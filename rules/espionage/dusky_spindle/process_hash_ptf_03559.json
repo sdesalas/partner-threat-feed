@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Dusky Spindle espionage toolkit sample, as reported in campaign PTF-03559. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Dusky Spindle Espionage Toolkit: Process started from known malicious binary (PTF-03559)",
+        "note": "## Triage and analysis\n\n### Investigating Dusky Spindle Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Dusky Spindle espionage toolkit in campaign PTF-03559.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"0f2b5f5429d9624a0493e97a20d754099594d3513fd6738ecb7088777aecf746\", \"a889922ab9d298a7ab4ab383e5358b0f1bf44b401d70e66aa547b292cdf03dc2\", \"4f56bfe37fe8eae60461d8233836d47fe6b523e2c6662f99a4f85c393762ffb2\", \"8206fffffd29c8fe1db49535977b4ac8fa08c9a51240a6388f50f5f477028c16\", \"80af0f059dcd6927d7dfbbc85bc6434ee2c783750a67694e46a1da63a4672525\", \"9a5b423320dba8f446ddd996b4b079edc6bb8bd4765ca04983afd3904d95ed53\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03559"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ec0cdd27-9caa-5547-80ba-6cdf710a4a72",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Dusky Spindle",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-03559",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "ec0cdd27-9caa-5547-80ba-6cdf710a4a72_1",
+    "type": "security-rule"
+}

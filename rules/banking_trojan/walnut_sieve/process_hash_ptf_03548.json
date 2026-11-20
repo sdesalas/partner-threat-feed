@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Walnut Sieve banking trojan sample, as reported in campaign PTF-03548. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Walnut Sieve Banking Trojan: Process started from known malicious binary (PTF-03548)",
+        "note": "## Triage and analysis\n\n### Investigating Walnut Sieve Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Walnut Sieve banking trojan in campaign PTF-03548.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"2f93d363ad7b308ddc463247198d00ff400f4094c9ebbf4ed060af85487e3dec\", \"c93087fa106a0b79b588a3fed246e30ccd53b7d1178fcbd06547813a79d46594\", \"bed53021495b9eee47d234b2315d8a02a1edf725242b3bd44c3de91504fa2903\", \"78f9e4d063716c0a8c94a407ffa1b21c5d730eea0774507aeddb64096a803fdc\", \"e0898a29005a0e810b021766d0ccd4b09e2bbf46fb70e2465859d14f6252e807\", \"1845cecb3180cb42d28a929e3cd57a66829d5abcdbbb7ac4c88015c7ead9ee95\", \"dd34759fa07f1b230466742ca89be44b34c761bfe755ccfe6c7d696887ef28b6\", \"db53d4263a4d61225ebbbf3b4e6e24f370e8b11046c6b44283dbd2305c818abc\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03548"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "8b684d6b-b71a-5fd6-89b3-461e9b47b1b0",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Walnut Sieve",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-03548",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "8b684d6b-b71a-5fd6-89b3-461e9b47b1b0_1",
+    "type": "security-rule"
+}

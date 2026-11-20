@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Rosewood Wicket infostealer sample, as reported in campaign PTF-03709. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Rosewood Wicket Infostealer: Process started from known malicious binary (PTF-03709)",
+        "note": "## Triage and analysis\n\n### Investigating Rosewood Wicket Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Rosewood Wicket infostealer in campaign PTF-03709.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"873fce8a1814945b3ec498745ad777db41011a4908e470c113507a81bd7fd9c0\", \"cf599724661abe41f0c8e4775d3cb7577eaca1b28466a0a026dbb34227fec0ce\", \"7ea015c36f8bbd75ac90c8092a84d800e62fd4489e783973156db12753e3a71e\", \"7c518aac180c7d23508ed51ee951ed13897ee35bcede90bf2010737fa0de1c9e\", \"e93a1df25571296da308932b7b31155e1fbe4de1806fd6f8b53e1f68fad7edff\", \"d337c654fdd4aadb24e9b5e5a391355960b565259ae24be02fd8e6e0dadce512\", \"80dfaacbf8d633dfb550f580d3189ef13d35c2f717c2ca71c6820afdc86ae83b\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03709"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "44a91e8a-1bce-531d-b0fa-3d1f84e15456",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Rosewood Wicket",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-03709",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "44a91e8a-1bce-531d-b0fa-3d1f84e15456_1",
+    "type": "security-rule"
+}

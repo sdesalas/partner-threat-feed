@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Granite Pulley cryptominer sample, as reported in campaign PTF-03694. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Granite Pulley Cryptominer: File with known malicious hash written (PTF-03694)",
+        "note": "## Triage and analysis\n\n### Investigating Granite Pulley Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Granite Pulley cryptominer in campaign PTF-03694.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"6c7745f5a49cf16c9f3b1f245474acadce98ca95a76a7eb0ceeee807c01d5fe7\" or \"b07d866bce610d44f621ac6282d56ff5e614035bc3f238b6c53cb48ae6ae70c8\" or \"914aec35fa011e023ec20cce76f444d21e40d3cc3a83c71b67d25c07b0745da4\" or \"ff84c46197c8ef456a395709893df04e9cd871f993de42b32663c788a34c4a39\" or \"ba65ec7ca03ed93d8cb5179cb0bd15ed2e58631cbb0a6772fb41ea86243edd8b\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03694"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "0d67d708-9aa7-5072-88c1-04664c4c93ae",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Granite Pulley",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03694",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "0d67d708-9aa7-5072-88c1-04664c4c93ae_1",
+    "type": "security-rule"
+}

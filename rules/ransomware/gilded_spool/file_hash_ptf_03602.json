@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Gilded Spool ransomware sample, as reported in campaign PTF-03602. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Gilded Spool Ransomware: File with known malicious hash written (PTF-03602)",
+        "note": "## Triage and analysis\n\n### Investigating Gilded Spool Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Gilded Spool ransomware in campaign PTF-03602.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"99e41575336a74397400ff9896598ce15c029bb27b792095543b1cba7812eabf\" or \"1cd8602d34de099149a3386cc3e524bdf8eddef9bd9b2c5e8883f413a0486750\" or \"52d31975ee9412acb4f6bb688bb41a207f2359473ad9a8a094689b24b98b09b0\" or \"6bb00b8677a9f3cbeef1012e3b0a20ac84c1e76f9972fa98b313c0b8dae5f5ea\" or \"3acd2ecf5ec9e9c5cdc979786f3cd796849ca83cb67133e6ab68efbd8df02a09\" or \"7bba6c9dc9952568895698de743f1ee4b022cecfcfbf38f07fe3d3436ee43956\" or \"289cd5c835daf6abcfcde01f8bf8cb52932a58488ce15e13c041bd5283ddc597\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03602"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "4875eb3c-ea63-529c-a4a4-1ec3cec31463",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Gilded Spool",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-03602",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "4875eb3c-ea63-529c-a4a4-1ec3cec31463_1",
+    "type": "security-rule"
+}

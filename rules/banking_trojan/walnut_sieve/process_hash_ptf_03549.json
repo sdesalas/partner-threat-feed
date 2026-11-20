@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Walnut Sieve banking trojan sample, as reported in campaign PTF-03549. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Walnut Sieve Banking Trojan: Process started from known malicious binary (PTF-03549)",
+        "note": "## Triage and analysis\n\n### Investigating Walnut Sieve Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Walnut Sieve banking trojan in campaign PTF-03549.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"83d1a84fa8e31d81742e5c98b66454cf83e780ebea3b3e43fcce8f73aa293a3f\", \"ee66959d5da5da369731481d38512b523c8ef325b40e95680977ba1ba1fd29cb\", \"be593fc5005294bd21b576c00a8f7ad0f0506afa21c16a1522867f9ebc9d5772\", \"f2b40dd156c23f8ed6b92a08fe94820d448ce9711ff3342fbd22be24b32ea0ba\", \"7fe29db0d87786ab31611b3cb0e50fd0e2ff8c94aec8f45b8017272473100672\", \"74be61e15416d230d0ab84e63fbf2883984ccb6f142bf66030ed2b497de9fdec\", \"f01a3b2a31cb180d89b12436ccf0e656a946dd5daffacc429d0a6d3d6b604d10\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03549"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "74a0e723-6249-5d00-b6d5-91cc74883772",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Walnut Sieve",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-03549",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "74a0e723-6249-5d00-b6d5-91cc74883772_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Paper Funnel loader sample, as reported in campaign PTF-03534. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Paper Funnel Loader: Process started from known malicious binary (PTF-03534)",
+        "note": "## Triage and analysis\n\n### Investigating Paper Funnel Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Paper Funnel loader in campaign PTF-03534.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"f0926a1f49897d1ccd3634840911c23c5513c71600ee8bd5a95dc66b01a1ff75\", \"c978a32b58fddd75e68cc41d4662786be293bdda856a441ca58779d98709cbf0\", \"a873abd4e044ad09260ac3df46229aa8791681055a32f5e58ac3890c97778a84\", \"dd4ab4b3ecb30e6ced8b89a9e0fd8fbb1089a39a55d78c3c55a9b2fc3d7b69e2\", \"8aa26ddbeadf80b996899007589a1716fe31efa6a5b5c35e81cfb909026873e0\", \"b22b157d9fb50dff2240c4c63dd89d22bcf9b2e369a8d3fcb66245e8dea05492\", \"56bc3a08132c7649219025920cd7466c8dc4f8a09cd9f2c1a3b161dfbaa65e7b\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03534"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "2b3a5dac-c417-56d0-a0c8-783c4166ae69",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Paper Funnel",
+            "Threat Type: Loader",
+            "Campaign: PTF-03534",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "2b3a5dac-c417-56d0-a0c8-783c4166ae69_1",
+    "type": "security-rule"
+}

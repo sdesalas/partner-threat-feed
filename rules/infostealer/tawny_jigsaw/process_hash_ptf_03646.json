@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Tawny Jigsaw infostealer sample, as reported in campaign PTF-03646. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Tawny Jigsaw Infostealer: Process started from known malicious binary (PTF-03646)",
+        "note": "## Triage and analysis\n\n### Investigating Tawny Jigsaw Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tawny Jigsaw infostealer in campaign PTF-03646.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"893d6cff32ca9b609b7b1c783a814e8fecf6f56c3962e0819b76728e283b4fba\", \"0498f513a9f7f57918a0fd96551531ebfb1f36c94b19195a0773b084bcb1bd39\", \"a1e6ebf4d4f443d067b2fe129716f63aa358f65e92d489661cfea9ec835f2965\", \"99f1a184b9fcf15def4ede0c19ee0d470b977b80b8cdb37aaa5b71f37f85b7c1\", \"5bb3828f46142d9564f1f81fa1b562b593e6f4ecf432417e75646701e6694630\", \"899b794c572e911e11235a70181ac6b64c8d4da198bf90f50fd6fb15cc196a38\", \"49f0fc28bbf9bcc15c32a1c0394a24095e5b8245d668b3623a5f507764a4f176\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03646"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "161447d2-6b92-5e84-ba09-457ad87d3c0d",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Tawny Jigsaw",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-03646",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "161447d2-6b92-5e84-ba09-457ad87d3c0d_1",
+    "type": "security-rule"
+}

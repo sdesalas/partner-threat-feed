@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Quartz Ladle botnet sample, as reported in campaign PTF-03577. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Quartz Ladle Botnet: File with known malicious hash written (PTF-03577)",
+        "note": "## Triage and analysis\n\n### Investigating Quartz Ladle Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Quartz Ladle botnet in campaign PTF-03577.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"ef22cdf037c3c944104fdc88204a2d5fb219c9744646ec10e1f7a1ad14bba1e8\" or \"620ba256446f31a2308251c205fa1a31bb133ce3584a55b8c864e7f5aae8dabf\" or \"71602e8a0934edb5d0b0c165ac855e10b360db0770f670f48d94b217da55ad4e\" or \"67f85ce34d4141c6dd5d5748599801f1ba71e4c94b78d93ed9093e974f69b2dd\" or \"a0337d6e8f602a5c9d657934b481ef4835af9b6002283c2566a6907886b5a63b\" or \"07149704ecfb36f95d7f9ddf0622a13ffa07c3483948233a6a8e9027ea7fb811\" or \"702c6c8148158f48dbcfee36f5dc59874ac2f48f9a7f39fbf8a36ee66c2fc69e\" or \"2dd04efae13deacbe9c3a131ce2f9eb866de12ec3faa03a8d6a17fd2b6a7de9d\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03577"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ad43042d-892b-572a-a6da-db47f7510830",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Quartz Ladle",
+            "Threat Type: Botnet",
+            "Campaign: PTF-03577",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "ad43042d-892b-572a-a6da-db47f7510830_1",
+    "type": "security-rule"
+}

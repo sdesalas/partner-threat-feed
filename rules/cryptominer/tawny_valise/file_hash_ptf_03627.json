@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Tawny Valise cryptominer sample, as reported in campaign PTF-03627. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Tawny Valise Cryptominer: File with known malicious hash written (PTF-03627)",
+        "note": "## Triage and analysis\n\n### Investigating Tawny Valise Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tawny Valise cryptominer in campaign PTF-03627.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"4fca91afe79f9d155006c915e7b25bf714c2d8d02c8722d2c1a25b9fc299b86f\" or \"a1ba3b33a9847b9f044ba08c5604032b1e0b8fad0132f7769f644c7c8821929b\" or \"a6966c904ba368bbec111ef017e3d9f3585239abf88b47e4877893f38f3949e4\" or \"e836198095e0700833b390510065797be16b02f8757f23ed178200f58878984b\" or \"2862c8dd418403d02f9957fed6b2f95c73eee9ab94c5d37704c81c6986ce5ee1\" or \"47ab6d9fe161ffcd7cbc0dfe165c449a56fa1b335638d277297eeeea4c1904ea\" or \"d8632652dfa03b52276c673a9b5c3d6705fcb899e8de749e7a6887ba2dfaf516\" or \"7c509461c43b52f7b84e4b0a767e5e59e5349110afc68ad1c766e0cae9d702b7\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03627"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "350bd964-d02c-5398-9fda-30b293b4fe9c",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Tawny Valise",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03627",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "350bd964-d02c-5398-9fda-30b293b4fe9c_1",
+    "type": "security-rule"
+}

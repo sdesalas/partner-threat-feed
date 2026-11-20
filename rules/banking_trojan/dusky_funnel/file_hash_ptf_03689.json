@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Dusky Funnel banking trojan sample, as reported in campaign PTF-03689. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Dusky Funnel Banking Trojan: File with known malicious hash written (PTF-03689)",
+        "note": "## Triage and analysis\n\n### Investigating Dusky Funnel Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Dusky Funnel banking trojan in campaign PTF-03689.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"5326b0b132507266ba431c19e41a0f645936623d2439881e18dadc9f3418e856\" or \"0c83ba83319bd859fd2339d8999d735cd039c128e2bf936e11d0bf77d0d06351\" or \"fe85e0953696037c1cb0fb6dbab03d338d00f77a343afcd8f396696a6d65ec52\" or \"3bbe552713a0c79c3bc7e2c18d0e3fbe4f51de545abd6f7137350d51d1fa831f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03689"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b97ddef6-4ec6-5e78-a35a-8ba52d68838e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Dusky Funnel",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-03689",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "b97ddef6-4ec6-5e78-a35a-8ba52d68838e_1",
+    "type": "security-rule"
+}

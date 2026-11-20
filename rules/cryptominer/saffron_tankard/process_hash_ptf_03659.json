@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Saffron Tankard cryptominer sample, as reported in campaign PTF-03659. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Saffron Tankard Cryptominer: Process started from known malicious binary (PTF-03659)",
+        "note": "## Triage and analysis\n\n### Investigating Saffron Tankard Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Saffron Tankard cryptominer in campaign PTF-03659.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"336ec289f6adc09a6dc6b608ec16b7a4993d66caeeb5e13c639354d122f7164a\", \"3adaa1e24cd55e40e39e7d3eeed42f88277d22fbc4f5cd35ca6c6de9e98df78f\", \"6fdf33077d66a9ba0f753e5244d682391c74d40b7e16dc015ab3c46c7438edc0\", \"a32a8306c4a2e25cfe311adca13d5ae2daf8ead7a9a901f0fd28e36cdbf9e6b8\", \"b0c6d1e936a50a8307bc69ea15a4b874b36a5e2d7755a391acff24b8e20eede6\", \"2eaeeddbb76d232a6d837d2b329539aba8a9a3bf10e8d86cc1a20ccd3e5d79f3\", \"574cafacd79de9464c6d30a1584941295ca41f2c81f60f306f6628d890a41474\", \"4fd8a792c8e7eb7db30eedb9aab672cd68ab6301b40d0be167cbc154ffed33c0\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03659"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "685155f5-cde7-58f2-b25f-e58a1daaae1a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Saffron Tankard",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03659",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "685155f5-cde7-58f2-b25f-e58a1daaae1a_1",
+    "type": "security-rule"
+}

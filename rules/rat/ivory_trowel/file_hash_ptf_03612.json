@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ivory Trowel remote access trojan sample, as reported in campaign PTF-03612. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ivory Trowel Remote Access Trojan: File with known malicious hash written (PTF-03612)",
+        "note": "## Triage and analysis\n\n### Investigating Ivory Trowel Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ivory Trowel remote access trojan in campaign PTF-03612.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"52a728a65b86a085e863f8a5ecc51a1b4de0ead69ef89204bc7c1fb048c29a79\" or \"a785289c8b2a2a6523cd46f817dff71328c607a16726fb73d2ee91718e6b0728\" or \"1257ae517679606254a8023dcb9646d6486a95d8cad63d751d511d4e056c5bc7\" or \"8cf628e4619ebd4463b37878ad4326656b08a80c05b5cf337ce05385311da60b\" or \"0564dd3f2188f7d6f87c88058a751ed46e3f1af97988aaf5f5ccf09071cf5bd8\" or \"df46a316727b69646f9a590f26a975a69fb564dce5b8d3722c13d199918a1621\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03612"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f8272528-b932-53f8-a639-ffdc5ec17999",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ivory Trowel",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-03612",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "f8272528-b932-53f8-a639-ffdc5ec17999_1",
+    "type": "security-rule"
+}

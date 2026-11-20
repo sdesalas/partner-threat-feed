@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Verdant Ladle loader sample, as reported in campaign PTF-03719. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Verdant Ladle Loader: File with known malicious hash written (PTF-03719)",
+        "note": "## Triage and analysis\n\n### Investigating Verdant Ladle Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Verdant Ladle loader in campaign PTF-03719.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"a7b848eee80424250c0a7bf44f0f7646c3fddb1718637d6abcf7fec457625c19\" or \"11bb642ca175478c45c23921a5c8c565daf402bb59f4373cef8782ee940f5d64\" or \"28c1951ab8bdf57f3cab76f25c95025d3ab467818b360ddbc23becc6b939075f\" or \"4de0fffa9d0b144b221fdec0ba65b4ca370211ca0625bb22fa06fdf5615d6fb0\" or \"37d580ad609693e54d7bf1802e224ba2508b48b4a4a3eb15ef7ad157a904bd7f\" or \"df6478a63425bffbce5f8f85a9ce28bf64e29adacd6e3228aeae12b986c819ff\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03719"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "740033f6-aaa6-5165-8ef8-c92d3ba29d64",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Verdant Ladle",
+            "Threat Type: Loader",
+            "Campaign: PTF-03719",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "740033f6-aaa6-5165-8ef8-c92d3ba29d64_1",
+    "type": "security-rule"
+}

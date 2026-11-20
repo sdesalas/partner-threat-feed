@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Dusky Funnel banking trojan sample, as reported in campaign PTF-03690. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Dusky Funnel Banking Trojan: Process started from known malicious binary (PTF-03690)",
+        "note": "## Triage and analysis\n\n### Investigating Dusky Funnel Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Dusky Funnel banking trojan in campaign PTF-03690.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"bc8386b9fa4af79c8baca63c36839e2a12f9a6817a64d1f28b08ae4cb806738d\", \"d0194c52788a568dc190c89f87deadec32d2effaa76a0dda8082795277a27fd9\", \"64ad61674e7ef967be781eb450a54a171a3d5c41338fa2f76903a1f9e92c9405\", \"16180a16e324b11aa55e16a75660925b93c2a8eb19555a90ba10357ade8d9e23\", \"7237a74701d312a57737b932314426880bc0f0bc4cec7454d29a1ae6b568777e\", \"a86a0b0273fcd3bd6b56d2f2481550832de1e9d72cfd08a546e806e5458ca0c7\", \"db32ac318d4a23271e9bc8f36cda7a8f1b390f6583022f55476b2d13016a5c9f\", \"e0c747e02919d54300c78dbb30ab3efc82c81c88f2ceb07f823269a5cff731e3\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03690"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "4340391a-12ba-596a-9b77-7f1aec3bb309",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Dusky Funnel",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-03690",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "4340391a-12ba-596a-9b77-7f1aec3bb309_1",
+    "type": "security-rule"
+}

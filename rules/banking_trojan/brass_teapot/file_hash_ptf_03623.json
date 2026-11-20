@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Brass Teapot banking trojan sample, as reported in campaign PTF-03623. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Brass Teapot Banking Trojan: File with known malicious hash written (PTF-03623)",
+        "note": "## Triage and analysis\n\n### Investigating Brass Teapot Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Brass Teapot banking trojan in campaign PTF-03623.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"3788415572bd6e8b2f40b63d43d12eded0552facf89c4aaed0722b723dc6a659\" or \"e3b0afb8668a6f2ae9142e1cf096cbe045c4ad86117071b1d6f1842fa70eee73\" or \"5a306fa0cf76ef8ddd038d02ca39afd961b8adac3e9b6242f5782db2bc435e6c\" or \"f27aacc76271fa960a1d3c94181d14336ab67c92394d4ca978a6b9dbad799d96\" or \"72d2c58b6a2ef9da867eb14dc5c36d679b451f09ac09725b7f7e3a93e22baede\" or \"c5ead1c85ca460f142f6c274932ed0dcb663672a1daf97be92a6f96db356274b\" or \"0348a5f7797af95a0f3bf21b6ee4c4004f2673f6ad496ea0e22ced378ed8b6d7\" or \"10976b6ac7f9aa68245525a9ac31481f3e258a4f2213cbd1f2728a729fe25990\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03623"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e2bfe4f1-fb7e-52af-8edc-cb2f854c55d0",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Brass Teapot",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-03623",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "e2bfe4f1-fb7e-52af-8edc-cb2f854c55d0_1",
+    "type": "security-rule"
+}

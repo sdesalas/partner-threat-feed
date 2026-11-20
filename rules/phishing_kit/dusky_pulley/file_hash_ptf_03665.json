@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Dusky Pulley phishing kit sample, as reported in campaign PTF-03665. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Dusky Pulley Phishing Kit: File with known malicious hash written (PTF-03665)",
+        "note": "## Triage and analysis\n\n### Investigating Dusky Pulley Phishing Kit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Dusky Pulley phishing kit in campaign PTF-03665.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"171114c02ac839ec91b254fabfc4d91e737db9f1d59d4e6b054f78ced613b975\" or \"bec57449d0bc380290286a33a8deee14a2f6197c5422d814921920b0f4eb2f8b\" or \"7fab15464ceca15046519407f43d7ea349497fb353a109b96910a916b14b4b28\" or \"b618206771ebc912f62ff9654106035e261f3fceca2ffd1bbaf46d7a139f52ea\" or \"0280c7a82f9b7c5aaad64838c260176921b9eaf78a20ac43ebd0ed2e4a235ddf\" or \"ea88c01a325e3b2a5e030869baeedb70a89911c7c2cdf9bfe18045ed66a8974f\" or \"ede7f94cd33662fa228f147397ee534536bf12ace8ef46770990c7cbdf2d0f98\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03665"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "c92d83e9-ec47-5aed-a1af-d82f702e9152",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Dusky Pulley",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-03665",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "c92d83e9-ec47-5aed-a1af-d82f702e9152_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,69 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies three or more hosts resolving command and control domains used by the Dusky Spindle espionage toolkit, as reported in campaign PTF-03559. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "language": "esql",
+        "license": "Elastic License v2",
+        "name": "Dusky Spindle Espionage Toolkit: Several hosts resolving command and control domains (PTF-03559)",
+        "note": "## Triage and analysis\n\n### Investigating Dusky Spindle Espionage Toolkit: Several hosts resolving command and control domains\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Dusky Spindle espionage toolkit in campaign PTF-03559.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "FROM logs-endpoint.events.network-*\n| WHERE dns.question.name IN (\"api-edge48.example\", \"cloud-media43.invalid\", \"portal-cloud69.test\", \"portal-portal36.example\", \"track-files60.example\")\n| STATS host_count = COUNT_DISTINCT(host.id), hosts = VALUES(host.name) BY dns.question.name\n| WHERE host_count >= 3",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03559"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 99,
+        "rule_id": "e64a432f-3893-5a05-b00b-e9a838716aec",
+        "severity": "critical",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Dusky Spindle",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-03559",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1071",
+                        "name": "Application Layer Protocol",
+                        "reference": "https://attack.mitre.org/techniques/T1071/",
+                        "subtechnique": [
+                            {
+                                "id": "T1071.004",
+                                "name": "DNS",
+                                "reference": "https://attack.mitre.org/techniques/T1071/004/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "type": "esql",
+        "version": 1
+    },
+    "id": "e64a432f-3893-5a05-b00b-e9a838716aec_1",
+    "type": "security-rule"
+}

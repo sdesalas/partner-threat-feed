@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Fennel Trellis banking trojan payloads, as reported in campaign PTF-03656. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Fennel Trellis Banking Trojan: Request to known payload URL (PTF-03656)",
+        "note": "## Triage and analysis\n\n### Investigating Fennel Trellis Banking Trojan: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Fennel Trellis banking trojan in campaign PTF-03656.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://cdn-portal43.invalid/update/8114.bin\" or \"https://media-relay70.example/install/5169.bin\" or \"https://sync-connect12.test/update/7215.bin\" or \"https://sync-sync79.example/doc/4666.msi\" or \"https://update-track91.invalid/doc/2350.msi\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03656"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "8a62357d-7094-5734-b01a-37768c64552a",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Fennel Trellis",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-03656",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "8a62357d-7094-5734-b01a-37768c64552a_1",
+    "type": "security-rule"
+}

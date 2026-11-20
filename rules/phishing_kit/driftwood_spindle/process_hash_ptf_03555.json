@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Driftwood Spindle phishing kit sample, as reported in campaign PTF-03555. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Driftwood Spindle Phishing Kit: Process started from known malicious binary (PTF-03555)",
+        "note": "## Triage and analysis\n\n### Investigating Driftwood Spindle Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Driftwood Spindle phishing kit in campaign PTF-03555.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"cd8c73c8a9b23c2980dc0459e08bc01f0d9377c9133a44126dc6686c9b43dc6e\", \"6dcdbfb9410dbe2e81533d79de18aae760644acd9adb0e9984fc48d2fcb486e0\", \"52099b67bd8ae6f14b61c75351fc4be55ca5345d0ee653c4c6c2153d747c6ac4\", \"87e5539ef0383725f4c01edf993576b6cda0d4bf52428caeaf761115e015ad81\", \"bd536e4b45b161387fed811e0504c4708dc426dc45a745db79c41d2bc11c9cba\", \"7be4107fc30fda58967759098922c35086e6527ad51d191e35105618cf15f903\", \"75bf114f71b63fd75701a101df2d94cdc807e10629e33c929f13e6d641e17a79\", \"3ddcd9b3a00acc8459282eae2766a7c7bf3e0920e23290888d1409ff16975844\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03555"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "9766e701-7781-5351-851e-355341fc30a8",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Driftwood Spindle",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-03555",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "9766e701-7781-5351-851e-355341fc30a8_1",
+    "type": "security-rule"
+}

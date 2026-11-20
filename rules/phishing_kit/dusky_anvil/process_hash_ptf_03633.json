@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Dusky Anvil phishing kit sample, as reported in campaign PTF-03633. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Dusky Anvil Phishing Kit: Process started from known malicious binary (PTF-03633)",
+        "note": "## Triage and analysis\n\n### Investigating Dusky Anvil Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Dusky Anvil phishing kit in campaign PTF-03633.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"1d950b91885055afb2ccd866d29c9e8f5fd74c9b3df2cc7891e40a2e657f0014\", \"b598675781ad5e005d71a0c31648c78b2011874a9b0f2bae91c7c497e6ac51da\", \"041d76b8b5d8a42f4e5961b72b1f3c815dc88ed816ce24e54268959bea027eeb\", \"5cf9193e4e994dd220a5a84f17d761977786e9b3b4312c9e256931043141a6c1\", \"00c33268d16a47c7e8e76f86c48c78172335a641a01942909c05b57fb5221900\", \"91207ee01440c6f87886deb9f7f72cc3250e64f46a723354a04e3619cbf0905a\", \"1551a6e42ae9749a3cc166fc18426d3c2dd6dbfc625e4853a8f2ab81fea60161\", \"05050b781872e5114bd9f9347085ef0c9953efdea4fa8a54c780b25d0411f8e1\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03633"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "fc12889a-8176-5128-8277-135a9fb57d94",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Dusky Anvil",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-03633",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "fc12889a-8176-5128-8277-135a9fb57d94_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Birch Tinderbox remote access trojan sample, as reported in campaign PTF-03675. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Birch Tinderbox Remote Access Trojan: File with known malicious hash written (PTF-03675)",
+        "note": "## Triage and analysis\n\n### Investigating Birch Tinderbox Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Birch Tinderbox remote access trojan in campaign PTF-03675.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"603a275db440b0457cf3ad3e3e57ec236e504564a2b3045f3fc7e3f0d1d02c25\" or \"58b2906682854b720958d81340dccac6d5890dd8556ff1329eaeacafa98b7c44\" or \"1eabaedbefe76bba71a4560c58818a0c3c42b87cc00ebe7e4416fd9625a2fdf8\" or \"a7c360519230804bf0b70a1d0c091c7fd6ef10ac5fb4af5848cf108e770fff9c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03675"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "0df2a558-b75e-515a-a68f-0ca52152f6d5",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Birch Tinderbox",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-03675",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "0df2a558-b75e-515a-a68f-0ca52152f6d5_1",
+    "type": "security-rule"
+}

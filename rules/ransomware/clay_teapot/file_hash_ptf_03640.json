@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Clay Teapot ransomware sample, as reported in campaign PTF-03640. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Clay Teapot Ransomware: File with known malicious hash written (PTF-03640)",
+        "note": "## Triage and analysis\n\n### Investigating Clay Teapot Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Clay Teapot ransomware in campaign PTF-03640.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"8c98566ff916844cfe879462a3bb893a9763b0fc4cd42275daa863efa5780e29\" or \"486afe88a6c28de5dbc4381ff5387207c51dd8970e8630de1b48d1a094dd94f3\" or \"63298423cedbb6dd7be906fb22f62f9e68e98d033f2272757cba5351e7d80c33\" or \"b5ac4e03e7a4176d9ba6f37c0b05ffe15eedf442d1c3aa0d1b3c218df21b4f6b\" or \"2ae8324ec06c700e20f73aa1b236f03c2e3f28c4accbf999987b8e3f74f98257\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03640"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "cb05e1b5-391f-5bd4-a757-5f941f43b4dc",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Clay Teapot",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-03640",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "cb05e1b5-391f-5bd4-a757-5f941f43b4dc_1",
+    "type": "security-rule"
+}

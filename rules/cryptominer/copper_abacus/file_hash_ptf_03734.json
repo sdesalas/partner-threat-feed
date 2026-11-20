@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Copper Abacus cryptominer sample, as reported in campaign PTF-03734. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Copper Abacus Cryptominer: File with known malicious hash written (PTF-03734)",
+        "note": "## Triage and analysis\n\n### Investigating Copper Abacus Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Copper Abacus cryptominer in campaign PTF-03734.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"381774c737a42a0718125246439f4adeac09a5b5289ec25707df27b478132550\" or \"cd494bedcf3072626fee7b84c2ab5feb03c490c2098f7275a8296f88efb824dc\" or \"fc1251c32fa606ac1e615c3390f41611039eb8ae317d6c06e866bb602ea158c1\" or \"61a131b2a86548c6357433a0cd963d7dd492cebec0a9b2120cca2e7c6f4db0b9\" or \"82518d0cb414423366893f19b08850c662fd0ca9d9cdb01d3da5faa2d3397ebb\" or \"83b4f7c74eb9ab3b6d576b1c66979e2137c8a694cdf7dd3b1d4d94f9686cdd75\" or \"6f10397d7799de4edb90b8299505a476cb09343180e81384068e691103ac8588\" or \"decbef1970a7c065016bdbd4ced8f18db026803ff792de451c4f53ef7b8e3345\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03734"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "cab2f585-a3dc-52ef-99ad-4422e1988dfd",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Copper Abacus",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03734",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "cab2f585-a3dc-52ef-99ad-4422e1988dfd_1",
+    "type": "security-rule"
+}

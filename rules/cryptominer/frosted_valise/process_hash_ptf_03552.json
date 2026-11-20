@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Frosted Valise cryptominer sample, as reported in campaign PTF-03552. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Frosted Valise Cryptominer: Process started from known malicious binary (PTF-03552)",
+        "note": "## Triage and analysis\n\n### Investigating Frosted Valise Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Frosted Valise cryptominer in campaign PTF-03552.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"a644e98a1b3383224ab2d58ebc80c5a95827cc69c40990d487328cc73e954b17\", \"6c53d17f0b04234c589a2c225cccefd6619945b75fed10525962098810d42bd8\", \"278a041ee4ee85bbf609bd37e4b640d879ccd0155576da815c3f286476d137be\", \"ff6e47204f2a889e8615a82e1d363b7d94ee61b14a2b71dfc51dd48c829949b8\", \"4930254f4809a9174518b2675d9fa24c3d7370e9e96bbc43885f833b085b4eb9\", \"daaba88602cb77682d68206a6f4a51997d9c6727f5c420a8932e835213e2abc4\", \"dbdebeb61ceed690c333f34f5108f63e4e107f4c948e0890f83b0b2d9b8e2464\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03552"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "bdc94094-3135-5dac-952d-7b10335b5c7e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Frosted Valise",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03552",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "bdc94094-3135-5dac-952d-7b10335b5c7e_1",
+    "type": "security-rule"
+}
