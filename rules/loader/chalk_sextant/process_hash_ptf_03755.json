@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Chalk Sextant loader sample, as reported in campaign PTF-03755. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Chalk Sextant Loader: Process started from known malicious binary (PTF-03755)",
+        "note": "## Triage and analysis\n\n### Investigating Chalk Sextant Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Chalk Sextant loader in campaign PTF-03755.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"c0b27800cf51d33c30e7301e2318e6b97c34851c2a6150fd60e0299389078f64\", \"c09f5de425e7535fbec73a122cfec570334d4ef8ace62901a5ab6e538193ae92\", \"97e60bff3e62d09e0e4dbcdded563d228092d423e2c513b8a5ce19c1341714a2\", \"ffe29c1ff568323624490e9035e26857b2764a196ecf24ca6311bddf762f456a\", \"38671965b46a766707fa28d4457c8371703cd0c271ffa7bdec0babd8e7994ee1\", \"5df76b000a96ba0d69aed837a773d606135c63f31544bc26e948c9744ead863d\", \"9e3485bddb723d2f1ce53b88b235927495be994cdc45c34f82ae3da93666a54d\", \"911761f5b4d15ce83f5fadbcaae38cbef7b9f663b209faf6d02c0e64b6f6ca69\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03755"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ed32f2e1-0dad-5962-8b4b-c5da0552c998",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Chalk Sextant",
+            "Threat Type: Loader",
+            "Campaign: PTF-03755",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "ed32f2e1-0dad-5962-8b4b-c5da0552c998_1",
+    "type": "security-rule"
+}

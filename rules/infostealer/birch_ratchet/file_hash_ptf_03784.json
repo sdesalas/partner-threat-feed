@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Birch Ratchet infostealer sample, as reported in campaign PTF-03784. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Birch Ratchet Infostealer: File with known malicious hash written (PTF-03784)",
+        "note": "## Triage and analysis\n\n### Investigating Birch Ratchet Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Birch Ratchet infostealer in campaign PTF-03784.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"133dc8f3c919b5d20f1cd5685d165a6639e8b215fbacd58cf279d2ee65219fd7\" or \"15488b56ab4458e05bb12e8f4c0d9804d7978905da1d3b3cba146011c625ffab\" or \"9ec4f540066418c300560dfe77e489e6a8be20c43aae2e70ca05890e6529a5c0\" or \"9d181730257899bfee6ff092927eb824aa43bd5d0ded1e843e2db126ea6c0c83\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03784"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "465beede-d08e-5ea7-a0e6-c3f637a3430d",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Birch Ratchet",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-03784",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "465beede-d08e-5ea7-a0e6-c3f637a3430d_1",
+    "type": "security-rule"
+}

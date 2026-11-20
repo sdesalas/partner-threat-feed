@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Chalk Trowel ransomware sample, as reported in campaign PTF-03779. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Chalk Trowel Ransomware: File with known malicious hash written (PTF-03779)",
+        "note": "## Triage and analysis\n\n### Investigating Chalk Trowel Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Chalk Trowel ransomware in campaign PTF-03779.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"2077aefea8c65a483ff1ab7f4fec05309ea8ac26bda9bf7f8c680cb2729990d4\" or \"e8a3f74371d810bdfd81c7a83bffd19aaedc89fc69c904326114aadb5c6ec1fb\" or \"e70bb2b916ed34015f767575543c630f40b5c63a5f76ab677e0aa0ba105d8e1a\" or \"c03038ee3205fac8bcc12043516d6ae13b0769fd6ce3a31e6886873250944bc4\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03779"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "cb8e0369-c446-57de-a00d-a993cf6e2e6c",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Chalk Trowel",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-03779",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "cb8e0369-c446-57de-a00d-a993cf6e2e6c_1",
+    "type": "security-rule"
+}

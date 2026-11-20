@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Chalk Spindle remote access trojan sample, as reported in campaign PTF-03816. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Chalk Spindle Remote Access Trojan: File with known malicious hash written (PTF-03816)",
+        "note": "## Triage and analysis\n\n### Investigating Chalk Spindle Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Chalk Spindle remote access trojan in campaign PTF-03816.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"bd770814f306ce66ed4039943ca289580fb0a01961c0c13ffec5a59aaf832856\" or \"9163325eb84e69254dc110151840940da4d303a76791873e448fe5872ea64562\" or \"30e4ebf07a5c287bbafb53e76c25cc8df90012f045e08fc607dc5900bc3eaff1\" or \"8be477bd969b66225029f186027033a919de407b056589a7f36e8a61903c30fb\" or \"919bf69cc73b10ebd396db5f906c7299fde1c5057424502b3ec96da2d84fe5ec\" or \"d2f64070eff88a7ed57377c4053901cf9197ffc298a4e37931bdb970ac9f2ce7\" or \"37097bde80e1dd5f805c49bbf82cbbfeb1649e1574a67620e636af7ac9de955c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03816"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "9deec418-1afe-5ca6-abff-68f9004a0d76",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Chalk Spindle",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-03816",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "9deec418-1afe-5ca6-abff-68f9004a0d76_1",
+    "type": "security-rule"
+}

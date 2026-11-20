@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Walnut Spool botnet sample, as reported in campaign PTF-03761. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Walnut Spool Botnet: Process started from known malicious binary (PTF-03761)",
+        "note": "## Triage and analysis\n\n### Investigating Walnut Spool Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Walnut Spool botnet in campaign PTF-03761.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"f249df5f01ac627ae2774c2f13ee5d844ca22b3fbe06a1be7af40efa7ec4e043\", \"dc5892f9dfefc113fd561c3bfba8ffe0a920c9b1b3fb2ba390de6233e0cdba66\", \"ccedfc0d59dabdaafa77d57989c5ab82ed4aca5e2c2fe80dee9b43153151532c\", \"4cf0a36d931ffc62978444e70ffafe8890d02957840774df7db4f167cfcd5673\", \"eec0a77a0164ead37d609510b9338fb83fe49f773fec89f1c00d1da8e938a45d\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03761"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "04f8fc53-4b51-5b5a-90f1-560de8084962",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Walnut Spool",
+            "Threat Type: Botnet",
+            "Campaign: PTF-03761",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "04f8fc53-4b51-5b5a-90f1-560de8084962_1",
+    "type": "security-rule"
+}

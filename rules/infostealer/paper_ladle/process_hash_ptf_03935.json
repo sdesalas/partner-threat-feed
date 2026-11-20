@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Paper Ladle infostealer sample, as reported in campaign PTF-03935. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Paper Ladle Infostealer: Process started from known malicious binary (PTF-03935)",
+        "note": "## Triage and analysis\n\n### Investigating Paper Ladle Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Paper Ladle infostealer in campaign PTF-03935.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"e7fb3cddd1ac61b7b337d5d3b5546a9f156b2ac608c2429539f4f2d311e03fa1\", \"b519273142e238efdcce3a4291cc9320d0d0a34849e78a63e82e30227d29574c\", \"b8b2e6efe25e04b664f02582c9a0a5e8d34db8132091fa5f5f6e96e74631d8cd\", \"c12f0540de25c79d99e85b806a9e98e754d356b42136a43c54a3447e765c071f\", \"9e416d0c3b275a13730d4b0572fdb2234587092e248d80e93f2884aa7ca5b089\", \"65b31a6f88e16a4757d9de6381099bb0ab01fc79b50becf07e4777c38ba6951b\", \"2f4f33d15fe59f3213c18417173b975d8baa71e5f1137fbb5b6ffc59a04ef931\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03935"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f7fd6749-4729-5a5d-820d-73247b33dfed",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Paper Ladle",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-03935",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "f7fd6749-4729-5a5d-820d-73247b33dfed_1",
+    "type": "security-rule"
+}

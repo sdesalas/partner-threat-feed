@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ashen Satchel infostealer sample, as reported in campaign PTF-03745. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ashen Satchel Infostealer: Process started from known malicious binary (PTF-03745)",
+        "note": "## Triage and analysis\n\n### Investigating Ashen Satchel Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ashen Satchel infostealer in campaign PTF-03745.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"af7bcbbe13077d36b552a20fb8b1ffd3ddefd7d28ec2551e10ebff9d9f594f0a\", \"f36c593e49da72d7cb23bc4bf8d2f550e7cdf16521aedb4036f2abcd3c4aef17\", \"7ef96133033a43ee37c02a50fe21400fe0e9dec3ca792dcbd795220e03e15ed9\", \"2e48f61be814efdb1c8e597e626126a958d5ed6662e58ac5b0f98157b8336375\", \"370cf3facfc4f2d3413137e7946d7a59fd0221c9a56566387ba28bf9a6595091\", \"f9e95dd75f969bcbe807a6feb323d03891b1eb70289a27501acf49a6c37655db\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03745"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "4ca414ad-edbe-51b4-bf45-b23117b7158b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ashen Satchel",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-03745",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "4ca414ad-edbe-51b4-bf45-b23117b7158b_1",
+    "type": "security-rule"
+}

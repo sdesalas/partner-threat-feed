@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Paper Ladle infostealer sample, as reported in campaign PTF-03936. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Paper Ladle Infostealer: File with known malicious hash written (PTF-03936)",
+        "note": "## Triage and analysis\n\n### Investigating Paper Ladle Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Paper Ladle infostealer in campaign PTF-03936.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"766b05683b03781ab1119e5fcbe1013df2d4df3c5e84b91c74e5250ab22124b7\" or \"cb39d40115a23adf6662e908e9effcf71b377e07f41c0e83312045b6030a38c9\" or \"da3d993826ef95b45724fdbedf48de87ac2ccd228281e70e869889249f95e6e9\" or \"8e55862a6d4327fc4187e2e31938b193a595b4f0e7631169ee08e4e3f8efab98\" or \"61153aeb9871ccb612c6b96b7e054c29c4dc64ed4f425310e2dcd0251140e567\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03936"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f575aa41-1759-5a5e-b59e-8e7f958e8565",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Paper Ladle",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-03936",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "f575aa41-1759-5a5e-b59e-8e7f958e8565_1",
+    "type": "security-rule"
+}

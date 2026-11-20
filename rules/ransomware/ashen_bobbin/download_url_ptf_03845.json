@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Ashen Bobbin ransomware payloads, as reported in campaign PTF-03845. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ashen Bobbin Ransomware: Request to known payload URL (PTF-03845)",
+        "note": "## Triage and analysis\n\n### Investigating Ashen Bobbin Ransomware: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ashen Bobbin ransomware in campaign PTF-03845.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://cloud-node71.test/payload/8221.php\" or \"https://login-assets40.invalid/install/9398.bin\" or \"https://node-media39.example/doc/8320.php\" or \"https://node-update96.example/update/3758.zip\" or \"https://relay-secure73.test/download/1652.bin\" or \"https://sync-relay33.invalid/install/3469.zip\" or \"https://sync-secure65.example/doc/1469.bin\" or \"https://track-cdn46.invalid/gate/1456.php\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03845"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "64728511-1475-583e-8749-cf497fc8914a",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ashen Bobbin",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-03845",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "64728511-1475-583e-8749-cf497fc8914a_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Oaken Satchel phishing kit sample, as reported in campaign PTF-03838. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Oaken Satchel Phishing Kit: Process started from known malicious binary (PTF-03838)",
+        "note": "## Triage and analysis\n\n### Investigating Oaken Satchel Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Oaken Satchel phishing kit in campaign PTF-03838.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"94fb4127fbb9a1b07f0e0de185fd7225c4f1158d0c9a895ce495bced62d8ed46\", \"2be341cf72caa2b49788b9e1c0ca545ad477ff7c9ce1cfa883940e02a07d201b\", \"5d977f747e7071f220e0b021de1ba41dd03e3d1de704ed09f41affe07ff56574\", \"fde06caf8d66ed05e8ae452e48b634b1c7322e22e4ecad8913751479ecd8cab4\", \"4c84f5dcb354d72baa5ef901192220acfa9df419b03ef2a4ebaaab5211f9605b\", \"72ab332976e19eff82a0090874aa3bdd29aa264bc04bc9cbec0ff9ff376ded2c\", \"d73e294f014ddc6e931afa83316c0cc429f33597120fb877d907e5739014d170\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03838"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "26e2a9ba-271b-5b4c-9bf6-14a0c4afc498",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Oaken Satchel",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-03838",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "26e2a9ba-271b-5b4c-9bf6-14a0c4afc498_1",
+    "type": "security-rule"
+}

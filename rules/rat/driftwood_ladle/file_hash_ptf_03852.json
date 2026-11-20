@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Driftwood Ladle remote access trojan sample, as reported in campaign PTF-03852. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Driftwood Ladle Remote Access Trojan: File with known malicious hash written (PTF-03852)",
+        "note": "## Triage and analysis\n\n### Investigating Driftwood Ladle Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Driftwood Ladle remote access trojan in campaign PTF-03852.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"4cc4c92404e4a019ae6a78ec1f565055aa682a4ed5e0f33f075c2208054004fb\" or \"b688448b6b2b5b996d5c49c4f843132937481d88f0c17f0c64f65fa260279a11\" or \"d3c5f4632af4353e76ed705bf8448ca0a2532e52f9d5452adbce1d68c49a9bff\" or \"ea94f2e6789060b5ebc42e3919131c7749fcd28308063d307c3806279dc71dc1\" or \"3ed44c439cae222355e26d1ed46d5c76cdbbe1a6fe8e58eea32c369aca06fe6a\" or \"daf01e0ca1b6d180171dabc0605c258917b9145f97ca32a1c6ebd731bee756d0\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03852"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d5718256-8bbc-5cea-a5cf-e695f1a029e6",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Driftwood Ladle",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-03852",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "d5718256-8bbc-5cea-a5cf-e695f1a029e6_1",
+    "type": "security-rule"
+}

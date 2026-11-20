@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Willow Keystone phishing kit sample, as reported in campaign PTF-03804. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Willow Keystone Phishing Kit: File with known malicious hash written (PTF-03804)",
+        "note": "## Triage and analysis\n\n### Investigating Willow Keystone Phishing Kit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Willow Keystone phishing kit in campaign PTF-03804.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"06d849b7d25f66d32870a8a721afbf877ed4f5597400bff3624172533f301a1f\" or \"de4215d9db083a863803e4597786188ce33c71eba9a0af586ca9b2775b155afe\" or \"0d54dbf8639d3a307b3915bc6cc9c582f0f6bdcfdc7bb52096deb0bca06a3dc7\" or \"015eb1ffbfaab21073c4a72adda47b1479cf7bb3f580bbe2a2d83cced552bdc5\" or \"9e742c2f047a713129acc935045f9f29164266f52e93800397c73df6d6e71f65\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03804"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "60db3616-5829-5b83-86a8-78a14c79cc01",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Willow Keystone",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-03804",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "60db3616-5829-5b83-86a8-78a14c79cc01_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Birch Ratchet infostealer sample, as reported in campaign PTF-03783. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Birch Ratchet Infostealer: Process started from known malicious binary (PTF-03783)",
+        "note": "## Triage and analysis\n\n### Investigating Birch Ratchet Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Birch Ratchet infostealer in campaign PTF-03783.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"3ee33141b80af23e3ec1865eb5e6fea51817f302615a5ad2740665f1e37b32d9\", \"097912f812f8bc1c8bcc761b1424e1cfd07a8e237cf59c57ceb2ffd864996c12\", \"d163650f29884b18b3bdc686a7b1798cc081d4be0579eba8ef116535cb055a7b\", \"e8613e913e37162595ddb9ba46cdc1baaa22e54ece7f9dee091d2ac01d23471d\", \"2d0c1155cb76f34f4241e1ea7229dfd6cb40007224a8e017f66c7380c5a01400\", \"c246827d73a15c2b01cfbf4f34e73804904400a4652857f4f4e46d46266fe7f2\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03783"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e0e83749-8851-5771-9b8a-395ea3da3cf9",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Birch Ratchet",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-03783",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "e0e83749-8851-5771-9b8a-395ea3da3cf9_1",
+    "type": "security-rule"
+}

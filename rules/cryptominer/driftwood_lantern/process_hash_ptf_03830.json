@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Driftwood Lantern cryptominer sample, as reported in campaign PTF-03830. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Driftwood Lantern Cryptominer: Process started from known malicious binary (PTF-03830)",
+        "note": "## Triage and analysis\n\n### Investigating Driftwood Lantern Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Driftwood Lantern cryptominer in campaign PTF-03830.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"0f6b0cdd7766bbc3501c7fe56b3f6f8c6cc7065237e1177971265aac23f14ad0\", \"eb501edd6ff4d6ac9ae70e5c4e3658976c42dd9c01d6241d2169f5b860ec1cb6\", \"9e207ed5ebf7d62b284e49eb766e0ca1515fa7a1e40b46b0d9f0af9f87109a05\", \"2823048c8367db529e5604cae75c347c2562576b4fd837e8d5d87acde0a7f98b\", \"2ed269a12c811de7f3d00c375cfe724b2efd2c0f2a5cd5f68f2b0d7805e363f6\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03830"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "6240c05f-53e3-5ae9-bb5b-ecf00c86cafc",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Driftwood Lantern",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03830",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "6240c05f-53e3-5ae9-bb5b-ecf00c86cafc_1",
+    "type": "security-rule"
+}

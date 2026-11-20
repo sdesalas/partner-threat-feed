@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Umber Shuttle banking trojan sample, as reported in campaign PTF-03764. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Umber Shuttle Banking Trojan: File with known malicious hash written (PTF-03764)",
+        "note": "## Triage and analysis\n\n### Investigating Umber Shuttle Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Umber Shuttle banking trojan in campaign PTF-03764.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"0d91e2780f42cf0865793b1d314f7a4b9b880d683bae185c6a40075a40980b82\" or \"108d87ab87bcc80520c11af95915f97058753fd9c2ae3c42dc7e41ba9f897d8c\" or \"db26cc6c78424e977e0db3b8c7dc24c2f79d24c957ef679ea7dffa20beb852e4\" or \"1f5edf1a1967f5bb1af455a5e7af5a9a51d268cf4a9918ab31e89d52e380841a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03764"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "21f5cf88-d5b3-5a30-bc8d-f515cc69b4c9",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Umber Shuttle",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-03764",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "21f5cf88-d5b3-5a30-bc8d-f515cc69b4c9_1",
+    "type": "security-rule"
+}

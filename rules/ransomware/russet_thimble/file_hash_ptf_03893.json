@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Russet Thimble ransomware sample, as reported in campaign PTF-03893. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Russet Thimble Ransomware: File with known malicious hash written (PTF-03893)",
+        "note": "## Triage and analysis\n\n### Investigating Russet Thimble Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Russet Thimble ransomware in campaign PTF-03893.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"7476386a280831b5f8349c346855890c4f5b9778101ade1f070827757599d20b\" or \"71f6a7db2e3bfa975f492f8f80ccf6ced124d4ad4978b6cc0c34d2c4250def9b\" or \"93a2045bb15b3fb0e70872dd69a1e6c5338d2d08c4661694ae20ac1e549e9d74\" or \"b042115490b2e57443550b1b3d9c290493284ea1ac58cf64a95430136b1c6695\" or \"37655c0314b7537bad6873cf598baa351dfdd2a41f7925b1e67c3e630e2fca52\" or \"86b93c6f8bcb3d40763636e47f71af4575fe436750302c904bf49cc26164c3b2\" or \"271a5722cb8372c41036f2809d25a323aa20dfd5c060a1aa2576d4e8b12ab38e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03893"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "2dec81e5-3245-52a1-973e-bf35331f551c",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Russet Thimble",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-03893",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "2dec81e5-3245-52a1-973e-bf35331f551c_1",
+    "type": "security-rule"
+}

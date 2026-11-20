@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Slate Easel botnet sample, as reported in campaign PTF-03909. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Slate Easel Botnet: Process started from known malicious binary (PTF-03909)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Easel Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Easel botnet in campaign PTF-03909.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"962567e2e13390e9f2e1482e96e41aa0fb50defbfde8949134c12304ae707b18\", \"18717501afb8747a697fd32f384fb6ae64aff3d422c01a01c0bf4ff210234e7b\", \"dd3dbec517b3768df27e1bab4dfaf646469e6757632089e819de8f8046dfdc0c\", \"3fa1d22e31257bc8e7b52d46932c5b7b39b01119c7d64a0486edaeada5dccfd8\", \"4aba742eb4d7ca3e080ae80bb72cb386a01edc1cbbd0ac3e402619cdc99a847b\", \"20bc13e382b8d778b1cb7118e00d3fd356723e6bb8e062e9199aaa192728af4d\", \"93956e93e9e968f71cc8517e2ea84eeafd5875f2a3c92831ca640dffec74a701\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03909"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f9006333-597d-5516-8137-a34b01a90fdb",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Slate Easel",
+            "Threat Type: Botnet",
+            "Campaign: PTF-03909",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "f9006333-597d-5516-8137-a34b01a90fdb_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Hazel Sextant cryptominer sample, as reported in campaign PTF-03769. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Hazel Sextant Cryptominer: Process started from known malicious binary (PTF-03769)",
+        "note": "## Triage and analysis\n\n### Investigating Hazel Sextant Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hazel Sextant cryptominer in campaign PTF-03769.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"e30c8300a4c8f5a5e46923da4ee078348faea4462fc68c475cdff90d3c0402e4\", \"f9f4e52dbe7b4cef43e3410844894165b1a44d2ce14fd8270338c9f22edb231a\", \"294be8cf8e4c38288b8656bb84e68fbf05a2391afe80f056deddc64cc44caad1\", \"67d4c908e40e9dc4878144a80cec24cf8e8b1f43f843143e726e62a369bb5281\", \"ed2bef14b85f644afac3df695a8989f50fc9450440a40e2b01b884092e325331\", \"e7e12532d3b3c091f25a380bd01c695a873773317ba5e24ec3e1246fea1a29b5\", \"35e10caf3b2cda82f5953c47d0ffd08c8dec5f4595addfb6c4f21c662be1f699\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03769"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "22fe777e-ea8b-53f9-8f27-01804fa71aa8",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Hazel Sextant",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03769",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "22fe777e-ea8b-53f9-8f27-01804fa71aa8_1",
+    "type": "security-rule"
+}

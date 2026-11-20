@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Frosted Funnel loader sample, as reported in campaign PTF-03858. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Frosted Funnel Loader: File with known malicious hash written (PTF-03858)",
+        "note": "## Triage and analysis\n\n### Investigating Frosted Funnel Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Frosted Funnel loader in campaign PTF-03858.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"f01ca1adeea7f35d9c4902fce8f740064f34e97fdc482f8eb27a380da26d6ee2\" or \"499cfa98fc9b2dd054b2e609700e577404e30d50d38d5799af793c3e883af917\" or \"db2867f35a0ba6957e1b0fb78f47fcad10e0a6250eab096c27e3b0d967082ffb\" or \"0a1a096a5930b620a6175700ca36b2019a4ca87bff9c78bfed3771a8ce2fdccb\" or \"95dd824eb1169a93da0923f17033bd500509fd0b26846d9a2f9ef2ebdfc823d0\" or \"a1e7854dd16fc8cdc834c75ccf8f3be6799060c700e259cdf3077b97160415e2\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03858"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f0306660-9754-5d0c-9a2d-c4960e978f7e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Frosted Funnel",
+            "Threat Type: Loader",
+            "Campaign: PTF-03858",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "f0306660-9754-5d0c-9a2d-c4960e978f7e_1",
+    "type": "security-rule"
+}

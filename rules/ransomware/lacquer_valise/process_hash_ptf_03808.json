@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Lacquer Valise ransomware sample, as reported in campaign PTF-03808. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Lacquer Valise Ransomware: Process started from known malicious binary (PTF-03808)",
+        "note": "## Triage and analysis\n\n### Investigating Lacquer Valise Ransomware: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Lacquer Valise ransomware in campaign PTF-03808.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"2598a1becf4779e058801b8c9a80345f54fd790486b54c36da5d3688bccac86d\", \"bf6c65a7de4a9e0771997c764664d707d9e99a1e285e8ea70d6b915751e5f34d\", \"3b673939df62fa90bd2c7f70d20ed391f9eb9af021931c392ee800c96f847498\", \"c77216677a41c5a48bfa3dc7c2e2046e70c0c652b6fc53f751c94c7e86e1addc\", \"51d1310a0ae389aac12f17a463063ea3427a87e591eea0aa743e48f6c651165a\", \"dd8cf92d86ec835fc2c94677c17cf817a69f2e44f0dbb47cd1055f77ab861d3f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03808"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 99,
+        "rule_id": "0dc7fcb4-361a-54cb-93ba-7a7fbbff0092",
+        "severity": "critical",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Lacquer Valise",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-03808",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "0dc7fcb4-361a-54cb-93ba-7a7fbbff0092_1",
+    "type": "security-rule"
+}

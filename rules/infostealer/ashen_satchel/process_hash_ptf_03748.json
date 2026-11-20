@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ashen Satchel infostealer sample, as reported in campaign PTF-03748. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ashen Satchel Infostealer: Process started from known malicious binary (PTF-03748)",
+        "note": "## Triage and analysis\n\n### Investigating Ashen Satchel Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ashen Satchel infostealer in campaign PTF-03748.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"8a8efe7e0ef7c9d75798afe47c1af8df6fdd633fdfb2ff4eeae47e7bacb8d322\", \"4d8994a22a0f666da085c55dffb6f86788d2aa0728677f5418583c635cdf7fd2\", \"694128ae9097141142c6bc5dab1acd1449db98587e6c23686e00316cb93b4b9e\", \"077a0468bd0fc0895ff599e144299ef68bbbaefd77789f429da4b356c8dd8bc3\", \"cd726d02c854613ad08469c665e386b7ad9a2489d0083f213256e60d00983898\", \"0e5342fd4817227e3157a0d47b5c1ad0e22b270159692eacbebf684185af9282\", \"01763d4fcc6460f5d7de1a55d32561157de7dc16d73678c47954b45531b6d086\", \"863a6efcb7b14c810cf44b9f1398cd35a6ff4629cbaf290520a09814f82675ab\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03748"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "bbd8204d-06ec-5364-8832-d1d07a9dc147",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ashen Satchel",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-03748",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "bbd8204d-06ec-5364-8832-d1d07a9dc147_1",
+    "type": "security-rule"
+}

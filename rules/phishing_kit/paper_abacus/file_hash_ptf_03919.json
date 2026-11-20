@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Paper Abacus phishing kit sample, as reported in campaign PTF-03919. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Paper Abacus Phishing Kit: File with known malicious hash written (PTF-03919)",
+        "note": "## Triage and analysis\n\n### Investigating Paper Abacus Phishing Kit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Paper Abacus phishing kit in campaign PTF-03919.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"ce7f1309ee3818aae74c433134e4871873072f389350ced8239016646a4b9a55\" or \"89dbd2a39fb1827335fb7518fa72494e78cbc1d3eff73f6c7605323226b007ed\" or \"abe66999c45f1c1e002e45c2cd919c90150dba8a0738cfaa81d20d5a94dca49f\" or \"16dd99215df8bb16bae8b0ae8da5e4906c7bdf34f60f646298633da5bfbf6377\" or \"6be0a5e3bdec944b036d2457979e6c0dc75a07b51dac1add0ee155d2d50a073a\" or \"86eeedd5353bd8b2a463de742702c5c1c8b715e6343b1bc7094af85bf390d472\" or \"5d18afc5f4030de2e368b8fe5b25c7122aaee3aba19594a24c5fc4be94f885fa\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03919"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "6fddaee6-18df-56c2-9ca2-c2b0ea09cfa1",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Paper Abacus",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-03919",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "6fddaee6-18df-56c2-9ca2-c2b0ea09cfa1_1",
+    "type": "security-rule"
+}

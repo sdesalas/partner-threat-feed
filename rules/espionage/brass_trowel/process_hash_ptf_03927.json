@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Brass Trowel espionage toolkit sample, as reported in campaign PTF-03927. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Brass Trowel Espionage Toolkit: Process started from known malicious binary (PTF-03927)",
+        "note": "## Triage and analysis\n\n### Investigating Brass Trowel Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Brass Trowel espionage toolkit in campaign PTF-03927.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"7208da5417bd3d4ad6291c502389ae7a6863f37942676240e552ad16225983c0\", \"fa1bf7f6af2a773525d082c4f8eaac09d626659bf7b57200b0ef80537b66b6b7\", \"2b5a03c3b308a34004e47e3c1ab17e23664d81520850705dac9a6d76d5aeb79f\", \"09fea87c135c2d9ad4a5bde5fe643934b4709d3c33388ae5070444684a699ce4\", \"6f7e615d8bb3f88cdcffb8cf92882f2fe1fe31eb04bb7893bdba7fbceab2b974\", \"e8470f87d0d3587f15643e1c3a23b330a0d7b338e12036290f3bdd38eb7f8275\", \"0414afde96c55f5face112c41c38902526760ad10575ce3ec3e411453e27e025\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03927"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "8298dfd3-40d0-52d6-b548-10ffa99ad23c",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Brass Trowel",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-03927",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "8298dfd3-40d0-52d6-b548-10ffa99ad23c_1",
+    "type": "security-rule"
+}

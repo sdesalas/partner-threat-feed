@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies email messages from sender addresses used to deliver the Clay Bobbin loader, as reported in campaign PTF-03821. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-email-*",
+            "filebeat-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Clay Bobbin Loader: Email from known phishing sender (PTF-03821)",
+        "note": "## Triage and analysis\n\n### Investigating Clay Bobbin Loader: Email from known phishing sender\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Clay Bobbin loader in campaign PTF-03821.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "email.from.address:(\"billing@files-connect86.invalid\" or \"billing@secure-auth47.example\" or \"hr@relay-update32.example\" or \"noreply@files-sync47.example\" or \"noreply@secure-node40.test\" or \"shipping@static-portal48.invalid\" or \"shipping@static-relay83.example\" or \"support@node-update99.example\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03821"
+        ],
+        "related_integrations": [],
+        "risk_score": 47,
+        "rule_id": "2a2fb3d1-7225-545b-b8d5-006779035c5d",
+        "severity": "medium",
+        "tags": [
+            "Domain: Email",
+            "Use Case: Threat Detection",
+            "Tactic: Initial Access",
+            "Threat: Clay Bobbin",
+            "Threat Type: Loader",
+            "Campaign: PTF-03821",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0001",
+                    "name": "Initial Access",
+                    "reference": "https://attack.mitre.org/tactics/TA0001/"
+                },
+                "technique": [
+                    {
+                        "id": "T1566",
+                        "name": "Phishing",
+                        "reference": "https://attack.mitre.org/techniques/T1566/",
+                        "subtechnique": [
+                            {
+                                "id": "T1566.001",
+                                "name": "Spearphishing Attachment",
+                                "reference": "https://attack.mitre.org/techniques/T1566/001/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "2a2fb3d1-7225-545b-b8d5-006779035c5d_1",
+    "type": "security-rule"
+}

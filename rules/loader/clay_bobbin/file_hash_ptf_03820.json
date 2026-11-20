@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Clay Bobbin loader sample, as reported in campaign PTF-03820. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Clay Bobbin Loader: File with known malicious hash written (PTF-03820)",
+        "note": "## Triage and analysis\n\n### Investigating Clay Bobbin Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Clay Bobbin loader in campaign PTF-03820.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"1155277e2f6ddb925fcb2d5e45ee42daa6626afba0eb314c1e02d0eb847343f8\" or \"42229b4fb188cf001e9da0a7e6fb938a1419f6fb42de684eee84f775829dbfd8\" or \"d24fda1b097eba94dc34bd9c851789426172d200971c59cae2c9fa934f90bc5b\" or \"780aba258b43f1fc984d8a47aad6c5e63d24649d29d758ee4cbb5d681dffdd8c\" or \"8626b0484f6ac37ab529d58bebee393ed5c080e641ac7ad88edc26047dd5cd4f\" or \"9b8c16ee6fe6db49c3e778a97cb004b52f2187bb029a2b85db2db9af4b4fb46f\" or \"a8e782a34f079f0bfc2a2dec7422642d47921d0464d57f63dfea46cc24ada818\" or \"74bc178a68791bdec29b5e4d1af3a0a1247f8720c5e222048aa1a9f4aa5ace87\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03820"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e9f50da0-9492-568e-84e7-b6190f3d5b3e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Clay Bobbin",
+            "Threat Type: Loader",
+            "Campaign: PTF-03820",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "e9f50da0-9492-568e-84e7-b6190f3d5b3e_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Chalk Sextant loader sample, as reported in campaign PTF-03758. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Chalk Sextant Loader: File with known malicious hash written (PTF-03758)",
+        "note": "## Triage and analysis\n\n### Investigating Chalk Sextant Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Chalk Sextant loader in campaign PTF-03758.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"28cbd62581d4f84488cf0ad83492323138bd98a618d80a1e1030e6e0775a882f\" or \"517425119bbc2811a0cf6fd19dd84c9c9c7cc749f3d5f36d1443c0d4dbf8d237\" or \"86ff1616397d5c2309cdcfbe3014e6d65b6cae6115b3412abd63378c3bde3eda\" or \"a8759db345c215fb49a264f4745da0e6240c1792fdaec12bbd071c8fcd8ee87a\" or \"249693e849d0f256542a4468e8cd087d6691bde979295e035545a90e8b849215\" or \"05b747268fc3a26961325713821527562478d8aa9d1aa2c4133a109d703c9ea0\" or \"e4aca1438d93a56975102954a22f7ac8f1381a076019285bf9a1d7f5787f4180\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03758"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "45f8cb39-86e2-5f65-af81-eae6f46926cf",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Chalk Sextant",
+            "Threat Type: Loader",
+            "Campaign: PTF-03758",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "45f8cb39-86e2-5f65-af81-eae6f46926cf_1",
+    "type": "security-rule"
+}

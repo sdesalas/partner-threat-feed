@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ashen Satchel infostealer sample, as reported in campaign PTF-03747. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ashen Satchel Infostealer: File with known malicious hash written (PTF-03747)",
+        "note": "## Triage and analysis\n\n### Investigating Ashen Satchel Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ashen Satchel infostealer in campaign PTF-03747.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"31785b69ceec8cbf90d83cf02d9e65c54ca79745249b0db3cd0f0698fc2e2e3c\" or \"e4d93b62f94bcaeffcf13dbe4281ce93355a3a3e0ccb98cb999373a92f86992e\" or \"a185ae337f6b56c3abb07f5277ab9f38083ae2178d9c6efdeed5aa0481c8cb72\" or \"3695230b1a30a3bdb2c8291f00406c11b3ca6c2b58e2c7e678bdc9a19476c007\" or \"dd74a3a66be973b163821dc66d8bcc06b2b888866bd0d9c6bd9ae90ea5938652\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03747"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "3b7fa8b3-0a75-50e7-a723-6efb2990a1f9",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ashen Satchel",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-03747",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "3b7fa8b3-0a75-50e7-a723-6efb2990a1f9_1",
+    "type": "security-rule"
+}
