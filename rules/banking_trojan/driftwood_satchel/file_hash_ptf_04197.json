@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Driftwood Satchel banking trojan sample, as reported in campaign PTF-04197. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Driftwood Satchel Banking Trojan: File with known malicious hash written (PTF-04197)",
+        "note": "## Triage and analysis\n\n### Investigating Driftwood Satchel Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Driftwood Satchel banking trojan in campaign PTF-04197.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"5453de65291772da57fd1cac1d48d183460e2615b39a1906b9277280eb96426c\" or \"a73ed7a746a814ce79d8b71b7375d393d4b2e9cad92233d6967b3bcc6708cbe1\" or \"a599cdd1362b15e6137cdb3573bbff885356996a7afbb05e4ed3cc2f9bfb72fc\" or \"8b04863feb045bd695ede450264292aae3e955eee5d97a9e362286418452d88c\" or \"c5c402de0505380d2f9295e525058a16275635b099e185afe6dc4ffff7f62133\" or \"08685dee671cb8caf2abe2b5082f89e3be7086c5bd877a62d3f87c3b5093986c\" or \"743a46a106559c1ee1ebb9750858a611f2006e5ec40102c5f3acca7362955684\" or \"ee8407915ee3e8a1aca8f916fa567e2943dec9fff00658b07341621602da4830\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04197"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "714ba0d0-d729-5bcd-9d6f-ac2fcc658d5a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Driftwood Satchel",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-04197",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "714ba0d0-d729-5bcd-9d6f-ac2fcc658d5a_1",
+    "type": "security-rule"
+}

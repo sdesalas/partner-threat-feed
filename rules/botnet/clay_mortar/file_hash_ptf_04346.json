@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Clay Mortar botnet sample, as reported in campaign PTF-04346. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Clay Mortar Botnet: File with known malicious hash written (PTF-04346)",
+        "note": "## Triage and analysis\n\n### Investigating Clay Mortar Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Clay Mortar botnet in campaign PTF-04346.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"ad50605247beccc57278b6f04672c77bc800ad71750f2740e134f9375fd9ad10\" or \"c7bf83df2ddf6409964ad1ecfd99754ce32a3d04ff134cd010cb0f9fafe0af9e\" or \"4f59db49a9ffd2f007aab807c0623e1e97054089d88ff7062dd75339f16f3032\" or \"9af10f8aec6f5563355149002a2b6d5b4ddafd81b9f62b90c1ff50b4f3d587cc\" or \"577e2e95007e050ebcaf17867832c0c556cc839c8e752c8fabe19de3113511f8\" or \"e7e07dded04874715604c68b2b0477f3b3c0aee4fa3022a8cd88e94bbcf7a64c\" or \"80ddb1ec9cd231ed3a1aacc34dc39ec5247639f2fc0adef2584ce50c14b4fae9\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04346"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f65bb7d6-8ee0-5b15-bac2-25f67f39a4d4",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Clay Mortar",
+            "Threat Type: Botnet",
+            "Campaign: PTF-04346",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "f65bb7d6-8ee0-5b15-bac2-25f67f39a4d4_1",
+    "type": "security-rule"
+}

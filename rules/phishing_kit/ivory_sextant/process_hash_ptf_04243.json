@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ivory Sextant phishing kit sample, as reported in campaign PTF-04243. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ivory Sextant Phishing Kit: Process started from known malicious binary (PTF-04243)",
+        "note": "## Triage and analysis\n\n### Investigating Ivory Sextant Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ivory Sextant phishing kit in campaign PTF-04243.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"0010296b45c1d8f8f554f6fcd1ab305119b66e9909f53b10be84e7f0c90a376a\", \"bfbb03283577d77cf8ddf65d642792e7214f71a68042615c93bd4337eed7d9c5\", \"7da501caa7951c0fc3afadd8338937c4d6bdaea6d4d8d16f8a53ae948025c9df\", \"95d4fdaad7d9c97c27f9cf824e8405eb25ab85f0cf9d0468b6e07daf4f9c3b87\", \"1a0528b8cc0fcedfa5115e911ba20ae33df7221f0e09053851e821d659b52ae5\", \"43714dbce419ae354c7f3fabb5387e490d3a18bc3edc62780091ee042910fd8c\", \"d8d089b78dfd5f57cdd8b0abf34ec351076d5437dae28623dc79f4debc71ff6f\", \"d46de17135fbfdc9cbf48e203a43be64836b054a19296b40c87b09e7b9723bda\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04243"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "38fad3d1-c68d-5a1d-8cbf-d30332734052",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ivory Sextant",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-04243",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "38fad3d1-c68d-5a1d-8cbf-d30332734052_1",
+    "type": "security-rule"
+}

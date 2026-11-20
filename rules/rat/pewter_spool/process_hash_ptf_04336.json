@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Pewter Spool remote access trojan sample, as reported in campaign PTF-04336. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Pewter Spool Remote Access Trojan: Process started from known malicious binary (PTF-04336)",
+        "note": "## Triage and analysis\n\n### Investigating Pewter Spool Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Pewter Spool remote access trojan in campaign PTF-04336.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"32b669dfb04cd02a954703413bbf3780ac55906f0b94d629ba8786689b55a92b\", \"d77c60cb159365356844651af769ee78563cf77eff9dbf5ee739c2f9e0284a5d\", \"a108ff505288d2258e5a33e4ba3c13b1367c9cac19f1c3fb8a2165440b061b46\", \"9c47a1a670a7fb0030f7d33b95145682479440353a6f50b54ea0164580fad328\", \"92de8ed08aece52ecb592f67f40fe1f9d25ba092a2c94814253a69ef857a3113\", \"cf63618eac0cce412ac4a954b336574c748e01cfc9fb4ba3c5bfb5f515c694b1\", \"e6fa28c9c33577f5004bbe2158d4499f7278d7f7670c1368c024ef2f4c7a8190\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04336"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "9004f29c-ef8b-539c-aed7-c004ae67c5cb",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Pewter Spool",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-04336",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "9004f29c-ef8b-539c-aed7-c004ae67c5cb_1",
+    "type": "security-rule"
+}

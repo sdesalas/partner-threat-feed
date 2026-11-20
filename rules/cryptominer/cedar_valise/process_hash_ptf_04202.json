@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Cedar Valise cryptominer sample, as reported in campaign PTF-04202. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Cedar Valise Cryptominer: Process started from known malicious binary (PTF-04202)",
+        "note": "## Triage and analysis\n\n### Investigating Cedar Valise Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Cedar Valise cryptominer in campaign PTF-04202.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"5adf2b362015e9c3d3d7c16aa6fa06dd782d697198261e4fab23e0685987ec4f\", \"f46a7f4ac14e1191f00e5a6b06266c044d64afec8d440841291f7f6b02090304\", \"af02fa78c70ef6889fc771c96276fe5fff92af78807b9c74a42389bbf640af44\", \"3349f87c61564d1117b7f8aa8cc99bd5045781b5df1f689f1f15bb8c31286353\", \"09d1914bd242d5ec345e962b2f8995e4fa96c7e2056709830cef6b3cdaf47a32\", \"65dd09d33ac130043e3320f01c8c8ccd2489c0806138cc33a0ef7464f641e377\", \"32eadfd8cadc260c2a526d7d4cbff556249b0be05422a554079e078784ec452c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04202"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "59768d6c-32aa-5381-ad1c-a3bafdced08a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Cedar Valise",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-04202",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "59768d6c-32aa-5381-ad1c-a3bafdced08a_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Birch Trowel banking trojan sample, as reported in campaign PTF-04355. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Birch Trowel Banking Trojan: Process started from known malicious binary (PTF-04355)",
+        "note": "## Triage and analysis\n\n### Investigating Birch Trowel Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Birch Trowel banking trojan in campaign PTF-04355.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"524e81ee099904a2d1c1282a387ab55e96f1b96b59b617b2fa5a727fbff317b0\", \"50b318c5529339bbe474b9f581bb06af7e20e79f204b52f7887b16cc6746c41a\", \"cd841f0715df59bdf3e20f9816bdc32c66b2cb143f15aa71a746395fbb29bdda\", \"2544e08ca5acdf9e37b7bdbf9fa2d11e540a9eda0859463304a010e683ed278e\", \"19d990c1d78b7f4d579d0355a101a7ef662d44327d2c2f9d734fd404fb74b0cb\", \"b42cd57a3e4f391a732a52c16b4650aa86d936ef55fa1b76c26abf006af1dc57\", \"76726f046683aee4fad68ea07b45ccf127f9bb808224254c1b9085a8b28103d6\", \"40eb090e3109e7b12555911e9f3d8d63e2de768760ff596929061a4dca9c04d2\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04355"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "29927df9-8c1b-5533-8e27-4a2dd42cd066",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Birch Trowel",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-04355",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "29927df9-8c1b-5533-8e27-4a2dd42cd066_1",
+    "type": "security-rule"
+}

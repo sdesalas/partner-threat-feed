@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ivory Sextant phishing kit sample, as reported in campaign PTF-04240. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ivory Sextant Phishing Kit: Process started from known malicious binary (PTF-04240)",
+        "note": "## Triage and analysis\n\n### Investigating Ivory Sextant Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ivory Sextant phishing kit in campaign PTF-04240.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"0db4f9d8a4656e32cf8ba1addbaab5979fc1728397dbdcfe6e63e7f874d18a5f\", \"b78f402e98c56b1ae9ca94b157f064e05fc49b829c6f93cd146c3d85e7e95ef2\", \"67c2e8608f07b498fe0fcc1858e4cbb001b86b85b08691cec3fbd668bb83014a\", \"a3dd7784b6c77fc5c14f292a4774c9a631a1aa906003f2776d80c18ba7bfb87c\", \"d34426a72df504b8004ddfd1989fa1d26534f0b837323e9f64e4f3bc2b583637\", \"3a0c89219b7df349a49bc0a5877ee1ceaa1d7a545d106db8eca10a49e3c569b0\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04240"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "84952d38-ad7c-50f2-abc3-be1cf2aea04d",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ivory Sextant",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-04240",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "84952d38-ad7c-50f2-abc3-be1cf2aea04d_1",
+    "type": "security-rule"
+}

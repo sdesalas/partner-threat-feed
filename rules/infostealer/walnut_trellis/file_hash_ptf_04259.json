@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Walnut Trellis infostealer sample, as reported in campaign PTF-04259. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Walnut Trellis Infostealer: File with known malicious hash written (PTF-04259)",
+        "note": "## Triage and analysis\n\n### Investigating Walnut Trellis Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Walnut Trellis infostealer in campaign PTF-04259.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"0b59650854703e44897883e97fab7bfff64d264c8a7767491489964605decf87\" or \"889907cdc6c3b857176e86ae091f54623593fbc0a710d3f154f1d64d94d8f3c8\" or \"2b83f85e8ef8910133f345dd6673481e5a15a81bfa75d673c92ebe5ac5487ce2\" or \"74d14ee9be0ee46a4873d64260f6b82fb31c0249a753302dcd457dc893a22114\" or \"0382cfbef555e4528349fd3cd751758b436be321c5ebcfed8d1dd5c059f17a77\" or \"aa1b89f1db16ae5a503a5226d29c59c44fbd1001310fe811a8672282278f4b35\" or \"62d55ac177ddaba17e578fdda1b3b5089bdc17a2d0584698b358edf419e937da\" or \"eefb8531e2a7050df54f02bb88a63ef25cceb05599a82ffafa01049bef941906\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04259"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "c24aa3a3-8ea1-5229-8fd5-08a0737d1d4d",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Walnut Trellis",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-04259",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "c24aa3a3-8ea1-5229-8fd5-08a0737d1d4d_1",
+    "type": "security-rule"
+}

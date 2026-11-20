@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Dusky Sextant infostealer sample, as reported in campaign PTF-04218. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Dusky Sextant Infostealer: File with known malicious hash written (PTF-04218)",
+        "note": "## Triage and analysis\n\n### Investigating Dusky Sextant Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Dusky Sextant infostealer in campaign PTF-04218.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"b33ed4f0cef44028dd72daa6440e260b1080b120d02fd79798c1fe206188586d\" or \"91c2f3b0afd6299097732da686c9350cff7157e7dcc19425bfde91564b54ec54\" or \"53384f8d1a9563c64136d5a05afa8e7c8d59b460ad52b556c18949b4ec9926d3\" or \"f1da4ff881bef77f5c9f3062da2a77ca78487c50d4ce997e5175f3bedc8a4c94\" or \"bf5c98c189691e78654b9c791b9dfc9be6324a680c8d40f5c2cadc8df514fa53\" or \"a298969455e37399dcd6e132dd89d302e1fb64dfb2c5125913d1c1c5461ed9e7\" or \"f27295e5e5114745a2aaa6976dcf1694958d2f375b39bd2160594ac639a474e4\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04218"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "666ee430-f048-524b-a7cf-f249a25e5aa1",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Dusky Sextant",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-04218",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "666ee430-f048-524b-a7cf-f249a25e5aa1_1",
+    "type": "security-rule"
+}

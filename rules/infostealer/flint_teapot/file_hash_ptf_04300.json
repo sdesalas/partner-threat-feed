@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Flint Teapot infostealer sample, as reported in campaign PTF-04300. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Flint Teapot Infostealer: File with known malicious hash written (PTF-04300)",
+        "note": "## Triage and analysis\n\n### Investigating Flint Teapot Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Flint Teapot infostealer in campaign PTF-04300.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"6714f887822d23233ad669cc79dbc0e4c24e3b37b8a8e64f869b8db23f42c60f\" or \"25d2bf44ed26d56f72fbac49f08a6bf86e9749781d0cb9810fdc0f4f5b45a87b\" or \"f33f87fe90d59319a3443ad80ec6afcf5055c414e13aa33c7dc969bb0656f499\" or \"a1ab1953b7de016739da4d0867ed4ff3786c8d0ced01e17d732435a72e05f9d2\" or \"5c6393874930cb1011970b784f57862dd14e7b159af78345fa1ee4e64045affc\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04300"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "56b497e9-2ed7-562d-8e36-217ec987b550",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Flint Teapot",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-04300",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "56b497e9-2ed7-562d-8e36-217ec987b550_1",
+    "type": "security-rule"
+}

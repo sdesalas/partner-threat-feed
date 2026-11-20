@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies email messages from sender addresses used to deliver the Tawny Ratchet ransomware, as reported in campaign PTF-04213. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-email-*",
+            "filebeat-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Tawny Ratchet Ransomware: Email from known phishing sender (PTF-04213)",
+        "note": "## Triage and analysis\n\n### Investigating Tawny Ratchet Ransomware: Email from known phishing sender\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tawny Ratchet ransomware in campaign PTF-04213.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "email.from.address:(\"accounts@api-files86.test\" or \"hr@track-portal81.example\" or \"noreply@node-mail53.invalid\" or \"noreply@relay-relay89.invalid\" or \"noreply@sync-api67.invalid\" or \"shipping@cdn-track16.test\" or \"support@data-files72.invalid\" or \"support@files-update36.invalid\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04213"
+        ],
+        "related_integrations": [],
+        "risk_score": 47,
+        "rule_id": "5100b111-a37f-5819-9d4c-45d786f443cd",
+        "severity": "medium",
+        "tags": [
+            "Domain: Email",
+            "Use Case: Threat Detection",
+            "Tactic: Initial Access",
+            "Threat: Tawny Ratchet",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-04213",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0001",
+                    "name": "Initial Access",
+                    "reference": "https://attack.mitre.org/tactics/TA0001/"
+                },
+                "technique": [
+                    {
+                        "id": "T1566",
+                        "name": "Phishing",
+                        "reference": "https://attack.mitre.org/techniques/T1566/",
+                        "subtechnique": [
+                            {
+                                "id": "T1566.001",
+                                "name": "Spearphishing Attachment",
+                                "reference": "https://attack.mitre.org/techniques/T1566/001/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "5100b111-a37f-5819-9d4c-45d786f443cd_1",
+    "type": "security-rule"
+}

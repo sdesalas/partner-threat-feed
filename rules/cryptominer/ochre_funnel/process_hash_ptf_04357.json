@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ochre Funnel cryptominer sample, as reported in campaign PTF-04357. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ochre Funnel Cryptominer: Process started from known malicious binary (PTF-04357)",
+        "note": "## Triage and analysis\n\n### Investigating Ochre Funnel Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ochre Funnel cryptominer in campaign PTF-04357.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"b33c39bb7c4f09b05da8a30bf5baa9a1a5d62eab9698f040bb7e717e33cfdd6d\", \"9b3b1074796821da6acc59508a70f0270a3dedb70b42b24cc0350b01021753f0\", \"14b1cc5b6d296a6d8335286b4826c0fbb6e7ba57384d765d68f08c08708b093c\", \"0e6ba7c3de9a7a24dd29e5ed1ccc23936c08b783333a33a208ef12d37ba0617f\", \"d7deb3a51417f510587c183a035b20b50af624bb504bb0edb8f1d44d19c2a66f\", \"1dde60bbdb9bdb19189b48a0a001ae22891c9c33a09d96090a8d90a77e2263e1\", \"234bcad6927589d0e3ab695832a39e9e132b02caac461d3955d70ffaea269870\", \"dd7bc45516a79b9c1ca39dcd3bfe9806aa9e524c4df67d382df188c327de319f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04357"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b817e350-5ec5-55f6-a37c-3800327f864a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ochre Funnel",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-04357",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "b817e350-5ec5-55f6-a37c-3800327f864a_1",
+    "type": "security-rule"
+}

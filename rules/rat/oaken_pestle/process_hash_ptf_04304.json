@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Oaken Pestle remote access trojan sample, as reported in campaign PTF-04304. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Oaken Pestle Remote Access Trojan: Process started from known malicious binary (PTF-04304)",
+        "note": "## Triage and analysis\n\n### Investigating Oaken Pestle Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Oaken Pestle remote access trojan in campaign PTF-04304.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"ffb6a51caaf6b7afd193fc9e477fd31d6b6ef33079c3d316d33a84a6984deb91\", \"ac03a546ee6ecbbec57e40d872c0de9c6558e0936c9c00f6e4020a5f4052bb75\", \"481479ccca07af712b725be4b099667ec9c290b1cfa8b84ae43b566cb4098967\", \"a5690270c3309c47ea7d43864b4ffb076a27c2474d31825f371340daab39187b\", \"fbff012f6460515afd8e2b2cfac5bd1b373675e52473a34ef563267a001a6827\", \"30355f4fee5d73fa48cc792718b60150ad257c3e4bcdcea833328afff281ce0d\", \"fc544091cb91afab8e08df2570f7b806fdc7a555dfcd2db136cb90d7b53c5f2e\", \"d9a744f4257bd0a2fb30d1f9e602c324902f62ed3ca92c12b8e5008851b25221\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04304"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "3fc83160-7294-54d6-bbd8-03f7fdfe9724",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Oaken Pestle",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-04304",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "3fc83160-7294-54d6-bbd8-03f7fdfe9724_1",
+    "type": "security-rule"
+}

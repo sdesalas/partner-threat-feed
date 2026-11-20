@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Ivory Sextant phishing kit payloads, as reported in campaign PTF-04241. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ivory Sextant Phishing Kit: Request to known payload URL (PTF-04241)",
+        "note": "## Triage and analysis\n\n### Investigating Ivory Sextant Phishing Kit: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ivory Sextant phishing kit in campaign PTF-04241.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://api-relay12.example/gate/2852.msi\" or \"https://auth-track12.invalid/gate/1112.zip\" or \"https://data-update31.test/payload/3586.zip\" or \"https://edge-sync62.invalid/update/4460.zip\" or \"https://mail-connect71.invalid/doc/9298.msi\" or \"https://mail-login6.invalid/update/6458.bin\" or \"https://node-relay52.invalid/install/3980.msi\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04241"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "b849c9bd-0dec-5537-89b7-d1520fd7fd65",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ivory Sextant",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-04241",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "b849c9bd-0dec-5537-89b7-d1520fd7fd65_1",
+    "type": "security-rule"
+}

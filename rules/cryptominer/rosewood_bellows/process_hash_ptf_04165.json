@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Rosewood Bellows cryptominer sample, as reported in campaign PTF-04165. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Rosewood Bellows Cryptominer: Process started from known malicious binary (PTF-04165)",
+        "note": "## Triage and analysis\n\n### Investigating Rosewood Bellows Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Rosewood Bellows cryptominer in campaign PTF-04165.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"57daaadc6d2d6efbe2d1d433c3a44bbae49c8d86b91423d151fb983bd7004727\", \"750f63631065881040081320a1c6085b81fc5856abd3ce71d2918d5381e946b5\", \"defcfc409c88ab0662d7cb5eea689195cf15eb41ca52d5ed5db66a2fdf306171\", \"2bbb64db89ce5eae347f73b5dde24e18cb52c7eb3048991bdc958b77bd17a1ab\", \"c75123452cd9650c1a6f48dba4feecd1bcc5768e86159d09f061424fc4fd0939\", \"1c82d9a41a60eb96dab2b4bc3aa35f4cc0bc3e10219aeaeca623e30920467c7e\", \"16f84fdb82ba558ea2b2f559385cbe46af77d687a2bed9f04578136a8d2da387\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04165"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "6575aee6-262d-5c39-9a55-0048a9929e0b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Rosewood Bellows",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-04165",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "6575aee6-262d-5c39-9a55-0048a9929e0b_1",
+    "type": "security-rule"
+}

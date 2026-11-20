@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Pewter Spool remote access trojan sample, as reported in campaign PTF-04338. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Pewter Spool Remote Access Trojan: Process started from known malicious binary (PTF-04338)",
+        "note": "## Triage and analysis\n\n### Investigating Pewter Spool Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Pewter Spool remote access trojan in campaign PTF-04338.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"4ce2691cd7db70701bb7d4212298f605607fde02b763f1f407320e300fb3c095\", \"38a48412a06460e294973199bfb1e43ed1d3613d2886d6745ee495efa9a62f7f\", \"4f6480cf8f0fd959d2613cb1f2879e953a2f9414b9fcb2f2555512a475292716\", \"c78e2fc5cf6f36bca15a726f81f7e47cf44e8b271b52b08aba5a63c8a1b847da\", \"22b7c31e8b9c2bb068e8ea335c813c65c5348cc6559c9d6df78b09ed7a9fa574\", \"8e75e9be09daed86e314f0e437bac1ed5480993ac9ce8997a9d061dc62a7339a\", \"45974afded4fe03ff601c1884596de54ee5097977e897ba42901597bc195b33e\", \"e9eabd6f5c1ce1a8c6a53300360da603c058e60f77ccd65113b080a35cb59ef1\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04338"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "07e7bb6e-1b9d-50a4-bf7e-4f060fc262e0",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Pewter Spool",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-04338",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "07e7bb6e-1b9d-50a4-bf7e-4f060fc262e0_1",
+    "type": "security-rule"
+}

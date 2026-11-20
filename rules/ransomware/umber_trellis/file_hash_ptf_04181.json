@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Umber Trellis ransomware sample, as reported in campaign PTF-04181. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Umber Trellis Ransomware: File with known malicious hash written (PTF-04181)",
+        "note": "## Triage and analysis\n\n### Investigating Umber Trellis Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Umber Trellis ransomware in campaign PTF-04181.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"9470d1caa7bf37aed3994611ce246d03216905923df2e6727a5ab3ad8e0a81aa\" or \"6e7febb0ba4ff3c41a01b0b01ea1baab2061d16785994e17876ac288416c7365\" or \"5cff70a211b1534cc03e2c8d9ba53c593702a3307bd13879827ad0aa04450d6f\" or \"41f25a09b2e8cab2e88884c9f3e0acff20a868868d411e79f0b00e50469d97c5\" or \"f079f4ecd66257b3bbf6b307ca49d5f64da0f4ef3660418aa8ad55ff3c749805\" or \"72e87384db66281ffb31bfd55ff90f224d89c2eefabc1b215b53fd9a6110fe20\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04181"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "4c30803d-5693-5570-9d57-bac8b6f9e74f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Umber Trellis",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-04181",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "4c30803d-5693-5570-9d57-bac8b6f9e74f_1",
+    "type": "security-rule"
+}

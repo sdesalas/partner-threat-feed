@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Rosewood Bellows cryptominer sample, as reported in campaign PTF-04165. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Rosewood Bellows Cryptominer: File with known malicious hash written (PTF-04165)",
+        "note": "## Triage and analysis\n\n### Investigating Rosewood Bellows Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Rosewood Bellows cryptominer in campaign PTF-04165.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"d8a8f98a886a0c6901b678e2f89240b743638d335b37b91a861ece62b1001dd5\" or \"7f5250cde9c434acd788a8aeef9d8bd4cf49bf8919890c2140b331ba2cc75add\" or \"e7587cbaa1858bad31e38993034e5e5eb9f22e5adca7359f90f9431d76b54265\" or \"a316d5eebf42adc211857fd4d089741e5422aa04f623362c5ce81469d30354b8\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04165"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d4db0f56-179b-55e3-930a-3536c46afd2e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Rosewood Bellows",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-04165",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "d4db0f56-179b-55e3-930a-3536c46afd2e_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Clay Pestle espionage toolkit sample, as reported in campaign PTF-04327. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Clay Pestle Espionage Toolkit: Process started from known malicious binary (PTF-04327)",
+        "note": "## Triage and analysis\n\n### Investigating Clay Pestle Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Clay Pestle espionage toolkit in campaign PTF-04327.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"b7b36794dc1a05ea06ba1f64e7388891c3b96574f0069c2bec60b141c6a15399\", \"a2bd2bcbe8ed731f16d061f58a1ce3e2283ac1df6fa300e33faf036eb7aef82e\", \"2a23a949b992f6e6c27895c71946ccf9cbc2d35d026cfba3252108c744974e2b\", \"9374fe61198e0cd31da37bcdd2c835f75c1c6a668fdc5821ddd5f23bee2d2d78\", \"a026e6c1568f321e32cc301c20d4dfa1434b3dcd4a601a8e538cb1ae7421d24a\", \"04500be4ee4ada9188e8bf4f71c4d8761bac596db71e81235dc98a2fc16041b9\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04327"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "4fd3a5f2-3e45-5f31-8db5-a41e6236e7cd",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Clay Pestle",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-04327",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "4fd3a5f2-3e45-5f31-8db5-a41e6236e7cd_1",
+    "type": "security-rule"
+}

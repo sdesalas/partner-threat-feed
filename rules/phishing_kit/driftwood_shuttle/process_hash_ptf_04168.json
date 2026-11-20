@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Driftwood Shuttle phishing kit sample, as reported in campaign PTF-04168. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Driftwood Shuttle Phishing Kit: Process started from known malicious binary (PTF-04168)",
+        "note": "## Triage and analysis\n\n### Investigating Driftwood Shuttle Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Driftwood Shuttle phishing kit in campaign PTF-04168.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"e4fb4943a52fd6f1b5d659b495982f94a58f2d5fb38968593352caa2c56101a2\", \"6e807d53973ea369a9d6db3469ae0a0d4da6a60654a2b234d2ceb527717b7a58\", \"d355dda6feaa73615c4b832a5dd8c4f5a2dfb6f7feb2051c5336c0acb1fb517a\", \"1971160ae58be6247c07e357b281e130f5a0692af7f8423f5cba5b3cac0457ea\", \"3f1616d4ac1b18679dc43c6cb9e967566332979feff53872c8b477b4c91602c7\", \"774fabcd9a410a1f4a0e6224be58390154c7fe7f34d7ce1fc2b4148d1bc6c301\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04168"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "66c217e4-c73b-5b59-a9b1-69203890bdc6",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Driftwood Shuttle",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-04168",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "66c217e4-c73b-5b59-a9b1-69203890bdc6_1",
+    "type": "security-rule"
+}

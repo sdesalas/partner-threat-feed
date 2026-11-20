@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Dusky Sextant infostealer sample, as reported in campaign PTF-04216. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Dusky Sextant Infostealer: Process started from known malicious binary (PTF-04216)",
+        "note": "## Triage and analysis\n\n### Investigating Dusky Sextant Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Dusky Sextant infostealer in campaign PTF-04216.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"4091dfd18461bbc8f33a8e3160ef0b978d5cd3c64bb84006af97b67bd9cd1ba1\", \"95a1d390640be4b7786d8829bf8a435a2fe0101089338fd07213d0032b1b5623\", \"b7dd05d9df66a27e944c3efa30358299b0315cc8fcc8fb56c7a62897453115b5\", \"3c98789b05f737361a60ae163cb8a6fb8388e9827560d3e2f2f458025162ec64\", \"94a0d3e34774ef2e8d862edfe9ebc120af185fa1887828c8c5cc97fa234f2079\", \"181c6ddb9a54fcc6cd599a9f3b45d5394955850f776469e58c815c946096efef\", \"b21e80dab7014724f9a4d5225705bb0997ee081e950cfb179740f6d0685ada0f\", \"c0a794e6ed15992fe8c57fa7418e66368bc1f3a9875f954349e66459aa325adb\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04216"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d81dcc80-45db-5194-ac59-a753f04d6748",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Dusky Sextant",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-04216",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "d81dcc80-45db-5194-ac59-a753f04d6748_1",
+    "type": "security-rule"
+}

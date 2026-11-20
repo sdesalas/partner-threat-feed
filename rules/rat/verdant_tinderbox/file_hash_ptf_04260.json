@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Verdant Tinderbox remote access trojan sample, as reported in campaign PTF-04260. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Verdant Tinderbox Remote Access Trojan: File with known malicious hash written (PTF-04260)",
+        "note": "## Triage and analysis\n\n### Investigating Verdant Tinderbox Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Verdant Tinderbox remote access trojan in campaign PTF-04260.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"c137b1def84e3287f100c0491e05c97d8375a9fae11256393976f81eb4f714be\" or \"076b3ae233dfb01f576276e281474f08ea43459f5879fba0504e518f5a95de54\" or \"0c0716f6f9810c88b638974c43c092390dc22269c49a5c175fdb0738d867e736\" or \"d71dd04313273c02fdcef2f203f351c0e9f4c8cbf55e26bd7de3f8ebb8d7895a\" or \"5dbb69c2e860f3970b25b0fab9a50199a33cc51a084b6a06f1db570651f07de3\" or \"4eff52fdd62bb4a56b5e60a1e0a3e807a8bf02c01f6e6cc1fb79f998af2f089f\" or \"085b773de31dff580f0df4912a9b330f1aee026bfb10907dca753e57b140de78\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04260"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "3fcebd28-1e59-5760-b0b1-a3762a3c05bd",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Verdant Tinderbox",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-04260",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "3fcebd28-1e59-5760-b0b1-a3762a3c05bd_1",
+    "type": "security-rule"
+}

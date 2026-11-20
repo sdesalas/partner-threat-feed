@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Umber Trellis ransomware sample, as reported in campaign PTF-04181. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Umber Trellis Ransomware: Process started from known malicious binary (PTF-04181)",
+        "note": "## Triage and analysis\n\n### Investigating Umber Trellis Ransomware: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Umber Trellis ransomware in campaign PTF-04181.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"283f7353c0529099585ce07365526a898b2aae1babe58a72141410fc1d5095a6\", \"7c882afb4baf1e79933ae4a3c30d7e21945e052339d6fe1a1c35990c000cc0a4\", \"4a30487940156c529c38f328b2c74241bf79e4452001236ec26b679f9ddee4d7\", \"73a7edd314d69ec2d9cf157d577d3e64524f2e66dda5f1a240439a1d8852455e\", \"9de6afd9ba345a516611e4c9d81d54d5fdb6d1a0226f2585f859481d3af0e0ab\", \"b2e15d1b51bba6930ad1e940759e6cf1a3af99a4154fad6b590a74bf61f3f89a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04181"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 99,
+        "rule_id": "8cadd364-b7ef-54c0-951f-f5c508bd9ba1",
+        "severity": "critical",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Umber Trellis",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-04181",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "8cadd364-b7ef-54c0-951f-f5c508bd9ba1_1",
+    "type": "security-rule"
+}

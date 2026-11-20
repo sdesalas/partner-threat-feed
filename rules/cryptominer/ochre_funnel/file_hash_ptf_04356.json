@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ochre Funnel cryptominer sample, as reported in campaign PTF-04356. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ochre Funnel Cryptominer: File with known malicious hash written (PTF-04356)",
+        "note": "## Triage and analysis\n\n### Investigating Ochre Funnel Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ochre Funnel cryptominer in campaign PTF-04356.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"57c30bba5ff28a16144ba46b759cd34410e65cc206830449f36720bcf52bd200\" or \"6265a97fc78f36d718bace799d104d3e8a4954650fbfbc2e963f4be9855c9ffa\" or \"b9bc4a9f82c5dc85b2d117c3ea46c9683d7746bba97557df3b8e7f1b75217252\" or \"34663a6ec3c74ac982bbd7d0bc2f69fc203100f93782c7d8a5651695067f592e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04356"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "dd33b39f-2fe7-59ff-9a5d-aa5bc0a74f3b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ochre Funnel",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-04356",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "dd33b39f-2fe7-59ff-9a5d-aa5bc0a74f3b_1",
+    "type": "security-rule"
+}

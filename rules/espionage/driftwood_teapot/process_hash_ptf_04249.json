@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Driftwood Teapot espionage toolkit sample, as reported in campaign PTF-04249. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Driftwood Teapot Espionage Toolkit: Process started from known malicious binary (PTF-04249)",
+        "note": "## Triage and analysis\n\n### Investigating Driftwood Teapot Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Driftwood Teapot espionage toolkit in campaign PTF-04249.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"1289f3ef82a50941d708f8c2cb4717db8dea8262913ad1804231bd7b4e7452d9\", \"87d2700aab6acc5790d2aaf324f07425221478ffbe50705ec22ea7623f2989f3\", \"1d08533c4e4d5c28949aed7423de2270b8c4bc345ad51fd2525227ea6c78cf99\", \"614ed2ffce0d3eed8d6e71de5423ea0a0b4d323cba584594f70ddc5c450be048\", \"2af4314e36659a4162edab93c5a239d3f1bb667b376754965a798151271ba00f\", \"72b3afdff31f127423f430950faa72074a515ae65e98d1499a14bec91e412945\", \"26942e2a94cda04f8889d3c62016629c64d4aa555014aa6a734671661249f09c\", \"7d299c4c06e5a062815c0c7a6b4792a18a82198db7ef582bd846a608082a57e7\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04249"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "4a2f7d6b-1fe1-516e-b61f-22d95764dc93",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Driftwood Teapot",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-04249",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "4a2f7d6b-1fe1-516e-b61f-22d95764dc93_1",
+    "type": "security-rule"
+}

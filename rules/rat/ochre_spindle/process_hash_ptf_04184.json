@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ochre Spindle remote access trojan sample, as reported in campaign PTF-04184. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ochre Spindle Remote Access Trojan: Process started from known malicious binary (PTF-04184)",
+        "note": "## Triage and analysis\n\n### Investigating Ochre Spindle Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ochre Spindle remote access trojan in campaign PTF-04184.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"8f574c55ae5fee04bb5ce991418b04759639446ef5452c6595440d59326bc9a1\", \"69fe52f131bdcef8c4fe0b09b55594e5a5b26ccd8076b19fe79b22d22f64d8c7\", \"506ad72497ee3a9638bba600c89150d22432e6790ac5d0c9eb24ced0b491ae6e\", \"46a3007ed7edf1d65ccf6fd845679e1e6c2f374fbf0fe0e6728b2e6802245b61\", \"2b9de6b27d3041bd5d7ae0e2db996af2c90529112d6e2747937aaf413bbf2437\", \"6e46be8fd4112329f7ab7e7a6d3a5e61c3168bf8b614b1fa58ba258a193cf102\", \"bdb43a1405a7b399ae12770710e07177cde005322d4bfe3910cc58b0ae4e83f0\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04184"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "acf12f4f-b083-5ec4-8c25-4a8b6c4de487",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ochre Spindle",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-04184",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "acf12f4f-b083-5ec4-8c25-4a8b6c4de487_1",
+    "type": "security-rule"
+}

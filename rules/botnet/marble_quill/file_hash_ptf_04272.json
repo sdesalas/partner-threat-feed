@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Marble Quill botnet sample, as reported in campaign PTF-04272. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Marble Quill Botnet: File with known malicious hash written (PTF-04272)",
+        "note": "## Triage and analysis\n\n### Investigating Marble Quill Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Marble Quill botnet in campaign PTF-04272.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"06105a2a3795e030fce8cb2d46225d18e18064e282e680e52cbf7516b8df5a06\" or \"16f6a4d93d4bc53a10493336f98d5c5478f4fc1d752573a5b3b38b522128f166\" or \"89f1e07c8ec94b91a9424344064e56f93b1fd48b32e2fcc4d701314ff65bf508\" or \"b96139b50cabdc5d8967fcff46d6108d40888a35f8128a2ede4a9a67b339061a\" or \"8faa4638a5afa55438dc380034c211299b54e1684abf6986fa2adb37904370fe\" or \"0da617d793f6a89010d83ba495779e671c2d2dcda620bf5f549613115f53285d\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04272"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "1b21a786-a434-55dd-9312-076c15896563",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Marble Quill",
+            "Threat Type: Botnet",
+            "Campaign: PTF-04272",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "1b21a786-a434-55dd-9312-076c15896563_1",
+    "type": "security-rule"
+}

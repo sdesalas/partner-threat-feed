@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Cedar Valise cryptominer sample, as reported in campaign PTF-04201. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Cedar Valise Cryptominer: Process started from known malicious binary (PTF-04201)",
+        "note": "## Triage and analysis\n\n### Investigating Cedar Valise Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Cedar Valise cryptominer in campaign PTF-04201.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"7a1454fd915d37f83a6e03dafd599153f77569f214d690ab8f2455e073cabf58\", \"2cae656183393199ed14e3449d100f8408273364e16fa857d6bbac43fedba8a5\", \"8f6d2895d39cf255e7ac3334433bddf3bc9e33c1b0ff9e50e585e353e1eff7d4\", \"5d1b5ede04b3a87ab457894777a5b9d5f3fe26115d0a1eab7e2be68b855201d1\", \"f727e85bf94865da72fbdf925d5f5744faa8e3cf0d8ee6d7eec75e6eec0902a3\", \"142c1175f45c4ee09786144beb8a6405728815b216f2c25c0ae0211bcf848243\", \"25120f29fb099c3efdf1c636991094517de2f9926f84c7ea2cb8d6a34b28e130\", \"c20e33e8ac8964b17a185770d8524f3b6a72713f1ad04a33fe4308a0368e29f7\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04201"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "10e5db2b-e7bb-5ae0-8993-910a96133771",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Cedar Valise",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-04201",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "10e5db2b-e7bb-5ae0-8993-910a96133771_1",
+    "type": "security-rule"
+}

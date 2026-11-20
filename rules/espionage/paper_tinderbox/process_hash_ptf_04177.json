@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Paper Tinderbox espionage toolkit sample, as reported in campaign PTF-04177. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Paper Tinderbox Espionage Toolkit: Process started from known malicious binary (PTF-04177)",
+        "note": "## Triage and analysis\n\n### Investigating Paper Tinderbox Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Paper Tinderbox espionage toolkit in campaign PTF-04177.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"7931bc93367a4fe06259b7fa44d0af908189c8ba803636ce5d9c2eba9c0275c0\", \"21ab91b5fe4d50923453444665ca595525edfcef9793ab4d431bf9798ef3c2ae\", \"c0477d6a92e2ca3ee6957db8a66252c1049902400f849300e10cb974ad0c397f\", \"271749b5c72ed13d347ef7113718c2729aeedbcc06a543c68eb445d0714d5e85\", \"fa798b630d43f90f47d3b291152802355ee08254b685d0530e73dd7aab8bdc3a\", \"9ea0ae00d10ef50e5c2d59515d9ded35b129a832f71f7a9fde098a4fac3558af\", \"c029582d8e723ce56b20d847424c415cfc823d7874e10c5956cc22255ce09833\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04177"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d84211b7-67b4-5e22-8886-bdd62d706a36",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Paper Tinderbox",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-04177",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "d84211b7-67b4-5e22-8886-bdd62d706a36_1",
+    "type": "security-rule"
+}

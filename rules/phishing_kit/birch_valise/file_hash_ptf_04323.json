@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Birch Valise phishing kit sample, as reported in campaign PTF-04323. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Birch Valise Phishing Kit: File with known malicious hash written (PTF-04323)",
+        "note": "## Triage and analysis\n\n### Investigating Birch Valise Phishing Kit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Birch Valise phishing kit in campaign PTF-04323.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"a9772c8ce4f62121624fddc34504dcf7dccf6d72635aa80c5a7fa881c5763654\" or \"aa397a31578ea343af05cec5bedb08ebf90aba1b0f09df58739b231b103c572f\" or \"05340d52589e457b333512b50376c3cd9c4c01dbaa528f0d8873f3a13cbcd5b8\" or \"442e5371f3ae5db30a27d03739577fab120dbf52bc9daee111a4561e313333be\" or \"f331d918f5ec8b7c14b3c52e2200d3f0b771677560711b06ac3be4c682a5e4a9\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04323"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "515fab80-24a9-55fd-99c1-df8dcd5eb455",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Birch Valise",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-04323",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "515fab80-24a9-55fd-99c1-df8dcd5eb455_1",
+    "type": "security-rule"
+}

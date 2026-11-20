@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Chalk Jigsaw banking trojan sample, as reported in campaign PTF-04159. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Chalk Jigsaw Banking Trojan: Process started from known malicious binary (PTF-04159)",
+        "note": "## Triage and analysis\n\n### Investigating Chalk Jigsaw Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Chalk Jigsaw banking trojan in campaign PTF-04159.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"e8683399fe94d5ca338f55e94bc917bcdd4b5ec5fe687526e7aada7fa1c15a13\", \"e745e301430d1cb8589ff4e2c79987fc60143034b0b3dd8a07d5fc97331dea46\", \"b51deae20c72d142301ac44a9ac4f7d350b5ec7df754b3986d56652e32d8ba39\", \"7dc3c5b3a536d8e93e3a477cc9a7d8210e3fbdb4e2df6f56e657f4a493937945\", \"a4ed0d1cd2b77634db51fa6d93aceaba4937b2c81af18f23b0f9018feb113de0\", \"0e4b2e03d03d98a30939b30d6f65e352334ff8a091c604147d6fdd3d6a5b6b78\", \"edbf08148103718c3377e7c70c218ac207888225aeb35b21b97c1523271d723d\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04159"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e5afabce-7ccb-5359-a33f-72823668b04d",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Chalk Jigsaw",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-04159",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "e5afabce-7ccb-5359-a33f-72823668b04d_1",
+    "type": "security-rule"
+}

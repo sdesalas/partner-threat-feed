@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Birch Trowel banking trojan sample, as reported in campaign PTF-04352. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Birch Trowel Banking Trojan: File with known malicious hash written (PTF-04352)",
+        "note": "## Triage and analysis\n\n### Investigating Birch Trowel Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Birch Trowel banking trojan in campaign PTF-04352.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"4af561f96507fbfeb11672e3362e99bc9b70339811b029562625973dabbacd3d\" or \"bee5a24d4cf9e457a05b30c83d8bb94d03b7d1a6911deefc04368c4e6d897443\" or \"3330daa99405cac8bacab3e30224f4a8d6f824d97b9e494217ca346157c40709\" or \"7598ff075f7bb386d229427105ec7c15df1c4a75217fe256a8b8251ed715a7f4\" or \"fd990582b716663b651694ebdfad4581bedcfc4ba6a273c57856f200b3ffb14f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04352"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "cc215566-4025-538d-97f6-54c034bfc92e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Birch Trowel",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-04352",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "cc215566-4025-538d-97f6-54c034bfc92e_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Verdant Tinderbox remote access trojan sample, as reported in campaign PTF-04261. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Verdant Tinderbox Remote Access Trojan: Process started from known malicious binary (PTF-04261)",
+        "note": "## Triage and analysis\n\n### Investigating Verdant Tinderbox Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Verdant Tinderbox remote access trojan in campaign PTF-04261.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"eb4c2e66ccebe2f4fe9a5d40fc64eab19b7e5925217868a9ccba952f644c143e\", \"7f78e0fa1562bab858ed5d0126f985477e1a74967d3ea6b3c12899dccb405610\", \"8675e3261e0460a158b7df4aceeb0bfacd4d07748949bf17dfca14420f003783\", \"dc8cb7629e325e6834ad24d4b462014f41f6e5990f91f79661d4c8ca30453a36\", \"7dbbff29e3c80c17bb3e38701797708ea12d73a791f0c6b604a881848ba68b98\", \"140f827005363b3ed4c9265d1049ed2f01a7533322252042787b0d188beee0da\", \"972eed22d4164889ada64b5128b8fcafff733b2cf5299fc5319459c9122e3e30\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04261"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "5227dc7f-1598-54f4-a873-b0a584029655",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Verdant Tinderbox",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-04261",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "5227dc7f-1598-54f4-a873-b0a584029655_1",
+    "type": "security-rule"
+}

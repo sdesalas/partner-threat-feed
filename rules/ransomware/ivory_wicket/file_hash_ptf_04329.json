@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ivory Wicket ransomware sample, as reported in campaign PTF-04329. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ivory Wicket Ransomware: File with known malicious hash written (PTF-04329)",
+        "note": "## Triage and analysis\n\n### Investigating Ivory Wicket Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ivory Wicket ransomware in campaign PTF-04329.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"10414e713dc570be64ffed7da929cfbe16e6b137517763b9fe896ce7af7730fd\" or \"7c77b306238054e980029ade603f11e60b89a97d3c355adba5c25d6cb2a29f52\" or \"135b235ecc4beebbec8858db635abbd3dd55bf56eebfedbf396c607028cb8588\" or \"2ca99cfb883e1d4c689302493911e265f77531ddae8bc450b5a67a2896ba83e8\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04329"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ebda3992-f6b5-5f37-9ae2-9c924cc64602",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ivory Wicket",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-04329",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "ebda3992-f6b5-5f37-9ae2-9c924cc64602_1",
+    "type": "security-rule"
+}

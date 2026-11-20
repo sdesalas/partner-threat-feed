@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Clay Bellows loader sample, as reported in campaign PTF-04191. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Clay Bellows Loader: File with known malicious hash written (PTF-04191)",
+        "note": "## Triage and analysis\n\n### Investigating Clay Bellows Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Clay Bellows loader in campaign PTF-04191.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"937c51ba4c21dc867bff2decbac34a97c2a89d55614127a7a978dd8413180dca\" or \"e5c86e847ca9f08d396e24d1efc9298c98904e82dfd487a423aa6d9919f8da02\" or \"ecefdb58e2ddc160f3aac99aad7c61eba838bd813785525b889c868b42d820a7\" or \"6ec2a92485f6c5b193e481765402a5cb44b7d45c603f267275def9a8200a5264\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04191"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "c7ff8761-3e4d-533c-8759-d6dd141d87a0",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Clay Bellows",
+            "Threat Type: Loader",
+            "Campaign: PTF-04191",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "c7ff8761-3e4d-533c-8759-d6dd141d87a0_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Marble Sextant botnet sample, as reported in campaign PTF-04157. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Marble Sextant Botnet: File with known malicious hash written (PTF-04157)",
+        "note": "## Triage and analysis\n\n### Investigating Marble Sextant Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Marble Sextant botnet in campaign PTF-04157.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"ce369781eb5edc3cd0981b5dea7aed118cbf7be6c7694ed4bc840198a453114b\" or \"f1b2f340ca6924623fd05d919d99da0535bffe17140cee80e78fdb5211456f70\" or \"77af4bc2bbb8335456d8a025396db5bf3f07e1a2e443c2e090d4f7f37fe3a50d\" or \"780315883b08138323c803f53a3fa0ae54493401c19d3ea7b2cd17356f8ae16e\" or \"e9820189155345042029face28d67d8e75600a51dde95d7ceb0f4197094bcff9\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04157"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "9ce973e4-3e3b-554a-8f94-c41457b26e8f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Marble Sextant",
+            "Threat Type: Botnet",
+            "Campaign: PTF-04157",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "9ce973e4-3e3b-554a-8f94-c41457b26e8f_1",
+    "type": "security-rule"
+}
