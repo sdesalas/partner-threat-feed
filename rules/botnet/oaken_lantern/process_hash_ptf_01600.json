@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Oaken Lantern botnet sample, as reported in campaign PTF-01600. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Oaken Lantern Botnet: Process started from known malicious binary (PTF-01600)",
+        "note": "## Triage and analysis\n\n### Investigating Oaken Lantern Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Oaken Lantern botnet in campaign PTF-01600.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"98ce0dfc237c7d3d0208eee0e53e476d252d8fa3868b0d0653300d7aa4698db6\", \"c8facd38d2110d2ceafa4628edb9bd41f31de3bbac08f090d0907e178a266f62\", \"cecfb586e81595e44996993ab84d4824354bf32a457a9864014c33003899515e\", \"e8f75b4703d7c635ae40bbaef8ec03e3c555431beb4806e31096c5d9b2b53393\", \"b353ef875ad0a23819d1ea4a13e8d72b7ac69afd0cfda45d9c8b8b9171f61b0f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01600"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "6b9b8bc2-0345-55fc-a578-432f19a691f0",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Oaken Lantern",
+            "Threat Type: Botnet",
+            "Campaign: PTF-01600",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "6b9b8bc2-0345-55fc-a578-432f19a691f0_1",
+    "type": "security-rule"
+}

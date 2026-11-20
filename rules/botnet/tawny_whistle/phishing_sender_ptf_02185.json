@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies email messages from sender addresses used to deliver the Tawny Whistle botnet, as reported in campaign PTF-02185. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-email-*",
+            "filebeat-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Tawny Whistle Botnet: Email from known phishing sender (PTF-02185)",
+        "note": "## Triage and analysis\n\n### Investigating Tawny Whistle Botnet: Email from known phishing sender\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tawny Whistle botnet in campaign PTF-02185.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "email.from.address:(\"accounts@auth-assets90.invalid\" or \"accounts@edge-media50.invalid\" or \"accounts@portal-portal92.test\" or \"payroll@auth-relay30.invalid\" or \"payroll@relay-auth3.example\" or \"shipping@cloud-files80.test\" or \"shipping@edge-files6.invalid\" or \"support@cloud-api18.test\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02185"
+        ],
+        "related_integrations": [],
+        "risk_score": 47,
+        "rule_id": "a8328df9-d74c-5e91-8335-ad925e9ffb3d",
+        "severity": "medium",
+        "tags": [
+            "Domain: Email",
+            "Use Case: Threat Detection",
+            "Tactic: Initial Access",
+            "Threat: Tawny Whistle",
+            "Threat Type: Botnet",
+            "Campaign: PTF-02185",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0001",
+                    "name": "Initial Access",
+                    "reference": "https://attack.mitre.org/tactics/TA0001/"
+                },
+                "technique": [
+                    {
+                        "id": "T1566",
+                        "name": "Phishing",
+                        "reference": "https://attack.mitre.org/techniques/T1566/",
+                        "subtechnique": [
+                            {
+                                "id": "T1566.001",
+                                "name": "Spearphishing Attachment",
+                                "reference": "https://attack.mitre.org/techniques/T1566/001/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "a8328df9-d74c-5e91-8335-ad925e9ffb3d_1",
+    "type": "security-rule"
+}

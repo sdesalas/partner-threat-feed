@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Cedar Spool loader sample, as reported in campaign PTF-00086. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Cedar Spool Loader: File with known malicious hash written (PTF-00086)",
+        "note": "## Triage and analysis\n\n### Investigating Cedar Spool Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Cedar Spool loader in campaign PTF-00086.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"98f11bf63e8b723bc4abb6c8881f1078cfca346d2b2ae96e94794261d8a12ed0\" or \"3168ae55e536611b8567cbe1866aeb25dd4bd9f8bfa2a1a4a9efd346e2aa5f7b\" or \"21c0df90c563dc10cde3eed40a1f3d630cde07ddeb27cfb507cfa15ffd70ef26\" or \"e1fa42b439101122201391857e650951c1e2359df60f878df3ee59b4ff618be1\" or \"f65eb8319408282a056a47b51b72aef030402897ef7055ab3cb5731a77706369\" or \"1cdba316ce23367bd9f2a32f7a4a30630fe95c611c22c1c6644c3a555d026d3d\" or \"185c6dab9320671311fee774e1ce2e8b12dfb3d7a9e3445c1d77b6734f2f5b32\" or \"12097bb5f432e46970aef1bcf80443e9bf7c239c51aa4f8d2e3710e502f00cf3\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00086"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "3c0cc583-f316-5f96-a09f-302504fdc290",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Cedar Spool",
+            "Threat Type: Loader",
+            "Campaign: PTF-00086",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "3c0cc583-f316-5f96-a09f-302504fdc290_1",
+    "type": "security-rule"
+}

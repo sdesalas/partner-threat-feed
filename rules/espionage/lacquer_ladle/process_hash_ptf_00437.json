@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Lacquer Ladle espionage toolkit sample, as reported in campaign PTF-00437. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Lacquer Ladle Espionage Toolkit: Process started from known malicious binary (PTF-00437)",
+        "note": "## Triage and analysis\n\n### Investigating Lacquer Ladle Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Lacquer Ladle espionage toolkit in campaign PTF-00437.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"ffebbb633b1e4be99f34b6ec2435a6bebc05e100d12d63b6ae738e551d07d3df\", \"a3ef827d1782329dc59ed514971f499711779dd924c260c835399c78eab21a5a\", \"9515a0b84b340f47fe12a6a1c2b61876d5a1baa7628ebf42343d1db8a10245e2\", \"aff123a11e415d210ad751d13a7040170b09db69343079261a45fc8baa3b0b30\", \"6406f5ffdc0855301da125a7d6e48667f3e5c0a3f83524bbe54353dca49cad3f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00437"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "c93751e9-e2eb-5170-8b45-4ae850afc486",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Lacquer Ladle",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-00437",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "c93751e9-e2eb-5170-8b45-4ae850afc486_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Copper Spindle cryptominer sample, as reported in campaign PTF-01610. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Copper Spindle Cryptominer: File with known malicious hash written (PTF-01610)",
+        "note": "## Triage and analysis\n\n### Investigating Copper Spindle Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Copper Spindle cryptominer in campaign PTF-01610.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"0ceb41fc1bb2c2c43ef5df684df01cbcf96c901fdc4965136c28bc754b75750c\" or \"c6ea8ac14bbe02ee3a78d5d6dfb2a74c3600ac4d8b28b533e7b6af3f6d0105d0\" or \"8c72913c7105ff08693c199b52b5cb01e748f8f66fa38edd5ede3857bcee460f\" or \"5bf2775d067104a10af29feb4102d805d5ffc0d3ea725b3e5a975868f19c2099\" or \"ae075d79cecb0263d101d9ec3ce01910e6aba2208af9c485a7a9dee2c5de81a2\" or \"5646af09168abd6943e913a6f7cccce4cf33aa817d77869709810cfa1665e4ae\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01610"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "75823b80-c0a9-57a4-a22b-2062448dc9eb",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Copper Spindle",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-01610",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "75823b80-c0a9-57a4-a22b-2062448dc9eb_1",
+    "type": "security-rule"
+}

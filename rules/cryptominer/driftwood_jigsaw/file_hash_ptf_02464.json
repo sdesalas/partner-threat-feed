@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Driftwood Jigsaw cryptominer sample, as reported in campaign PTF-02464. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Driftwood Jigsaw Cryptominer: File with known malicious hash written (PTF-02464)",
+        "note": "## Triage and analysis\n\n### Investigating Driftwood Jigsaw Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Driftwood Jigsaw cryptominer in campaign PTF-02464.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"b1d2ee8d47ae98f2a245c1ca3169681bb0716fbe293ced280426074d97a351bb\" or \"7754d52f766c3dfae02ab80b9d105ba78d96d5f35bddc576da40bee886681e21\" or \"60e80c3733a1d4c7d785459c14d7de03100bf19beb6889b275ca8d0a5bfd381c\" or \"ad537a796dacb9d6558ed69952d03c08dd57c2686b70a5f7f7dd5ea6762f8d6a\" or \"0ddd6760dcd46785cc78765a905fffb685ce4313172e3ddc686ac29c88d14840\" or \"d552d8afd5550fe1ab63e737a0e7e19968621a0e9615ec5b519b368620801843\" or \"196ada64236279682f298f638b5a41fefad385f8c52b138ea089b5bb8504fc5a\" or \"a8b233558468bddc90f174c10b3e075fd4c43c03bd4c4fa6f8251592f6b4f7ea\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02464"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "01f3b846-922d-5a79-ad35-62dc946c86d1",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Driftwood Jigsaw",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-02464",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "01f3b846-922d-5a79-ad35-62dc946c86d1_1",
+    "type": "security-rule"
+}

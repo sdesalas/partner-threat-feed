@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Umber Sieve phishing kit sample, as reported in campaign PTF-01069. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Umber Sieve Phishing Kit: File with known malicious hash written (PTF-01069)",
+        "note": "## Triage and analysis\n\n### Investigating Umber Sieve Phishing Kit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Umber Sieve phishing kit in campaign PTF-01069.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"255f4cf3fde5004f6f05c204d4f29d20446316366570a2049d384a4fb7b37d69\" or \"2e949533b50e460e5d59c51e9b209de916cb10a4bc6d8d32b51d88929bb08846\" or \"3e3bc7b7590acbe6ad9317604278ffe31a7e89941ea53c80391d194f4c014df9\" or \"02e23744ebe32904ace18bfcab1fc2b63fd7cd7fc67766ecdd2b5a4d5a6d0189\" or \"67339792205afc475c7a23750b9ae79bf25752e15abe601c4098f7f6c2398ec0\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01069"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "192b0e00-49f4-50fb-96a9-0577d44a9ec3",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Umber Sieve",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-01069",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "192b0e00-49f4-50fb-96a9-0577d44a9ec3_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Tawny Shuttle loader sample, as reported in campaign PTF-02293. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Tawny Shuttle Loader: File with known malicious hash written (PTF-02293)",
+        "note": "## Triage and analysis\n\n### Investigating Tawny Shuttle Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tawny Shuttle loader in campaign PTF-02293.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"4bc0826cd6dc0084360982fa8f60d2d3a73c81e29908f3858ec5e0fa021d8286\" or \"7084b1bf7d8e47fd7eb6b13afe109e44f59e741a912d2374499e1d8ec0493026\" or \"ab2fd1e1fc40d3f70f00cdf81a9ad58ba541aa7b4d248e0021707a5d4045457f\" or \"b57435e041105b9a4a66e00ebec2bc62582d7a57c9100d4bfa842ab594db5d3a\" or \"caa3cb0d6c762fbdcfea47eb9ddfbc98c85c9506857773ca767026283a215ea3\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02293"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "670123ce-6b5b-5117-bfc6-50d819cc608e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Tawny Shuttle",
+            "Threat Type: Loader",
+            "Campaign: PTF-02293",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "670123ce-6b5b-5117-bfc6-50d819cc608e_1",
+    "type": "security-rule"
+}

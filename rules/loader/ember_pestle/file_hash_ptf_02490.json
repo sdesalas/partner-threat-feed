@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ember Pestle loader sample, as reported in campaign PTF-02490. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ember Pestle Loader: File with known malicious hash written (PTF-02490)",
+        "note": "## Triage and analysis\n\n### Investigating Ember Pestle Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ember Pestle loader in campaign PTF-02490.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"2e70dd7b563c41263e2c7316cfacd91dd1e6cdb6b6bd6bd78fb5a5a0600ce287\" or \"e3995d960eee2709989bb8008b26adc7533e6beccce78ddc8cc05bdb99e9fe75\" or \"49eff90520807b0521067e054ad69d94abb5928a9b51064f00a896f363a35452\" or \"52b56c46d8a0ca857efc8b47a5b50362b103d7f66098f156579abe4753e903d3\" or \"14bf670972f363c205eddc89dbf79435b5f2ca911c0d40f1031255dbe7172dca\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02490"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "8910cb03-1e26-5122-8215-d30818ce46e9",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ember Pestle",
+            "Threat Type: Loader",
+            "Campaign: PTF-02490",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "8910cb03-1e26-5122-8215-d30818ce46e9_1",
+    "type": "security-rule"
+}

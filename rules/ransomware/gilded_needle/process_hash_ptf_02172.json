@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Gilded Needle ransomware sample, as reported in campaign PTF-02172. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Gilded Needle Ransomware: Process started from known malicious binary (PTF-02172)",
+        "note": "## Triage and analysis\n\n### Investigating Gilded Needle Ransomware: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Gilded Needle ransomware in campaign PTF-02172.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"b95df247c1f7b382dfa9f2a58c80dd3a39d54448932d7f2ae72c591a861ecefa\", \"68899f0a997ead5567f195edcf8b6cfb580f463c15b852e3f48aed169d06c05d\", \"800d5234a9934c89f557ca05ec6bc0ac1906a8580a0f9716729a42e3e09da2e9\", \"cb2a6ec35ed62dd36ce7adc938b98a6993d8aae9e4b195e947341173cebbd906\", \"3cc7390c193eb0dbd23fcc967d3a888484238545263de0c93c20012ed27ee0f2\", \"fd01eddc8d31a983a2f171075bcd024cb564b88e7c962b6ac18fc25a228820ca\", \"ea5215e66c1c3832a3336e1d9d09b4ebe447a87b0142f99644a9de1c9440eeb3\", \"81e342b180f6ba7d061a961d512f4f347dfe23f69e21145156fc855437c0b797\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02172"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 99,
+        "rule_id": "312b652c-5d5a-59f4-a6c6-e7aff8441591",
+        "severity": "critical",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Gilded Needle",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-02172",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "312b652c-5d5a-59f4-a6c6-e7aff8441591_1",
+    "type": "security-rule"
+}

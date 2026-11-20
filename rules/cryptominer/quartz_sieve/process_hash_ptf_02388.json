@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Quartz Sieve cryptominer sample, as reported in campaign PTF-02388. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Quartz Sieve Cryptominer: Process started from known malicious binary (PTF-02388)",
+        "note": "## Triage and analysis\n\n### Investigating Quartz Sieve Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Quartz Sieve cryptominer in campaign PTF-02388.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"9afbbfa7151322c216ffff26ac62ec196be5bbf25fb8a7ff5168c668c00099f7\", \"fee8c13fbab25d16bd9a04663d326b87570703683a3e3e7abbe175302b31a56b\", \"7ff12f8073b41e408020bb6d41cfa1d846b2a9132b562b7bbe860c96c15ea00b\", \"37e9b490769a85b93ed34762d26f274e5f4eecf2a80a280f2cf7ac260d85cc30\", \"c86c7d1c171c4010e343b844d2c194649ca6d1a90a834c4d16025052644fd309\", \"1e28b3326ff4548908aadd94a0fe44d9be5a1cfc6ed26906106a2ca9f1532508\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02388"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "fc69d1af-6f2d-5a3e-8e72-75a524376377",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Quartz Sieve",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-02388",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "fc69d1af-6f2d-5a3e-8e72-75a524376377_1",
+    "type": "security-rule"
+}

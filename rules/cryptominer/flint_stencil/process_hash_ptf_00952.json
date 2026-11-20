@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Flint Stencil cryptominer sample, as reported in campaign PTF-00952. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Flint Stencil Cryptominer: Process started from known malicious binary (PTF-00952)",
+        "note": "## Triage and analysis\n\n### Investigating Flint Stencil Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Flint Stencil cryptominer in campaign PTF-00952.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"c2ab3f2d4583ed27ad23ef54c110a3dc7df8364583e1792e9dd0d61fd625c37d\", \"6713ffac0e51da36b09ff0ec7e9e8ad1bbee6743ae147a31943ded50295dbe5e\", \"0bbfc86aab2526cb90858bda10bd19e8630f0cf8719bf1708b4728b7c183325b\", \"6c12cb33ec78a2ec9bdf9d8c6cece39affb2f78fa03bfecce456655944c9eed4\", \"c0547f0b5601ec682f2101da171881724eb901ef1665e4a97e262df86be0ce40\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00952"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "1ed16fd3-d054-5cf4-bc39-049b7a1eef56",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Flint Stencil",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-00952",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "1ed16fd3-d054-5cf4-bc39-049b7a1eef56_1",
+    "type": "security-rule"
+}

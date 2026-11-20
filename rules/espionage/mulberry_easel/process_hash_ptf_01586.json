@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Mulberry Easel espionage toolkit sample, as reported in campaign PTF-01586. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Mulberry Easel Espionage Toolkit: Process started from known malicious binary (PTF-01586)",
+        "note": "## Triage and analysis\n\n### Investigating Mulberry Easel Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mulberry Easel espionage toolkit in campaign PTF-01586.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"99038b35b44c2155e93ff20919f4eccd4cd1cfed0f9b9f338ce60001a4703b5e\", \"7bbfecc1aa3b2bc4d08a533fa001d3e793e2cb446c4b51955659db984e5043d9\", \"b9af215ec07b00bedbd7873a12882e7f6028c6d4b1840d8aff2bf53d447e8b00\", \"d212ba93c6a6ca2c61ad05c25c0f06a19f9160816feeb9597c3c83a58c1a82ff\", \"cb4d7edacc990cd4b181df690e928260fc72cc43b011b65a868605f822237756\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01586"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e39210b1-0013-5855-bcec-5e46c59ede76",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Mulberry Easel",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-01586",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "e39210b1-0013-5855-bcec-5e46c59ede76_1",
+    "type": "security-rule"
+}

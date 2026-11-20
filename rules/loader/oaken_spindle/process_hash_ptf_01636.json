@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Oaken Spindle loader sample, as reported in campaign PTF-01636. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Oaken Spindle Loader: Process started from known malicious binary (PTF-01636)",
+        "note": "## Triage and analysis\n\n### Investigating Oaken Spindle Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Oaken Spindle loader in campaign PTF-01636.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"39342694565842e3a6ee2fd5e5ed6c8233bb7b24793e2588b163f126f1a391a5\", \"c79faa8ab6ce0077d014e590246a953bfe5df4a87deb3d8b2133899826276cf6\", \"120e83eaed780dfa933d82b005b1df0c8b7088f9b4e7a89e566be09449253107\", \"a22bf383d1a040d1643c98fe0cc15f3b143bbeea89bad55e25a546adca4c07e1\", \"2d33d4a0b6d4e5033df079e48249dcc425a5fe6c7a8e5b3c2f47f28186d424d1\", \"9f3456424f2cb9d673253a861bd3d958d8399b8aea30d93a81a1c8ebcadf639c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01636"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "a72e2e97-1654-5aae-a766-6d15021d75ac",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Oaken Spindle",
+            "Threat Type: Loader",
+            "Campaign: PTF-01636",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "a72e2e97-1654-5aae-a766-6d15021d75ac_1",
+    "type": "security-rule"
+}

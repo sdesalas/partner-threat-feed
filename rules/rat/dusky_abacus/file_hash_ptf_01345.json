@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Dusky Abacus remote access trojan sample, as reported in campaign PTF-01345. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Dusky Abacus Remote Access Trojan: File with known malicious hash written (PTF-01345)",
+        "note": "## Triage and analysis\n\n### Investigating Dusky Abacus Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Dusky Abacus remote access trojan in campaign PTF-01345.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"2e6ffc72a306e343fa029e88fe7040d918f422a111e871692aedc28328ef4de9\" or \"5fc5d97de4dbcfea60040a82136d8a06c042f12915392f8e96c68e9a9124914b\" or \"3bcf42d00dacc62b921ccef6e4c0a0fee2f542cfb099809e7b866d7fe05129b2\" or \"20459ffaf8ddff3aee79b51b5166053387d6f6d82da5f50527ad7c9ac9776a36\" or \"1e7f3118dece5c99069b20ab3201b05da61c7ffb9cbbe51d71f1c31afb576698\" or \"801759ddb921e7ba11533b2f814dc6e5a80dd6cd021fb51148e7f7a76f8598dd\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01345"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "215c1af4-57e1-5ede-8f3e-ae320ed8512e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Dusky Abacus",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-01345",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "215c1af4-57e1-5ede-8f3e-ae320ed8512e_1",
+    "type": "security-rule"
+}

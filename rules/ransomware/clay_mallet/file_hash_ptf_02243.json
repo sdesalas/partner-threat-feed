@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Clay Mallet ransomware sample, as reported in campaign PTF-02243. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Clay Mallet Ransomware: File with known malicious hash written (PTF-02243)",
+        "note": "## Triage and analysis\n\n### Investigating Clay Mallet Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Clay Mallet ransomware in campaign PTF-02243.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"f64ebf4975ece85b1352404958d74ec00c49b10bb92f6335dfa280a96781d165\" or \"3603d3480de3092a28b35ff93f900242856b7e1e5aa1a328140053f97e15b588\" or \"f460893b7569b2a8fc97e1fd2d7654da92bb5100247d523f092a3f4547625edb\" or \"09b97bc40335deb35782ce551783bd63da4ec9e588108342d0fb3d2a1dbc7d0e\" or \"35fe7022abb3d2647009a89e91317eca046f76a3d8d9a597226c8a442fb9c2e0\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02243"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f32568f3-20e8-59f2-98b5-a3f6a34628e3",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Clay Mallet",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-02243",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "f32568f3-20e8-59f2-98b5-a3f6a34628e3_1",
+    "type": "security-rule"
+}

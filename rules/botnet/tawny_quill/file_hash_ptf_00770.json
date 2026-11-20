@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Tawny Quill botnet sample, as reported in campaign PTF-00770. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Tawny Quill Botnet: File with known malicious hash written (PTF-00770)",
+        "note": "## Triage and analysis\n\n### Investigating Tawny Quill Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tawny Quill botnet in campaign PTF-00770.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"bf7fc8081b9ff354a17aebeeb98b818ef31f7e9e846a02b1318d2ae3850f9c6a\" or \"9fb60876a23551e27c81036835c2981a90e8022c7007cec29df83cac70271092\" or \"ccf34e3665de3bafe49de701b704630f28281b313b92e0b012585a390c512ad5\" or \"19b74ae63b40e7d8299e007d9f1d1b3855692b51354f4fc927669ad76c089e3b\" or \"e34d6948b0b7194e292376a8eadc54e6102634f36eaa33f015d64c4fdd558413\" or \"a342c99798a49f6a228fa516c6a02845f0533eb9e12463a679beefa06838ad1f\" or \"896324936629b2f691fb0ebd7fd41748eb96306a8a1cf530dfdeadbce0c8923c\" or \"7c089f88d8a861b003015222f64a20375e282477214c59416b29d42c38b168ec\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00770"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "95f11001-5b1f-5d55-a8a5-b927af2864c4",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Tawny Quill",
+            "Threat Type: Botnet",
+            "Campaign: PTF-00770",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "95f11001-5b1f-5d55-a8a5-b927af2864c4_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Chalk Spool infostealer sample, as reported in campaign PTF-01994. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Chalk Spool Infostealer: Process started from known malicious binary (PTF-01994)",
+        "note": "## Triage and analysis\n\n### Investigating Chalk Spool Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Chalk Spool infostealer in campaign PTF-01994.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"f56532057198a4ed73e924fcc2e62393847791af8a13f863a99ef8c6b37258cc\", \"85c1798c43c97d047b8ac60b3caf3320c700e2bc49311ad70e701103e983bf5d\", \"fe1e6f4c671e52febf928cfb98886555fe04cb017aa2c830453c21a3ab406d9b\", \"711b55f4efcde5ba7fe73c5ca3cb4ea1b5a3acb3b9bdc799664036f5ba052d03\", \"6af03efc99a0f1a07b788965652bd2dfb76de3253f2fff8754103cdd13ac9985\", \"a5e90bad831fd341a2f895a7cffdde5e6b3db59173e57928602994bfd5b28fbc\", \"c2c026473d19960fa1e85db2d438e91013b4707aba8051ae0250fe7d58114585\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01994"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b3e29aaf-1743-57ae-8004-f5f62da5187f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Chalk Spool",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-01994",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "b3e29aaf-1743-57ae-8004-f5f62da5187f_1",
+    "type": "security-rule"
+}

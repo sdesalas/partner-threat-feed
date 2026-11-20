@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Mulberry Jigsaw infostealer sample, as reported in campaign PTF-00524. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Mulberry Jigsaw Infostealer: File with known malicious hash written (PTF-00524)",
+        "note": "## Triage and analysis\n\n### Investigating Mulberry Jigsaw Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mulberry Jigsaw infostealer in campaign PTF-00524.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"c5e554245fcfe94cb07c5933f42ca116a996e6710daf81f6da6a03b4bfda6bad\" or \"ff385b0a6c29ee020b5d1d72761245600cc058852f29cb7b23576e226491da9f\" or \"2b19af0531f80263d6d2f31b0e084eae13e85223dd4eef2aea883e5cce8419bc\" or \"297926972821baaccecd40c4e36d3f517f47da84302a4d397e2243364e60300e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00524"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "32796303-ec39-55d4-8574-1c4d8c031643",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Mulberry Jigsaw",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-00524",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "32796303-ec39-55d4-8574-1c4d8c031643_1",
+    "type": "security-rule"
+}

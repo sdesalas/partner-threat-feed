@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Fennel Gimlet banking trojan sample, as reported in campaign PTF-02424. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Fennel Gimlet Banking Trojan: File with known malicious hash written (PTF-02424)",
+        "note": "## Triage and analysis\n\n### Investigating Fennel Gimlet Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Fennel Gimlet banking trojan in campaign PTF-02424.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"45fc0bd7fe388e176ac0a97c30038818f13f49f191dfb9e85a21c7d7c15f0c30\" or \"2a77a127ca57c8d36ca447d91a834442213b04029b92b8ee97ae1adf6fb61bec\" or \"41cb77305dc0ab785437c7cff64dcc50c37113d2e0fbeb917c0347fe0c3cf8c4\" or \"5252977c34ae767f56cf9740c34c55fe62acd33135e082836f1ae5f305a4082d\" or \"10145133d8dd113984bd382c40c2c6329423f0a9e0e2556ad9aa390d74e2f6ce\" or \"0c3a4c183be4e4524a0cc6acd4810cda7c945f418ebcf26d0d348454517345ed\" or \"48ca4b90b259382565accdfe1313b78704f6c38d44c35d47b864e3f72615a908\" or \"4de98e350679026f3ea89b1172c5abb874976aaea01f1879cb5ef65d60b770e2\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02424"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "4d02da00-7542-51a2-b06a-34f3eea1e361",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Fennel Gimlet",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-02424",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "4d02da00-7542-51a2-b06a-34f3eea1e361_1",
+    "type": "security-rule"
+}

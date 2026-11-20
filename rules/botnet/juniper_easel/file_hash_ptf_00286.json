@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Juniper Easel botnet sample, as reported in campaign PTF-00286. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Juniper Easel Botnet: File with known malicious hash written (PTF-00286)",
+        "note": "## Triage and analysis\n\n### Investigating Juniper Easel Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Juniper Easel botnet in campaign PTF-00286.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"5767777663578af18a76c1dfaa42fc7bc00f6fb6fa8053f5d8ddeba06b37a68d\" or \"a6b1dea26a1b0754dedcb3858c005463c90a8187a1da77086b9268fc58d277fc\" or \"80cb5a14367f009c0a07a155232158df5c73853d4281d58a52d5550097350c42\" or \"dd0041b71731c56b15927eeae364d6b13d38c346c1b066ca93cfe98efa37b8b6\" or \"f45bcb2359cc7311574180fde953494a4cb484b2c974ef4a1c75477709094b51\" or \"7638bb7bced7a038c898dcf2c78df362819e37d834a5a6390d2a9155586b8738\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00286"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "77d34d5b-7ae8-5caa-ae16-caf5fb8252db",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Juniper Easel",
+            "Threat Type: Botnet",
+            "Campaign: PTF-00286",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "77d34d5b-7ae8-5caa-ae16-caf5fb8252db_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Gilded Lectern phishing kit sample, as reported in campaign PTF-00701. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Gilded Lectern Phishing Kit: File with known malicious hash written (PTF-00701)",
+        "note": "## Triage and analysis\n\n### Investigating Gilded Lectern Phishing Kit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Gilded Lectern phishing kit in campaign PTF-00701.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"825db70e835aeb67121a49dbc0f68b6e252d7018754a0a1c4eae56017346bcda\" or \"657fb457d15ea3a0b273ed5def503e603a6971716e64cd49432377fd5100a07b\" or \"0164b47e8ceb9643acf823044540a4211e0788fe1d1b6bc9e760357a49312a32\" or \"bc868eef19c37f36d0efaa37538aae0a831518cee98c21d167d5c78dd52f46bb\" or \"1cddc1c8c6cc18cdce421cd81b3b9442a58e34867dfb4cc21e6d35dd20785293\" or \"8e44ca3173e0bed95ccc647af31f6df9af764eb853c569c6e347b2aa89f1a0aa\" or \"6fc687bd20bdb4762992c8ecf9e9f3e666a9ddba273a3be14bfceb912c628da0\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00701"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "97a27988-2982-5441-bdd9-626335291376",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Gilded Lectern",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-00701",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "97a27988-2982-5441-bdd9-626335291376_1",
+    "type": "security-rule"
+}

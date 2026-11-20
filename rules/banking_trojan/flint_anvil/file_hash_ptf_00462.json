@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Flint Anvil banking trojan sample, as reported in campaign PTF-00462. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Flint Anvil Banking Trojan: File with known malicious hash written (PTF-00462)",
+        "note": "## Triage and analysis\n\n### Investigating Flint Anvil Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Flint Anvil banking trojan in campaign PTF-00462.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"f17a131b371d5893d53f707efb60e9fd7d9a2f14a0f20e17a66c8eb4e9734e7f\" or \"c730fc988fdd0131bb7ae2c0f4df869a61acbda47ec82b288880849f9ea1743e\" or \"154e77edf1fded508a9745c26024fe844ff0e4565e6d69b2d6365524bdb1dca6\" or \"5ef6a0535c19b4090f2e13f297c83552ce7c5567d9db636465572cc1e984bd8b\" or \"37f6f39c85c687e0c5aa5f0249859b84fe40c96b5def9ef8774e578e4d9ae134\" or \"c20936b0222c07e8a5b1419b5edd886a8f7851bd0374ed3d3d8e5ea86203817e\" or \"413faae697085f61cdb2854f333f5b4a66d49acc49d583c3e5f8a2242678daf7\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00462"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "7d1d82d3-f6f4-5285-9b5a-0e13c9137435",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Flint Anvil",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-00462",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "7d1d82d3-f6f4-5285-9b5a-0e13c9137435_1",
+    "type": "security-rule"
+}

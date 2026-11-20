@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Copper Bobbin loader sample, as reported in campaign PTF-00218. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Copper Bobbin Loader: File with known malicious hash written (PTF-00218)",
+        "note": "## Triage and analysis\n\n### Investigating Copper Bobbin Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Copper Bobbin loader in campaign PTF-00218.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"9d24005c81751e6f2300e1fa6ddca5ed65ed55a54e7473649f962fcc344d54cf\" or \"f9a69055d1ae4ce4e7bcf14d5f6ce280054dbe06486f77a07397df8ceb0c056a\" or \"03b94dcb8d3c7737c1d11021893418ce03e5e188b90eba8011bb4263d82d888d\" or \"150d12d804bbbfbfba03f43b79b1fe22a360535c2c3dbc0216ac19a0a750485d\" or \"4d59e8d8546a4f4b1c0c7998476feccf4230a99a5fbdcc504b03976e6ec06cf7\" or \"3e283347202871c80dc2ababcf5c0b235aa836108fe8371ef26ad2545ecadb49\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00218"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "6c0613c8-767f-5e5e-84d2-1b7c63467155",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Copper Bobbin",
+            "Threat Type: Loader",
+            "Campaign: PTF-00218",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "6c0613c8-767f-5e5e-84d2-1b7c63467155_1",
+    "type": "security-rule"
+}

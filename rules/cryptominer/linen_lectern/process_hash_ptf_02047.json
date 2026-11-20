@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Linen Lectern cryptominer sample, as reported in campaign PTF-02047. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Linen Lectern Cryptominer: Process started from known malicious binary (PTF-02047)",
+        "note": "## Triage and analysis\n\n### Investigating Linen Lectern Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Linen Lectern cryptominer in campaign PTF-02047.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"2b11312b36c865894b71c9d9c2210a7e98643a0fb01a30cfab9335c379bb0023\", \"adac08e47bd3abe738a41c3a1c4d491aa4fb5371029fe140e5a5942685cd01b0\", \"a9cd1d8538a9100e19e92580df799a17d33cb271f0e26a16ea19c3a069aed190\", \"87c1a5fdd7a4bd1737307e9ad3df81eedc3af8fbc094b64ce1627ddfba7de8ac\", \"fd604c4c0b93d9216bd58753fac361453293d822d8cfc9d6db783a8915e55a22\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02047"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "c5491a0b-2fe3-56a6-b637-9729058d9f59",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Linen Lectern",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-02047",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "c5491a0b-2fe3-56a6-b637-9729058d9f59_1",
+    "type": "security-rule"
+}

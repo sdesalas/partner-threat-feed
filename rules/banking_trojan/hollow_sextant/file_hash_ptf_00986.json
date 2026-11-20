@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Hollow Sextant banking trojan sample, as reported in campaign PTF-00986. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Hollow Sextant Banking Trojan: File with known malicious hash written (PTF-00986)",
+        "note": "## Triage and analysis\n\n### Investigating Hollow Sextant Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hollow Sextant banking trojan in campaign PTF-00986.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"b9989c4907405bdf1aa5aeb9aa1f4897db0d9d3d1fd77e4cee2ea0dc3812c82a\" or \"b001c4ef2a65e4df02d8c84e13070786103411a94da7dfdbbb2ea4add587b3e7\" or \"b968c36e83aa5eeea8683ec0f3f534be9377b261d267a544673750975ce4dd91\" or \"877b1911f8fbf9e83b3d0f6b6af7b0c9e569c7b40aa008c9fcef6cadcc11197d\" or \"08ff163b6ecd59106a62e949282079ed9a2b2b118fb306cc8a622f111b3f22b5\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00986"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e6b3e01f-60f7-5714-8772-89cd6f1556b5",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Hollow Sextant",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-00986",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "e6b3e01f-60f7-5714-8772-89cd6f1556b5_1",
+    "type": "security-rule"
+}

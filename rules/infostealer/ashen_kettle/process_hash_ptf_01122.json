@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ashen Kettle infostealer sample, as reported in campaign PTF-01122. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ashen Kettle Infostealer: Process started from known malicious binary (PTF-01122)",
+        "note": "## Triage and analysis\n\n### Investigating Ashen Kettle Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ashen Kettle infostealer in campaign PTF-01122.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"2d6eef7b1685b0822e36d8349ecf57f42f8114f0b2503d7a91a295393262dbf9\", \"29ec1ec855a8844025622d7103f31743fb4e726b93bd74157eb17772dc187605\", \"fb162730e9c8369fca242cd5f1b42397c4901154909b25d9b0f178eb5917bd70\", \"0c6d94f6b516e1be029f36414a8d8b35ae325621bc12023c621f9556cf989a61\", \"c0a7b027fd66cc6e44ec2ccd4496306438e547ddff8dc753eab9d5cc66fb6ae8\", \"108318cd0f8418339d379c77e644efb9ceb3ffdbb9e11bb0c473d938d7e4cade\", \"1f21a926c6061c99ac8bf1c2b6a449ecbf436fda338ad64af9088ff59c03e44b\", \"a9992015fb4e5ff42896fce55cf963c40be967913654b6c9412fd4d9fd4e4e92\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01122"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "93ce761e-2679-59f2-a47e-b5ddae481d4d",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ashen Kettle",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-01122",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "93ce761e-2679-59f2-a47e-b5ddae481d4d_1",
+    "type": "security-rule"
+}

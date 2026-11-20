@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Russet Funnel cryptominer sample, as reported in campaign PTF-02193. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Russet Funnel Cryptominer: File with known malicious hash written (PTF-02193)",
+        "note": "## Triage and analysis\n\n### Investigating Russet Funnel Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Russet Funnel cryptominer in campaign PTF-02193.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"95e826d30c292ea2b70f7b49b8196aead6d148d2c9552e451db0db2a65eef42b\" or \"8a33281f3f377d8e3da41d0ad16d3f98d866a6656310942c1058321ce2f8cebf\" or \"67c1fd5c428775d690e227bc9f62608f105017c9d11ca5fbf2233bda62a8aef2\" or \"c26e9e7fb778a1677c177c23640d1de47d179164b11bf567993d8c4f0c11bf70\" or \"f8c32e22f45ba85fe9c99d7f2fa4ccd7b336f15c50eddf6d981657c86a6e70f1\" or \"5bb9c2e72e010940828276f5e80b6b1f20fb1fcef26a46ce8f236583ac53156f\" or \"2d61d640b9fff985c3d4ce18af05951b4c3271f847c98b7b152e88bd5462f58a\" or \"777723277f27d522ceb0975c19d25a217cfcade8c28bca2faf53656d99d9ac18\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02193"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "325f187f-14c7-5099-8248-c271065043db",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Russet Funnel",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-02193",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "325f187f-14c7-5099-8248-c271065043db_1",
+    "type": "security-rule"
+}

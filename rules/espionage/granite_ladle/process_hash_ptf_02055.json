@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Granite Ladle espionage toolkit sample, as reported in campaign PTF-02055. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Granite Ladle Espionage Toolkit: Process started from known malicious binary (PTF-02055)",
+        "note": "## Triage and analysis\n\n### Investigating Granite Ladle Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Granite Ladle espionage toolkit in campaign PTF-02055.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"143794cde2a57aa6ecd9acac170109addcb61bb063dcc992505e65a1ebe93abb\", \"46458b677acfe1ac312e871ec4ceaaf89dd5ecbf19e667b09c789aa92fe16990\", \"75a34993b5efe0a6b60ceafc3c900e9fcb5a1cbe414da786cccb819f2995b2bf\", \"dc347c538e3d598e8122ff9dec7ac52b6b875a57888985ec727a7b873632800d\", \"d423c10c3d384e9a92fa68c211b00047e779f11f2219407f6bb260a13f0a9056\", \"bd59b60ccf483b222cf607c0c1be67b5e0279836594d8898b58d4572dbf8eca2\", \"58d3721c52878778c87bd28d71a22ca8c9d21be2f086f6fd0edbf46a38a6e14a\", \"74a9be23847ddb8678a8eceed5d31bc5c66a2e6baf0110bc9740c9e5a8e8d6b4\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02055"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "124512b3-1486-590c-9e36-42cb0364982c",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Granite Ladle",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-02055",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "124512b3-1486-590c-9e36-42cb0364982c_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Cedar Gimlet remote access trojan sample, as reported in campaign PTF-01525. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Cedar Gimlet Remote Access Trojan: File with known malicious hash written (PTF-01525)",
+        "note": "## Triage and analysis\n\n### Investigating Cedar Gimlet Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Cedar Gimlet remote access trojan in campaign PTF-01525.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"fd6c11356a124280da0b2bfbe1bc60ef8b97ec9fac998c5dbe8fc50c5066f468\" or \"be16dab65b1d970b240ee58cfe0e98d85cba410bc2a62a14d8c9874788fd6a43\" or \"6b88d78e636c6701424646d0e28ebd6b68e855b1c0b9449674c2ab446ba9773b\" or \"64d832a94d81e46a223c9538fe85fd0d86825d0c2a08a8b52594c621c5613e6a\" or \"c0e78e4453b4789f65a3a7f6561b6bbecf92bf2bc2757414c49f488073f236b3\" or \"2f312989e772386a382b9fe5e960295d614eb3ee31717846964bcfc049c11bf4\" or \"53db3c6fa84189048b615611ae9745c00dfe0245fec1be6728c56fb738645592\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01525"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "0f094164-a1f8-5b06-9981-d68d1d74f145",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Cedar Gimlet",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-01525",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "0f094164-a1f8-5b06-9981-d68d1d74f145_1",
+    "type": "security-rule"
+}

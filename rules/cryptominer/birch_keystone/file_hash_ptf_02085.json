@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Birch Keystone cryptominer sample, as reported in campaign PTF-02085. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Birch Keystone Cryptominer: File with known malicious hash written (PTF-02085)",
+        "note": "## Triage and analysis\n\n### Investigating Birch Keystone Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Birch Keystone cryptominer in campaign PTF-02085.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"47f6ef38cf221d83ae361fa3021a6b46ec91a263498d0b9d8bd1fdd2f5401151\" or \"4024a5dd61f847eff34300b13cc56a77e3216f1bc9f1b06c38c3eb1892f4f98b\" or \"31f531f56be334a9461b9713ea0769b8f528925211e05f2a32e87ddc93848db0\" or \"8e30872c921b571872c5cc65966ebb0a0770fe40123ec813975fdf26bd55b64f\" or \"85d9b40fd15ccc739e019631f8ee91af515dfa3486ed891603700a2b0e5aa8de\" or \"3cbe563865fefbc5422520dd9fe540cb2c3308dc5e0e68d2b2f8a6463a4088b6\" or \"f5636b64995eb056e8b92cd121808a9d3e0fba7d8959fa5fe3c596938a697307\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02085"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e3d1e814-9ba3-5eb5-b790-84725b960f0d",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Birch Keystone",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-02085",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "e3d1e814-9ba3-5eb5-b790-84725b960f0d_1",
+    "type": "security-rule"
+}

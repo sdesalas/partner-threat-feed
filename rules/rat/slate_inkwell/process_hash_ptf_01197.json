@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Slate Inkwell remote access trojan sample, as reported in campaign PTF-01197. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Slate Inkwell Remote Access Trojan: Process started from known malicious binary (PTF-01197)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Inkwell Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Inkwell remote access trojan in campaign PTF-01197.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"3707993cfb12977cc31cc872f49999773f32f4cfb9704c7b082d65b8efe1a4de\", \"693c87faff84bda4d814789b8e590354556128e9780facbd20537877e617d503\", \"18e342110ab05a4a687e6b5e000ac1441ea95fae537f16aa78fb55f22b535121\", \"283a0ddb521939c42b4e843be144ec609be83d2fc4f764e0812ec58807b0b4d4\", \"ab38bd0fe5d4b329d584897d6f6d89896fc29b839ee2ed62c3c20178307959dc\", \"4774da0a1523922895c99d45af783d18c9e89e35b7c9758f74708a8f64e4333c\", \"0d29ccb574f48dcd860c02dd4d29a636b534011dbc8465cb232c931ceb76d322\", \"52ea2ed1809960e46ece6f676a8de320c0fd2485219114aff69d584a78311822\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01197"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e770046e-b1e9-5bcc-9c70-ae6a8e0add8c",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Slate Inkwell",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-01197",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "e770046e-b1e9-5bcc-9c70-ae6a8e0add8c_1",
+    "type": "security-rule"
+}

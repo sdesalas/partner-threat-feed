@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Slate Mallet remote access trojan sample, as reported in campaign PTF-01451. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Slate Mallet Remote Access Trojan: Process started from known malicious binary (PTF-01451)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Mallet Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Mallet remote access trojan in campaign PTF-01451.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"707545f292422379ce22e4531eaffc3838043b9a38ef5f7f699c54439a873ff6\", \"777f90f32fbd34127a1b309a9ffc0d1c564890f3dc0c342717e95562f56ca70a\", \"e25f1799ae61ed6fbac71da05b25485a622200521020b9d53e2daaa6c6bb52e3\", \"78b52ef9c75e2dc4f44ecfe2a3396b27b83841ef3c93bf6f49edb582f1d2df7e\", \"4eaab1ae2b425e6c05a272d5255e02eb541fbafaa1d9268a74f172a6ba636936\", \"5ec04ab112e7f98d1cf5e3b3a97111dd5c5ac871031f0a8945606f2890f5dac7\", \"ce4ae0f1719265290259e494952ef33051f03ade58bd52b1d68133372fb45e37\", \"0758255be29034fbc30a0b59cba4b6b17d0db8152e9da33bf0d170b9f7e6dcef\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01451"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "70d5152f-a255-5a1e-a1ec-6644edca5f1e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Slate Mallet",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-01451",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "70d5152f-a255-5a1e-a1ec-6644edca5f1e_1",
+    "type": "security-rule"
+}

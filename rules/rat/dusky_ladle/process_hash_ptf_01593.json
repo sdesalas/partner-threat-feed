@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Dusky Ladle remote access trojan sample, as reported in campaign PTF-01593. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Dusky Ladle Remote Access Trojan: Process started from known malicious binary (PTF-01593)",
+        "note": "## Triage and analysis\n\n### Investigating Dusky Ladle Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Dusky Ladle remote access trojan in campaign PTF-01593.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"17358531fa682e4d3eaf206c57bbbfeed04b7e07853f2550cfe02ddbe02ad4ef\", \"041ee8e0055c5ab5ae0818195169fc970f00c8fb9d030ca435352224c957ed77\", \"15bfb22f461a50a2d098122f77bf3de2a38fca00d6df57cf332b456ff3a3dcbc\", \"33151bc47e658b41d643b1d324ce32ce2b4b23aa6a0548cc3897e932c6656c18\", \"9cb42a2b5e9b21fed3944a409e9d430c397bd292b80fd3fae99651438b1ba1f6\", \"995ec3b4e3aa3b41f69c5b3a0dc44be649978fa13fd14955a9aa1e75055b74e7\", \"a468fd1437348dc47306894f32e76a092ec01f3ad6278ae1cf441add874335cc\", \"8e50e7425b63119e814d1cf716a04481ab2097aadad6aaec329c5743838ead0d\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01593"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "db9e7ed9-5ad0-5bec-aab4-cace17d90d0d",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Dusky Ladle",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-01593",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "db9e7ed9-5ad0-5bec-aab4-cace17d90d0d_1",
+    "type": "security-rule"
+}

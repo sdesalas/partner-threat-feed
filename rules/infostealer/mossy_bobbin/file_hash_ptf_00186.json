@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Mossy Bobbin infostealer sample, as reported in campaign PTF-00186. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Mossy Bobbin Infostealer: File with known malicious hash written (PTF-00186)",
+        "note": "## Triage and analysis\n\n### Investigating Mossy Bobbin Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mossy Bobbin infostealer in campaign PTF-00186.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"f2df6d063c12c22416503d99a7884fc3cf0358ec40477f8870d4a64ca77a5441\" or \"e3578d44eaab3aa42d71aa2f4126588cb64dc1c0ca0e7d6411754eeab1568b74\" or \"18cb6716e4416017223e1f0d2f1c75e669a6d4264e8623af65e7f24d142b3c09\" or \"37c0be31ee313df45df1ffaf6955287161be7be6e67ae5b7cfb6b33e2be3a5a0\" or \"661cb554b5bcf854728eadbb47e0dda6c47f8d73ef53bb321a18284481722c22\" or \"f66f0281d3660c24cf4b236ba8c0f005c4c044c79bc4c16e4d8bef1395044555\" or \"ed39a78d38d9d10e80b0ccbfa28976df381d6e4fe784562002e428c365370a68\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00186"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "acff9437-ace7-5470-8efd-c586283f1a46",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Mossy Bobbin",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-00186",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "acff9437-ace7-5470-8efd-c586283f1a46_1",
+    "type": "security-rule"
+}

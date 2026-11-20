@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Cedar Spindle cryptominer sample, as reported in campaign PTF-00693. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Cedar Spindle Cryptominer: File with known malicious hash written (PTF-00693)",
+        "note": "## Triage and analysis\n\n### Investigating Cedar Spindle Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Cedar Spindle cryptominer in campaign PTF-00693.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"551e0da78970b44087c4086c73c2fda26b522b7fdcd0a2c3769adb38f60fcab3\" or \"5e3bca4800b5fb07081ff1d188bcf6f39c7f8609365f41a86938fb5231d6ba5d\" or \"811489117ba84d14f46a398916453f0198505accf4ab2ecc8bfa50d3488ea758\" or \"87e51a9ac73ec793c78b7c8de06de2ae03db658ceb06437291ab599219a85e32\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00693"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "7b51dc38-a5cb-5646-b6a7-70e02b0a57a2",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Cedar Spindle",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-00693",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "7b51dc38-a5cb-5646-b6a7-70e02b0a57a2_1",
+    "type": "security-rule"
+}

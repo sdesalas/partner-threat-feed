@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Linen Loom remote access trojan sample, as reported in campaign PTF-00757. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Linen Loom Remote Access Trojan: Process started from known malicious binary (PTF-00757)",
+        "note": "## Triage and analysis\n\n### Investigating Linen Loom Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Linen Loom remote access trojan in campaign PTF-00757.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"ebc7d3ee7f57b5f2a1bc37712348786f08d398303eedf2d5308ccd592c454dcf\", \"304ea939d6ef853984b316c462d3503d70fb4476e62df0e7bd44d46c5f3b5619\", \"d5c576499bd87c67d79afbb8ba44046d62cd124b96b02bec39431f4d74fe4840\", \"a75001af1bdf3b2534c82398948150f01014fc9043b5318db8e60f4557eab309\", \"0da7363e0b7df44d735e2d5fa0d268b5f0f9e1412b2a17e8ce20ff703f1b1eb2\", \"b888802678114fdcfcada2fd19c608ad6a9dab15031ccd4fd16628c1ade5a7c3\", \"78b1dbce97b9a9db12988063e61689a89fd769e01c2791b580f34bf80e2f134f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00757"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ae7d2e66-e2ba-561b-bf33-66dfbfa6b1a6",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Linen Loom",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-00757",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "ae7d2e66-e2ba-561b-bf33-66dfbfa6b1a6_1",
+    "type": "security-rule"
+}

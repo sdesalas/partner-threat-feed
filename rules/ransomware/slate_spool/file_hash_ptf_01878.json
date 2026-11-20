@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Slate Spool ransomware sample, as reported in campaign PTF-01878. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Slate Spool Ransomware: File with known malicious hash written (PTF-01878)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Spool Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Spool ransomware in campaign PTF-01878.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"be454d37e8fc300c137a8f775bfe221ec072a72c3d5724ed8988484e6eb1a8e5\" or \"4b35455e17c9658e4a33631f365b6845d59b35133d701b528644df08a99f2065\" or \"bf910d7937a49eab6d71504997b1271dffc10afb66a068ee75ca191570af1ac4\" or \"83f09a73184ead87d66501cbcf09deef964ef1d86ef23f7023b075ca07c476e1\" or \"2d5fa6040e0f97257a2b5d559106a46a4e659317efe833fb7aa6653c7cd853f7\" or \"1f7c48c7301c9e7a24dfdfc6f0171546c7135bac53db261b18ab234d7a539679\" or \"3288902268a464aa4aa4db6327b33682e8a5febb243ccfbaa896049201636878\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01878"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b0a5554c-0f10-51c3-93f9-8b57fb93c8bb",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Slate Spool",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-01878",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "b0a5554c-0f10-51c3-93f9-8b57fb93c8bb_1",
+    "type": "security-rule"
+}

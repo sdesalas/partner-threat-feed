@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Slate Lectern remote access trojan sample, as reported in campaign PTF-02251. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Slate Lectern Remote Access Trojan: File with known malicious hash written (PTF-02251)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Lectern Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Lectern remote access trojan in campaign PTF-02251.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"9648c7168bfb59268cb302b861c24a2041d1ad3f38431e5a176c536d72c5555c\" or \"d00c2a519db10908e2f1a52ec9d4c40a26f1efcb1bd66e92848fa5fd2c6cfe45\" or \"cd00cde6b46a8f812892912ca45f1133eaac1dca827759628b2a8b36c6c44600\" or \"2b67e0265352e5bdf2f93c61c05c891194af6b8a2c1e16be11b58cf4b3ed4351\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02251"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "fe5d3ce9-da3c-57b7-8c4c-e9e95e8c5fd4",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Slate Lectern",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-02251",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "fe5d3ce9-da3c-57b7-8c4c-e9e95e8c5fd4_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Verdant Pulley cryptominer sample, as reported in campaign PTF-01212. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Verdant Pulley Cryptominer: File with known malicious hash written (PTF-01212)",
+        "note": "## Triage and analysis\n\n### Investigating Verdant Pulley Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Verdant Pulley cryptominer in campaign PTF-01212.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"17566584ff7c3c258c9adee3fb6aa7d438c5d3cd984eaa11b2458688330f3676\" or \"cc44674a1afc8b7522fd8062442e25bb85d21f419a3d20be5942694029d2b8dd\" or \"87edd34c555837bef33a2bb54f0aa846b3d413d344b48aef8fbb1fdf4a9c8ef5\" or \"1cc81bc5a5289430a04a69814e525de6695fd394d6bcc3bf06b30ac67fcbf076\" or \"d0ea05bf0f829761be898ca17102e3291695e6a3270d37e21e944dc8219f7757\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01212"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "37b877e2-434c-589e-93cf-5b8dce1dddb1",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Verdant Pulley",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-01212",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "37b877e2-434c-589e-93cf-5b8dce1dddb1_1",
+    "type": "security-rule"
+}

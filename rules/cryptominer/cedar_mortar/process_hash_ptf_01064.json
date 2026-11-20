@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Cedar Mortar cryptominer sample, as reported in campaign PTF-01064. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Cedar Mortar Cryptominer: Process started from known malicious binary (PTF-01064)",
+        "note": "## Triage and analysis\n\n### Investigating Cedar Mortar Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Cedar Mortar cryptominer in campaign PTF-01064.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"4a267a7f9badd4ecfa48cc67f736ff781bc82eb293170d49162e610d6a3cecff\", \"274351f4600ed596c148d343340a1c0892774e6b8eaeb734914f34ceb3458e05\", \"aa7f7f0cccec6056f54fffeeb9ec152253f0fc5db289861c503a8b84e2231706\", \"eb78f76d61c9a05c8a7f8a1ca87cbd174ee5800d48781b2d108720bf1e33e6c0\", \"afafa649fb4b371f5b2532f778244bad954eeb00ee91eba9a03758ab2888cd74\", \"c13967e286d7f078f38d3a486ce6d4a241a20c9c35abba0b42d7cffa2c433112\", \"343a6bab9b4e1a1910ad16e64b66985f01285dd4d8efcc5f589a9839ba70f0c3\", \"e525ed0ea0e92be9a8b7e07d8c225002564623daf1618c4721c838284f1fe164\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01064"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "9cccf4a4-12cd-5ad8-8184-da73a5a9a5ba",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Cedar Mortar",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-01064",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "9cccf4a4-12cd-5ad8-8184-da73a5a9a5ba_1",
+    "type": "security-rule"
+}

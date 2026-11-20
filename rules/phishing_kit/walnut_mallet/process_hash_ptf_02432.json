@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Walnut Mallet phishing kit sample, as reported in campaign PTF-02432. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Walnut Mallet Phishing Kit: Process started from known malicious binary (PTF-02432)",
+        "note": "## Triage and analysis\n\n### Investigating Walnut Mallet Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Walnut Mallet phishing kit in campaign PTF-02432.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"7bda23ad2cae444ff9f7dbffb2818cffd0db9d64858dd6d7b38b8f2abd8eac2b\", \"c9af293cf5a656e719d9435a090a722401e9bb740e76482695a2bd777ae52485\", \"b0d6c9564052d308bd8c10d5fea9fd82f32483fc3a56f3bb78065feac542972e\", \"bd91143f71ad8913b48ae02eb230954070f7f4b4dce3baa2c843ef2afd6489d0\", \"654974ba3a12bf0d8e499396cf7982dab4e468dc414cc39190a2d8b51d527391\", \"5d1ee598e953aef40fb2f7e238a4b55837861c2d1ff55cf01b4912c41ce8fc0b\", \"2e6a95597bb1253c49ebb7feca4319f83f481d88e601433a50c53c64909c7985\", \"5c962c99347c06885c3e2eccd7acb30338fe93ab8f2f534196946167070b3d93\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02432"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "74852232-eda8-5252-ab82-3146c2015d73",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Walnut Mallet",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-02432",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "74852232-eda8-5252-ab82-3146c2015d73_1",
+    "type": "security-rule"
+}

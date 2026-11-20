@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Dusky Mallet loader sample, as reported in campaign PTF-00127. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Dusky Mallet Loader: Process started from known malicious binary (PTF-00127)",
+        "note": "## Triage and analysis\n\n### Investigating Dusky Mallet Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Dusky Mallet loader in campaign PTF-00127.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"771ded9395a654af48cca19ddee1b97d052c6a827a2d342b01d487ac4b629e32\", \"9e4f9e5295034253f49867e79e29b8cbeac55ecd56e701b14d432d23033f4b46\", \"1291415d220b4a4640e7636d0692da5f7b375ebb1944c4b3f20c3aa660cfd6f9\", \"4bdc07d54c343fa064b30c98d68eed50855df843085bef04b591f2f37c4886a2\", \"3602cf74e138fb2e291ddbcbf386d6fc6fe402128c96b015efdfa4e7a2de89ac\", \"9c2631fb5cc79491de1d15dd763aec109906b141893bffdbb09986013eed6018\", \"0cf3a502db1b5d26d964d5bf2f9a40f5b73081add0d25bd615c3703ffdfdf19d\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00127"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ccbb20c6-c1a5-5f13-be0a-076321986cd2",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Dusky Mallet",
+            "Threat Type: Loader",
+            "Campaign: PTF-00127",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "ccbb20c6-c1a5-5f13-be0a-076321986cd2_1",
+    "type": "security-rule"
+}

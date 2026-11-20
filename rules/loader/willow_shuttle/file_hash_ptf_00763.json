@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Willow Shuttle loader sample, as reported in campaign PTF-00763. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Willow Shuttle Loader: File with known malicious hash written (PTF-00763)",
+        "note": "## Triage and analysis\n\n### Investigating Willow Shuttle Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Willow Shuttle loader in campaign PTF-00763.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"3afd082b797ba9f7ff9072665255728464682df0021b0a40ce424b81fb932043\" or \"ca786b50cdab6fdfc34248e63c87cc46a021784252babe04b528e41968c06102\" or \"da122705e1f9cb9cf4778b928e37e85165633ce21c1c2ec85d7897b7c1836fdd\" or \"76453419497c8f528c8b2bf3af204877cc4888159532e94f7a2eafb5dfc2ef35\" or \"e4c89675c838a6716681696822e599ab7f1f66eacdf0de72c7080c630688594d\" or \"cbc4bc2875bc1a80b694100c80fbadc75dc7cb9d2b117c805066bd5c3def6844\" or \"62271fae12f8260c4a3f166c94056f8afcf31db844099b2c90f58da6bf592de2\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00763"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "9f462fa0-daa9-5ae4-ac38-318ae8744a6e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Willow Shuttle",
+            "Threat Type: Loader",
+            "Campaign: PTF-00763",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "9f462fa0-daa9-5ae4-ac38-318ae8744a6e_1",
+    "type": "security-rule"
+}

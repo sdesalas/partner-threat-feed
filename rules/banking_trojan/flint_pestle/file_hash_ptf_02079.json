@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Flint Pestle banking trojan sample, as reported in campaign PTF-02079. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Flint Pestle Banking Trojan: File with known malicious hash written (PTF-02079)",
+        "note": "## Triage and analysis\n\n### Investigating Flint Pestle Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Flint Pestle banking trojan in campaign PTF-02079.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"80e1ae73dac6373c8f0061b4bed1572dead08b7b1bf48dd143456c59f7302e38\" or \"d96ba47e8ada8e7ce1d1ff24718c18fc617b2d2a455fdce875f86dcd09b83a49\" or \"61a9d7f7afec6e796c4757f39c0137e066b9cbffcb1cf016f6df99e6c5182a64\" or \"e1a4a8989976aadfe160a48fbbd4c304a7b4a79d22fdb2bb83c38ebcfd07d121\" or \"601dedcf7adfde40e0c7279c9d04e9c60d821f048c1854ed5baa0c8a35e11e49\" or \"58c98fdfc25fa7c50470d7f763c190f4d5eb0d7237c6d76cc35c188fdbc6f261\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02079"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "cf35ebe4-bc0b-54a0-a137-fa58d465753b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Flint Pestle",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-02079",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "cf35ebe4-bc0b-54a0-a137-fa58d465753b_1",
+    "type": "security-rule"
+}

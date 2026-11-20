@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Quartz Keystone infostealer sample, as reported in campaign PTF-00381. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Quartz Keystone Infostealer: Process started from known malicious binary (PTF-00381)",
+        "note": "## Triage and analysis\n\n### Investigating Quartz Keystone Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Quartz Keystone infostealer in campaign PTF-00381.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"ded4bbbe0bdf12975a7a5f8d536f34e68c6fa76740e8006fe6ded7c0013bff02\", \"a762e8e04e1dfa68919035fe446bc9580a74e8bf30c8bff1b4e3e491c2e49946\", \"1b981c96ffa9ec880c0926cf39d8e1a2081066cfdaf71f22f28b3d5e54694da8\", \"8414e23e791d3a4851e83aff15679dcebcab8d71c11ca5f4e95308390b071e86\", \"560ada344acb8472e3da59fdc06381bb8a30e6837780a903a608c3dd77fef3ef\", \"e69146996128d42a52e222414bc74bfb2b122a93a55d487fe8e1a0866738bdd8\", \"b2462bd8aa2768385614bd496ac7bca6de3d8a41c00d13ec08a7eee0ee776a18\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00381"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f0c0dea9-8f3e-5fe8-9e3d-0c0d752766e6",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Quartz Keystone",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-00381",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "f0c0dea9-8f3e-5fe8-9e3d-0c0d752766e6_1",
+    "type": "security-rule"
+}

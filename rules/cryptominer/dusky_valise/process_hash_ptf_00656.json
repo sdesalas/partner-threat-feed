@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Dusky Valise cryptominer sample, as reported in campaign PTF-00656. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Dusky Valise Cryptominer: Process started from known malicious binary (PTF-00656)",
+        "note": "## Triage and analysis\n\n### Investigating Dusky Valise Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Dusky Valise cryptominer in campaign PTF-00656.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"792d72081f5c3e8d61fe70835f5e0492462fea4efb1be3d39b8f93a92892ec60\", \"a4f4d92a2ee0db4f3c63bc3a81a2b3fda7e2712576e9958be8892b2f43cfaa5c\", \"fae901e92c5b8d45d8ffeff06afc9ce35d695db71036a1611dd4ec4244504f74\", \"41b9a843fdee548a5ca99dc82c2f3bd6d0916c62946eeb2e194b29924f4a3216\", \"c691d4c68652d38913a7c33a18bb04e4e9c6bfe6a932dfd844004fb4f5dcacfa\", \"df6dff377cf135b29377add958d660f310674936f9832a3874fd4446e9df1697\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00656"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "5260864d-a4cc-5226-8b68-ed55e319d636",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Dusky Valise",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-00656",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "5260864d-a4cc-5226-8b68-ed55e319d636_1",
+    "type": "security-rule"
+}

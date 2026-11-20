@@ -1,0 +1,79 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies DNS lookups of command and control domains used by the Hollow Pulley espionage toolkit, as reported in campaign PTF-00995. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.network-*",
+            "logs-network_traffic.*",
+            "packetbeat-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Hollow Pulley Espionage Toolkit: DNS lookup of command and control domain (PTF-00995)",
+        "note": "## Triage and analysis\n\n### Investigating Hollow Pulley Espionage Toolkit: DNS lookup of command and control domain\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hollow Pulley espionage toolkit in campaign PTF-00995.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "dns.question.name:(\"edge-cloud4.invalid\" or \"files-relay24.test\" or \"files-track81.invalid\" or \"mail-relay24.invalid\" or \"mail-static55.example\" or \"static-static78.invalid\" or \"update-relay93.invalid\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00995"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            },
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "6c42f627-4e29-5b6f-a367-cc040b6876cc",
+        "severity": "high",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Hollow Pulley",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-00995",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1071",
+                        "name": "Application Layer Protocol",
+                        "reference": "https://attack.mitre.org/techniques/T1071/",
+                        "subtechnique": [
+                            {
+                                "id": "T1071.004",
+                                "name": "DNS",
+                                "reference": "https://attack.mitre.org/techniques/T1071/004/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "6c42f627-4e29-5b6f-a367-cc040b6876cc_1",
+    "type": "security-rule"
+}

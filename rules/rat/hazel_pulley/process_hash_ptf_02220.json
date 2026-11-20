@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Hazel Pulley remote access trojan sample, as reported in campaign PTF-02220. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Hazel Pulley Remote Access Trojan: Process started from known malicious binary (PTF-02220)",
+        "note": "## Triage and analysis\n\n### Investigating Hazel Pulley Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hazel Pulley remote access trojan in campaign PTF-02220.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"39edb69ac8883815612090084c043a8b88d9ea3b11d12cd7bcce8efe2dd077f6\", \"3dd19de3ebce58365e60c31561faa45a5ad7349c8b70a70d2153d39f3f676122\", \"6bd20195ce2613aa8b7abbe15fd916d8bfd54f379b1b02f1a89bd4364700e81c\", \"03746459bca8a0437e3a4f35072f57ff7e24b82065b64faa12a12fd05e510e93\", \"abcc34333f33c277aa457107806831e0eb132b920a28dd14853904d6ae01e590\", \"4c5fb26c59c2d9281028b1563a758a954664e300be2af76e2a16edfb68caed17\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02220"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "76377377-3efc-5326-b1f6-4f654ba27fa6",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Hazel Pulley",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-02220",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "76377377-3efc-5326-b1f6-4f654ba27fa6_1",
+    "type": "security-rule"
+}

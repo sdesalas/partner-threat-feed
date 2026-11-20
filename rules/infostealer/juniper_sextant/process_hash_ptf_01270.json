@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Juniper Sextant infostealer sample, as reported in campaign PTF-01270. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Juniper Sextant Infostealer: Process started from known malicious binary (PTF-01270)",
+        "note": "## Triage and analysis\n\n### Investigating Juniper Sextant Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Juniper Sextant infostealer in campaign PTF-01270.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"b54dfc7fb535d714354e824b1dc1a1a9432d30a6539b24605f7e0c150a20c238\", \"4e6820cc7cf4124b45c6cffc1c797ef0864de05ce2de5f115e461d0b6ced75dc\", \"989c1395c99145745742c2e4b5ade1aaef0f8ffe100af7c7d915091311561b81\", \"4581fc656bcb4d0611b9d82e845022143fe80d57505f01a6bb3b3c8c28295b9f\", \"b84c6feee3c17953669f87600b01e46d165da5cb328d691c5d60513bc56fd159\", \"63b9ccce3fa800726a8587a5a1d4086a00411363a9284a90575b0284c0f6d083\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01270"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "dbf0e031-29c7-568b-b4ae-d8338b17081f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Juniper Sextant",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-01270",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "dbf0e031-29c7-568b-b4ae-d8338b17081f_1",
+    "type": "security-rule"
+}

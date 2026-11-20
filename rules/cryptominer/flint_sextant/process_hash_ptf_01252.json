@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Flint Sextant cryptominer sample, as reported in campaign PTF-01252. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Flint Sextant Cryptominer: Process started from known malicious binary (PTF-01252)",
+        "note": "## Triage and analysis\n\n### Investigating Flint Sextant Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Flint Sextant cryptominer in campaign PTF-01252.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"ecabca8ab6678fcdd8eccbbedc7696e7812f9ec7ff0ec8529bdc475581383c6b\", \"3908b66833f5414e5c65c1a2be0a7a3bcc7e744fad708a5c63017df457bf48dc\", \"e78a4aebb172017b3e2c8ac327a0648d8404003a19af00939de763943b187122\", \"0f1696252c811ed4885f929e111272f6e40dee7a3dfd39927eb47a26906b657c\", \"393a663c4a93a9ac609d7483e7f4540c1dd5de0bad1e45d585481745ce289e07\", \"20099b6756d034729474e26621f3ab832bbf333600c74d72d8d94a06d3d61a9a\", \"e063d78449e2b627830ff534c47125a5459650ca1b8bd6787cf9cda40cffb36e\", \"d952b62fce580f640a0cee6e95e83a9128b50954668205e37def4e7fdd06d035\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01252"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "67980127-cee7-5b45-8218-c5b93d92e7b5",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Flint Sextant",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-01252",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "67980127-cee7-5b45-8218-c5b93d92e7b5_1",
+    "type": "security-rule"
+}

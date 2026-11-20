@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ochre Easel loader sample, as reported in campaign PTF-02448. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ochre Easel Loader: Process started from known malicious binary (PTF-02448)",
+        "note": "## Triage and analysis\n\n### Investigating Ochre Easel Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ochre Easel loader in campaign PTF-02448.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"8e436f9f3870589390e9daa0755c4f9c6e2e6034ad6f37c9879520e8c045fd50\", \"cd28e2b27a6d5552f739ba245781a48532d542298fba0d2ec876833423b000b7\", \"c425b72ab7c812d4287712a1ec3279774b8cf6d6e5bf70bdb29056b38262c958\", \"71e2c541d50dd75ff8514a75f5107baa317c7006ce82df487e7a62f3f924da0c\", \"cb8298e2730499a626a349c62cc2703e267b420a2b6e17e29fdada3e8ce147df\", \"a306702e911769da199dad5f8fa585d4b308170e6bd9679b9df2969504dda8f6\", \"af681e5a512e826ab68a31568fe6fec9b64a7672fc62af344fb43eaf3a280abd\", \"a7712d4ad9e07db374f5fa2ba65c269e05eaf57372992af6df70fdef64a78bc5\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02448"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "a4a14d4c-b023-5fc7-884b-0842cc7e82cf",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ochre Easel",
+            "Threat Type: Loader",
+            "Campaign: PTF-02448",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "a4a14d4c-b023-5fc7-884b-0842cc7e82cf_1",
+    "type": "security-rule"
+}

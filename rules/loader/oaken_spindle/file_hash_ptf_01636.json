@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Oaken Spindle loader sample, as reported in campaign PTF-01636. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Oaken Spindle Loader: File with known malicious hash written (PTF-01636)",
+        "note": "## Triage and analysis\n\n### Investigating Oaken Spindle Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Oaken Spindle loader in campaign PTF-01636.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"c7cbcaa274dd0964e0fae4967ed103f69c729b686c9c61772fd2da912b2e27e1\" or \"d65168dea6c8c4c5f10a575a63b77eda2e0185116407af7c431515eea6f0c9a9\" or \"43affc0fe48d2a6a3c18cd9375a9de75e8a2e6ee7c1dc712e26ec8fde887ad65\" or \"dd5c2d2fd6cc02fa754adc50a22781cd11be2c350ecbdb4098214dc48f8f9f16\" or \"cb82a395a788dd578eef4277ca5768282d283636b8fee8cc68aa69b440c2bf79\" or \"144d338452ce7577505b0fa4fde6b123e302572299bc817a84b56a560c680e89\" or \"0e9e9b55738deb17b05ad601aabc3d70a95a717339ac17ae1eb2704507c4a55b\" or \"7550927eeb10d98222a1c455bdcb1048a44fee5a3b235c8983a3f40624824182\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01636"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "7a41f278-be56-5e6d-b8f6-5c823bf670c6",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Oaken Spindle",
+            "Threat Type: Loader",
+            "Campaign: PTF-01636",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "7a41f278-be56-5e6d-b8f6-5c823bf670c6_1",
+    "type": "security-rule"
+}

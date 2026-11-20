@@ -1,0 +1,69 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies three or more hosts resolving command and control domains used by the Nickel Needle infostealer, as reported in campaign PTF-01915. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "language": "esql",
+        "license": "Elastic License v2",
+        "name": "Nickel Needle Infostealer: Several hosts resolving command and control domains (PTF-01915)",
+        "note": "## Triage and analysis\n\n### Investigating Nickel Needle Infostealer: Several hosts resolving command and control domains\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Nickel Needle infostealer in campaign PTF-01915.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "FROM logs-endpoint.events.network-*\n| WHERE dns.question.name IN (\"auth-cdn99.example\", \"cloud-media58.test\", \"node-portal87.example\")\n| STATS host_count = COUNT_DISTINCT(host.id), hosts = VALUES(host.name) BY dns.question.name\n| WHERE host_count >= 3",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01915"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 99,
+        "rule_id": "7991fe7a-102e-5a64-9c32-bfdb71718d61",
+        "severity": "critical",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Nickel Needle",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-01915",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1071",
+                        "name": "Application Layer Protocol",
+                        "reference": "https://attack.mitre.org/techniques/T1071/",
+                        "subtechnique": [
+                            {
+                                "id": "T1071.004",
+                                "name": "DNS",
+                                "reference": "https://attack.mitre.org/techniques/T1071/004/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "type": "esql",
+        "version": 1
+    },
+    "id": "7991fe7a-102e-5a64-9c32-bfdb71718d61_1",
+    "type": "security-rule"
+}

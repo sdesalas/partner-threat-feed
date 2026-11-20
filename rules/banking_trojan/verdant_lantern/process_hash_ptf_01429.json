@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Verdant Lantern banking trojan sample, as reported in campaign PTF-01429. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Verdant Lantern Banking Trojan: Process started from known malicious binary (PTF-01429)",
+        "note": "## Triage and analysis\n\n### Investigating Verdant Lantern Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Verdant Lantern banking trojan in campaign PTF-01429.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"7c41b364ef08426a3b890f4b8fce936375a50eecda273342b3109c3bb6d2efd9\", \"4884cf874b827897129ee5e98cc73a5208830f131eaf1338828f396fbadd6cdc\", \"12b8c5662a616402d7575cf59e12df7fd108982c564f2b8f207091ddf3b2ff0e\", \"642a18723efed32eaa9fdd310871b33e2cf5830abadda0507b9010230506616b\", \"d5f8426c30759692fc8ffe1464e2734b851e9ee9bf761aa56d1033f6e3161b9b\", \"bce54912ffbae345ca6f2f896f9da9fc8369a079a588a14f5e0b95315cc5da9d\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01429"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "0df72967-d50a-53f1-905f-d80374586b40",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Verdant Lantern",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-01429",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "0df72967-d50a-53f1-905f-d80374586b40_1",
+    "type": "security-rule"
+}

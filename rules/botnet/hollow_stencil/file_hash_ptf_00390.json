@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Hollow Stencil botnet sample, as reported in campaign PTF-00390. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Hollow Stencil Botnet: File with known malicious hash written (PTF-00390)",
+        "note": "## Triage and analysis\n\n### Investigating Hollow Stencil Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hollow Stencil botnet in campaign PTF-00390.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"d1c65be49c13acc1956e818149a6fbbf766d9b46fa667ed1f2a51f25af3fb202\" or \"93daf91378a6d324e1eb1acaf53fd2178e47d053c41b679797a092e2144ef020\" or \"596590720342ae5354d6527eec6754ecf3d25fcf71a7577a5ec991c72dfdee45\" or \"b502c469c52ce9408b746049f2045dbeb1da8d39d0d0316a025342296e2606b6\" or \"f1d75ce4c4799691daeef1ce039d880a86acc0f04b2b6b0d06fc173edd9a0043\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00390"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "68d195be-05ad-5605-ab9e-e3f05ebe5f18",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Hollow Stencil",
+            "Threat Type: Botnet",
+            "Campaign: PTF-00390",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "68d195be-05ad-5605-ab9e-e3f05ebe5f18_1",
+    "type": "security-rule"
+}

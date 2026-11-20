@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Russet Kettle banking trojan sample, as reported in campaign PTF-00686. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Russet Kettle Banking Trojan: File with known malicious hash written (PTF-00686)",
+        "note": "## Triage and analysis\n\n### Investigating Russet Kettle Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Russet Kettle banking trojan in campaign PTF-00686.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"f19f36529c579d471feb0f027cd48a9616913de0898acc123e41596e54bdf5ce\" or \"388edc9cdfa91b0ea02ea97fdad2a2e9db424028d0124abfb25b1054a50bcfb7\" or \"f88b23dfbe680cedd928f9b52e4ee08843638ed0329b2193c0d670ad1a22ec68\" or \"76a53b1ee34313c792b9ae90269648b186787f815e9a648e89244592c8c2190a\" or \"324a13b6ca6fec3b1aa90d81ca36de95d856513f373917b7b4a8239f68049aa0\" or \"805518b04e7adc0ad6a79a9b45c71d36896e663e2416f24a658dcb460ff6403f\" or \"9e6b7024f1aab2897f18f2425b74e0cbe74d2561f25eaf76333278126245f5eb\" or \"3acfa9a566282ad244625d9095ada1ea027e7528db83eced136178bc0733ac25\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00686"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "1f2fdeb6-d81b-51a4-85ec-2df65f36f2a0",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Russet Kettle",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-00686",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "1f2fdeb6-d81b-51a4-85ec-2df65f36f2a0_1",
+    "type": "security-rule"
+}

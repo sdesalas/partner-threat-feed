@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Verdant Funnel loader sample, as reported in campaign PTF-01490. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Verdant Funnel Loader: File with known malicious hash written (PTF-01490)",
+        "note": "## Triage and analysis\n\n### Investigating Verdant Funnel Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Verdant Funnel loader in campaign PTF-01490.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"e227fe666c469456ab505f3e5e90456ae56facba79fddc48fce586bb93ec75b9\" or \"409b810e0fb035ba43d9594086bf70f9e2f6c4e72bc007fd02b0a6d38d8f41c0\" or \"7b022aac606a197e1f1586fdf7ba9e833982c7f9a32ded3886906ba313c5f601\" or \"fc2838b0ac9711eb87af92fb856dca20df05fe828fca539a7fd5a531505b81a1\" or \"3bff92138df1642396cee44d816583d8117232ac3aca8501a26692c96d2a7478\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01490"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "14b9f41b-b062-5418-ab02-dce32c8f1abf",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Verdant Funnel",
+            "Threat Type: Loader",
+            "Campaign: PTF-01490",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "14b9f41b-b062-5418-ab02-dce32c8f1abf_1",
+    "type": "security-rule"
+}

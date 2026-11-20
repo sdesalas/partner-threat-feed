@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Nickel Keystone espionage toolkit sample, as reported in campaign PTF-00744. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Nickel Keystone Espionage Toolkit: Process started from known malicious binary (PTF-00744)",
+        "note": "## Triage and analysis\n\n### Investigating Nickel Keystone Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Nickel Keystone espionage toolkit in campaign PTF-00744.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"76a883f948a5900da8c2114e6bf1e5aff59d6692434fed7e75aba129fbee4863\", \"60bb027e9e5a265dc9f9a43cacb94101503d10995afacc7f0dab4456f7479903\", \"93169cfeb2e642afebd4bd502e9a1314e679943d097606f536949e4d035d2e9c\", \"01314516efc3f72cf8397660266a75d989007205ef2c77c351e58147fb48c2cc\", \"5fe0c61839a3535508f4acccc454bceb18a7444f98abbd37876157d1c7058a28\", \"5991d10b569ed3d764abd3ab0378bd36d29c8766d324af1a733393d103cc0c08\", \"c3805665b3085d2726869cf1baadd2de442cc89cf06313e671922d8aa537f18e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00744"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "1dcc02b7-6fdb-5a06-ad1e-f8da19eff1cc",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Nickel Keystone",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-00744",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "1dcc02b7-6fdb-5a06-ad1e-f8da19eff1cc_1",
+    "type": "security-rule"
+}

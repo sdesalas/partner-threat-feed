@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Gilded Trellis infostealer sample, as reported in campaign PTF-01305. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Gilded Trellis Infostealer: File with known malicious hash written (PTF-01305)",
+        "note": "## Triage and analysis\n\n### Investigating Gilded Trellis Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Gilded Trellis infostealer in campaign PTF-01305.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"63c5d1dcd62ebe4c1366db2a8570a80237436c35667a249682c4bb8ea2eb0a0e\" or \"4aa5dc24770a29938572f897750b1ba325f48918fecfcf10be15d5a3f918152a\" or \"8e0ed8fea457e54d0228bcccaa2d74e53dcfdc7f2191c8b6bb3c02b32502beb7\" or \"3e7117db7bed334a662d943dda481a5d15c72081265bf493e3f21c776efbb332\" or \"4368761a10acf1655cbe9dfbf586724e16c054b61e2f7cd9cbe65f81f68c19e4\" or \"9b0366321c8a7a43a3ecf090b03ea588389916453792551834d3716bf9850c17\" or \"e5e99cb15443047045c107664978fe9dfb0dda145c0651e20c713974d5ee7590\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01305"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "7cc736c1-c40d-55f0-8cec-98817af491df",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Gilded Trellis",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-01305",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "7cc736c1-c40d-55f0-8cec-98817af491df_1",
+    "type": "security-rule"
+}

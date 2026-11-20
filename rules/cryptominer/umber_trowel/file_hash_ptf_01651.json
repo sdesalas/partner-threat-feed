@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Umber Trowel cryptominer sample, as reported in campaign PTF-01651. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Umber Trowel Cryptominer: File with known malicious hash written (PTF-01651)",
+        "note": "## Triage and analysis\n\n### Investigating Umber Trowel Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Umber Trowel cryptominer in campaign PTF-01651.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"de0b17614ee8b17e8a5f94301cfeeeb04aa3789e5a2f802da63cb7dd8e6a4aee\" or \"b4f91eea4730c60ab8a623f2863823d854f1011822e5eeb4ce20ec3bbad72d3f\" or \"44ae95145baaf59d0329a28f026e432c015e0b82e706d94e5887fec26e0655bb\" or \"4df49372b8234ceeaeec08f5824de773a2f0dae7e95312a2c3464cfce3b957f2\" or \"497bb562de6b5afa046b409bbbd342d1bf5a1ef4c9d662312893f6487ee1233d\" or \"89b69d66fb8a73e7324eb5f9a5befe6fe276e4bf727c70404f104a2778f761c3\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01651"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "47911cbc-da0f-5e11-b2a6-68e716892d8f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Umber Trowel",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-01651",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "47911cbc-da0f-5e11-b2a6-68e716892d8f_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Tawny Tinderbox banking trojan sample, as reported in campaign PTF-01105. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Tawny Tinderbox Banking Trojan: Process started from known malicious binary (PTF-01105)",
+        "note": "## Triage and analysis\n\n### Investigating Tawny Tinderbox Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tawny Tinderbox banking trojan in campaign PTF-01105.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"99b89d938175beb98188d220f2ea8bf6645eaa1a9f520e96e90d4c1b2e9df495\", \"1482948b9217d5258d66eba2d94ff50014284e436170df242ac75c366090c4bc\", \"e724e75c50b1533ab3a0a4dbdbc4154a6e43b1f875834e225576026454756658\", \"df0eb38f5a43ae0e36e48300358254445d1f91bdc012227f7d866defad05972c\", \"5a4822758e62855b09f47c0b943c5c57e556d4d99aac8c457cfd37e4b9d48e1c\", \"e5dfe0b1c54280fafcd4656e78f0f106ca5a3e772ffa1b81361a7634fb6f4bcd\", \"9e071fb6bc5e83dbec5724c8d4c8a6a4afcf3ab7e85e6f7ef87010f884ec9691\", \"c523b825103399d25790d8896921cdd536ea257477d5243c4b51799b19e6c2d3\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01105"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "aad8b3d5-f007-53fc-ae9f-4c89e2c87850",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Tawny Tinderbox",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-01105",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "aad8b3d5-f007-53fc-ae9f-4c89e2c87850_1",
+    "type": "security-rule"
+}

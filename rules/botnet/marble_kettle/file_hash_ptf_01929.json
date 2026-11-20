@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Marble Kettle botnet sample, as reported in campaign PTF-01929. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Marble Kettle Botnet: File with known malicious hash written (PTF-01929)",
+        "note": "## Triage and analysis\n\n### Investigating Marble Kettle Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Marble Kettle botnet in campaign PTF-01929.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"bb4e92c19565a1b6a5f24b59e2639e02c55b58886cd933f96a13e79be08f4723\" or \"026d451ec3a446376ddc61a4b66a96a4770658a9cff6520c17739c1a8ee03238\" or \"c50754d29161edf377464eef3da7ceb5b1046cb30b455d0ec08eb2774f18a35b\" or \"bef0ff71dca4437d3a592bd039064bf7064b25b6b11614332997e906c60ddbbc\" or \"9608cb290ccb843c4697a87a2681b1a05bbf6196c139e64ae386ed0f29e197e6\" or \"fab2799c56ad69ba5dcc817128cbd17fcb651daef571947ff34939b679ebd3ce\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01929"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "2aa18200-aabc-5cdb-b2a5-d20035914d3b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Marble Kettle",
+            "Threat Type: Botnet",
+            "Campaign: PTF-01929",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "2aa18200-aabc-5cdb-b2a5-d20035914d3b_1",
+    "type": "security-rule"
+}

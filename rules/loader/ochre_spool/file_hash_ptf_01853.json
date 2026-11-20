@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ochre Spool loader sample, as reported in campaign PTF-01853. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ochre Spool Loader: File with known malicious hash written (PTF-01853)",
+        "note": "## Triage and analysis\n\n### Investigating Ochre Spool Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ochre Spool loader in campaign PTF-01853.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"1f5d508c41712e76ed4b9dd3c74588291381a0d59704cff8fea5b54542869fb3\" or \"dbc809e996ae66ec38f3bfbe6a8e1825133acad495fd0aaf8ca32f0b5bb5bbe4\" or \"49e710b003db5ebe3a14a6fad86d3cec5e99fe7fec254522a87bdd47ec0dffd9\" or \"dfffc72e7a33b66eaf0e2c299b213774b5e78a22bb707ffb9365642ec7ac5277\" or \"53a88d6e57fc4013962ac2ad7deab980ae0eb1ccf8ec78780308d960d6c071ca\" or \"2d0f3acace4a49ebe1e78d3bddecdb34009056f17078f5c2256ca0d416beeffa\" or \"ce59eb15b97ff93e85ea48b5a6943744910eeee0d5b4d293b0fb7368df5d0f6a\" or \"f99038fa177cc8f48ed0936c7dcf53abc9529dba6259c355f6446eec72d432e4\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01853"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "2e99b5f1-6351-54e1-99ee-481b1267fc14",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ochre Spool",
+            "Threat Type: Loader",
+            "Campaign: PTF-01853",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "2e99b5f1-6351-54e1-99ee-481b1267fc14_1",
+    "type": "security-rule"
+}

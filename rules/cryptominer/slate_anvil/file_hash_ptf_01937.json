@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Slate Anvil cryptominer sample, as reported in campaign PTF-01937. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Slate Anvil Cryptominer: File with known malicious hash written (PTF-01937)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Anvil Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Anvil cryptominer in campaign PTF-01937.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"6584d53c531a815aa030b91fc13633b48fe734dfc56500bc99864744d6de04df\" or \"c303223f3273910cbeac4b0a0120553bf0901e07623b5e72b13a733ed5b15e7f\" or \"e4c36b8d67164d5d63703ce3f9fcc65b70a8bbc2af53630298d0aabacaf20895\" or \"afc84a8d8da4a8a52e49a198edf2a7b018f091bf5d12fa0608c6ad258bebbedc\" or \"eccddbcba9e5eacd021fbab46d71641d0f9011404aeeab37215e07bc1dc3678d\" or \"8edee78514257a3de770c84f5b3f4780d7e381486c319117692122d9f9671590\" or \"6285ae4868195531b07b95abd6fe86477069797b0c9acd6968873ede90169594\" or \"c4445f559acb38ca30fafb570fa3b0a2d8830665939abd0cd0d0cce71943ddc9\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01937"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "69539e82-34b2-5bdd-96eb-3d7e5ac344a1",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Slate Anvil",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-01937",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "69539e82-34b2-5bdd-96eb-3d7e5ac344a1_1",
+    "type": "security-rule"
+}

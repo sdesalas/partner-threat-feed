@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Oaken Valise ransomware sample, as reported in campaign PTF-02402. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Oaken Valise Ransomware: Process started from known malicious binary (PTF-02402)",
+        "note": "## Triage and analysis\n\n### Investigating Oaken Valise Ransomware: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Oaken Valise ransomware in campaign PTF-02402.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"e4f8034e9abc31d9c557e13d4680b89578d1d4f5b595493a8779cfb43e069fe3\", \"f1579dbd87ef4228bacd12b0853f77fa92099a2098aba23a8e7489d37e17fdae\", \"427294dad8150501fe20ce9ad26d9fdd0396b736c96fcfbcecffcd66f6d4409b\", \"64195fc6717623558204886cc92c93167c80d0e641019bb4c501f6a10dc65856\", \"1626ccda200fbbef06254621189e766c1237db3b5221468b254498691a90fbbf\", \"2c0bd8dcb48dca54119d83e5b4e2cf316e56b39eafed03fbbd87261956e7113c\", \"9b217e6b84c1803f7668e7f38aff3984d35da0b478ada3d85610fddd6482b370\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02402"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 99,
+        "rule_id": "fc906a5e-bb36-5290-b2a7-5db155e36ca6",
+        "severity": "critical",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Oaken Valise",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-02402",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "fc906a5e-bb36-5290-b2a7-5db155e36ca6_1",
+    "type": "security-rule"
+}

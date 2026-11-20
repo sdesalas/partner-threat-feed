@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Frosted Bellows loader sample, as reported in campaign PTF-01704. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Frosted Bellows Loader: File with known malicious hash written (PTF-01704)",
+        "note": "## Triage and analysis\n\n### Investigating Frosted Bellows Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Frosted Bellows loader in campaign PTF-01704.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"8169ca9c2765b84fb683c11ae5cf33776eb98b39d61a6b0036750a367bed0728\" or \"39fbf78c7bd79a29f584b507ae5f3d2e92a9641958be617e78cb5140741a45ce\" or \"2d872ec061fad580caedbe859eaa8bf0b90dad98e470d1ecfaf0ced1ba463177\" or \"9163d6e09b95db7e71f3f392513113619aa61002dcdffd7b0b0401f990c63557\" or \"163318c602e5fa2f18051b978c8f30c6d39cda92805a5bba14178831567d2fef\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01704"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "cc496c3f-cae1-5a16-be4a-e0b60032d2bf",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Frosted Bellows",
+            "Threat Type: Loader",
+            "Campaign: PTF-01704",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "cc496c3f-cae1-5a16-be4a-e0b60032d2bf_1",
+    "type": "security-rule"
+}

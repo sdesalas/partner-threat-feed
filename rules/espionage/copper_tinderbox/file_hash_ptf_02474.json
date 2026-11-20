@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Copper Tinderbox espionage toolkit sample, as reported in campaign PTF-02474. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Copper Tinderbox Espionage Toolkit: File with known malicious hash written (PTF-02474)",
+        "note": "## Triage and analysis\n\n### Investigating Copper Tinderbox Espionage Toolkit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Copper Tinderbox espionage toolkit in campaign PTF-02474.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"eec61adca18aa8bc5d3f3fcc9a188d66d32c925a9a65bc063e4248c67238eb15\" or \"729d0d4152684719496e0eeb985efc0844381469c6deeed11e9e7fb037acf567\" or \"c78aaefb0dc00e4f36ac77d8f6f02c61a14b19f7558719abf6a5614a1282228d\" or \"419d0694b057bb88c21ee9f91aaa3f1ebe412f3750a097675dc2963d998ed58f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02474"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "9ac4ccc0-4941-5d3a-93a6-8aa86aaa7228",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Copper Tinderbox",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-02474",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "9ac4ccc0-4941-5d3a-93a6-8aa86aaa7228_1",
+    "type": "security-rule"
+}

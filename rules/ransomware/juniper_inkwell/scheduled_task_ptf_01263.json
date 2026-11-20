@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies scheduled tasks created with names that the Juniper Inkwell ransomware uses for persistence, as reported in campaign PTF-01263. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Juniper Inkwell Ransomware: Scheduled task created with known task name (PTF-01263)",
+        "note": "## Triage and analysis\n\n### Investigating Juniper Inkwell Ransomware: Scheduled task created with known task name\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Juniper Inkwell ransomware in campaign PTF-01263.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where host.os.type == \"windows\" and event.type == \"start\" and process.name : \"schtasks.exe\" and process.args : (\"/create\", \"-create\") and process.args : (\"AgentUpdateTask\", \"BrokerHostTask\", \"SyncCacheTask\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01263"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "315b098c-439c-5a9f-802e-f5b6e9996061",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Persistence",
+            "Threat: Juniper Inkwell",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-01263",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0003",
+                    "name": "Persistence",
+                    "reference": "https://attack.mitre.org/tactics/TA0003/"
+                },
+                "technique": [
+                    {
+                        "id": "T1053",
+                        "name": "Scheduled Task/Job",
+                        "reference": "https://attack.mitre.org/techniques/T1053/",
+                        "subtechnique": [
+                            {
+                                "id": "T1053.005",
+                                "name": "Scheduled Task",
+                                "reference": "https://attack.mitre.org/techniques/T1053/005/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "315b098c-439c-5a9f-802e-f5b6e9996061_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Hollow Satchel remote access trojan sample, as reported in campaign PTF-01996. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Hollow Satchel Remote Access Trojan: File with known malicious hash written (PTF-01996)",
+        "note": "## Triage and analysis\n\n### Investigating Hollow Satchel Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hollow Satchel remote access trojan in campaign PTF-01996.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"3bfcab8fcdf040300dc953a15866a90a879d1078f7fd9a57e990f13ca7cab738\" or \"8fb9fd928fa13641196ed36f57a9ae0c36a874cec9be1e8c856e99627ba73534\" or \"9263b7a66b06c6e13b2e2cb0ea5c642c6c84b54e8bfc52c92ef46e2a44ab478c\" or \"e7ea01bc2fff521f0f7570d8801d845b6454f1abb02d94a923b643f9db869055\" or \"4ca513920f7d54b6ec990dbddcebe04915c2eeb0a3d48d6127874054c01f6b91\" or \"46c3a0e744d1bb4419739debee7a36fefae47b51a00b69ee81efb514fbf11b39\" or \"89a3e9c113567584d4a6d03e86f5662c7521fe81f3418a6a33eebc82ad1b4ab2\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01996"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "7440b8f0-c9f2-5661-8a0b-b55690ea1adc",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Hollow Satchel",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-01996",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "7440b8f0-c9f2-5661-8a0b-b55690ea1adc_1",
+    "type": "security-rule"
+}

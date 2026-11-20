@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Juniper Inkwell ransomware sample, as reported in campaign PTF-01263. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Juniper Inkwell Ransomware: File with known malicious hash written (PTF-01263)",
+        "note": "## Triage and analysis\n\n### Investigating Juniper Inkwell Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Juniper Inkwell ransomware in campaign PTF-01263.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"c524cd5537a579d508025305f12bc0f805936830094a0441ccbf5ee686785c86\" or \"58812635dc0781ceda9461ccf53c459d26c94fedccd3a295933aa2987c660994\" or \"18847266c6a059f7b13ed6d5598e54c65e7ae7453862f5db4e1997d975128938\" or \"4bb69a4586f32b066d66f6f126208ee78158eca643e79e664106d3c9f4f1bd61\" or \"5e144060f6c9e3be1d8690ae124b824e585f51ecfc18299ab1ed78686854ed5a\" or \"945dc95d76f8cfea4eeb70fba145512c61398652247a726f6618fe63790ac289\" or \"5f0730fb4bac5049537c0647a4d6a48386ed4ddb8b67e11c807d0e6c23504d62\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01263"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "55f22fcd-eca4-594e-b8f2-309cd3cd2ef5",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Juniper Inkwell",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-01263",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "55f22fcd-eca4-594e-b8f2-309cd3cd2ef5_1",
+    "type": "security-rule"
+}

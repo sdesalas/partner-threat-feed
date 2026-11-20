@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Copper Bobbin loader sample, as reported in campaign PTF-00220. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Copper Bobbin Loader: Process started from known malicious binary (PTF-00220)",
+        "note": "## Triage and analysis\n\n### Investigating Copper Bobbin Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Copper Bobbin loader in campaign PTF-00220.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"36ed737d4f7b7cf8d412b0d09bddd6d487edad44d399cf20c690626ae1e0e717\", \"485cd8905b9e7e60fe171b26d0bc27150a2162b6a29fde42b5f16ddf177d9434\", \"b05f321f33c88ebe306e5fbf2896f4b25eaa1f52386f14f453b6e567741c0e9b\", \"56a49f6c21ad9f1a6f14c6ee0a70865d7a5b6f4dddf231b07ff3af19e03da688\", \"c6f989bf74394cb85dacffb70394dd9784c42fe58e0d447cd61e9814953e2502\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00220"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "989da397-c47f-5ffe-8835-ecbbd02e1809",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Copper Bobbin",
+            "Threat Type: Loader",
+            "Campaign: PTF-00220",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "989da397-c47f-5ffe-8835-ecbbd02e1809_1",
+    "type": "security-rule"
+}

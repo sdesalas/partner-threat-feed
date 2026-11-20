@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Clay Gimlet remote access trojan sample, as reported in campaign PTF-00415. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Clay Gimlet Remote Access Trojan: Process started from known malicious binary (PTF-00415)",
+        "note": "## Triage and analysis\n\n### Investigating Clay Gimlet Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Clay Gimlet remote access trojan in campaign PTF-00415.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"1c2968a398b1a5d50d242794d97ace8b5f7883ec2bc6d121d5c132e1c3b5ea9e\", \"de3556308a38adc16330600735ef8433809fc125fb9b91ccfafa5d423e70c7eb\", \"05dccaff1eea030d16f3eca8b4f4b9f99d006cfcc554c6eb27322e9b87fd49be\", \"a95028bf9c53dbd497551c9ce15c47865b154a3c7512dd818022f2a451082e2c\", \"296c37560240d5b425be700b54b80dda53d7f916e62e809f1c79410de2b4ca14\", \"e774e236c190ba9562e8d255ae89ff764e34d421b512bbfcd79836ffbac4d16b\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00415"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "aaac231d-6e23-57e1-895b-aef7b22e3368",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Clay Gimlet",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-00415",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "aaac231d-6e23-57e1-895b-aef7b22e3368_1",
+    "type": "security-rule"
+}

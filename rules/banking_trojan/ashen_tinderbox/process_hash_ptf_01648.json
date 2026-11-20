@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ashen Tinderbox banking trojan sample, as reported in campaign PTF-01648. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ashen Tinderbox Banking Trojan: Process started from known malicious binary (PTF-01648)",
+        "note": "## Triage and analysis\n\n### Investigating Ashen Tinderbox Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ashen Tinderbox banking trojan in campaign PTF-01648.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"a56a3c2c709d11546baece36074535c045bb69b229d1fd999ea730e7ed767ce8\", \"7ce3cc59862cec1e3dae1a3d0814e239fb783b77956c829e195a4b2e1f7a9529\", \"dfcd30002e602cc468d34abcfa3851647bb2395ae3effaa53e1bec6220f66df5\", \"a08de58d8be8c43a5eae868ec39dc570440471ec1e61479a9bbbe814e6057e6c\", \"082afb93be133d1c7e05ac9d872350a3a5811ca4671fa5b2f7f521e8b00508ae\", \"7af01da19cc50f38bc3b959382874fb573538b765fd050b14402be5aa4b291ea\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01648"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ce00d9ec-5024-54d2-bf51-ddec9e31ec99",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ashen Tinderbox",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-01648",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "ce00d9ec-5024-54d2-bf51-ddec9e31ec99_1",
+    "type": "security-rule"
+}

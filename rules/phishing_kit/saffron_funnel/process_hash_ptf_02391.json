@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Saffron Funnel phishing kit sample, as reported in campaign PTF-02391. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Saffron Funnel Phishing Kit: Process started from known malicious binary (PTF-02391)",
+        "note": "## Triage and analysis\n\n### Investigating Saffron Funnel Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Saffron Funnel phishing kit in campaign PTF-02391.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"69bea66c4464a78815d46a4292d366ba2608d92dfc8b586b34c01d0e2226be0f\", \"e1348985338141088d8ec7b5f3246332942d0988e8905a85689069e7e090d1c1\", \"652a3b480afa84500413c2b8e119b36205f663f42dfd753ca8109c4d028b0c0b\", \"fe5a6e89032ff1543d847ad0992e8d89cd46d17300401429a231fc2c6396ca43\", \"3c1cf83613754a5ad6cb248fd5239697d302c7de5cd3b6bba94c9c0af8b1c2a4\", \"e238a2939968f1ca56ced43b9ed95b6620a3ca9db11282e9eb3344d1afbe64ce\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02391"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e8152224-d1f3-5d7d-8496-901eb17ef8e9",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Saffron Funnel",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-02391",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "e8152224-d1f3-5d7d-8496-901eb17ef8e9_1",
+    "type": "security-rule"
+}

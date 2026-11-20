@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Tin Stencil espionage toolkit sample, as reported in campaign PTF-00552. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Tin Stencil Espionage Toolkit: Process started from known malicious binary (PTF-00552)",
+        "note": "## Triage and analysis\n\n### Investigating Tin Stencil Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tin Stencil espionage toolkit in campaign PTF-00552.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"6b21dc997d5b49441acdc6542fc5508b2f374bb5f417493699aab0b6df7eb69c\", \"cc64c21c26b685891934d228d4db2b9f966861cf846663b59fbdc96fc9d5c1a1\", \"583e980b5d1ac9abf68f0003c2907d2437ce28b525f3c341d5b2d4466e36f85d\", \"d1679867f231a95054ff4a4016ae0fcab9fb395f508c05e365d00fc68e9c5931\", \"6c16831e43431b8f28ff9c99d1da41d871de915ae6dfdb046d6b607d7669e2a4\", \"18f1ae499af66aaa7ac88c8e299641823f1e86e5b0868e45f6f490aae1a66e94\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00552"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "db06bb36-0515-52a1-85b6-e868e2e0fc95",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Tin Stencil",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-00552",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "db06bb36-0515-52a1-85b6-e868e2e0fc95_1",
+    "type": "security-rule"
+}

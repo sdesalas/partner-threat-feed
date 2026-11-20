@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Lacquer Sieve cryptominer sample, as reported in campaign PTF-00369. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Lacquer Sieve Cryptominer: File with known malicious hash written (PTF-00369)",
+        "note": "## Triage and analysis\n\n### Investigating Lacquer Sieve Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Lacquer Sieve cryptominer in campaign PTF-00369.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"4fe104c3d54e523e61da68fd2a6800fa15e8afda6d85055795b28d92e26a70c0\" or \"7d8cd386d3fd10a4a8dfd8213451125d9c838dc8d3ba2750dbbe0ce74bdb807b\" or \"e4d9e2350f5c467fab2f8d4857543212c3213c5454da17fe4e87c8b1c9b7a583\" or \"f0c42a0d362650e44aeffc2d2293a65326935ae2e8cba1a58584da55950c3a7e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00369"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "cff6412a-ce50-5639-8f37-08de0df33287",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Lacquer Sieve",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-00369",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "cff6412a-ce50-5639-8f37-08de0df33287_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Slate Quill infostealer sample, as reported in campaign PTF-00247. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Slate Quill Infostealer: Process started from known malicious binary (PTF-00247)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Quill Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Quill infostealer in campaign PTF-00247.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"336f1b7ec84aacde0524a29b0b270eb4dace2d991eb7616234d9853e92e7c519\", \"585d4d139656f1dffd5aa880272802707255ec2ec2e7caec8b5f2b8bbe2c4f13\", \"d7130aab49a025d0228b88f4e8a291413aa9d0cd1be8f1e4999b941b96193638\", \"63c9c335f2756caea253383da2e8b58f8eec17cf42ffa13b81c3fce082206158\", \"4290bd91ce91ac0f62e04b3a8d1c6d29bd4f9f6860eb89cd280cfe99e4df821c\", \"f54ccc49e79b0aa9937e02e46761c5e70c9a0127e50861814d284ab2d52828bf\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00247"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e29480ff-8ed3-59fb-950d-258d0b4d71f7",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Slate Quill",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-00247",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "e29480ff-8ed3-59fb-950d-258d0b4d71f7_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Russet Teapot botnet sample, as reported in campaign PTF-01791. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Russet Teapot Botnet: Process started from known malicious binary (PTF-01791)",
+        "note": "## Triage and analysis\n\n### Investigating Russet Teapot Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Russet Teapot botnet in campaign PTF-01791.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"bd9b37ca579c9e28964ecb226f48024221f8220d0b5f08e97b693ec8cea4c078\", \"519a09f2fa380885dc689b0f9425971ca2eadbabb48bf538d0f2af743b2ec01a\", \"7b389d4c10bd132bde2efb293688e1397d9968140481e2025f466f297e3798f2\", \"9a36bd6f1da0a6ed377fcf6afeb483a300e782238b1e49bfcc01bd56124379af\", \"f880933bd4243fe1c47f429c7a3f3400a20fe4450d4252b406b71050497ddfa0\", \"07a7f4dabf2e30dbacc504f24a72bfa61c18cab26612cffbe11a357f9f66b06c\", \"957507972aee4c6858d60c96fb1e74599abeca19a8cef484be87dcd39c5aef27\", \"6c9a4e602ff70dac95b7c52309e775a69be4471fb757f41faf741037c57d2587\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01791"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f8d4af71-32cb-50e2-a1d4-283dabebac2a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Russet Teapot",
+            "Threat Type: Botnet",
+            "Campaign: PTF-01791",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "f8d4af71-32cb-50e2-a1d4-283dabebac2a_1",
+    "type": "security-rule"
+}

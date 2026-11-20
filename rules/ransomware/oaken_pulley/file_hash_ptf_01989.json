@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Oaken Pulley ransomware sample, as reported in campaign PTF-01989. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Oaken Pulley Ransomware: File with known malicious hash written (PTF-01989)",
+        "note": "## Triage and analysis\n\n### Investigating Oaken Pulley Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Oaken Pulley ransomware in campaign PTF-01989.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"ba16f9fc91e8d14b6b32fb78007600e743f4dcb9f5ab7c7a2f24034c990718ee\" or \"4f4e59ef9721cdb90520a992f7aa5e608f2080a32011bc5e9a7348b542ff2466\" or \"5f781eb497ff8e529c1d58f13aadeb77761e121b0759e1b570cfd6dc07738fd1\" or \"a4d33b21b9f28146d8871f51411b28c73c2e5335f0029d7ac5c8afb4a2ef1cc5\" or \"069a67cb9f71e1906d729addca814d81fdc4ab4bfb3af3d607fe82ca1e0897cc\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01989"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "cb973f82-11b9-5817-9060-6ab292191e7c",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Oaken Pulley",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-01989",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "cb973f82-11b9-5817-9060-6ab292191e7c_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Flint Lectern botnet sample, as reported in campaign PTF-02076. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Flint Lectern Botnet: File with known malicious hash written (PTF-02076)",
+        "note": "## Triage and analysis\n\n### Investigating Flint Lectern Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Flint Lectern botnet in campaign PTF-02076.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"b6b6e0ad5049d44fe6c50f54cecb6daf12e36063a89b3556c4e011d688c0c384\" or \"93903e2c4e1c25dba1e2f71fe5f38d041e79de8bcc14f5dcfce6522f82d21bf5\" or \"911e22f6640d5cd3054d04cc3351b4eb27f3925b367231320da7c51b55471d7e\" or \"394ba567a0e7191933ea755ce404e7d14750b42ecb3f4b803d005e3002431da9\" or \"107ba66462e1b5e326ca3e383291d16c878a9d7a4666128a57f3d92d3a70ad37\" or \"882476cdbe6a2c530c33b22d3b9da94402a979ed78c1c48acaa04cb5b8516745\" or \"f171482bfd4ed5d6c378ccab0bdb54a1977097d3e883db79c3ff976250b65566\" or \"bd9d252ebd398d6b18d466a85353b1c32530c75711aa5603201bbcaf7d133326\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02076"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "46ce1df4-5cc3-54af-a8cc-2f02411b6813",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Flint Lectern",
+            "Threat Type: Botnet",
+            "Campaign: PTF-02076",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "46ce1df4-5cc3-54af-a8cc-2f02411b6813_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ashen Funnel espionage toolkit sample, as reported in campaign PTF-00962. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ashen Funnel Espionage Toolkit: Process started from known malicious binary (PTF-00962)",
+        "note": "## Triage and analysis\n\n### Investigating Ashen Funnel Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ashen Funnel espionage toolkit in campaign PTF-00962.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"3710ee0a1ecec9c280ea5809d7f6ae7c4fb75c38ecbe58c5e4c1820b643f2b1a\", \"a33f8d6b4eac05c247bea8788e0fab71294b6ce9e2eeaddf47223e028eab65ea\", \"ef22f0a771524a583cd35b32424610f2339dbbba9ea776c20eb060958c397988\", \"a34cd46d94b36e69274c6a41e71ec7cc2b407d92252ace345c2223d090145fe7\", \"583aba916ff7a009ee76699fd36bd54c3e00af428b2671b6d3d56c44aca3cc8c\", \"249114aa6dd90ab94a813cf1c7a2376a9572e4a990486b0c2ee01cc650a24958\", \"b24e1b039443c0b1cc358a3703ace80c8f7ccc8a8cf11bed639989d9aa902ca5\", \"79d47fad3ce1cdecce1514555dc07f14b1e8cc670e1cab4be5244e58604a69ac\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00962"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "257ff628-a48c-5947-a05e-1d5b9094e671",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ashen Funnel",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-00962",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "257ff628-a48c-5947-a05e-1d5b9094e671_1",
+    "type": "security-rule"
+}

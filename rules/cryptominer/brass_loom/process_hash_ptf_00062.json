@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Brass Loom cryptominer sample, as reported in campaign PTF-00062. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Brass Loom Cryptominer: Process started from known malicious binary (PTF-00062)",
+        "note": "## Triage and analysis\n\n### Investigating Brass Loom Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Brass Loom cryptominer in campaign PTF-00062.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"10d77322a03ff6054db0b71e2cec4663e81b32d42cee63f5de92821778c6fd81\", \"f29a9ceda2a8b61607294a368acd31f9bee548954ae5f0528c9eb2a030487780\", \"189af90ec1870b81dedfba86964c91aafc54a02b89f0a0ad45fa6ac74dac7296\", \"e37743dd8e74dc4768c8296833597e2f7b637f6f5557ab86bddcf5f2fb7fbffb\", \"116f0d91c74d380123d1279e7b3dfa2b93c419bba4066e795e51bcd0a7b3665a\", \"00e4a5bb19b19cf068133a536ecb47a5ea2d1b992b7fc1e03e53401495137e1b\", \"6c0d16269e84d58b81f29e03a4d517fc78ab7107f63bce0687fca93a761a202b\", \"f41280f874bfa09d6324fee7f1f5d420280a9d4ec19f936614641f63184669ae\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00062"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f93b7c23-0287-5362-af81-a011ac3e1073",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Brass Loom",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-00062",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "f93b7c23-0287-5362-af81-a011ac3e1073_1",
+    "type": "security-rule"
+}

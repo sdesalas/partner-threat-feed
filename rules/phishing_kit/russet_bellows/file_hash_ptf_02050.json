@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Russet Bellows phishing kit sample, as reported in campaign PTF-02050. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Russet Bellows Phishing Kit: File with known malicious hash written (PTF-02050)",
+        "note": "## Triage and analysis\n\n### Investigating Russet Bellows Phishing Kit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Russet Bellows phishing kit in campaign PTF-02050.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"7e2276e82219190ef1e98dc66730c4bd11eca960b465e74e83446fdc751ef7fb\" or \"4bf284067cf2b76c4cf7894cc568b6ebf13e92b299afd777a3ae82a2fca1a931\" or \"42bd94615a19761264fcc679481bd98841fd179b5c1d216062eb532f13d1f923\" or \"e6083900bde2c6ed5242c39201ab0ed1afa09b408c860d5cf4aed888d6ee2b27\" or \"c9cd4846f19d2af4977593e045f9d89de17e9d00f7f3dccc4b074a6e7e015ca3\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02050"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "54d08cdd-7d4e-53a6-a51a-ac3ef5c40f31",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Russet Bellows",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-02050",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "54d08cdd-7d4e-53a6-a51a-ac3ef5c40f31_1",
+    "type": "security-rule"
+}

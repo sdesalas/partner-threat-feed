@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Pewter Sextant infostealer sample, as reported in campaign PTF-00971. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Pewter Sextant Infostealer: Process started from known malicious binary (PTF-00971)",
+        "note": "## Triage and analysis\n\n### Investigating Pewter Sextant Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Pewter Sextant infostealer in campaign PTF-00971.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"5aab203e101c545549cec0b30e8884af5cc16b8ece154bc6a264d93116685d91\", \"877d59cd864fae3f0c5b41cd69d5b0b28b6159a93f324be60d427e95347d816b\", \"c5249e55c25c8bfe7821add6471781b25eef876a7e71f03c70ad01cc948d0f80\", \"8a65af30312d0e11146a5354d41b6c07517f317aca27b672d02c77e120b7f128\", \"d4af40cf82f5da88f735e88696ca4b92093319c595abeb01fb7a7897c0e5a366\", \"31334dfe57bc706133ac99bfe0c708c4da6c229dee48365b0a5c819fc6a3099b\", \"0b0e6311b1a0800bc2d4f4a051bdde1a1d3fe6f378e127f298121d59cf334599\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00971"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "de6721f4-b431-5d18-bfb8-648ea6024449",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Pewter Sextant",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-00971",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "de6721f4-b431-5d18-bfb8-648ea6024449_1",
+    "type": "security-rule"
+}

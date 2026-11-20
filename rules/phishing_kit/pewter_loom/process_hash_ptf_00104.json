@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Pewter Loom phishing kit sample, as reported in campaign PTF-00104. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Pewter Loom Phishing Kit: Process started from known malicious binary (PTF-00104)",
+        "note": "## Triage and analysis\n\n### Investigating Pewter Loom Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Pewter Loom phishing kit in campaign PTF-00104.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"95f7d226bb8dada89ccd906a8db8cbf8f145370d76fc0d4a1bc13ade79dc1583\", \"e9be05d4b7d3de51ffa2cb5e4309fb9594681dfd7c0eaf2eb9be3d166d019b08\", \"9855f1bb21b96f00bafa3f6ca818a73c5d507ba2ae00bd682fd4a187377f7e7d\", \"a2c6a9aa9447e57ca5c5c6a021424e2bbb8843c86545da3ac6f2a3f4fdd4a4cd\", \"e7d048c6ecd09f75c03d72db8a788069758f2b374dbaceb0c2edfb1452264abb\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00104"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "939dac29-708c-5751-82aa-ae8a264be1d3",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Pewter Loom",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-00104",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "939dac29-708c-5751-82aa-ae8a264be1d3_1",
+    "type": "security-rule"
+}

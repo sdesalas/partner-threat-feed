@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Paper Pestle loader sample, as reported in campaign PTF-00719. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Paper Pestle Loader: File with known malicious hash written (PTF-00719)",
+        "note": "## Triage and analysis\n\n### Investigating Paper Pestle Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Paper Pestle loader in campaign PTF-00719.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"000afb28c99b18d75ddf7797c3dd7ef919d509d350d6a770bb0c03d77e23a9a1\" or \"1a1c9fea2b0c0b6d1826c34144e229b73933adeb8112b9b7e439dfb6cae96e4d\" or \"c226fca70e8cc64675b2d1b8a602d4406704083a6ecdf4d43edae9e801720ecb\" or \"f94b1027c3244076e78a7568136fbd7a70b39173acc059350092c474e1d5f439\" or \"ff8b6ffdb87b19ce0aa7f6bb33243ae7f3d73a81fb77c4437b0d8702f23b5b0e\" or \"260bdd794c085fd048f1ec5e678ad932cf40c00b3457fca6adabc7769513e855\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00719"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "74b10a66-1b58-5f8e-aee9-d472e0ae0832",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Paper Pestle",
+            "Threat Type: Loader",
+            "Campaign: PTF-00719",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "74b10a66-1b58-5f8e-aee9-d472e0ae0832_1",
+    "type": "security-rule"
+}

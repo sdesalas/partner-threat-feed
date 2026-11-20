@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ashen Kettle infostealer sample, as reported in campaign PTF-01122. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ashen Kettle Infostealer: File with known malicious hash written (PTF-01122)",
+        "note": "## Triage and analysis\n\n### Investigating Ashen Kettle Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ashen Kettle infostealer in campaign PTF-01122.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"a3a112e36f263cf0d17a3d4e3d876fbfa937a597bccc2deb56c98ad1258ccfee\" or \"c42284f564ecfb6f2aed1bf46bc94459b6eaf024a62351da547e6e7ab42bd530\" or \"db75038f4ebab040b580bb8fec57bc242ca5571fc27fbd290811155b553d289f\" or \"1fb7afeed41a238e38a5fd251d74e61a450abba1b366d261e031870422df2be6\" or \"e304212a5bcc4eafdcc922ff4bd8f20a3385cab777099226eb7084d20a36c8c0\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01122"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "737a0534-01c6-507d-b840-cd4e841c9694",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ashen Kettle",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-01122",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "737a0534-01c6-507d-b840-cd4e841c9694_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Tin Teapot espionage toolkit sample, as reported in campaign PTF-02317. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Tin Teapot Espionage Toolkit: File with known malicious hash written (PTF-02317)",
+        "note": "## Triage and analysis\n\n### Investigating Tin Teapot Espionage Toolkit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tin Teapot espionage toolkit in campaign PTF-02317.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"6575c73f4cc5a1d2e3694dd8d5d21c6200f2fbf25a4a905f4bf6d7af893f96fa\" or \"8b854f2cbf0c490c2e7aa753a1ca50f79e0d13cc990b8266aa292596dda9f311\" or \"e6488f44f6277928551032b81c8a6af5e353083f57a9fdc1853700801b7a7df4\" or \"e1ee89a1ea7d070640a00c421b0bce5ee0749b74989104aec74f2b76b1958113\" or \"4251553b989291813438647c569d9cb4027a734711dd27ac88aa65019b0612a3\" or \"daa1e44f55792ca48cb85af2763a3a3c4b7afc7bcc7a41f5f31b321d9a1f0a48\" or \"15f548601b4dd3eed91203ff954ba30c9844bf606b6e04bc7f5c2434556578a6\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02317"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "63f9a760-db74-5c52-b7a5-bb9528699c83",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Tin Teapot",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-02317",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "63f9a760-db74-5c52-b7a5-bb9528699c83_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Hazel Thimble espionage toolkit sample, as reported in campaign PTF-00111. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Hazel Thimble Espionage Toolkit: Process started from known malicious binary (PTF-00111)",
+        "note": "## Triage and analysis\n\n### Investigating Hazel Thimble Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hazel Thimble espionage toolkit in campaign PTF-00111.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"d1d5ec82bd4713e4f2e9bbf3f287a14b67f7258caedd1cc65ef9082560628fec\", \"ebe2af888abd908ff6790f8bc8fd9dfdfe452a367b554198fd6f1a2fb4d5fcde\", \"1f346b337ed3d7f629bf681622f7f1b8b3952d1271d171d75b232844469fe88a\", \"33151bbc994bed6280795c32e1f51155e57c781c6ed51608aa970616c88fe124\", \"a5a529b8596dceecbcb742488e6f9c4104ff4859cfc7519ecc1fc46599ffdfaf\", \"3eb23fc9ae58727221da2be8f4f837bfe201fb551e3765cd59950e5873003f16\", \"b377e65caeec11a6cbab6ff0ee5ec6ed53722e7bd1deccb3bcab4c348c227e25\", \"19e4f3a24294cebec96d814c4982cc8e8ff96fa60968cc2bd62cf29a1c7c5a8b\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00111"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "a6110c61-04d8-57df-8d59-364129ef58d5",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Hazel Thimble",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-00111",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "a6110c61-04d8-57df-8d59-364129ef58d5_1",
+    "type": "security-rule"
+}

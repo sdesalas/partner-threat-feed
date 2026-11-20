@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ivory Lectern espionage toolkit sample, as reported in campaign PTF-01443. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ivory Lectern Espionage Toolkit: Process started from known malicious binary (PTF-01443)",
+        "note": "## Triage and analysis\n\n### Investigating Ivory Lectern Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ivory Lectern espionage toolkit in campaign PTF-01443.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"888dfa051aa1703c6fe60888991374c58397a3d1d9f39e52e0487b4ab67a7b89\", \"2316f8cf5fd09b81fe1459e3cd75e2d7d98948bb4d10649fd98346d89a405356\", \"6128870074df1dfba832f36dacc333cf83d724ac8e5c1ffeb1f4400c9413b388\", \"791b934aa66a361851305421f9070c427e20f1e5aa97001194a5bcaa1fab4c4b\", \"69d139ff9fbcad9a44c636b1b91a8799bfc3b80bc087acc80f61a5e55bc2d6de\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01443"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "18401b03-5512-5c0b-bc4e-d22d539e225b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ivory Lectern",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-01443",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "18401b03-5512-5c0b-bc4e-d22d539e225b_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Oaken Trellis botnet sample, as reported in campaign PTF-02379. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Oaken Trellis Botnet: Process started from known malicious binary (PTF-02379)",
+        "note": "## Triage and analysis\n\n### Investigating Oaken Trellis Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Oaken Trellis botnet in campaign PTF-02379.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"126ebc28297047728332b4edcbc659af977c344a53cd1651ae79560bc34d2ec4\", \"c90e2e74b03262cd1f2bf398a02153b4028307825c8a09642265478325b36c20\", \"1359d62a66abbfeab932844b9ed65315870dece56f40c93c5fc97e2ca47f1f23\", \"3255298c500b518b44a7583a9a0554aca0f66e275b5695be5fdfe9de16a77bae\", \"47ae6c085a1d2e4a8c057dd193aa3209410a6da1d0664d6c2dfaf3250cdef373\", \"3e00d6e3390d8bfc4eca2c5fbbc769e0b26c26800c21c492c0ba14f6914bd8f7\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02379"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "54fe59ee-d35c-5236-b6ce-7daa5f67b5f7",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Oaken Trellis",
+            "Threat Type: Botnet",
+            "Campaign: PTF-02379",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "54fe59ee-d35c-5236-b6ce-7daa5f67b5f7_1",
+    "type": "security-rule"
+}

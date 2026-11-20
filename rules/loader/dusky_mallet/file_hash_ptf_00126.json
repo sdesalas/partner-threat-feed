@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Dusky Mallet loader sample, as reported in campaign PTF-00126. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Dusky Mallet Loader: File with known malicious hash written (PTF-00126)",
+        "note": "## Triage and analysis\n\n### Investigating Dusky Mallet Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Dusky Mallet loader in campaign PTF-00126.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"141bf68a2e9bf00f34605ffc147fa1a51209c87ec67de6cf778ae70c31446b3f\" or \"f1c10f8efdffe47f53a092d723e955d52ede07f82b526888f515e71fd6ff420f\" or \"6f17bac55312878b61a2aa3ecfd526e34fb9b71cc33caf1bff62bb6d1f3495fb\" or \"4b55e92b8f1b63a10ce6bc9a060ddf9b180ea46abcd48ccadda8ba0005ae18fc\" or \"fe05e88e2e3b0794e0fa807002a58702fdec5ff405313961f2022bd40cbad53b\" or \"e5e5dc86e45b85081f9b4101fe25724c12b660f057f41cdb8824763f379e297d\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00126"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "680f8729-0aeb-51a4-8ceb-f9eaaee09be8",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Dusky Mallet",
+            "Threat Type: Loader",
+            "Campaign: PTF-00126",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "680f8729-0aeb-51a4-8ceb-f9eaaee09be8_1",
+    "type": "security-rule"
+}

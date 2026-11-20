@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Lacquer Bobbin cryptominer sample, as reported in campaign PTF-01140. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Lacquer Bobbin Cryptominer: File with known malicious hash written (PTF-01140)",
+        "note": "## Triage and analysis\n\n### Investigating Lacquer Bobbin Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Lacquer Bobbin cryptominer in campaign PTF-01140.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"ade83af2d563231fa4d6cd13efa03bb906795e86c5331358a3352a6c6a3b14ff\" or \"6372e3340e47b9be54a77e6c2d4635069b220eff49b73014de4c8f32ccc4818d\" or \"397693d01042a9f59cb2d3367cb4a9ae1de0d900f79842f973fa4ffd5fd9897b\" or \"f7f595bc7924730527e79a6c35a79747391f328549ad46911af5fc944036cfed\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01140"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "3c577fce-781b-58a9-9156-04120d1e4aa3",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Lacquer Bobbin",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-01140",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "3c577fce-781b-58a9-9156-04120d1e4aa3_1",
+    "type": "security-rule"
+}

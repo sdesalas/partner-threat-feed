@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Frosted Ratchet infostealer sample, as reported in campaign PTF-01590. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Frosted Ratchet Infostealer: File with known malicious hash written (PTF-01590)",
+        "note": "## Triage and analysis\n\n### Investigating Frosted Ratchet Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Frosted Ratchet infostealer in campaign PTF-01590.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"761220e4fbdd217720273bd2c7a47f350d0edf2e966516be400f91a29f19be2f\" or \"1a78e9a75ef9d3e3edd11434cd12c33b7a783b95fadd990869f642a708d4a3a8\" or \"ba96f66441be1126cb7bd8bcfa4b32a115f23be1b35a6d6b917ac50f38934820\" or \"070897264c0019b681d811f82ce7fe88b778f9628f1a30878bff305334c208de\" or \"3f445b1d46886fb543fd14112feeb2a293f28e64c089e5d4823c8c8a53148f80\" or \"2d11c12b856bb664c091f2f684f93b2093f6b64cfcab765ae23b5d72a591604f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01590"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ac7ecc47-a160-52eb-bbe8-b3fb38cbff08",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Frosted Ratchet",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-01590",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "ac7ecc47-a160-52eb-bbe8-b3fb38cbff08_1",
+    "type": "security-rule"
+}

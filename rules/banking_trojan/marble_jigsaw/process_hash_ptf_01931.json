@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Marble Jigsaw banking trojan sample, as reported in campaign PTF-01931. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Marble Jigsaw Banking Trojan: Process started from known malicious binary (PTF-01931)",
+        "note": "## Triage and analysis\n\n### Investigating Marble Jigsaw Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Marble Jigsaw banking trojan in campaign PTF-01931.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"ac15fbfee2a539fac5e635f38f645c66e22a1e095d2d60dbf9fb9c28ab6104e1\", \"025ad602fcca50e2ffafce508c02d96015d33c29d4efa1344ed4de518d2d6a8c\", \"20e1b377a102deda63b7cd231762bf9cb1e820be015e42f465fd2d50d1885d2b\", \"7d9141317c64a9cbf5fb1f691cf3b8a2f6637003a0af1232d0083145711506ef\", \"6914926a60f045996192c1fee2891ddcbee8157dd2866d9c40f7c5781bac6d38\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01931"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "7c2434df-62af-5252-99ea-08c1dd08e6cf",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Marble Jigsaw",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-01931",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "7c2434df-62af-5252-99ea-08c1dd08e6cf_1",
+    "type": "security-rule"
+}

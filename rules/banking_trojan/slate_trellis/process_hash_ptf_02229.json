@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Slate Trellis banking trojan sample, as reported in campaign PTF-02229. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Slate Trellis Banking Trojan: Process started from known malicious binary (PTF-02229)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Trellis Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Trellis banking trojan in campaign PTF-02229.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"97e0715a9f5ef9e9e7641db7ee7a79cebbf494b6b23c0e88bd5df44c605e46cc\", \"c1d49f0ee5f42a7f2e84f669b71f0eb4638b61ebb3ee124b8046272f0850b028\", \"faeb7298e81c25f194cb6a9d6ab1ae06677a4e5e1eaefac78719e1a7bc3d8d99\", \"e93265e9acabff9e8f1a8028c20c7b09a9305d5c466bfe91e09ce91df9706bbf\", \"3f4fce2e245ab1d522a7ae730da3ea5869ed27bcf0d533c9307b2f10a5960cb5\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02229"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "031787ed-2ffe-5773-b0cf-7c124a994025",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Slate Trellis",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-02229",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "031787ed-2ffe-5773-b0cf-7c124a994025_1",
+    "type": "security-rule"
+}

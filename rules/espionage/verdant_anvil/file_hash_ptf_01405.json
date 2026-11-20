@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Verdant Anvil espionage toolkit sample, as reported in campaign PTF-01405. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Verdant Anvil Espionage Toolkit: File with known malicious hash written (PTF-01405)",
+        "note": "## Triage and analysis\n\n### Investigating Verdant Anvil Espionage Toolkit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Verdant Anvil espionage toolkit in campaign PTF-01405.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"6c2b3aae7b0f729f27cd36d3def3ebf8a5b94c333c7df72b4dd3523de17fd82c\" or \"de701475d5c3306618fb6effbd76e8adce0d68334444a4eea092f27f4b0059b1\" or \"f99a55aab1a3ab3747c5ad877ee283aa315ea2c9ccb175bfa4af0e6b71aae8a1\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01405"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "6f1b025e-506e-5391-a3d1-f7ac2a2a81fa",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Verdant Anvil",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-01405",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "6f1b025e-506e-5391-a3d1-f7ac2a2a81fa_1",
+    "type": "security-rule"
+}

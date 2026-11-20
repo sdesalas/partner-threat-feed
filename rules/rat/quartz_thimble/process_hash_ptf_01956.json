@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Quartz Thimble remote access trojan sample, as reported in campaign PTF-01956. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Quartz Thimble Remote Access Trojan: Process started from known malicious binary (PTF-01956)",
+        "note": "## Triage and analysis\n\n### Investigating Quartz Thimble Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Quartz Thimble remote access trojan in campaign PTF-01956.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"6bcba482f88316c272b36b4f871c082dd4000ef7e4d0240657d9d755ddd52678\", \"4836049e55abf854a8ca99c76f8d69b49391f3e3a47e86b9d2878e703e1f1221\", \"319a8da8f097e7acdf5fd19ec277034fc5e97b7cabccc7b7f9c4591fb6d6d053\", \"51de258b32d02fbdc6e5f775ca3768803d2b7b5061a0511a2933f9afcb4a9809\", \"9657f95afb56412a883c825344a273ce835c91d6b42937004da442eae64e6f37\", \"09b8205b4cc55f7629ee622edbe8eadcb5416c46d11712c651972a95394bd5b2\", \"03c8cb166c1cd981434d541debd449b9c7db208b62ad2bb1eb90c340aa1c88bd\", \"794bdd5f0037cfd84d221dfa98a6ecde798ea7e5c44c72eef56d529cc4178c9b\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01956"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f847877c-4ee4-56f6-adf9-d1d2cdc016d9",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Quartz Thimble",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-01956",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "f847877c-4ee4-56f6-adf9-d1d2cdc016d9_1",
+    "type": "security-rule"
+}

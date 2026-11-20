@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Tawny Whistle botnet sample, as reported in campaign PTF-02186. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Tawny Whistle Botnet: Process started from known malicious binary (PTF-02186)",
+        "note": "## Triage and analysis\n\n### Investigating Tawny Whistle Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tawny Whistle botnet in campaign PTF-02186.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"08c184e3e44fdaca4a32732a3fd58bb5ac0e8bb700d5ccd6c690398bb52817e7\", \"fcf8e9bb985db7037c1b96011c7ce0add8f3dfc8609c5bd0f588503258c4a2a7\", \"3c6b3f07b701707a838b1b8e8087b6743de1eea29aa001553c1105b4a68f9b27\", \"76ecbb1f172336623f3b6719f0f7dcf24e55c57ff78777ce84ddd7ed7e4b5c15\", \"cdc0584165eeb5d031b266a9c968aafb4127c3512fbc6b2797bb4b7e0bcbf7be\", \"caa0d243975e8c585e99fb56522563b6c489a8ed0ee14a680bfd69c3c59f15b7\", \"0a4ad9e8fe1750be41939cac922d5408c729341130a8aa54af80aaf0a8faa1b9\", \"ffd1cb0fe5f63adac331faa4844f8de07580bb374152e0d344054133574e507e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02186"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "3723e8de-d5ad-578b-a518-9eebebb417a1",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Tawny Whistle",
+            "Threat Type: Botnet",
+            "Campaign: PTF-02186",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "3723e8de-d5ad-578b-a518-9eebebb417a1_1",
+    "type": "security-rule"
+}

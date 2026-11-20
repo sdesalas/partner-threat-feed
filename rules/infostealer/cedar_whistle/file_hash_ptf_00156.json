@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Cedar Whistle infostealer sample, as reported in campaign PTF-00156. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Cedar Whistle Infostealer: File with known malicious hash written (PTF-00156)",
+        "note": "## Triage and analysis\n\n### Investigating Cedar Whistle Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Cedar Whistle infostealer in campaign PTF-00156.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"5fd41ff9e435f8166e95a78f6c111bed1bdb944e8c810f78912e3c0a4e51eb2e\" or \"0c0a851b9cc5f3bdaf70a1bade9b3401f50b943ce5347af48ddf2465209c38ab\" or \"e04f3b4b374a265298aa328b105a8de6f8df37742ef27b60630f266a8f3488fc\" or \"2c459c186acdf4a9345ba81a44071d494839964bec5562ca700991210db6010d\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00156"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "5eeb92a6-a26b-5b96-b7e6-a71741d5e1b0",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Cedar Whistle",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-00156",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "5eeb92a6-a26b-5b96-b7e6-a71741d5e1b0_1",
+    "type": "security-rule"
+}

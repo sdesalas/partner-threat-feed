@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Mulberry Tinderbox ransomware sample, as reported in campaign PTF-01811. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Mulberry Tinderbox Ransomware: File with known malicious hash written (PTF-01811)",
+        "note": "## Triage and analysis\n\n### Investigating Mulberry Tinderbox Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mulberry Tinderbox ransomware in campaign PTF-01811.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"0c10e8b39f4b77cf463978b7444ea5836dbcbb5de6af049d37679c399d73dcf8\" or \"61019ba89f96410cc9010ebe509e2175fea60b4d0a1f4ad0d5f77ff3f745e574\" or \"3cdf7d1893d4e28f3cce2509bc4c8115c0e4ae827943de4e2c85771d97820fa0\" or \"9574b39a787c5d5a0d987bc31b8ea4a3c56bc44252d1dbb4cf999a2756e1e9db\" or \"cb9e20d463c59e2ee68d1a4a1dcedc87020fde1576238a44b0e2bb974f181914\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01811"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "0c817316-97de-565d-afbd-9476040dc592",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Mulberry Tinderbox",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-01811",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "0c817316-97de-565d-afbd-9476040dc592_1",
+    "type": "security-rule"
+}

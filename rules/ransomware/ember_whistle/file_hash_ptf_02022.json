@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ember Whistle ransomware sample, as reported in campaign PTF-02022. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ember Whistle Ransomware: File with known malicious hash written (PTF-02022)",
+        "note": "## Triage and analysis\n\n### Investigating Ember Whistle Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ember Whistle ransomware in campaign PTF-02022.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"97a421706dd3f5ea92b52b4ea692a9efc99acab335d68850b1a9bed30957dbc9\" or \"f979522c748f360e64f73e186c5e553aa8a59815a12ac0200a8581a67c4130ca\" or \"32c1e7ab1070417799e5f69a02beddbacbab2373c371eda841b8e829e8f03ef3\" or \"ed4dc183264457b348c158b390c1b71b76a1009294b891ea86a23bcb3ae4f67d\" or \"18324f3dae9b44425ab1eab33beeb65fc067814bbfb562ea214c325f5fb4d195\" or \"fea4e5e885332822fb44c2f4297d1a1a577baed6301942f038e29ee2a470e217\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02022"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f6870e47-9d61-59b5-80f4-b6ed74838e86",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ember Whistle",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-02022",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "f6870e47-9d61-59b5-80f4-b6ed74838e86_1",
+    "type": "security-rule"
+}

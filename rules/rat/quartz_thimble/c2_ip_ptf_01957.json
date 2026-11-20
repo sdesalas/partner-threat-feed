@@ -1,0 +1,72 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies network connections to command and control IP addresses used by the Quartz Thimble remote access trojan, as reported in campaign PTF-01957. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.network-*",
+            "logs-network_traffic.*",
+            "packetbeat-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Quartz Thimble Remote Access Trojan: Connection to command and control IP address (PTF-01957)",
+        "note": "## Triage and analysis\n\n### Investigating Quartz Thimble Remote Access Trojan: Connection to command and control IP address\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Quartz Thimble remote access trojan in campaign PTF-01957.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:network and destination.ip:(\"198.19.67.67\" or \"198.18.213.66\" or \"198.18.135.98\" or \"198.18.152.252\" or \"198.18.171.72\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01957"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            },
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "bb094b07-e869-5a67-9b21-7f2cf06972f1",
+        "severity": "high",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Quartz Thimble",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-01957",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1071",
+                        "name": "Application Layer Protocol",
+                        "reference": "https://attack.mitre.org/techniques/T1071/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "bb094b07-e869-5a67-9b21-7f2cf06972f1_1",
+    "type": "security-rule"
+}

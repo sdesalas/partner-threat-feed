@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Tin Mortar cryptominer sample, as reported in campaign PTF-00394. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Tin Mortar Cryptominer: Process started from known malicious binary (PTF-00394)",
+        "note": "## Triage and analysis\n\n### Investigating Tin Mortar Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tin Mortar cryptominer in campaign PTF-00394.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"5c0190b775f2d06cdc0e09c2e4e196810d844eec8f8149e31918a4e04a629144\", \"972e6246add5925daa6c1ac4ee541e3258df8395d18457cbca0919f58fabb856\", \"9d58768b7dcda769e0e3e937c382c4e83e56177bacd268bdf86ad8fab8e664e4\", \"fe5e655a9d289fc08ec077aeb5cade82fb59867546e762f448e65169b659ed0c\", \"02abf0cb23e34b0e947271fb186df7c548c1658e162a413accf3a0cb1e15e60c\", \"be61f458e5993fb15e2fabe77c7c65a08e2cfd0a085433d31bfeea1a446d0cc9\", \"5d46c434ad090df35781ace85ddd414a6545ab62bfd26652548ae9825d8bb6f5\", \"101ada85856cff56351055a225ddd8a03f76929b34aa6525e1d9ad84b3bed2f3\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00394"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f149b424-84a0-5d23-85f2-086704fb4535",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Tin Mortar",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-00394",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "f149b424-84a0-5d23-85f2-086704fb4535_1",
+    "type": "security-rule"
+}

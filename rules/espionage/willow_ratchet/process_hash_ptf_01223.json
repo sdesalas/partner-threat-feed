@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Willow Ratchet espionage toolkit sample, as reported in campaign PTF-01223. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Willow Ratchet Espionage Toolkit: Process started from known malicious binary (PTF-01223)",
+        "note": "## Triage and analysis\n\n### Investigating Willow Ratchet Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Willow Ratchet espionage toolkit in campaign PTF-01223.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"3091c21bd7e224ba32313848b562545d597aba4819dcb7f2e6f8a76b21b06394\", \"861795f5dc1f96db38e5cd39d131cbd3c3f28442b52453f7de051905ad12a4ae\", \"61751204e8a526324b5a2fd415409abc3e4d293985692d38e7a2cf4796d24066\", \"627a0c691accf9693e0636b73f85e08b38e49e1fdc7ddc19138988776c0b86c6\", \"91459b0fbb53f9d7059b7aa123b24f552fc076541d8f376040602f4df99e7b21\", \"8390bf189c4ea8e1fb01a00fead2522df9668a4850cdafbb1430857d9fd89b47\", \"7b7869c9b2f33dd6ff752238d1b2af45351925ace172d4e2c8ac36e8d79a9fa1\", \"a6f4f6959d0d96df7346f323401003f727963f91846f10c87233b339d651a7dc\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01223"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "08670a20-5a89-55eb-bb37-249a1cf3fd70",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Willow Ratchet",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-01223",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "08670a20-5a89-55eb-bb37-249a1cf3fd70_1",
+    "type": "security-rule"
+}

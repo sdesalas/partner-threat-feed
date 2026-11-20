@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Brass Thimble loader sample, as reported in campaign PTF-01352. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Brass Thimble Loader: Process started from known malicious binary (PTF-01352)",
+        "note": "## Triage and analysis\n\n### Investigating Brass Thimble Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Brass Thimble loader in campaign PTF-01352.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"9e125f6dabe75dcf18b18a0a301a48b69a0ea1b7809665ad92bec5df5a8ce27f\", \"78e5e3dbd79bfc7fb633d3b14568a27595b8df66ea0e7b30a5d57e675e8bda5d\", \"b4b4bba4a1526f0c1101cc3796dabd7ed7b9eacaf9045e591265a94b6ad3736d\", \"19816643d3c4f9d6f6e954c5b2b226e9fcbb2759c043fecbb0abcf5018753b56\", \"8ef609f52e392c0278b8ac73344ded9a6fa75138a43b364ee63b6744cde0b2e1\", \"a9c8512d38d26052084e3aa007d798ddf56abfcd3cbd32986c654335607780ee\", \"b2add43937284096d2758445c95b6cb1d18a2d9b14d6cd39dd2e94b375161bed\", \"6a54ebd3907fe7f70c487bb913d1ee6af9ec38a3ce57f0d6274f0bf6ebc746ca\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01352"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ae7a4c6f-09e6-5980-9f5b-1562e471164d",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Brass Thimble",
+            "Threat Type: Loader",
+            "Campaign: PTF-01352",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "ae7a4c6f-09e6-5980-9f5b-1562e471164d_1",
+    "type": "security-rule"
+}

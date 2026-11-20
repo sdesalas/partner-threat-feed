@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Verdant Mallet cryptominer sample, as reported in campaign PTF-00466. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Verdant Mallet Cryptominer: File with known malicious hash written (PTF-00466)",
+        "note": "## Triage and analysis\n\n### Investigating Verdant Mallet Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Verdant Mallet cryptominer in campaign PTF-00466.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"e94b5c826fe98e373c543f23d6e40653f5ed256e758953a95dee4c3c2cd03779\" or \"abd3828e638044e6ace48ffd2474961cbad05bd214c35de01733edfad471b1f0\" or \"dac1cc3bb19516393a8037e6cb94c8f291f51f5a7fd58fd664c8697d32a18f75\" or \"179b38d49c9de0a6708e89de21c42871afcd2abcd4323194d144d4a82d05379a\" or \"405b3c4776930f8d34c16810d2da5c9f3c9b5f79513cbe10c3c5813184f618c4\" or \"9cd3ba9454c3ed138d57e3470661a438b597487a790b13aeb7feebb832ef826d\" or \"161cfe9c8155a8ced2c7d4fe931c6dd021512a6885ae278491cede5cf9f14d88\" or \"5253ac9d4b20e95b5c709d762aa47f2436c5731676c4617684a6d008f790737c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00466"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "5de60bcb-24b1-5414-a47c-823f2f82622f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Verdant Mallet",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-00466",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "5de60bcb-24b1-5414-a47c-823f2f82622f_1",
+    "type": "security-rule"
+}

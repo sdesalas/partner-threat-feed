@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Willow Easel loader sample, as reported in campaign PTF-02258. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Willow Easel Loader: File with known malicious hash written (PTF-02258)",
+        "note": "## Triage and analysis\n\n### Investigating Willow Easel Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Willow Easel loader in campaign PTF-02258.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"cf60d633f0a61d2654c3698d6c297763f6cf0e75c60dfe7392d4403d4ab73d46\" or \"a6d9c8b7bef909ac5dd92f2d5711f89a79db28368d95930af9642e0b653c50bd\" or \"771743ef9f04038f65ea03c8eadb7212e755e941bd440a3e376cb0eceaf558bb\" or \"b80461b89347914cb4c28382671b3c8e0ffa7bed871514b4cb5a28e70f1075f7\" or \"e3b2516b856391e060233db052bf9153b10df54e29c4e862533ac903f2617e61\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02258"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "3b8d6414-ad46-507c-b780-10fa6a7131c2",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Willow Easel",
+            "Threat Type: Loader",
+            "Campaign: PTF-02258",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "3b8d6414-ad46-507c-b780-10fa6a7131c2_1",
+    "type": "security-rule"
+}

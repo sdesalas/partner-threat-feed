@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Tin Teapot espionage toolkit payloads, as reported in campaign PTF-02315. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Tin Teapot Espionage Toolkit: Request to known payload URL (PTF-02315)",
+        "note": "## Triage and analysis\n\n### Investigating Tin Teapot Espionage Toolkit: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tin Teapot espionage toolkit in campaign PTF-02315.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://api-static49.invalid/download/5551.bin\" or \"https://data-relay17.example/download/1054.zip\" or \"https://login-edge52.example/invoice/7473.php\" or \"https://media-portal96.test/doc/7961.php\" or \"https://node-files84.invalid/invoice/2547.msi\" or \"https://sync-edge44.test/download/4114.bin\" or \"https://sync-files77.test/invoice/4826.msi\" or \"https://update-edge69.test/gate/8581.zip\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02315"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "4660f779-4566-5c64-a7a9-aacde0771534",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Tin Teapot",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-02315",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "4660f779-4566-5c64-a7a9-aacde0771534_1",
+    "type": "security-rule"
+}

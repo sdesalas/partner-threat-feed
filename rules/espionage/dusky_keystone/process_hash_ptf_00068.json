@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Dusky Keystone espionage toolkit sample, as reported in campaign PTF-00068. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Dusky Keystone Espionage Toolkit: Process started from known malicious binary (PTF-00068)",
+        "note": "## Triage and analysis\n\n### Investigating Dusky Keystone Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Dusky Keystone espionage toolkit in campaign PTF-00068.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"0544e49aa8d3c78727d612d261a0983989194e04bfe2db0b4b68d88d67ca8f6a\", \"479446a665e8553bd3b7cf0246809ef645a808faf3d89f2e244790dabca7ab7c\", \"acf226ddd199bf19367f4927d120ec24ae600ca8fec1a4f4cbc38a5ba0b050fb\", \"77648c81c119efe3e09dcdf005205fe1cb395aee538a68149c0833d553aa89e0\", \"abe27dcdb851416f35705261d5e7a49c78e8945ebecec4f346a17aca8ed75b6f\", \"27dae437e2be3cd94f79e920ed75234b4fa23dc8b9ffc3c00e6536be470759c5\", \"d4dbae8fcd2e848a2083d12769511d34a09a34f8bd9d434862e6ab3f4814823c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00068"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "42c1396c-8b7a-55bf-b83e-4d4e8154df0b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Dusky Keystone",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-00068",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "42c1396c-8b7a-55bf-b83e-4d4e8154df0b_1",
+    "type": "security-rule"
+}

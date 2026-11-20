@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Juniper Quill phishing kit sample, as reported in campaign PTF-00585. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Juniper Quill Phishing Kit: File with known malicious hash written (PTF-00585)",
+        "note": "## Triage and analysis\n\n### Investigating Juniper Quill Phishing Kit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Juniper Quill phishing kit in campaign PTF-00585.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"76569fd8edfb381813b8bfbebb6fc3f0dcd1afb0311d1a0737b505ac67c0a061\" or \"7101c4e95d3598239201b7632b8c5f056808a0cc38cde42446344e357091ddb3\" or \"81adc9ab75704899f6d1082563b410981711ceb358b63ec1a1f84507e4f653fb\" or \"1164ea35dce3eff8f34b5351dabfe2e2526674b14661ca00d3a00c29879d8351\" or \"e6ff854c4be194e74a46f46a1bc60e11767cfdafa97721625f2f4f709dbc7e9b\" or \"58df4721d9b9b1d89bb06c931bc183f9aafdf695d1fc954c400e311fc16881cd\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00585"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "a2681e2d-3d0b-5801-8a6b-fc60b02f4a9c",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Juniper Quill",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-00585",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "a2681e2d-3d0b-5801-8a6b-fc60b02f4a9c_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Tin Needle loader sample, as reported in campaign PTF-01821. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Tin Needle Loader: File with known malicious hash written (PTF-01821)",
+        "note": "## Triage and analysis\n\n### Investigating Tin Needle Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tin Needle loader in campaign PTF-01821.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"7180a69287038ac90f10c73f23ee78c77e15607bedeca3e50c3fb7bfc7cf2da7\" or \"8ed22a3d64e64e3d9663fcdcda546f20d4630eb3a87c0e2886c02cf551b118bb\" or \"4fe88b16ad65f5e2bb14100dadb4faae67d6948bb5304b58545a5d5fdcd8b8e2\" or \"b28534289ef38440e731312993c0a8764e27984a9783000eeee756685dbd14ac\" or \"a828f92cafd8cc4920034b7aa65f1399ccc4e4efe0bb02a0f22c5937fa4594c6\" or \"a21f12b688012954b1e74de20648393c22084cdbb4fbc1ef770f5857752b8ab7\" or \"1f09bcbbccf0b9ed2a5bac6b25550279c1e79de2b35efe0a3b95f4904777cda7\" or \"ca9ac680ae392110ae56bc8349fd35ba659040490530a55cf367bcf31cfb803b\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01821"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "63ddfef7-ebd5-5419-9b35-34c9e20b2632",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Tin Needle",
+            "Threat Type: Loader",
+            "Campaign: PTF-01821",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "63ddfef7-ebd5-5419-9b35-34c9e20b2632_1",
+    "type": "security-rule"
+}

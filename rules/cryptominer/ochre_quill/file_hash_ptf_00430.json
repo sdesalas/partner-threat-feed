@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ochre Quill cryptominer sample, as reported in campaign PTF-00430. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ochre Quill Cryptominer: File with known malicious hash written (PTF-00430)",
+        "note": "## Triage and analysis\n\n### Investigating Ochre Quill Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ochre Quill cryptominer in campaign PTF-00430.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"18f9efd65e2c69f4c3d36d9b16f66bbffb4014eedabdc00dfba1c74df784c1d1\" or \"71a4d75b20914cde36a0c14c46fca38c993fe3021a1dbee360fe3e3788719357\" or \"ceabd63cbc6fff85697a9e680f16531440ec0d061702e926abc2c7499e34ca54\" or \"90b7c8742c37bdef3b3af8e7d7ee843cb2d87582742723ac8fac53487ab745aa\" or \"f513c28a1433bb1b2268f9f5ff8c1ed7c127722c0846676494526ad9af283af6\" or \"a7291513db5e4662eaf475f2e6dda8cf60ee604fb83eff84e2e42a36da2e28e3\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00430"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "2ebe7407-171b-5d52-9c0c-e25e7708e2ea",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ochre Quill",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-00430",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "2ebe7407-171b-5d52-9c0c-e25e7708e2ea_1",
+    "type": "security-rule"
+}

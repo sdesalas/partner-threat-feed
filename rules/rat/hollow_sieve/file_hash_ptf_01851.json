@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Hollow Sieve remote access trojan sample, as reported in campaign PTF-01851. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Hollow Sieve Remote Access Trojan: File with known malicious hash written (PTF-01851)",
+        "note": "## Triage and analysis\n\n### Investigating Hollow Sieve Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hollow Sieve remote access trojan in campaign PTF-01851.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"f8818c36db183e2a108d386194983436387d2adfdf67a2481484e09765f710b8\" or \"2be5c89d28ef997abc057ad82db8d696a848c05d1a2608af81a4b0d3bc0a1066\" or \"25500ea1a7ccbbbe80bd378f80d4e2d30bc17b0a466211637260b640ab88fd9c\" or \"4527414ee8402278c5cbed94374ad0a55abbdc8d7401476e4b558d37de03e7a2\" or \"e25a405cd7f3f005c6d9bd063fef2c10c1d9aefbfccdc94cf0d8723574952080\" or \"80a563e123caf3b867afc73b2a4cfb0436035ec5d7afcdb7779bf65cde23a59d\" or \"06d4c03be5f321d145bfd70012c57159221bb2b8075acbd2cf1667a47fca7972\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01851"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "2f448477-1f08-5a63-adea-55975332fc87",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Hollow Sieve",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-01851",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "2f448477-1f08-5a63-adea-55975332fc87_1",
+    "type": "security-rule"
+}

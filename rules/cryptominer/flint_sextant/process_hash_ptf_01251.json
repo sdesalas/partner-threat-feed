@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Flint Sextant cryptominer sample, as reported in campaign PTF-01251. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Flint Sextant Cryptominer: Process started from known malicious binary (PTF-01251)",
+        "note": "## Triage and analysis\n\n### Investigating Flint Sextant Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Flint Sextant cryptominer in campaign PTF-01251.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"6c49322d9507b411100b082a91aaeadd855f76eecdc2f67842fcd6f830061521\", \"4584ffd9bdf92699917c1db996a264c38d1afcd36aa213a5aec118bf707bfa2c\", \"81a8490c7c10c76cd303f216b8ccc9a5efcb171208bb0e5b807b16cd02c5bad7\", \"5aef00bd6938a23b76338e5540653236b027ac2fd6cc788c9b0249c45ad2c101\", \"78163a9a4e4c9941174655e3c4d670869006630d3748718eb1d934628bd64900\", \"996741f7d2d3ad8e6a54e81d24e1c1fa7998293e63b0485a72e0ce777a6f929f\", \"c62e03656f21462769b40cb21b6ccb859ab09ad8f53af5ff3c484cf54adfb5f5\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01251"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "0f146714-ed9f-521d-9e31-7ffa15c32fc2",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Flint Sextant",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-01251",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "0f146714-ed9f-521d-9e31-7ffa15c32fc2_1",
+    "type": "security-rule"
+}

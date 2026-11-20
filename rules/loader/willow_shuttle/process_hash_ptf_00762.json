@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Willow Shuttle loader sample, as reported in campaign PTF-00762. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Willow Shuttle Loader: Process started from known malicious binary (PTF-00762)",
+        "note": "## Triage and analysis\n\n### Investigating Willow Shuttle Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Willow Shuttle loader in campaign PTF-00762.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"5c09c7fdb8f3ee21fc288edb209578b7b15d638c2d2d9ea17745ca4d1b8be0ef\", \"222efd21d719fa0f2b2a5bf4741f4d1234365706e3ee26b126ff24187eaee305\", \"9a0e19d31e5bea9dd3ca18740962e4c8707732cc38e556dcf41807198e071776\", \"7cb449ffe54d2c837d43eb9afd6f0e46be5b9f401ab3ede686c88f7f66436580\", \"661767a1b740f0eb273ec513d09a787d69af63f0df2da9cc37866ca8a3fa8433\", \"5ee2e5d154d2faac4edb1bb8c19a44b4c2abbeeb49204f17fe9af54f7c7a0cf2\", \"0126bb3e3ec650dbb03c2f572387f9c94cf98e6087ca928608d97ac623a260da\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00762"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "c509b0a6-9b99-5af0-959a-570f8b93c16d",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Willow Shuttle",
+            "Threat Type: Loader",
+            "Campaign: PTF-00762",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "c509b0a6-9b99-5af0-959a-570f8b93c16d_1",
+    "type": "security-rule"
+}

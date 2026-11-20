@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Frosted Jigsaw phishing kit sample, as reported in campaign PTF-00738. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Frosted Jigsaw Phishing Kit: File with known malicious hash written (PTF-00738)",
+        "note": "## Triage and analysis\n\n### Investigating Frosted Jigsaw Phishing Kit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Frosted Jigsaw phishing kit in campaign PTF-00738.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"64a68337ac1a1f55c2ee292f41a1c2c533eb757ab66928e1dddb6ff0ca517225\" or \"a0bd435d85f1bb3669fd84b9d467dccdf2863eab3689d8692361fb71418ea1cb\" or \"c8fefe6fed5ed335f52fff652e1cbd71d81290103e6516799dfd6415a8051584\" or \"6900a22b510d70ed7645ad1b8b9f91a062d55a3f99012f0f55d1ea4501d445aa\" or \"e9c52f6c7dacc32aa5d0e25d2a71d5a688398cdc5e7e6161ab193fb581036a93\" or \"5c145bc2509a38e9307b886e65464bd762e919dcc1295d94acf617577c03ef3e\" or \"f72991266a39e9f11448bc6683f33cec3891a976e7e69fdd6f223429139537bb\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00738"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e1718bad-cf59-5f29-8977-77f98376f74a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Frosted Jigsaw",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-00738",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "e1718bad-cf59-5f29-8977-77f98376f74a_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Juniper Jigsaw cryptominer sample, as reported in campaign PTF-00101. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Juniper Jigsaw Cryptominer: Process started from known malicious binary (PTF-00101)",
+        "note": "## Triage and analysis\n\n### Investigating Juniper Jigsaw Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Juniper Jigsaw cryptominer in campaign PTF-00101.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"0ca3d6a74b86cc1a08a0b8b69a458985a9323ff976512d75f28103dd4ec832cf\", \"d0a602106238ed8ea7b56680c8f406e1f38d50c2be50596d4e5fac640dca5550\", \"540b2354daf34135ddc6883c581452cea01ce2b85e2ace486393285da8dd02b2\", \"1544e3d0baac7e6c9c79221cb823519b53fd6edb3c71322c3626136d5fa620e6\", \"020810186837a1c221deab724b3db8c6b8c412a6e6bcfa010e401c95cfb750d3\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00101"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "6d00773a-dbd2-53ca-953d-788dfec53842",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Juniper Jigsaw",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-00101",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "6d00773a-dbd2-53ca-953d-788dfec53842_1",
+    "type": "security-rule"
+}

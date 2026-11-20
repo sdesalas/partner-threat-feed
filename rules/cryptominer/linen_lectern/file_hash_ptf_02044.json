@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Linen Lectern cryptominer sample, as reported in campaign PTF-02044. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Linen Lectern Cryptominer: File with known malicious hash written (PTF-02044)",
+        "note": "## Triage and analysis\n\n### Investigating Linen Lectern Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Linen Lectern cryptominer in campaign PTF-02044.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"057a71999a8bf951141a1a75b0b329e60b67763db60586aa49a690bff00ab5b1\" or \"3427c150352efe6f36c301f9175e2971d36036053962bb3db03798a88cfe740d\" or \"b03d5ba36f4a5473a13afc080e44d9c8e7a6b2b8eae20b2f0dbf54cec38ebcae\" or \"8ed402fafbe2353a9491b149e341235359e8453051c3415d1c0da6d8af6cd4d3\" or \"861856aedc6e3f53340a5fd9754e7fdf5e24676a38e1fb57683fd21440b935c6\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02044"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "c47d5e6a-94c3-53a4-93cb-cc841db82384",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Linen Lectern",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-02044",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "c47d5e6a-94c3-53a4-93cb-cc841db82384_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Russet Tinderbox loader sample, as reported in campaign PTF-02335. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Russet Tinderbox Loader: Process started from known malicious binary (PTF-02335)",
+        "note": "## Triage and analysis\n\n### Investigating Russet Tinderbox Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Russet Tinderbox loader in campaign PTF-02335.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"f39a3a7202866e1aa3e735c733d047aa7f9abe7c83a53d90ccebc6669d36014e\", \"5591be94c30b553994f058b2b2d9553d23a905d6a595d3f09877fbc3e24042ad\", \"ddf72fddc3615fd347647f0d8786c044b418580317f7e8b1178e12a56f21b7f5\", \"42287af2f8e72e663c7b0979f47502d1841fcf86bbe268f3c0a9b0d3f8ffd97b\", \"308a17810ba167d02b19509d0ccda5fd4d7c0662d884fe659660c7e74d9b752a\", \"72be8ffe0f5d5a79eb03953f7c3c8d1d94a87db4d630e73870981ce76f05ce70\", \"947b154cf07f2b608ad31ecf81b98a934e1e27cf5bfe7a39615183e0202b3043\", \"99917dde0d82e6192c25a6c3d43e4b2e8c32bf3f895f39b3c28b44312ac96988\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02335"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "c53887c5-ab22-5703-93ae-0c1fc2f08d87",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Russet Tinderbox",
+            "Threat Type: Loader",
+            "Campaign: PTF-02335",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "c53887c5-ab22-5703-93ae-0c1fc2f08d87_1",
+    "type": "security-rule"
+}

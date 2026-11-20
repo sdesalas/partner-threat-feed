@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Saffron Anvil infostealer sample, as reported in campaign PTF-02248. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Saffron Anvil Infostealer: Process started from known malicious binary (PTF-02248)",
+        "note": "## Triage and analysis\n\n### Investigating Saffron Anvil Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Saffron Anvil infostealer in campaign PTF-02248.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"26ef214e0366e0acb4b2cc39ae290215df9bd675503007bfdbb9c15eadeaecbd\", \"1de5b31598076675f11cf89e519ae7a6ecf043b972d9c84d927f95c80f1cfb26\", \"5df9f2ab798ce386a2a44fb1de41226b33e811fa94e517b54e341e95f6a8c0ff\", \"d97681d1f9628fa33adffcdbc9c3b30969937e4e607a0e9a9166288a8b0457e8\", \"3ca9c699206b8067ad6937b0ba1b4e2bf13a67d24ceb730ac94a7dea2e6bf221\", \"c3160f30df299a463b7dfc0905db7af88842807dbef5e69514b2d45ecab184f2\", \"928eb2ab0deb41f4081754e15808e2527f6cd977f644cbed6e1c275c2f12abc2\", \"aacabba7ca750d92bba286da1cfbff662eb867eccc0758e3a72e286f7cfe6fe7\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02248"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "70bbacf6-5154-5399-9156-f60ba96e72a1",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Saffron Anvil",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-02248",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "70bbacf6-5154-5399-9156-f60ba96e72a1_1",
+    "type": "security-rule"
+}

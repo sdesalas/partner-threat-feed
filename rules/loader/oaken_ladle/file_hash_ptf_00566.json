@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Oaken Ladle loader sample, as reported in campaign PTF-00566. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Oaken Ladle Loader: File with known malicious hash written (PTF-00566)",
+        "note": "## Triage and analysis\n\n### Investigating Oaken Ladle Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Oaken Ladle loader in campaign PTF-00566.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"e2d61693ca39705a05909c70df91d639737c039d9414c77636aae9f0764ea210\" or \"97cdfc08ec56cafd3786ea6c5e30d38345ef117d6d347689dd7e115c2c45cfa8\" or \"4af157ac69cf9bd29f01c49a6c9d25f24505550cfb5d110f69c96637f784bc9d\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00566"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "1984ebc8-2d92-5e09-bc25-a0156b35b3be",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Oaken Ladle",
+            "Threat Type: Loader",
+            "Campaign: PTF-00566",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "1984ebc8-2d92-5e09-bc25-a0156b35b3be_1",
+    "type": "security-rule"
+}

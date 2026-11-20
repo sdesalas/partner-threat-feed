@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Gilded Whistle remote access trojan sample, as reported in campaign PTF-01092. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Gilded Whistle Remote Access Trojan: File with known malicious hash written (PTF-01092)",
+        "note": "## Triage and analysis\n\n### Investigating Gilded Whistle Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Gilded Whistle remote access trojan in campaign PTF-01092.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"48603dcf14cc4f50040607d940aa5e81239f721b162bff654747c0a40aaa59c0\" or \"15562b9650c4cde201cf74368794a2846a5d8be490ffe452839d17b519da0aaf\" or \"14cb7b5a342fcdea672f698476497e945759b115c5944dfbcc6bdbd481988a9c\" or \"b239ace2207923e69f4a439a53acfae99b2b9828a5db0562c9985a89cb3d25dc\" or \"9eecd85b1a42ea7f66dcf21bf9a244de809cb8fbd91bdb753433c3f886e1f883\" or \"a40f8485312bd115ed3c065ae65fe45bc800baf6838b81d65a3ef48c675df5e8\" or \"0d2b1e9c8becbb4638af1da8f7cf5ebf6eac915b7656393b90a85765e83d9d35\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01092"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "916a6c4a-97d5-59fb-a2cd-987b4ffcea57",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Gilded Whistle",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-01092",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "916a6c4a-97d5-59fb-a2cd-987b4ffcea57_1",
+    "type": "security-rule"
+}

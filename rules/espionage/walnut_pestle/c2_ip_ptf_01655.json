@@ -1,0 +1,72 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies network connections to command and control IP addresses used by the Walnut Pestle espionage toolkit, as reported in campaign PTF-01655. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.network-*",
+            "logs-network_traffic.*",
+            "packetbeat-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Walnut Pestle Espionage Toolkit: Connection to command and control IP address (PTF-01655)",
+        "note": "## Triage and analysis\n\n### Investigating Walnut Pestle Espionage Toolkit: Connection to command and control IP address\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Walnut Pestle espionage toolkit in campaign PTF-01655.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:network and destination.ip:(\"198.19.42.92\" or \"198.18.165.89\" or \"198.18.203.238\" or \"198.18.188.21\" or \"198.18.8.144\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01655"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            },
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e8786c1c-46b8-55a5-8656-0a9238e8d38b",
+        "severity": "high",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Walnut Pestle",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-01655",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1071",
+                        "name": "Application Layer Protocol",
+                        "reference": "https://attack.mitre.org/techniques/T1071/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "e8786c1c-46b8-55a5-8656-0a9238e8d38b_1",
+    "type": "security-rule"
+}

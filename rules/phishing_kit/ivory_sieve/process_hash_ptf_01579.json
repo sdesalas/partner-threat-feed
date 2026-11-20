@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ivory Sieve phishing kit sample, as reported in campaign PTF-01579. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ivory Sieve Phishing Kit: Process started from known malicious binary (PTF-01579)",
+        "note": "## Triage and analysis\n\n### Investigating Ivory Sieve Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ivory Sieve phishing kit in campaign PTF-01579.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"f5d6d14f784a2c1e8ad35718a74be45194985923ed1a0055d2a7ba113e3609e9\", \"d5abac9dde1f053938a8d8f254bbe0563946f67aa894ce2168f99e82b1c95a63\", \"e88164134c4c90cd4bb438714516a2a388d588302c282704a8386d7f6ae0bcb9\", \"3a4159d076e01c13db68b47ed6fc5ab599e76a4da7c832b0a46b8e5f1a16fe1d\", \"db105f40b5c60fbcb921f1369d64905caed28b7c5b0ee0b8b34af2fe15773f56\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01579"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d7d1da83-0e65-5183-93b6-0b27f58dfb22",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ivory Sieve",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-01579",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "d7d1da83-0e65-5183-93b6-0b27f58dfb22_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ember Trellis infostealer sample, as reported in campaign PTF-00823. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ember Trellis Infostealer: Process started from known malicious binary (PTF-00823)",
+        "note": "## Triage and analysis\n\n### Investigating Ember Trellis Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ember Trellis infostealer in campaign PTF-00823.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"c41bfc94bbec6e154d8b424d552002a8a067f663ac62a7ebcd92f008d21bec78\", \"649e77b9b961fb34b4d7735d0a7b95f20846f366a9433a2bebf5e8309e3869ca\", \"d5e0a0cad8a6097fc2be3ff922d835003b9b03b24e579344f3622fe5e32acaaa\", \"e12833d25364b6b75d4c6f3c722217f4bef89ccc987093537bddb65b1aa85ff4\", \"e51a6d2de21f1d5fde7f49f39153820e6493965bf6cd84ed3e5098a3512a7485\", \"df949408cf9804fafd2769f78cda5b574e3e922079a928e5ed9097718e3a6d10\", \"650536674d701e31a70524e0511a9224e18bfc4f361d6e6a2b2e0a28c550f45b\", \"f0c0c8c0ba0d89100dc91ea60e394081f975ca5519ed1e5d2c513a1d69c3275d\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00823"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "07fc166f-3c56-5faf-b9c8-c623dc98639a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ember Trellis",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-00823",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "07fc166f-3c56-5faf-b9c8-c623dc98639a_1",
+    "type": "security-rule"
+}

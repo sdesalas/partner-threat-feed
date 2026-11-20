@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Slate Quill infostealer sample, as reported in campaign PTF-00247. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Slate Quill Infostealer: File with known malicious hash written (PTF-00247)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Quill Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Quill infostealer in campaign PTF-00247.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"c6817eb7228f8790fcdb4152a77efbc9abbf18d2cf77cb1620f8e319ab6b2fca\" or \"883625f1a3852d813310bd709a5a4715b9a9469bd5cdc35702d853e8a6c8d839\" or \"23c24fdb393778d74f20e8c6c70071e857c46bedbb0c848eac61d96d7d650a8c\" or \"93b20c829ba868f44c5a14730daff0e80d3247dd7bd9b547c7667adfc3ab416f\" or \"cbeccfd1e668282aefb7c45a81a26e63cf8b021ef0eb49cfb57957939d90c9da\" or \"12dcb9ee83ddfbafa7e2bc0de67cc817c6e6d4182e136128a947c54a94faeb9a\" or \"8921d3da3b6233b92128270cb89dabd5c79923d20e7a02986f50bf42a7c3292b\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00247"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "4079325e-7679-5080-8025-2bb557850b7b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Slate Quill",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-00247",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "4079325e-7679-5080-8025-2bb557850b7b_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Fennel Lantern botnet sample, as reported in campaign PTF-00356. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Fennel Lantern Botnet: File with known malicious hash written (PTF-00356)",
+        "note": "## Triage and analysis\n\n### Investigating Fennel Lantern Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Fennel Lantern botnet in campaign PTF-00356.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"ec39964bcf2e5d42af86bc7b600b8472a508cab1a5f6045bac9f4e399d1bfe2f\" or \"4f088982337f56812281deebb23089a77c9efa4bd9a32514c7673dc234140f6b\" or \"15f67461ff24a3d106c11f74d64f0ed0acbd0409e1c8d79dcef50dba0c95f6ff\" or \"b6226dbbd9b8d7e792ff38dce9ea78ea919c2aa5e170471889fd36114852f4b2\" or \"b21d5de9b25dc6c241ae8908ab2baedb5570fefce5101fc9afaa026fe37a556c\" or \"4a09dd99cbf0b0fbd80ccb318a04ee2145c42cf5e3546496d29d2edd3751d42f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00356"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "1ee94398-4a08-530f-8b1a-f8404cf32527",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Fennel Lantern",
+            "Threat Type: Botnet",
+            "Campaign: PTF-00356",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "1ee94398-4a08-530f-8b1a-f8404cf32527_1",
+    "type": "security-rule"
+}

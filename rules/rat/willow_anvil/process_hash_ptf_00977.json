@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Willow Anvil remote access trojan sample, as reported in campaign PTF-00977. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Willow Anvil Remote Access Trojan: Process started from known malicious binary (PTF-00977)",
+        "note": "## Triage and analysis\n\n### Investigating Willow Anvil Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Willow Anvil remote access trojan in campaign PTF-00977.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"4e64b93fac6d1b255223883d5c358174073b587c836e6d270bbb3ceb04dcfdb2\", \"084e6403b2b1e8448ccf9813fdffa3ce675e159789a5dfa65d9f0f1e7eed82a7\", \"03919d77d86880f728b5e4b386efd2635d7707b8fb786b1f0ba681c76b433d7c\", \"817c7be27233a9ce62a1e0cdd9d6bab097d087fe1599ef78c464536708a755c5\", \"98ebf517eca923280cc7b46bfd854f4b37f41e4762d77eb6e771fd1015c496ab\", \"4be20773f3a439b32f638dfad0eeb2d566abdca88667ae14fffc9dec24f746ac\", \"3a4dabb9e1ded126482a705fe12f10b80e20256ff5c685de178e7f18d6f1947c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00977"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "3400d537-b41b-5ebd-8ef9-18c0f9b2de2d",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Willow Anvil",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-00977",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "3400d537-b41b-5ebd-8ef9-18c0f9b2de2d_1",
+    "type": "security-rule"
+}

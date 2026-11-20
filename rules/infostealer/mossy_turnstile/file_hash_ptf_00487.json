@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Mossy Turnstile infostealer sample, as reported in campaign PTF-00487. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Mossy Turnstile Infostealer: File with known malicious hash written (PTF-00487)",
+        "note": "## Triage and analysis\n\n### Investigating Mossy Turnstile Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mossy Turnstile infostealer in campaign PTF-00487.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"cc9b9a9ee85c3c58fde9d2e408da19d8c2ad9e56f308baed73396a884725e821\" or \"ad444080a1537dc5647aff03935c3b768612d7ada4e7cb243912f5b63c18a420\" or \"9c4fa8057cc05f13ead3e46bdd5941b23ef8e8d7731c18ad0851557981241105\" or \"1901da0af258dcce9bae6fc58c76cdd413685b3c7967ef4b90d8b7af79c29704\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00487"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "0d61cf5c-a08e-57b1-a25e-277100a43ad2",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Mossy Turnstile",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-00487",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "0d61cf5c-a08e-57b1-a25e-277100a43ad2_1",
+    "type": "security-rule"
+}

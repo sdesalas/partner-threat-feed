@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Marble Wicket cryptominer sample, as reported in campaign PTF-00778. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Marble Wicket Cryptominer: File with known malicious hash written (PTF-00778)",
+        "note": "## Triage and analysis\n\n### Investigating Marble Wicket Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Marble Wicket cryptominer in campaign PTF-00778.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"694e58561a09961dccd4eefb364aa4006b1d219b91051caa02ad4d1cb77dea7f\" or \"b4c4f42bfdc65a685d35815f12da1550b4a932129fc0834069a5631eaa9180d5\" or \"ed3285a40dd081e5c52ccf67196288893a83df1687902d88379b1f7d9941d456\" or \"1e98b6fc74c12933781656528925a5e7b94922e379d12cd6bf354a3ce13665c9\" or \"b919b69df6bfcbbe82d19b5c74463df1aa369221412f598ceaad921ad25e45d8\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00778"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "fb664619-7d08-502b-b789-db535655a44d",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Marble Wicket",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-00778",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "fb664619-7d08-502b-b789-db535655a44d_1",
+    "type": "security-rule"
+}

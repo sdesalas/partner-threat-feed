@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Walnut Lectern phishing kit sample, as reported in campaign PTF-00546. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Walnut Lectern Phishing Kit: File with known malicious hash written (PTF-00546)",
+        "note": "## Triage and analysis\n\n### Investigating Walnut Lectern Phishing Kit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Walnut Lectern phishing kit in campaign PTF-00546.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"2e4996933706ff5a68650436750afac313bf3f3052de82e18bd6bf5d407556d9\" or \"b45459b39c9928bbdb89e7748ab81bb442523296254ee202647ae3a54b651de8\" or \"d96924711ad0b51a232e0c31a9315ebbba740e2367972116aca7fbee4150e168\" or \"56f817b3cfc079bb9a381a2bb856ac65bf048b7f8c242eccb3a83e68d22fc5de\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00546"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ac368d60-c158-5564-a7d6-d8b7a8b27bfa",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Walnut Lectern",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-00546",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "ac368d60-c158-5564-a7d6-d8b7a8b27bfa_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Linen Inkwell banking trojan sample, as reported in campaign PTF-00950. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Linen Inkwell Banking Trojan: Process started from known malicious binary (PTF-00950)",
+        "note": "## Triage and analysis\n\n### Investigating Linen Inkwell Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Linen Inkwell banking trojan in campaign PTF-00950.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"1fba67d4adaad747e2441f5c2255319618d2bee6fc99445168e948877b3cf07a\", \"7e3b8e571d4ae14478f5832350f480ff742d02c02c211ffc9f7cd19d938404a5\", \"a63ebe7e4b45da72bdba37fbabf2bb75a5af5de2989aa75c98976786355155c2\", \"9d6c844c2e335da05af74b3e22a5b6e0cf4c3d9df22d4f0121c3cba348b83d36\", \"476f8acbb3ea0d89ef7353ae14472d842ae3ac02e4ab8c0d45578457a7d56b11\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00950"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e2e92863-efb7-5e2a-b337-3505e32de0e9",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Linen Inkwell",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-00950",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "e2e92863-efb7-5e2a-b337-3505e32de0e9_1",
+    "type": "security-rule"
+}

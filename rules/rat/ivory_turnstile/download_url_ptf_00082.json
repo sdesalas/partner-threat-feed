@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Ivory Turnstile remote access trojan payloads, as reported in campaign PTF-00082. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ivory Turnstile Remote Access Trojan: Request to known payload URL (PTF-00082)",
+        "note": "## Triage and analysis\n\n### Investigating Ivory Turnstile Remote Access Trojan: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ivory Turnstile remote access trojan in campaign PTF-00082.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://assets-relay21.test/download/8982.bin\" or \"https://auth-sync22.invalid/update/1315.zip\" or \"https://cloud-api71.invalid/doc/7513.msi\" or \"https://login-mail42.invalid/install/1366.php\" or \"https://relay-cloud59.test/gate/4321.php\" or \"https://static-assets43.test/download/4235.bin\" or \"https://static-files10.invalid/download/1995.zip\" or \"https://static-login31.example/install/2667.php\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00082"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "651fbca6-cc17-5f85-ad4a-98f401af4cc3",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ivory Turnstile",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-00082",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "651fbca6-cc17-5f85-ad4a-98f401af4cc3_1",
+    "type": "security-rule"
+}

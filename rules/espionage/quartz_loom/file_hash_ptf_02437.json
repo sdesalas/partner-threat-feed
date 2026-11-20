@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Quartz Loom espionage toolkit sample, as reported in campaign PTF-02437. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Quartz Loom Espionage Toolkit: File with known malicious hash written (PTF-02437)",
+        "note": "## Triage and analysis\n\n### Investigating Quartz Loom Espionage Toolkit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Quartz Loom espionage toolkit in campaign PTF-02437.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"0302671239e02e95970d18c5758d15bebea9fee7b53748d031b796949953a112\" or \"d2d259e5c607805a4326a101d6fa5b7518aa45c5057d4d11fb0d33b783bfb0cc\" or \"e6bbba0815bcbd038d5f8d50958d5efe1800890d42b15ca6beb47cfa53709369\" or \"958b94d7e97f2d612e2b9123388fc46c640a8b8a07a0e30880555892c04192e1\" or \"b3de99eee4435dfe98d0d5a9666313d903479ff68eb3c1eda7f248ea625ec237\" or \"bab0511371a4ab876bee6dded7e640490ee00e403d46b9ed94509af4f9d6acb4\" or \"875be1102f162fc8dc8b9147629eb9f6c9391bdf7a5c852db8e3d8762d24dce1\" or \"a4d609e46eb929fec0311f4ed9ac9eaf1ec82dff1d0fe769ac0d9695fd764b5e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02437"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "404c4d95-7038-538f-8f41-5ff506d8b50f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Quartz Loom",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-02437",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "404c4d95-7038-538f-8f41-5ff506d8b50f_1",
+    "type": "security-rule"
+}

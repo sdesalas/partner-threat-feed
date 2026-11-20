@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Slate Trellis banking trojan sample, as reported in campaign PTF-02227. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Slate Trellis Banking Trojan: Process started from known malicious binary (PTF-02227)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Trellis Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Trellis banking trojan in campaign PTF-02227.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"ad9740e7a52a1621a9670cad4c792e2df67acefde2ec9c1cc13cb2109910dbf5\", \"a90918f52ff439a838d7f1da07560e27c4ce595b006bae164385936f19a78639\", \"3a611bca7d5f7dfee3887fac64d62c82893a094fdc22f8245aff1c21879a30d6\", \"1c50708f186377e626ab0706747cc19d7c946b51f5ee0710a8416f11d066eba1\", \"c9e79b7a4b446022ede23559252cf69de2ac224fc3e1ecfadf843d627496a843\", \"9291ad5838c562513f42455d753760e31814bf96ff89bea3d4b769d2c45d0e12\", \"21cd9780205721bed468aa31377918419b00ccc6adc25e98f0384f6cad67d6b8\", \"b6e7bc92e1f4ba79d844f06abf4bb0c030b77fba4b66cb37fa3984cbc28f6b48\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02227"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "1a82ca65-7afb-5e1b-a8fa-b5c5bc09fbd2",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Slate Trellis",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-02227",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "1a82ca65-7afb-5e1b-a8fa-b5c5bc09fbd2_1",
+    "type": "security-rule"
+}

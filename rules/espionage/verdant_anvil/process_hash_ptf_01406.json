@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Verdant Anvil espionage toolkit sample, as reported in campaign PTF-01406. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Verdant Anvil Espionage Toolkit: Process started from known malicious binary (PTF-01406)",
+        "note": "## Triage and analysis\n\n### Investigating Verdant Anvil Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Verdant Anvil espionage toolkit in campaign PTF-01406.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"0de6a327096ee041f8c17a6d77ad0a89ffd2df948ef392e20b8d615ea4e6a553\", \"e515ea214402f4b664e6e6d8644e7e9f346b2d81f80d417cfe5bdfc81fde6ddc\", \"61ecc2aabc23e4e3178b9b75db15aab4828049fa8a13b9e490975d1ce5e3be9f\", \"a171d5101cf93ff44200a69ed80b0a3636ab7737c50d82c3fdfc42c957f6f47f\", \"e12fc34303841cac0bfb58382120efb33a652210ff6e66a8c94c260903047531\", \"f1682d0cea9a9b6bc9b3498dec2e8bde9738bda938a44041ca10cf5bd7efd70a\", \"54e3afdab5bb634124897914c4c13ec7705d6929f7f4ab798acd2039d224c1b9\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01406"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "0f073d09-5e70-5423-baa9-603d9c7f2ec2",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Verdant Anvil",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-01406",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "0f073d09-5e70-5423-baa9-603d9c7f2ec2_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Birch Keystone cryptominer sample, as reported in campaign PTF-02085. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Birch Keystone Cryptominer: Process started from known malicious binary (PTF-02085)",
+        "note": "## Triage and analysis\n\n### Investigating Birch Keystone Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Birch Keystone cryptominer in campaign PTF-02085.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"0d860989a5cb66b517b89122abdbff994a1e876e1ca14ce30f4b39daf5c992a8\", \"e0d401c9ae2ffed294a5b1343eb936135cf588028b349746188a1a224631d1e4\", \"d85d995ed8cc30f18d31cc3a26f23a31cfb214d1e9955227cd04df21ded132f4\", \"f213f8a14f7e8d1c9624ed6bd0ec61c68fcb4e4c76b87a107c448b3d573fc8fa\", \"ac83f621ee7436dc9b76d85a00a02d9f968943aa9887079a29fb2c91de3b2c08\", \"cda6a1a52c76e4c424daa4cb258c13b8fd1f3ea7edf5595d664d79f8cee505c6\", \"5906f9f75b93903ae5fd524193fbc284e797defb2a2e31ca53668c79576c74b7\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02085"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "00f34e81-f8b3-5cd2-bcf5-6193c3fd926d",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Birch Keystone",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-02085",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "00f34e81-f8b3-5cd2-bcf5-6193c3fd926d_1",
+    "type": "security-rule"
+}

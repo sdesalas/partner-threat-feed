@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Mossy Whistle banking trojan sample, as reported in campaign PTF-01323. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Mossy Whistle Banking Trojan: Process started from known malicious binary (PTF-01323)",
+        "note": "## Triage and analysis\n\n### Investigating Mossy Whistle Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mossy Whistle banking trojan in campaign PTF-01323.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"aad89c7c45e47bc2fcbcab7a890eca3b47b891c22177111a95ef79725481f20b\", \"b8720078b3c6dc8cba9830ab7b73395008a1e65d7fbd9d0c418d8c0f4da965b9\", \"9ebf9f9b466e9df41b6fc3ec7b9efc6af99c811b4865f90138bf0a90fcd3f107\", \"29222aff549764989a21808907f5309ef571d5a0f1569e7a38e643d015d0c03b\", \"f86d034f65485dff0cada4162d0c13fffa907ca7063d9339c953294bbca24118\", \"d089bdbdd5d663bffc1cc308551bd593a351111bc6b6a36d253a2ef8e8358e84\", \"2b94defb7360a81b58d8fb7afa06f21c2c72b0e18ddbdf18b731800ee742b373\", \"24206986c15887a803335d02000ff83c2c0f2b05ba55d1bd9e2ce6395463c6c8\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01323"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "0cdac827-bf48-5207-9bd5-f04d3ee1d078",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Mossy Whistle",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-01323",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "0cdac827-bf48-5207-9bd5-f04d3ee1d078_1",
+    "type": "security-rule"
+}

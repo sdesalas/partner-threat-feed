@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ashen Lantern banking trojan sample, as reported in campaign PTF-01025. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ashen Lantern Banking Trojan: File with known malicious hash written (PTF-01025)",
+        "note": "## Triage and analysis\n\n### Investigating Ashen Lantern Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ashen Lantern banking trojan in campaign PTF-01025.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"a39fab7f71592580e5b2329b7d695267141c828df9bcafc187e3b5dd7341eae7\" or \"4e69f6e5bf49688ea08e190508c41b2d72c37f37d9a93e6b12f8f67fc671a736\" or \"167658d58213cbf084a9b0f7be626934502cb42c08746a5454f4814e8fc8c039\" or \"933f186e7ae0b8e5554b124d207768b07acac2ca8b2b870b116eb20e0059e56f\" or \"33a49f1f55cd0f646ec3a2e443441660a13228b7eb90991b3d0d0e98a56017ef\" or \"69ec0fe821cff6b6ff9ffe43dcd5525c702eb1622c8f03c13b631445df470260\" or \"2e315179daad6a7065bba5da27cc9e8bf9988c4572ebeac1056df8b3ae043806\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01025"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "13bab768-57d0-591d-9bab-c57a75eadd4e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ashen Lantern",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-01025",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "13bab768-57d0-591d-9bab-c57a75eadd4e_1",
+    "type": "security-rule"
+}

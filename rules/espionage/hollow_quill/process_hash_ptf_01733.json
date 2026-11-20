@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Hollow Quill espionage toolkit sample, as reported in campaign PTF-01733. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Hollow Quill Espionage Toolkit: Process started from known malicious binary (PTF-01733)",
+        "note": "## Triage and analysis\n\n### Investigating Hollow Quill Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hollow Quill espionage toolkit in campaign PTF-01733.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"7e579ad8a4e66acbd170762b37f5f613977d036dc8fd782955d7f66631113418\", \"a3e4c2d4016ba10e97a8765d45e1450d679a2948535472d34b7190a34977f369\", \"86c1e61706ce3728ad0a73623da981829a2f1f597975080c48c63baf35cf99c6\", \"beb70cd5c3b095e1ad61c3ea1304b8d65d7f44d0b05b51e525e2acb7d30dcfba\", \"de60725914d792d6905fc610d0efb2ac25163431bd4c246ee0240f006b8a452e\", \"e48b019c8cb284c8ed64cf899c3c3fd2e8a46ac930e45dcdd8e80f4d4ad0f4a9\", \"b6a343beb81112922ab44b6317c38b13c6bae2d1aa3b9235a52bd3e85070e635\", \"1107fdc5e81b138a0f1c8cbb7503a0ae890e5b322d560d86ed622027f7fc9a3e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01733"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "84f3eced-447a-586e-b2e3-d8300218e4df",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Hollow Quill",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-01733",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "84f3eced-447a-586e-b2e3-d8300218e4df_1",
+    "type": "security-rule"
+}

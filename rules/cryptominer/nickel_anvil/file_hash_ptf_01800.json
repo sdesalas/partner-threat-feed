@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Nickel Anvil cryptominer sample, as reported in campaign PTF-01800. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Nickel Anvil Cryptominer: File with known malicious hash written (PTF-01800)",
+        "note": "## Triage and analysis\n\n### Investigating Nickel Anvil Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Nickel Anvil cryptominer in campaign PTF-01800.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"77777c8296fc4a5346e263845a4a686ee7a2090e74277188f4b575a67e4210b5\" or \"ed8d372217647a235cafd97588f48a9a46a1fc585a359d191c15423bffd4f309\" or \"3394014692dc997f796710482ddc48bbc2b1d4d011e0b75abef0e2fce8a7f0e7\" or \"10431625562a7ec04b8f61024356abb24a49ffe2a8f5f3d93eff12feb37b1155\" or \"78a208166bca6e2023f715169aafbf596827755a8206d4d612aee1b4b66d9361\" or \"a8091adf43ce6cf6d3d4987f8c681a53d6d43e5d989be9e1a2cac6fe695348fb\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01800"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "7451ab38-849a-5f8b-af74-e0159b14a36f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Nickel Anvil",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-01800",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "7451ab38-849a-5f8b-af74-e0159b14a36f_1",
+    "type": "security-rule"
+}

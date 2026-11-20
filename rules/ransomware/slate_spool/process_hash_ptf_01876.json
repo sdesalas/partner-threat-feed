@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Slate Spool ransomware sample, as reported in campaign PTF-01876. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Slate Spool Ransomware: Process started from known malicious binary (PTF-01876)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Spool Ransomware: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Spool ransomware in campaign PTF-01876.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"6efb8733e55ee42d3777f89fd1c153bb9b304e27fdbfd5ea0d6c5b7abdb1b6a3\", \"e96ccf4ee61a93be40000ea9ba63476fe4cd74d0e0824135eef13d413a2dc48e\", \"64ef90868084fa9717e69905fe989b9d7c0f79d6314bfc22bf105718c8e67ef0\", \"25373cfefaac110b957519a885c94df465a2ac9b847fa2b7859ca8a92be0dd09\", \"3444683143e068a54f719337b15fa40f230d71d97c4d6c51e10927cf720847c5\", \"a2afeeb4b38e1ba12264de88f9bae8e3a7f3772ad2839860ea537b2c9bde5cfa\", \"444b96f51b5e8209fdcaab23362df466874ace3ee136faa251a99892ac75d882\", \"53e14e624691fe36104984507a2f35b34e56a4a65f7cb5e33f126afee9fff126\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01876"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 99,
+        "rule_id": "dfd7f77e-5987-5633-8a3d-1b360ae20ff6",
+        "severity": "critical",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Slate Spool",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-01876",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "dfd7f77e-5987-5633-8a3d-1b360ae20ff6_1",
+    "type": "security-rule"
+}

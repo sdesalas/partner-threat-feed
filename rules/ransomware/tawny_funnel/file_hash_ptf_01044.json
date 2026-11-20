@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Tawny Funnel ransomware sample, as reported in campaign PTF-01044. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Tawny Funnel Ransomware: File with known malicious hash written (PTF-01044)",
+        "note": "## Triage and analysis\n\n### Investigating Tawny Funnel Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tawny Funnel ransomware in campaign PTF-01044.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"2439f696bb28e6620077076abffb9101358011daa94350aba250e975c6ff39a1\" or \"b9e8a35d65292f0f3925dac7b798acde4d03f3476d52903a49a753673203d0ac\" or \"358f49dc7b1684cba75156defdb81fba5932f026724593b17e3e489def1104d3\" or \"47faeb2473bf499258ae2a4ffe42f00dc1ada19b1b76f7b458ef9b09866a915a\" or \"9c0c745e9102aa4e3dc4952cdba8e95024f96e81510c3dbe2064be0833bc5637\" or \"454874f1fc76e7d04c1b5c39c66fa00ec7d2c846934a80330ac96ed8aa427fc9\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01044"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ff9ec231-f9e4-5a43-8a09-483d4681bbb2",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Tawny Funnel",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-01044",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "ff9ec231-f9e4-5a43-8a09-483d4681bbb2_1",
+    "type": "security-rule"
+}

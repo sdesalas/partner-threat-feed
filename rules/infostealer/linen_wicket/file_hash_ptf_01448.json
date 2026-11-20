@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Linen Wicket infostealer sample, as reported in campaign PTF-01448. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Linen Wicket Infostealer: File with known malicious hash written (PTF-01448)",
+        "note": "## Triage and analysis\n\n### Investigating Linen Wicket Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Linen Wicket infostealer in campaign PTF-01448.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"8e3237959094c6507946dab0094775e7f4954e780632b6eb0fc1bc1138dc12d5\" or \"912655c24420e5dbbb9b511e61bffa5394473484cd4d96581ca4f839ff25fe55\" or \"c638cfb9ad29d095d2b41445550355065bca6fd6b75d1859198bfc351fab06c9\" or \"49b190790f851251c99baa72e0c3c0d2f2d989751ba522e81fe094b3ddb859ac\" or \"2830dbf2223fd93e08eee523dc4ee37c5ed8a33c269ad327fee5c6303292f7df\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01448"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "34eb3691-92be-5ef2-9566-90cbd644ae03",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Linen Wicket",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-01448",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "34eb3691-92be-5ef2-9566-90cbd644ae03_1",
+    "type": "security-rule"
+}

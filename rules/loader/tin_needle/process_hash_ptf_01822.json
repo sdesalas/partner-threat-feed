@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Tin Needle loader sample, as reported in campaign PTF-01822. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Tin Needle Loader: Process started from known malicious binary (PTF-01822)",
+        "note": "## Triage and analysis\n\n### Investigating Tin Needle Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tin Needle loader in campaign PTF-01822.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"9d7464c1eea3ea1262ff0cc28bf0405cb3b10a3a6e81a781759a9836d6a7dd6c\", \"8e7c350bde17e59d26c8fe01ca5f2f0a39f9945807027d7b65da674260795335\", \"e57d33bd95409b60b824c55b39f0688f1be923fd2c6b68d61f02c58bbf368157\", \"9d667a397ef066d6a89ef4d445e1890199e9f2925e07e84deb7f004221a4ae54\", \"169276dc67ce9458d736847ba007f24ec444b9410c102da9afa7e13e78740cfe\", \"fb9d2ef1525f44e1513dcbcab4c3e18defaeeaab382987af6a37e453176a224f\", \"040d336537c2d54816e34ad9735eff1298e706389ebb8d5d248cf8cba380d3e4\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01822"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ee833873-6715-517d-bd92-4c607d84e9fb",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Tin Needle",
+            "Threat Type: Loader",
+            "Campaign: PTF-01822",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "ee833873-6715-517d-bd92-4c607d84e9fb_1",
+    "type": "security-rule"
+}

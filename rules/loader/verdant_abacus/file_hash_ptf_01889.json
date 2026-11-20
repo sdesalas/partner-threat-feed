@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Verdant Abacus loader sample, as reported in campaign PTF-01889. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Verdant Abacus Loader: File with known malicious hash written (PTF-01889)",
+        "note": "## Triage and analysis\n\n### Investigating Verdant Abacus Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Verdant Abacus loader in campaign PTF-01889.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"98b27ddb4757edc2c2671feec4ffb5d2e794928eec38fb836222421f5321893c\" or \"c52d42c5ea23fd1c88b1ae0cd7fc5d9c75a0bbbb881c669b1fb937eaba49381a\" or \"baec1acd4baa748eaef764a361eb3b35ae64c72342ed9ce7b7295a5d049f117f\" or \"0de41718529e28d8473726d52aefedc0c388dda397391236dbeb7d73c5cc4874\" or \"7343fbafcf91f02a6bcfc36e4df4b95e0c428e5d086b8bb147a8fca5124322fa\" or \"e78c1f92d1273f4b1edf30b5069c6488c968bdc2146a379b7918449073dd96ec\" or \"c7a8aa96ea36c90e2b7e60c4416147bef80e13a096f1ba4e915d7c71d5e842bc\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01889"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "3f7d303b-81da-5828-bd98-da4793598a3a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Verdant Abacus",
+            "Threat Type: Loader",
+            "Campaign: PTF-01889",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "3f7d303b-81da-5828-bd98-da4793598a3a_1",
+    "type": "security-rule"
+}

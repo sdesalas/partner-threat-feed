@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Russet Valise banking trojan sample, as reported in campaign PTF-00057. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Russet Valise Banking Trojan: Process started from known malicious binary (PTF-00057)",
+        "note": "## Triage and analysis\n\n### Investigating Russet Valise Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Russet Valise banking trojan in campaign PTF-00057.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"9854af08c8b86d0f2341d7ed5a3ab0dc9b7b28c0e955b4c35e89520055534660\", \"c75769301969f9d7cc3b2fca39817184e2a6a4d5aa1a1120855172487212ec41\", \"5062e3dc33bd4a74278fe08ad86d58e4b7aeca906c44ef09f70daf9294698da6\", \"9ce6f32db470dde517a57e71fc0a6b434fea05bd3b4bfae7f748edd2b961de6a\", \"23e54bc19a357f9e7331594b87c8d8c80897fd425ee5471f8bf9a27595d294f8\", \"45b25ffcacf229d89b293cf4b53f66380d83bebc36c99ef7b419121a87ddbf2f\", \"7966803af51aa711629b68492e81b11b744c93e197ec3529e9128ac81e2fc3ef\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00057"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "3606a5b7-5857-53f8-b4c5-da3da459ccdc",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Russet Valise",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-00057",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "3606a5b7-5857-53f8-b4c5-da3da459ccdc_1",
+    "type": "security-rule"
+}

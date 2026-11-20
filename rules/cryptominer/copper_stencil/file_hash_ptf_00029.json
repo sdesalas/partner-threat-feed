@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Copper Stencil cryptominer sample, as reported in campaign PTF-00029. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Copper Stencil Cryptominer: File with known malicious hash written (PTF-00029)",
+        "note": "## Triage and analysis\n\n### Investigating Copper Stencil Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Copper Stencil cryptominer in campaign PTF-00029.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"f50055c6d4d5bb183f142690f38f50de0c3693be53e84b689ec8c432170b5c1b\" or \"b600d633b6a5b05f733282a5ea2f7154a761ea9e17d148dcb368b4d1abb727b8\" or \"02a1fe1ab6790e7e5bfec19571313025ab5f66c1f1cc66900872bd9d26cb01c3\" or \"0cf69966d5435fc3c4717005e27af524c66fb338c6cfda02062a443a91445285\" or \"570dff9f411b583c11719e86a702872fa2380c80d5b72313e95cb266a7463c59\" or \"0b21892b62e09ef3ff3c11dd14cf6c616bc6da3f0c45c3e9108503cc374ffe08\" or \"f212fd1abd6d2568d65e4bcb18794625fdcc7a7b5831388710a44ffcae0d4c70\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00029"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "26c69167-5166-55fd-b0d5-bc8b1bb81398",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Copper Stencil",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-00029",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "26c69167-5166-55fd-b0d5-bc8b1bb81398_1",
+    "type": "security-rule"
+}

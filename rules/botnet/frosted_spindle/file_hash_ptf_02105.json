@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Frosted Spindle botnet sample, as reported in campaign PTF-02105. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Frosted Spindle Botnet: File with known malicious hash written (PTF-02105)",
+        "note": "## Triage and analysis\n\n### Investigating Frosted Spindle Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Frosted Spindle botnet in campaign PTF-02105.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"fe4fb2fddbdafb5eb81f08d40972d2d390036227576744d9216779e531a6121e\" or \"a13e5615243fb19087155171c457cf2c35ba970ed23984a674914586e5777b16\" or \"72b21dafb3736d74f4c0173a3db547105f59c920850216210851a77577fe8015\" or \"31548eada216d552f560e5fda3a55f46ad95f176ea1704e3d8db9dd7a9fcd497\" or \"d3349dbd049c52acbccf01613f0cffc9beb32fd9e5d43d7fb579332cb1739f7b\" or \"04252510d7e6b5ef3a0bccb86fcb444952d61997fa1c77a5e6db02ec54ca56b5\" or \"0fb8722015acac06dc4e23678d9347da8d6cc6544408dd3956e4dcddf20d53f1\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02105"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b49f23e9-a1ef-5920-822a-afa30871c00c",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Frosted Spindle",
+            "Threat Type: Botnet",
+            "Campaign: PTF-02105",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "b49f23e9-a1ef-5920-822a-afa30871c00c_1",
+    "type": "security-rule"
+}

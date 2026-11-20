@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Tawny Tinderbox banking trojan payloads, as reported in campaign PTF-01103. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Tawny Tinderbox Banking Trojan: Request to known payload URL (PTF-01103)",
+        "note": "## Triage and analysis\n\n### Investigating Tawny Tinderbox Banking Trojan: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tawny Tinderbox banking trojan in campaign PTF-01103.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://api-cloud83.invalid/invoice/4867.msi\" or \"https://cloud-auth45.example/gate/6731.php\" or \"https://connect-cloud90.invalid/install/2829.zip\" or \"https://files-track46.invalid/gate/1499.bin\" or \"https://mail-portal42.invalid/update/9587.msi\" or \"https://node-mail35.example/payload/3774.zip\" or \"https://sync-mail84.example/doc/2682.bin\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01103"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "4979fad7-c5c3-5272-abd5-03e49213dbf9",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Tawny Tinderbox",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-01103",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "4979fad7-c5c3-5272-abd5-03e49213dbf9_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ivory Kettle remote access trojan sample, as reported in campaign PTF-00188. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ivory Kettle Remote Access Trojan: File with known malicious hash written (PTF-00188)",
+        "note": "## Triage and analysis\n\n### Investigating Ivory Kettle Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ivory Kettle remote access trojan in campaign PTF-00188.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"7963fae52aab45529daf6229f20df352b9f1802446c1294cb741dd31fc93c16a\" or \"fd358c9f71c5f49b24740bf5f28001b01aea999ff929e50b8bc5b4a5ab29adb3\" or \"88e14c49a961105a9e9fa6d3940af7665255535869fc87e34bd568db4ec80eb5\" or \"76a5183561b00b029f091bbf1b1cab47237e1271553e8c4c7c066b1fca36d58c\" or \"2044214f7ba242a751a71049b1b3706f4d96686da7a926e62b368a16a6f1e89a\" or \"dbdebae4a5807616a7cdbd5521410b31340f2142971ac9af44e2f81a2c9021f3\" or \"fb0bc293ffaa8c4b0560964be032b5e9f53d67882a5276b9cb8f9bbcee99a246\" or \"1f30a1686c0d4cbe58739d1ea9e6e4e42dcc002d50e7306b6f570600699e9b2c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00188"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "8e821bff-12f0-522f-9f63-e99935012ffa",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ivory Kettle",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-00188",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "8e821bff-12f0-522f-9f63-e99935012ffa_1",
+    "type": "security-rule"
+}

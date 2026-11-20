@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Umber Lectern infostealer payloads, as reported in campaign PTF-02367. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Umber Lectern Infostealer: Request to known payload URL (PTF-02367)",
+        "note": "## Triage and analysis\n\n### Investigating Umber Lectern Infostealer: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Umber Lectern infostealer in campaign PTF-02367.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://api-connect21.invalid/gate/5531.msi\" or \"https://connect-login89.example/install/3902.php\" or \"https://mail-secure50.invalid/install/4711.msi\" or \"https://node-cloud29.invalid/install/7956.zip\" or \"https://update-secure11.example/download/4101.bin\" or \"https://update-update15.invalid/update/7938.zip\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02367"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "cfc3e490-e357-597d-9f55-e2c94897a7d0",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Umber Lectern",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-02367",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "cfc3e490-e357-597d-9f55-e2c94897a7d0_1",
+    "type": "security-rule"
+}

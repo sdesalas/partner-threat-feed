@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ochre Bobbin banking trojan sample, as reported in campaign PTF-00266. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ochre Bobbin Banking Trojan: Process started from known malicious binary (PTF-00266)",
+        "note": "## Triage and analysis\n\n### Investigating Ochre Bobbin Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ochre Bobbin banking trojan in campaign PTF-00266.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"169cf7fd111a19d7a63c20b9ad0824a8821bbbe44d8fe1fcf3a303e8e3d5fc4d\", \"e2bbef87d83cb891aae76cf93a32cbf1502867b3ec8978dc06d0d5858234411e\", \"b1a01dddeb32d9173cc46982afe8ec70c97c08e1bc50584d7f6309956e69f0ba\", \"5012aa617482fb152a4878e3ecf072237e41b1cdddd38c8859b33489a2d3cd47\", \"84675bdf2bd298415be565e94720652ba6a946f055b7a33c570c87d546b994c7\", \"4b70142e4be3148824fd4063d7709baed057b53f08b04e38bff8eecac302f38d\", \"7b2ec3c0269d90b58779382d88a9ee2045564d9b1995b130627c91d9a34b16dc\", \"276ecc70b658e9a140579596feed0974440d1b310317eea4cc7e7b91c9d250ef\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00266"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "eaca6271-040e-5271-877b-b1020a37ee3d",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ochre Bobbin",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-00266",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "eaca6271-040e-5271-877b-b1020a37ee3d_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ember Hourglass botnet sample, as reported in campaign PTF-01097. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ember Hourglass Botnet: File with known malicious hash written (PTF-01097)",
+        "note": "## Triage and analysis\n\n### Investigating Ember Hourglass Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ember Hourglass botnet in campaign PTF-01097.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"f1de8b179e172c0e2b2f60e87a2c38040ea520bc037415511232f275898c6e31\" or \"0b931a00cb1c13d5c80dd45956eff1b1c0aec8b6b0ec386c8ea71cbf038cbf46\" or \"2d113a17ac3bf614509fe63e6cba9161c355c3809173a88a8a22ae6e382b24d0\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01097"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "563f3b96-fd6d-54ba-a64a-81d5990335ff",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ember Hourglass",
+            "Threat Type: Botnet",
+            "Campaign: PTF-01097",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "563f3b96-fd6d-54ba-a64a-81d5990335ff_1",
+    "type": "security-rule"
+}

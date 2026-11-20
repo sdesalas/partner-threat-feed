@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Umber Thimble phishing kit sample, as reported in campaign PTF-01438. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Umber Thimble Phishing Kit: Process started from known malicious binary (PTF-01438)",
+        "note": "## Triage and analysis\n\n### Investigating Umber Thimble Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Umber Thimble phishing kit in campaign PTF-01438.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"e8ad69af2a1ae1647bf696aae5504d28960c88ea4a83a45458ed67c6d33eb0f9\", \"65ced6d45fbe25a8a44d809b4919cc1007ac7b22f6d792e0524bfa1ab95da698\", \"7658b6e3c8b80c7639d38d61d769f721da98a9dec0cc74b8381b2c857687e3fc\", \"ed575238c284718f2a79764bfd4b18d0bae34f5a23db6259208f5ccd08466ddf\", \"90319b335c8e71796765edd960966faa470512cabcc84de14e233084c4e5f7b1\", \"009ffb0e85e3877c6d06f8d926a5c7c2474f4a70ca02a3477e178acd3d2a2cbf\", \"1173804e3f0c25da29f247aebfa9967d62ba442afb3a03589c17e70defc0cd69\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01438"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "fbc84af7-5107-57a3-8e20-6f52edf9ff55",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Umber Thimble",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-01438",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "fbc84af7-5107-57a3-8e20-6f52edf9ff55_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Hazel Whistle phishing kit sample, as reported in campaign PTF-00332. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Hazel Whistle Phishing Kit: File with known malicious hash written (PTF-00332)",
+        "note": "## Triage and analysis\n\n### Investigating Hazel Whistle Phishing Kit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hazel Whistle phishing kit in campaign PTF-00332.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"4b2d7550af5028c1b406fc34f999682acabf920e7ff7641f033537d3e57d3147\" or \"23d9bf9915f6ffce0eb7dea11df9c72460d9da74c27e5076002cfebbf982f866\" or \"139d7ea031d1328cb013d69b9b86bdf2d4b1e9780b4429403f06aaab5eaaeca2\" or \"b76ef428c175b5b8539be877a014c09f7d281d61c85e77e4d189a042bac4a665\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00332"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "71614c21-aad6-5365-ad3b-9353740d293e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Hazel Whistle",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-00332",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "71614c21-aad6-5365-ad3b-9353740d293e_1",
+    "type": "security-rule"
+}

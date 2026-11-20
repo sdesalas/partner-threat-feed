@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ivory Bellows cryptominer sample, as reported in campaign PTF-01535. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ivory Bellows Cryptominer: File with known malicious hash written (PTF-01535)",
+        "note": "## Triage and analysis\n\n### Investigating Ivory Bellows Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ivory Bellows cryptominer in campaign PTF-01535.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"33b7f9a4c3ea1aee0bf93a4bf273e1a55660179ad0aaddee9c2f431d145d9848\" or \"689f5b9feccb19ad3d288affcafea2b6e66e949669dd5898a54c708f036d944f\" or \"eb818d39cdfd547ec75b4f61611fe113f3fbc1ef5a58e3a430c2fec3a88c07a2\" or \"5c7055a522f4049b1dc93f130122c01e9aa0e09fb1f2a063efb7b9e4a7606f1f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01535"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "3a37af79-5c1f-5ab9-9839-e699e89dad14",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ivory Bellows",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-01535",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "3a37af79-5c1f-5ab9-9839-e699e89dad14_1",
+    "type": "security-rule"
+}

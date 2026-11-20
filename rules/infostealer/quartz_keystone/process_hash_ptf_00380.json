@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Quartz Keystone infostealer sample, as reported in campaign PTF-00380. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Quartz Keystone Infostealer: Process started from known malicious binary (PTF-00380)",
+        "note": "## Triage and analysis\n\n### Investigating Quartz Keystone Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Quartz Keystone infostealer in campaign PTF-00380.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"0881f9a6d30a33d1e7b41e77bfd7675da608a8c1a0b5e281bf5d51c36e58e586\", \"04946dc58ac169fb5590240cd64cd0603942f07d525627e3a7783d714b234ff0\", \"63b21961995a3a7858a7588970afb35d1eb46bb744596a2a6c3c30ef4037d3a4\", \"063040aea49443418bd8a428edc1069b8870baf4f344031552ad2939f87d7fde\", \"334c77500d1a65fbf469d80483f3260204f7880b92823896dbb99465f67ceeb5\", \"93bc8ac55923b7a3e67e9722b45bd3b8b6d73c54de2f6f5a9677efb53a768fe7\", \"6b56b2b74e71abb13c5f444acca1d7a1d92110bc8d7eb7b2ea6f0809d79b988f\", \"f79ba7834df93ec5195043f898a90814bd7988c0b1be911aeacc2b2e97411ceb\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00380"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "3eded0d7-5629-55a3-a858-284c81368c64",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Quartz Keystone",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-00380",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "3eded0d7-5629-55a3-a858-284c81368c64_1",
+    "type": "security-rule"
+}

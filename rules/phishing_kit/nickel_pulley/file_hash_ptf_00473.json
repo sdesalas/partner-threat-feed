@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Nickel Pulley phishing kit sample, as reported in campaign PTF-00473. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Nickel Pulley Phishing Kit: File with known malicious hash written (PTF-00473)",
+        "note": "## Triage and analysis\n\n### Investigating Nickel Pulley Phishing Kit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Nickel Pulley phishing kit in campaign PTF-00473.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"b2dc81968c1e3294725602d7c09be4e12f5b16f65849b17eb36b28cc1c1c0cd5\" or \"b78e2a56f61f84fb21c5f225d1b2f3075027dfed75454fa21810cc4f30e5f62b\" or \"af0b11aafb06b171eb94e3262a52e4845894b0ada71381807469a8ab9470615b\" or \"a9913fb0709b8fb0b05ab466733d9831595f7b2962b3710beb2386a00977e16b\" or \"d638198572b0930341830a679d2da83105c856eab974df615a19cf792b61229e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00473"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "4b82de6f-ccbf-5c6b-ab36-804e300c9134",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Nickel Pulley",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-00473",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "4b82de6f-ccbf-5c6b-ab36-804e300c9134_1",
+    "type": "security-rule"
+}

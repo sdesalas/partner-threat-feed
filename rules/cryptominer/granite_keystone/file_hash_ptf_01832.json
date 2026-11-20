@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Granite Keystone cryptominer sample, as reported in campaign PTF-01832. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Granite Keystone Cryptominer: File with known malicious hash written (PTF-01832)",
+        "note": "## Triage and analysis\n\n### Investigating Granite Keystone Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Granite Keystone cryptominer in campaign PTF-01832.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"b14bfd6f3a548324e7fc824b738dbe9d716499b18c16d52925df05f0a57d96bc\" or \"075ae4d8ab2ad0177752cb9083ef83cf35fe2a44e1968b6ddfd428a97770aca7\" or \"f109c1b6fc66f8a3703365c36e2e3711c43a57c43a333ecd5bba09055592fdc5\" or \"a1041f8ac6ff171f73f9c4c1297da98636e09792cb0d0a428b3d41ff825e8e3e\" or \"d0721712730c4d85993cb6904e5b894c00d234f33c5bd727fc2cfb4e5f55a6e0\" or \"983e9247fe426383974756d2692b1c2e360714e3d742e4b3e30806b137424a8e\" or \"96a3084667d684190446ea9c4fd5c43413571033d82e8943ad70d3e94ce9f74c\" or \"599db00a3d367961cf32aac219b1a9e7cfa69374e4fc2d70faef4856a701006c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01832"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "42240986-3539-52d0-bed6-336dfa1d9a5b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Granite Keystone",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-01832",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "42240986-3539-52d0-bed6-336dfa1d9a5b_1",
+    "type": "security-rule"
+}

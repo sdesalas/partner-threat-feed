@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Mossy Satchel cryptominer sample, as reported in campaign PTF-02232. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Mossy Satchel Cryptominer: File with known malicious hash written (PTF-02232)",
+        "note": "## Triage and analysis\n\n### Investigating Mossy Satchel Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mossy Satchel cryptominer in campaign PTF-02232.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"7a8d2d9865de74b2cdc1443eee65562afd9100bc826c14ecaaa5c8c6014eab18\" or \"3820739da5ac56d893ad6521ddbadd53f826debeea9f9979c3b6415f57815967\" or \"b13e0d4a81897f1263972d84a63d1ba03dcbb4ffee486847d008f5f5d319f3d4\" or \"a2f431df82b99c7937d2ac9a231fdd0cd212015a2217b0afa244a6cd16123ab6\" or \"42fa3a742ee6ba3ceae445ea15ae24f4e39c7e88f62d2e71ea51a8c57b52b0f2\" or \"78ba6641bb12843dcb7b0db7e1c563d7bb9672a2dfdada1eb22f209abf06935f\" or \"508fd0ae04f321bad661227da6563b27ddcfd60e947365713c2b5d26bfb305a0\" or \"b72053f48be9b4a9cc4a230c77061f3b9ef5ed0f0c765d0aea6556bab265c79f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02232"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "9a82a516-6f77-5256-8d35-f69d2c9a1289",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Mossy Satchel",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-02232",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "9a82a516-6f77-5256-8d35-f69d2c9a1289_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Slate Inkwell remote access trojan sample, as reported in campaign PTF-01197. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Slate Inkwell Remote Access Trojan: File with known malicious hash written (PTF-01197)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Inkwell Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Inkwell remote access trojan in campaign PTF-01197.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"7cd2e70ce65c6cf313f378f90108fde6621f5044419c6b03a76c6a3f036771b7\" or \"a4ebe291675c3412caeabb06285fdf81f6a750adcfda55359ba67e30c3d09db5\" or \"6f9c037403d4dfb979ba08615984425bda544e4fe62e6d5b25bead74a5936290\" or \"b05f4725826b5c7e27ecfd5a24ebb2475dfa08680c4d54b30501efbc19c0ced1\" or \"f9020173eb0cac9be6b5cab8027e0582e7b31e3572eca292d752f4083f458adc\" or \"5677e11ce45612a0a37c8df8724dd3d9ee10d9869f9c2bb1118d2c24712b3e5b\" or \"34569f2279303789789524fcc8f5bf7f5a3efdd070368ec200d898ca745d947f\" or \"3c3c6c87d7ccc75a2646db996e2fc914088feafbd175e23cdd19082ec47d452a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01197"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "4a2ecd84-ff7b-5088-b8ba-861f531139e4",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Slate Inkwell",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-01197",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "4a2ecd84-ff7b-5088-b8ba-861f531139e4_1",
+    "type": "security-rule"
+}

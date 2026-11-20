@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Tawny Wicket ransomware sample, as reported in campaign PTF-01082. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Tawny Wicket Ransomware: File with known malicious hash written (PTF-01082)",
+        "note": "## Triage and analysis\n\n### Investigating Tawny Wicket Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tawny Wicket ransomware in campaign PTF-01082.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"19df643c784be2fef43c71918a94cf0f971891e8e21b87fdb8a2189776a635fb\" or \"91058905ab605ec0f49008f022d364c7449786f782529d2f5a63a35f25c19c8d\" or \"f1d4b784c8ab17931b93ff63ec5a244381aef8e5398faea15ed642f22d07881e\" or \"7827898020c7fbed966ce09fa57511804c61cc5af7a1fc508645cc10b803a5ac\" or \"2343ea050a1a094f5a1256146ba22220e0cc01eeb6000c44ae495a830a8ff9fb\" or \"d7ac4bcace1272cfe7ba01d2020dafea6be0b494330393a18f00dca20bb74d52\" or \"533ef9501a68f7d3f7812db1f1a2cba0a2e4e2dbde071d9b9b92ebad73831a36\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01082"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "7b9bb9d6-511b-5e7e-9aff-7e52d891bb7a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Tawny Wicket",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-01082",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "7b9bb9d6-511b-5e7e-9aff-7e52d891bb7a_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ashen Tankard phishing kit sample, as reported in campaign PTF-01113. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ashen Tankard Phishing Kit: Process started from known malicious binary (PTF-01113)",
+        "note": "## Triage and analysis\n\n### Investigating Ashen Tankard Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ashen Tankard phishing kit in campaign PTF-01113.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"9f47a60a3ef46abea8218e1831ac0712cb1235750690a4799aee5f2088ced5e5\", \"b46aa45e4454b8a28dcadee0728df83d011f2219eeae1d7e0291b58c6373a693\", \"41c1ae43356640ff2d7253d4c3a697b40acd9d050ddc22a2015bd90f98372061\", \"fecd7a84ae4f128ff4a70d7d1e1deda4688d18715f54a73abb2c60738fd42dfc\", \"769b1c1ad70a83c802f51ecbec168302019634c42eeacde3b56ce0a8b9687870\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01113"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "52d70088-b6d5-55ed-9fef-a96b1c36be5c",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ashen Tankard",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-01113",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "52d70088-b6d5-55ed-9fef-a96b1c36be5c_1",
+    "type": "security-rule"
+}

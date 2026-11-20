@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Nickel Thimble cryptominer sample, as reported in campaign PTF-00581. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Nickel Thimble Cryptominer: Process started from known malicious binary (PTF-00581)",
+        "note": "## Triage and analysis\n\n### Investigating Nickel Thimble Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Nickel Thimble cryptominer in campaign PTF-00581.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"4f8bc2b81ce97255852a4c309121d9cb85459d98a60d48ea8d1302c30ea6b523\", \"52ee95fccedc580b1478074a0236caf544fec24a5b9741b565e3599414711bff\", \"d2a52affc9c15c17b5f8686bdbcb71a9dbddaecbc0b192f7c531f768b4f4a22c\", \"80286990d6d546fff29ab1ed1dd45c8d3fcaaa314365dcee91f6b6063951f96a\", \"3d1798d225ca7038ab5938b25e19cf417e6c4273674744432959325e944700c7\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00581"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "dec7505b-3dfd-5770-a691-f18c9943fa34",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Nickel Thimble",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-00581",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "dec7505b-3dfd-5770-a691-f18c9943fa34_1",
+    "type": "security-rule"
+}

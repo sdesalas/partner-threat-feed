@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Tin Wicket cryptominer sample, as reported in campaign PTF-00507. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Tin Wicket Cryptominer: Process started from known malicious binary (PTF-00507)",
+        "note": "## Triage and analysis\n\n### Investigating Tin Wicket Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tin Wicket cryptominer in campaign PTF-00507.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"b214e7e18d02406c5632770d6a2116c5ce3d427b667541a689e0267b03a6b6aa\", \"c61477997e93846f947a598bfa757545a7b0e8d60848d772d12e5d208b1472a5\", \"c4b0061149a9f201b87b28dc4143c2975396f80f5954c55295deb7bb8fe3bcac\", \"3350852f5087072e3f9b7ba7ec864b47d5ef6555478c90a21d2af23880a0bc06\", \"4258c37eb1bf7794772c9531d1b6e09f6ca3fe8ebad5dbc13a11781fddc15a0e\", \"b7703ac873b3fa3b6ff778a039c1e845768974d27294584abd71e3df0cdcebe7\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00507"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "da6f8ddd-860f-53fc-8009-74a01bb6a31c",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Tin Wicket",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-00507",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "da6f8ddd-860f-53fc-8009-74a01bb6a31c_1",
+    "type": "security-rule"
+}

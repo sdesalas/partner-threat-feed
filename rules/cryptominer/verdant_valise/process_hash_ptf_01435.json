@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Verdant Valise cryptominer sample, as reported in campaign PTF-01435. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Verdant Valise Cryptominer: Process started from known malicious binary (PTF-01435)",
+        "note": "## Triage and analysis\n\n### Investigating Verdant Valise Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Verdant Valise cryptominer in campaign PTF-01435.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"753da5a8b9c299a91ece88f7521979ea3c103071afb4cd75e91f0c61b9f6f78f\", \"b8eb2b55ccd9c78409864ffd9d21fc38673ef8298407fb18f8c1cb25fb4bad33\", \"edbf049292c9f9d3ea9e6ec026529e57ad535baca9f88430f8c066243a527e8c\", \"aff1b52e72fab84c6b814852ac7bd58d4373467cb8b0503015519bb4a5eb5865\", \"5ceb030ed4a226dc42e45308678b643a1772a13ee95a31eb32525f908dfc15b5\", \"eea1626688cc5f6a28ad254d36aa2d910f6f8abe63df460d8c2c3d062fdff81c\", \"ea5f5d8a1e89d82eb3027ac6a7b9f4734e869f5539ee27e3be27825a16d36f16\", \"94e72f45ac689faf40372e1396ce7a0348bef694e3a0ae11d13ab8196fbee8ec\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01435"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "6604a6c6-736f-5e17-800e-526f8d1bac1d",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Verdant Valise",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-01435",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "6604a6c6-736f-5e17-800e-526f8d1bac1d_1",
+    "type": "security-rule"
+}

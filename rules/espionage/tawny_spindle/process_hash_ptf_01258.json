@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Tawny Spindle espionage toolkit sample, as reported in campaign PTF-01258. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Tawny Spindle Espionage Toolkit: Process started from known malicious binary (PTF-01258)",
+        "note": "## Triage and analysis\n\n### Investigating Tawny Spindle Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tawny Spindle espionage toolkit in campaign PTF-01258.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"90461e341aa3137a02231a5b6401edacad70924f6a37d9ace6bf32376a37c31f\", \"cab99d1189283255267e305228c33f85f5ff816fcc736305966a76c65d9db9e7\", \"721af977e0cac3dd0168d25326311a514c47259e6251d526d558b7333e9278cd\", \"81e012e3c1fade9a5f7c86bac0abe13b4dc1f83c29c73791bd298eecf633b0c8\", \"616213dc3c2236722881ef382caa4cc28322dbc08030c859e66ba18db47d5c9a\", \"3bfeedf45a6d273afa1939e0b39381ea9da25953bea6678723f3d7129946c41b\", \"81e24a7c0bf8cc4f465a8a4efa1e7d34f98bf806d9152114fc2dd89e184a8602\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01258"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "19621ad8-4d2a-51bb-9db7-030c96052cd9",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Tawny Spindle",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-01258",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "19621ad8-4d2a-51bb-9db7-030c96052cd9_1",
+    "type": "security-rule"
+}

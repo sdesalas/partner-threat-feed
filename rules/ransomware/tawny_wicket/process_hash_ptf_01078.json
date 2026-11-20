@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Tawny Wicket ransomware sample, as reported in campaign PTF-01078. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Tawny Wicket Ransomware: Process started from known malicious binary (PTF-01078)",
+        "note": "## Triage and analysis\n\n### Investigating Tawny Wicket Ransomware: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tawny Wicket ransomware in campaign PTF-01078.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"0b267677e5e749d7cc6cd8d6d5ba7125d76c26461b220d244408a6a668ddb94f\", \"3f5dcae290189249c3e444f3ef63875f944339f0974bc3e3733f0664c3ec571f\", \"e9b1944be4e5d03b590f7bbbeba419320bd36ed88296ab44945a5620b2434cd5\", \"7bb222d2bed6107da9c3abe658210fe23f6d10e0a039062681d5e29abc2c7f31\", \"d5a21692670da3251d47d32fa3fb2c3eff8927addb283fde43f2d40cdff4efd5\", \"85eaa00453df532fd6cc90cf17e294a27ef4af4cf1414717239540b526de9c50\", \"ae98824acf60e416b9335a7676b612d35bca2fecfcc77362b764669cad8b9d1e\", \"d9ac9dca41647028628b9c4c7839343983e783b42f2031f3bf0440a19bf2ad5d\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01078"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 99,
+        "rule_id": "9c27cb15-f11a-5d6f-aba8-1a9f9fa30a89",
+        "severity": "critical",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Tawny Wicket",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-01078",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "9c27cb15-f11a-5d6f-aba8-1a9f9fa30a89_1",
+    "type": "security-rule"
+}

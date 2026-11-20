@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Oaken Lantern botnet sample, as reported in campaign PTF-01602. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Oaken Lantern Botnet: File with known malicious hash written (PTF-01602)",
+        "note": "## Triage and analysis\n\n### Investigating Oaken Lantern Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Oaken Lantern botnet in campaign PTF-01602.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"6f72d2f2b03cb53f12ce74e988c39a8621965fe95e015695b06f560e3509537a\" or \"edbd6ac4fe8adc301a4fc48af80330c60dba063b24dd9fc391d7cf1a6f18c81b\" or \"a6a6282ba3026408a9d8e711c4c9dbb2eee51837845bf1ae8429931177455577\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01602"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "3c80b69f-07ed-553f-823c-b7375f19e51a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Oaken Lantern",
+            "Threat Type: Botnet",
+            "Campaign: PTF-01602",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "3c80b69f-07ed-553f-823c-b7375f19e51a_1",
+    "type": "security-rule"
+}

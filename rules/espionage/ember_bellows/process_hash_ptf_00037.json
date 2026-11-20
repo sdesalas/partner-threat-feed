@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ember Bellows espionage toolkit sample, as reported in campaign PTF-00037. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ember Bellows Espionage Toolkit: Process started from known malicious binary (PTF-00037)",
+        "note": "## Triage and analysis\n\n### Investigating Ember Bellows Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ember Bellows espionage toolkit in campaign PTF-00037.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"dfb3c0c9fd57f60435e0ebac1dbf22719f114edc900b810d066edb22ff6a8d8d\", \"86a3c4b7a4850ce600593677ed2e2b1f0d1dd1a08ad7bafc590b2056978bb42f\", \"f87e960b888c34efd4ec364ee22aa2237a47f1ce9e5461814484a4d755a2e8af\", \"c7b7795dd98d573f6ceb84204ecbe18c1c38fdf1f64a4181a3686319ed22d66d\", \"8d9b4dcb82d12ee70ae41270fac2bb751b35374d2f737275a263242c3df01e65\", \"b87c389544f7afdccdd87e2725990475ecb069f9b6684c1e32e72204417796ae\", \"519049e65cd3c4a1d68fc8820ad77574afd681bfe333833e314b6ca6ad295e8d\", \"8f01a6c25ec593e1f9c64bbb30e9a844993b33805fd0e77fbcb2089aa6c4e699\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00037"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "8e82dd95-e91a-5597-9120-79a9f77dbea6",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ember Bellows",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-00037",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "8e82dd95-e91a-5597-9120-79a9f77dbea6_1",
+    "type": "security-rule"
+}

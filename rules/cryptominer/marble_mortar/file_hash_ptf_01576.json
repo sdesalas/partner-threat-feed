@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Marble Mortar cryptominer sample, as reported in campaign PTF-01576. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Marble Mortar Cryptominer: File with known malicious hash written (PTF-01576)",
+        "note": "## Triage and analysis\n\n### Investigating Marble Mortar Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Marble Mortar cryptominer in campaign PTF-01576.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"a90f2bc38ad1dc8f165fad515f814d4f03165665989d1b77da594fb5d659bce9\" or \"0dc3d0939a4f68b6b59e5a2feb7a583c0d0d22055ab61ce3b2e81afd3a150e0f\" or \"d765364d671b054255ed5c76f02ddcb8bfd4523337190f376583ccf94362a411\" or \"f0ffb268225a452470e4850ba1511a73f0918aac8a1175110a00b18b3fd95b7c\" or \"e9c03f925cff1aace7657dd636deba1e00eb4e83a2ed86f91a4394464e9e4fa5\" or \"2f4269362ed1a97fd0897958ac7f9530dd641873a0ebb4b3881957c7591f8a6a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01576"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b60e4131-a17d-54fe-956d-c9d9d045d5c8",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Marble Mortar",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-01576",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "b60e4131-a17d-54fe-956d-c9d9d045d5c8_1",
+    "type": "security-rule"
+}

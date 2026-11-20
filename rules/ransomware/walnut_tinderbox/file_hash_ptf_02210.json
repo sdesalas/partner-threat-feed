@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Walnut Tinderbox ransomware sample, as reported in campaign PTF-02210. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Walnut Tinderbox Ransomware: File with known malicious hash written (PTF-02210)",
+        "note": "## Triage and analysis\n\n### Investigating Walnut Tinderbox Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Walnut Tinderbox ransomware in campaign PTF-02210.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"c3c7ee5dca8627dcffdbf31fc66b8970d09129b1011d4945637ab4ebbd7eaa6a\" or \"0c640ce0f25eb9bb31f8d005211e3b5dd055a3930213795d3f7ff4cf476e44a5\" or \"c0feef6a65df665318fb75360200b52f3468a7cb7ce958be7fa95e77f5f71c70\" or \"7e0177992e793b55b957ebc946e84945f7bee3a1691c93390f6ee44c9e731cdb\" or \"e39eca3b63ebe20beb8fcf3b92a84a4bbca378602203bc5e787b0a66dd4ed6f7\" or \"6352409182b5562863e3f9607f3eeff0be40817dae5db86c889f8ba5043d4894\" or \"41d2f2fb77613067336e27986f09fd8f9723e6d4dd129eeddeab384cde5092a9\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02210"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "50fec9a9-b846-5124-b2c4-79fc1c726249",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Walnut Tinderbox",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-02210",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "50fec9a9-b846-5124-b2c4-79fc1c726249_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Saffron Whistle phishing kit payloads, as reported in campaign PTF-01146. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Saffron Whistle Phishing Kit: Request to known payload URL (PTF-01146)",
+        "note": "## Triage and analysis\n\n### Investigating Saffron Whistle Phishing Kit: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Saffron Whistle phishing kit in campaign PTF-01146.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://api-api16.example/install/9963.php\" or \"https://auth-static53.test/gate/3833.php\" or \"https://auth-sync63.example/gate/4460.bin\" or \"https://cdn-cloud16.example/gate/3296.php\" or \"https://files-media50.test/doc/8439.msi\" or \"https://relay-track55.example/gate/4732.msi\" or \"https://secure-update78.test/invoice/9837.msi\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01146"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "47e11034-2e69-5300-aae1-3905a2d317a6",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Saffron Whistle",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-01146",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "47e11034-2e69-5300-aae1-3905a2d317a6_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Mulberry Shuttle infostealer sample, as reported in campaign PTF-02177. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Mulberry Shuttle Infostealer: Process started from known malicious binary (PTF-02177)",
+        "note": "## Triage and analysis\n\n### Investigating Mulberry Shuttle Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mulberry Shuttle infostealer in campaign PTF-02177.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"49528f4ffc467f2b9c51c6691643f8fcd36f4ce74619f30e07d2766672c14c08\", \"887625e90513d86f8f0e3b3908417d2b68a35907431de983d5f7c238314f329c\", \"7132604351261f109e5c70e7dca0c08ce005792c3090b927a0f114ab304fefb5\", \"8278ac62ae94738755459a3d6481414f9bceaf16517bdeb199fcde03194de359\", \"f3099de2fb46f65ae59354132741c90bb739c477de82436f1ceb5bb7ec0bedf9\", \"bc06ff320c963754f0e682c29d2f22b38bbdfd962eefa73461b37a74e463e805\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02177"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "1c59e36b-dc74-5c5d-8a7a-d0173ec37f69",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Mulberry Shuttle",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-02177",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "1c59e36b-dc74-5c5d-8a7a-d0173ec37f69_1",
+    "type": "security-rule"
+}

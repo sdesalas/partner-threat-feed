@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Slate Thimble infostealer sample, as reported in campaign PTF-01701. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Slate Thimble Infostealer: File with known malicious hash written (PTF-01701)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Thimble Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Thimble infostealer in campaign PTF-01701.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"f31e3c7de7930bb55ebee44b81db8ad1c1be4a9c6684ced0563039ee811d8f72\" or \"1bd517b660197daddcc44dfd5d19e039d4e007c77e08cee92fd1b7f2e4989ad7\" or \"0be6bd460d13927adf136a7d79da9917129b84ed00fc83f97ffc6f689270f0df\" or \"d2e87e3c15dcfcc4b75c1556ebcd09aad32ebfc311d3fb009d9dc4af977c6107\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01701"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "afcb6bff-309b-5e15-bb1f-a50c46bb6ad3",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Slate Thimble",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-01701",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "afcb6bff-309b-5e15-bb1f-a50c46bb6ad3_1",
+    "type": "security-rule"
+}

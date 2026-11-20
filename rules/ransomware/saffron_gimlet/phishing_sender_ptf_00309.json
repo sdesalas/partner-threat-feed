@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies email messages from sender addresses used to deliver the Saffron Gimlet ransomware, as reported in campaign PTF-00309. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-email-*",
+            "filebeat-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Saffron Gimlet Ransomware: Email from known phishing sender (PTF-00309)",
+        "note": "## Triage and analysis\n\n### Investigating Saffron Gimlet Ransomware: Email from known phishing sender\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Saffron Gimlet ransomware in campaign PTF-00309.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "email.from.address:(\"accounts@mail-mail50.test\" or \"hr@connect-login98.example\" or \"it-helpdesk@connect-connect32.test\" or \"it-helpdesk@static-node5.test\" or \"it-helpdesk@sync-mail42.example\" or \"payroll@cloud-files77.example\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00309"
+        ],
+        "related_integrations": [],
+        "risk_score": 47,
+        "rule_id": "2462bc99-cc47-5804-9d3f-9fbe8184199c",
+        "severity": "medium",
+        "tags": [
+            "Domain: Email",
+            "Use Case: Threat Detection",
+            "Tactic: Initial Access",
+            "Threat: Saffron Gimlet",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-00309",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0001",
+                    "name": "Initial Access",
+                    "reference": "https://attack.mitre.org/tactics/TA0001/"
+                },
+                "technique": [
+                    {
+                        "id": "T1566",
+                        "name": "Phishing",
+                        "reference": "https://attack.mitre.org/techniques/T1566/",
+                        "subtechnique": [
+                            {
+                                "id": "T1566.001",
+                                "name": "Spearphishing Attachment",
+                                "reference": "https://attack.mitre.org/techniques/T1566/001/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "2462bc99-cc47-5804-9d3f-9fbe8184199c_1",
+    "type": "security-rule"
+}

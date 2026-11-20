@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Hazel Trellis banking trojan sample, as reported in campaign PTF-02342. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Hazel Trellis Banking Trojan: File with known malicious hash written (PTF-02342)",
+        "note": "## Triage and analysis\n\n### Investigating Hazel Trellis Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hazel Trellis banking trojan in campaign PTF-02342.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"6e07464d9028ddcdc1f3dabf6493fbdebf0dac0d9767adec8a6d57efd7ea0b9b\" or \"381e1fc6f0e9aca9ae2751647b68f68d56cf403b0c62e20d4ea148d23c273073\" or \"21df72a10dd16758cf6a9220b45dec6c662636507a3ef6f3adb5f36a89cecf1b\" or \"457c2c1e3968ab691ccdb843c4c095179125ca7e6dec65134b0f74e3379237e8\" or \"7974b3e6c92de9a3cdd860866465fb82fd9bfc1862b04b540a5a97ffeaf54df1\" or \"97a90c156c187999ebf2733755f4e672772631b25aa386753953a95391e3a8a1\" or \"85798a9f4f98a0917ee13d012e99a86b02b84dfd720e3e543a6066386f114fd9\" or \"1b8b2d65783c349f5248c1e8da0bb3ddceecef77199933343e19582982a5481c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02342"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "25a6623d-3f84-50af-9db6-edd52efe3b7d",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Hazel Trellis",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-02342",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "25a6623d-3f84-50af-9db6-edd52efe3b7d_1",
+    "type": "security-rule"
+}

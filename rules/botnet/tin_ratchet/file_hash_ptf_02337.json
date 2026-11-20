@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Tin Ratchet botnet sample, as reported in campaign PTF-02337. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Tin Ratchet Botnet: File with known malicious hash written (PTF-02337)",
+        "note": "## Triage and analysis\n\n### Investigating Tin Ratchet Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tin Ratchet botnet in campaign PTF-02337.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"a994b1cb4621e635686afa8ea69992e5f998a194a0f57f3f0a93cfc1bb677af6\" or \"b5a27aa2257f5d92519cf5a4ddb9d3698a5a6b96d8f1a369e58edf31c12f25b4\" or \"d387df1cc7fefe56d2a089eb34f15e2366b45769f1d4f03b82d6b32923759b1d\" or \"0e90a98bced44bf9ada025239dcc284f60e069be749a646546290d5a9a6e6a8c\" or \"d284b5663ee1d258d412045d95acba2096e01e85469b6a0dfcbb92b099c93f86\" or \"e07d84385b14344e206725d9f53ade39fcde9365ca904eb4f166e38f6dbda9d5\" or \"3a77b13b3e29e042c301121e5e0f2988c5b355ca2a92520db57b8ce03d7e965b\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02337"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "c406a634-ff0c-530c-a4c0-6a8eacb789dd",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Tin Ratchet",
+            "Threat Type: Botnet",
+            "Campaign: PTF-02337",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "c406a634-ff0c-530c-a4c0-6a8eacb789dd_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Marble Needle botnet sample, as reported in campaign PTF-00570. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Marble Needle Botnet: Process started from known malicious binary (PTF-00570)",
+        "note": "## Triage and analysis\n\n### Investigating Marble Needle Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Marble Needle botnet in campaign PTF-00570.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"c329a9f54cd20cd66a3e6e3c547c6ba12b25580cea22dcfbf4f315c9ef0ba596\", \"e3f986048340160aae0b3a784169a2ba53048326ebe359627b4bfc9e514157be\", \"29c615b0cc8c1d064460b41d9686834dbbd7e0003b8fa66d92ddb990c4c977b1\", \"40dcc7e2724cde4b2b8284701dbb43ec45eb76028044c05e64878683366e9f7a\", \"66108c51c1ab7d6081daf62e9e8876d436c4d87c255f29d38c3f152451e9ff57\", \"e29339047d9a785868e970f2ddd06925ed7392119cff0d595281f74c4cca1d31\", \"c10966a68665d1ad8337896f5e05df01e94c364f40a7d02f8ab944212a94c0f3\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00570"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "9d4f317b-8aac-5900-adf2-c7590e31ca01",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Marble Needle",
+            "Threat Type: Botnet",
+            "Campaign: PTF-00570",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "9d4f317b-8aac-5900-adf2-c7590e31ca01_1",
+    "type": "security-rule"
+}

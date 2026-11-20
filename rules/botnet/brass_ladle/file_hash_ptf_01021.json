@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Brass Ladle botnet sample, as reported in campaign PTF-01021. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Brass Ladle Botnet: File with known malicious hash written (PTF-01021)",
+        "note": "## Triage and analysis\n\n### Investigating Brass Ladle Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Brass Ladle botnet in campaign PTF-01021.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"a213361db07179a564932af427ba1aa6ab9c33c1b0b9bce8e49d074f7552a72a\" or \"317feaf5e97db695d4f6fccb5b7efd244ab48ff0a7f02b18c722eb7975c5d316\" or \"73a74915af5ff535bfe4056047524f40dbb708ea8c91d4ecc1260d7272806b03\" or \"03a5a889e3a12517d993fb990fc3004a82d12a123dd0fd087a63c7dd06f8c0c5\" or \"2a62f713255225f7c26652c5d25d0f250b4522daaa7041a81761979b45c41667\" or \"c9cbde2680ff3d0d601ef9c063558f894967136a3155845aca48e35739268adc\" or \"503de0e4433172925fe0f5fe6392d6d1261f6789218fedd08dec859c49a34e46\" or \"377059b4c6e320101ec93cd1f05a6e456b616dfaee2854f96ffffe1ebff8ab7e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01021"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "8a81d4af-b2c7-5254-9171-f4df3f7c4e7f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Brass Ladle",
+            "Threat Type: Botnet",
+            "Campaign: PTF-01021",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "8a81d4af-b2c7-5254-9171-f4df3f7c4e7f_1",
+    "type": "security-rule"
+}

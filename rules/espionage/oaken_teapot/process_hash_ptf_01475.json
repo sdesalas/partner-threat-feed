@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Oaken Teapot espionage toolkit sample, as reported in campaign PTF-01475. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Oaken Teapot Espionage Toolkit: Process started from known malicious binary (PTF-01475)",
+        "note": "## Triage and analysis\n\n### Investigating Oaken Teapot Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Oaken Teapot espionage toolkit in campaign PTF-01475.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"ec46054ce6827a7ddbb2a4b0c89558df3bff21a91175cdd1ec9d039363b2b8b0\", \"f2a063dc9e9aa90683f573dde99e9444ea9fb5c53ac29f739e3bc79294982248\", \"6685c55f1197451054d5b9cf439dc2b9be0694fbe26ae69b0c214cf3a672bb20\", \"58ce8cbd2a149fbe29fa4dd971dbdf4f68662cc97855225e9271b4078323d975\", \"553cd32ce4e0d1da2bb13a7c1c3543b007d1407334dc435224678814e2a41af4\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01475"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "1d583e79-5317-5d65-9627-5720af77e2a0",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Oaken Teapot",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-01475",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "1d583e79-5317-5d65-9627-5720af77e2a0_1",
+    "type": "security-rule"
+}

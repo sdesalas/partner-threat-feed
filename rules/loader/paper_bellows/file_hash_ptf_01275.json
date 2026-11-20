@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Paper Bellows loader sample, as reported in campaign PTF-01275. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Paper Bellows Loader: File with known malicious hash written (PTF-01275)",
+        "note": "## Triage and analysis\n\n### Investigating Paper Bellows Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Paper Bellows loader in campaign PTF-01275.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"4897ed11ece875b913f55fa51d24beb0998e0555a16625333031a2bac3b03a3c\" or \"d294bff95740ba63c604d350ddc78e94c1f0a1686a7f90d453abfc994dda5fbd\" or \"c14ad5a38ea7ede18d68d7036b885b081cc59aa959ca3428556b8b411586db82\" or \"6b79b605003c1aa301ce1561b2b1287acb1d5d76d9e6a69ebb0215f4aba4ce56\" or \"ae516988803732c6c86dd0bd11143e588acd84d2500f2aacd64796c0b94a65e9\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01275"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d576df6a-463d-5a1a-b855-cc400d33cd25",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Paper Bellows",
+            "Threat Type: Loader",
+            "Campaign: PTF-01275",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "d576df6a-463d-5a1a-b855-cc400d33cd25_1",
+    "type": "security-rule"
+}

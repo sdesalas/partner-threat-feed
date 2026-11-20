@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Clay Lectern phishing kit sample, as reported in campaign PTF-00959. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Clay Lectern Phishing Kit: Process started from known malicious binary (PTF-00959)",
+        "note": "## Triage and analysis\n\n### Investigating Clay Lectern Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Clay Lectern phishing kit in campaign PTF-00959.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"6a8ea68a5b742729361a780a7dee2f6755f6a3304a82348c953eaf2ea72ca97a\", \"4d955e41a5dc6761ac40ee35b587fc5bc57de27ed4b21d15b4e225019b2296ac\", \"8d483e60879c4d6c1e3ef1bd4e877b02a2738bc8cfdad09e8dbe657da6f8414b\", \"52a0bbf30ef7a0643ccaadc47a278a9a960609530e47baf4e4c40903ef97ae3a\", \"a5caa5d6516501f14fe25bf61ff0cad4bb5bb4d7f5844332ab65e6fc052f93e0\", \"696a30fbd14f013a5eeceb97e1a9b047c8b4db04b8aed80c57daf724eb34ab11\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00959"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "15913b92-6213-53bc-9c10-d6e0b4ca664d",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Clay Lectern",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-00959",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "15913b92-6213-53bc-9c10-d6e0b4ca664d_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Linen Abacus phishing kit sample, as reported in campaign PTF-00177. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Linen Abacus Phishing Kit: File with known malicious hash written (PTF-00177)",
+        "note": "## Triage and analysis\n\n### Investigating Linen Abacus Phishing Kit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Linen Abacus phishing kit in campaign PTF-00177.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"3250d5118ed1017b15d3c2c28befe1dcb769a4535f65e948d8010d3a2fc0cb0d\" or \"8591491434a1cd58dc60d066057dece7017f968d95fc871c44729eec58f3e0ca\" or \"00de0a85344ceca3cdf9e981b8f658a88a549219fee06765006f00ca9b3d336f\" or \"c83b1d0fc8c46b19b6be92ccdee4d555cc067d0726181fc1db644c66d81e835c\" or \"1912a6946a3a9c6a917b6297f78035dc24620ac592d75ea8ae73825de7d476ce\" or \"d66a6e297534d90ab4eda834acce2e48dd90f82c98c9b34d272c230712a16d46\" or \"5292aa562580b433c3a367d6dfcb5f7997ceab423d44e4f5e33cd8b344ea22d9\" or \"e80272cf6298ae18babc283cace7f5ebe118609c1088ae9a6383bb2dccd8d915\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00177"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "5ff21274-d22f-57fb-949a-88d9a2ce3480",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Linen Abacus",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-00177",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "5ff21274-d22f-57fb-949a-88d9a2ce3480_1",
+    "type": "security-rule"
+}

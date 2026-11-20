@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Birch Bobbin remote access trojan sample, as reported in campaign PTF-00938. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Birch Bobbin Remote Access Trojan: File with known malicious hash written (PTF-00938)",
+        "note": "## Triage and analysis\n\n### Investigating Birch Bobbin Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Birch Bobbin remote access trojan in campaign PTF-00938.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"f8dfe2abc5d3161b83429cd63c68aa29af17c00749eb96ac6d18e8d06b507f41\" or \"da3dbccc416dc8dfa5b88b08fd652240c0aab7ec5cb21783989fb187aef4ceab\" or \"e19c7ec2a64b3344d3efb1536b2881960eb9de1ac10012b383ee8b219edb8e9e\" or \"6e0fd13b96974dae569f03e134c94227cd4486430908e6bf6ca14cf1f1ba9308\" or \"90bfdeb238c6f97fb2321437103e80d3c26817bc2049801870af1eb6092928a9\" or \"0b59ff90dc2281c4c8c501b7a2c599f7f3d60aee191fe6dcc7dbf08d938dd223\" or \"4d47e867afac3a83371bbb4c5ae888469eb42435e2969597b98de641b702d374\" or \"b027ad5ba62ff12b70399bdf9f4c386869317d7a025d1e9319bb2a69dd33ca1e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00938"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "49b17ad1-8d7e-5a9c-b528-2ccdac6f75ca",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Birch Bobbin",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-00938",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "49b17ad1-8d7e-5a9c-b528-2ccdac6f75ca_1",
+    "type": "security-rule"
+}

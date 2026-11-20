@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Chalk Spool infostealer sample, as reported in campaign PTF-01990. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Chalk Spool Infostealer: File with known malicious hash written (PTF-01990)",
+        "note": "## Triage and analysis\n\n### Investigating Chalk Spool Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Chalk Spool infostealer in campaign PTF-01990.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"747b8e964627cb7131066a0b2aec55580af75c9489c316000d97ae9aadf53bbe\" or \"a4e2ab4916271b8aa6ea08753f6b8a03b2f1f79c21b6f995423e173ff965329d\" or \"4b51c4b23e2605d9a8343d45d263edfc7ca9ad969ff3034f329e0cf846c20ae3\" or \"533b849ce4d115c3f519dee2f3ee70764f07b4a089abc5ec60515926585d24a2\" or \"d60a3179e1c666b68735780a14f5ae474bc0ae484e51c7c55c0e1dc6262535e7\" or \"2fb71aff011434823a5c4b811d175949a1fbc04a072077f431d564649c631a32\" or \"de9bbcfc560ddaccffc9677bd06d62bc96af425ee05b19244d58cb726f05eb11\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01990"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b1eb1c8c-5d13-5e21-9eee-7ea34637d095",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Chalk Spool",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-01990",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "b1eb1c8c-5d13-5e21-9eee-7ea34637d095_1",
+    "type": "security-rule"
+}

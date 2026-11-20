@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Walnut Pestle espionage toolkit payloads, as reported in campaign PTF-01660. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Walnut Pestle Espionage Toolkit: Request to known payload URL (PTF-01660)",
+        "note": "## Triage and analysis\n\n### Investigating Walnut Pestle Espionage Toolkit: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Walnut Pestle espionage toolkit in campaign PTF-01660.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://assets-secure30.test/gate/6955.bin\" or \"https://files-cloud79.test/invoice/2332.msi\" or \"https://files-update87.test/download/9374.msi\" or \"https://media-sync39.example/update/4731.php\" or \"https://portal-node73.example/download/4929.zip\" or \"https://relay-files57.example/gate/9444.bin\" or \"https://static-relay77.invalid/doc/6879.php\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01660"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "4e44dbe2-fcce-5d8d-9ca2-6963e8c12b4c",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Walnut Pestle",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-01660",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "4e44dbe2-fcce-5d8d-9ca2-6963e8c12b4c_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Hazel Shuttle cryptominer sample, as reported in campaign PTF-01505. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Hazel Shuttle Cryptominer: Process started from known malicious binary (PTF-01505)",
+        "note": "## Triage and analysis\n\n### Investigating Hazel Shuttle Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hazel Shuttle cryptominer in campaign PTF-01505.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"ce0c767bd827d059a8c3ac707d433309502484bf02d28d5690dc2620fbf0beb7\", \"b99f2477229bcd510c5862cec041edcc76539accc53c7e2bf18bd25f8a6fe399\", \"6c8265e297e6bff1b06418c821f680e15a62e47893230f43bb2e1a4a916b3706\", \"4de891b08f19c50998edffcc239ae8aadf9bda1c7e6ed83e71726f64d60593cd\", \"b4af05584ee925fcd229fd07ef4cc1d070b001e81eb9253bbdbdb2e5ab2e2264\", \"51813a89aface27ccef1dc6c3cb590602ad99cdecb5eb8d0d2873a86afa99bb6\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01505"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "3ce94535-8809-50c2-ae06-b7ba5c346bdb",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Hazel Shuttle",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-01505",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "3ce94535-8809-50c2-ae06-b7ba5c346bdb_1",
+    "type": "security-rule"
+}

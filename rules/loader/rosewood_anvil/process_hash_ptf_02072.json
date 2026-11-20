@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Rosewood Anvil loader sample, as reported in campaign PTF-02072. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Rosewood Anvil Loader: Process started from known malicious binary (PTF-02072)",
+        "note": "## Triage and analysis\n\n### Investigating Rosewood Anvil Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Rosewood Anvil loader in campaign PTF-02072.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"0f63a8f4ea0e7f86c0d824f47a76d132f7f5b8484997b9c2994ce2f344177742\", \"cafd097f2130c283a28d5de79b5a5fb45d448bc3a86221ef433a09212f08c803\", \"94f46b146f20a358254d252d22dea05d0a0e48c7738ab8f6c4a82d90000926ce\", \"7ea681fb2f7f1b37208bf3420f954938b83405cdb47e0a589f090776e4cf90b4\", \"78b27350d4c7176e23cb3eb75dd8f94744697add0360f8a7d0a859e1cc836887\", \"e92248ecf1709f1c45863ec951dd1bdf5a4ca88526f881f02a826efb1626768d\", \"8c65710997fc8825b9bb8e3cb2c7161dd9bd4bfacc6ee35614c4097e318244d3\", \"4213984ec8e30b6dd47ad5f4f62c464a0efacd14a104469507fb6c1d73bcce17\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02072"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f942204d-87b5-5c49-a921-5f93073c40a2",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Rosewood Anvil",
+            "Threat Type: Loader",
+            "Campaign: PTF-02072",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "f942204d-87b5-5c49-a921-5f93073c40a2_1",
+    "type": "security-rule"
+}

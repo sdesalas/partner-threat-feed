@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Driftwood Stencil espionage toolkit sample, as reported in campaign PTF-01943. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Driftwood Stencil Espionage Toolkit: File with known malicious hash written (PTF-01943)",
+        "note": "## Triage and analysis\n\n### Investigating Driftwood Stencil Espionage Toolkit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Driftwood Stencil espionage toolkit in campaign PTF-01943.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"769744c56a42822973d7d2a36120fa543db6b5809ceb53c3f0418e45f1b55719\" or \"5cc3c6d129856aff11509385a6f5cb00f5f149593cdd4d995cb3e30a8d296a8f\" or \"5851817a6b656cda91a1cbd2c340206b7c5c82aeb6ff18052ffa00f1b8864f11\" or \"454be78dc8d701b0ac0b501f790398bc812a2d9932379b0e5eaea0f0b003fb25\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01943"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "7a94bcdd-8fa9-51a3-a6c7-6b4c157f253b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Driftwood Stencil",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-01943",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "7a94bcdd-8fa9-51a3-a6c7-6b4c157f253b_1",
+    "type": "security-rule"
+}

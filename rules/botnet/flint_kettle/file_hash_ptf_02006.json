@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Flint Kettle botnet sample, as reported in campaign PTF-02006. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Flint Kettle Botnet: File with known malicious hash written (PTF-02006)",
+        "note": "## Triage and analysis\n\n### Investigating Flint Kettle Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Flint Kettle botnet in campaign PTF-02006.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"fded5fc0b9bf835275d4e9f5e57f0f868ca74acae72e10efc518d2e75b3b6af4\" or \"2d03b65760c8598f080c4d74b5586b3e9c4098bf9e49e990d2ae2637c2f8de12\" or \"d3f317e89625cf5c6d1fe48cf5347768e20bd08930f20eaa446b6fa4cfd42181\" or \"cb8e764bdc80341537440da6381c52607f4a1d5110475e362e4ce2bf713dd048\" or \"3484899ba01fb0e5d302eac15d4b07431d19471b16700407385f3702f69b2555\" or \"fd0a1d20d564d9934f716dee7ca0b9e589be4137f7576150268d8ebae21c575f\" or \"68dcab0eb4c583e4ba4145ac9edbed224b87d4d00c3045b5ddb1eb46779338fe\" or \"e22ef29dfcf9080f9e943ccd7568c77d4d40f725c485b7201915ecec82dd49f6\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02006"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "90e34d85-9a5c-5a64-8584-e398b05eb728",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Flint Kettle",
+            "Threat Type: Botnet",
+            "Campaign: PTF-02006",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "90e34d85-9a5c-5a64-8584-e398b05eb728_1",
+    "type": "security-rule"
+}

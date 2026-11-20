@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Saffron Tinderbox loader sample, as reported in campaign PTF-01597. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Saffron Tinderbox Loader: File with known malicious hash written (PTF-01597)",
+        "note": "## Triage and analysis\n\n### Investigating Saffron Tinderbox Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Saffron Tinderbox loader in campaign PTF-01597.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"22d0e2534946241ca372329b42245f460296b434f9468f1db795170dce6743cf\" or \"711093221d5a8780d9acf0e0d5da6a815b16c2c610fe0b2c82b5a10b44f42fa0\" or \"f82239cae7ff02dd39b2be0c039965e8b0258724c5c06dce7c7d31f1024681a0\" or \"028e1ec88caf0e1e8b1b7249b8250d9108311fa2b049cab76bcfa956f5f7b65e\" or \"dcf1f8d04a207f93ff0e6b796595003d43bca68812c72fb51c5c5b3502a26fde\" or \"250ec3b9192a4d33908e2641b21a0ac5473c0a0cc0bb43dc366606fb8a81591f\" or \"0c26cef2615b6a85c3227771b7df98253ff862132c895cab6d4824a5ca650ae7\" or \"06bc760c6b9231b1e144b42d3f3f7a3a5d9000f9cdf8dc05ca420e0cc0374709\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01597"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "74e29671-b8b5-550a-a500-7213ff91a3dd",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Saffron Tinderbox",
+            "Threat Type: Loader",
+            "Campaign: PTF-01597",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "74e29671-b8b5-550a-a500-7213ff91a3dd_1",
+    "type": "security-rule"
+}

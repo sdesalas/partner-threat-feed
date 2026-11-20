@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Hollow Jigsaw espionage toolkit sample, as reported in campaign PTF-02280. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Hollow Jigsaw Espionage Toolkit: Process started from known malicious binary (PTF-02280)",
+        "note": "## Triage and analysis\n\n### Investigating Hollow Jigsaw Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hollow Jigsaw espionage toolkit in campaign PTF-02280.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"7201a2dcfaa4fc3a23808a008706948612f00eddc6cfc48d4957beba6cf27271\", \"e5bf5cdc5f0de65019730f3999d801a3c1298b4a1187b83b3441879c9aee8ffa\", \"a3eadb669f545c7578cb011618feeea4ef3f8069c5344882df83c028e17b40cb\", \"09e88744a8ef36681d843fd55c2dcc246be465b1dadca11abbcca6aab86a758c\", \"430daefcc2b76e65483407701fddbf5989c56c83ae5d0ca0cb76c87674116b33\", \"49b10865e1f4c8e88c728451003aa3f22b0998b9119836b45d783d954c4ef41c\", \"29b9891eedb25d6c079d40571f2234015b3397b1ffc16e99b7f6dc00fba6126b\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02280"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ebcefa57-d42c-50d4-8d7a-5f1111f36bd1",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Hollow Jigsaw",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-02280",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "ebcefa57-d42c-50d4-8d7a-5f1111f36bd1_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Frosted Spool ransomware sample, as reported in campaign PTF-01372. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Frosted Spool Ransomware: File with known malicious hash written (PTF-01372)",
+        "note": "## Triage and analysis\n\n### Investigating Frosted Spool Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Frosted Spool ransomware in campaign PTF-01372.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"9260456d2ce72d31c82c8be03e19bf9de9ab8a74ba4f0dde3922c173bccc39fd\" or \"50d2b018eb3b0329dab55c2ca9faa969dfa004fb759543dd1d2a4a9937a53ba3\" or \"2c17cadd5cb8925c6ab22f0448715427741a4c279736cf0db30338b8ab940234\" or \"53f480d83f91099dc5bcbe9f58418be52b2e3cf96670ad7556e9ca59733a8fed\" or \"a2a651428245825c8c13d1dbb7d21328d5cad11bdfb1a33350630701f7c9a2c4\" or \"9088b7353ec800fb4ed6480ddd4227e7ed476a9f89516dc3fd7a513fa9c27c07\" or \"c8b66ce951806f0e975a31130aba662ca80821714c6293536a416d214772fa07\" or \"65d4a53fa9b5d68836990ae4bcdf462c137b52836ba1386ec8210ce37bc2e745\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01372"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "5e574564-ab44-5c96-b201-088ad20ae077",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Frosted Spool",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-01372",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "5e574564-ab44-5c96-b201-088ad20ae077_1",
+    "type": "security-rule"
+}

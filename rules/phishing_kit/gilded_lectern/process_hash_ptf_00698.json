@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Gilded Lectern phishing kit sample, as reported in campaign PTF-00698. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Gilded Lectern Phishing Kit: Process started from known malicious binary (PTF-00698)",
+        "note": "## Triage and analysis\n\n### Investigating Gilded Lectern Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Gilded Lectern phishing kit in campaign PTF-00698.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"f3f118c2fd98dc2d8809cd92571b8f01d06debdc39e25c8628e4a4189b11fb7a\", \"cdcade18c5da8dcff53ff72e7778a101fb5cb5990ef99e01d173a8244b53b469\", \"54faeec8e7e8ce85487c5b8b416eea313abf9fc5532310ff742ae96e549c1a1f\", \"5f36cbced0675ac07731a342561f2cc12c61dac866996d0d4ca32fbb8c76d626\", \"04fa765de67d45b5327228d10153cad79a9c6fde1cc5408e6fe3d31d30a6e488\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00698"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "9b2491ef-8610-56b4-9dc2-5eb97bfee73a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Gilded Lectern",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-00698",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "9b2491ef-8610-56b4-9dc2-5eb97bfee73a_1",
+    "type": "security-rule"
+}

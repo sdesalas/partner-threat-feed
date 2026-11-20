@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Hazel Easel remote access trojan sample, as reported in campaign PTF-01014. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Hazel Easel Remote Access Trojan: File with known malicious hash written (PTF-01014)",
+        "note": "## Triage and analysis\n\n### Investigating Hazel Easel Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hazel Easel remote access trojan in campaign PTF-01014.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"8f09c61859a9c90d029ed2c2d5e70b2f3c2301da6e4809d53f320b7bbcc71b00\" or \"84521747b65a08494709b9fd8fdc2d16061ea502ffb8a2b6ee5aacdbb49e3dca\" or \"8625adf4c20eb7c37c1e57d6509e504f8a8380d7b6fb1dd88e81fe30fde98a34\" or \"8e8f0a3c264373752a83e037f3258658f24766ea848768362ffd906cbb403d56\" or \"de20e9dadaaa23e2d02503928b74e9d4927f18291083f63a72ef8d3354e6295f\" or \"e1f06efb3cb3cd9b54d53a7a2bcc9607e1e785244dbad3e28ca81427eb9958ce\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01014"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "fc1d69ec-93e2-5e4b-9f89-5b90ad1991d3",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Hazel Easel",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-01014",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "fc1d69ec-93e2-5e4b-9f89-5b90ad1991d3_1",
+    "type": "security-rule"
+}

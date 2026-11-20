@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Hollow Funnel banking trojan sample, as reported in campaign PTF-01175. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Hollow Funnel Banking Trojan: File with known malicious hash written (PTF-01175)",
+        "note": "## Triage and analysis\n\n### Investigating Hollow Funnel Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hollow Funnel banking trojan in campaign PTF-01175.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"9fbc5342520bccd3cd58023b364dee58c10315982a90451f3be4b1c48ed52e8c\" or \"2b0003d82aa51d2daefe1795fb917951ffd399f94bb2dd622a8ead184bd4c5b1\" or \"c3eab3dfd1489470d71c4c27b74683dfd123fe4c0d9d3495435adf8d21569139\" or \"5d5aefd5fa38265ae005de0f14fc69c00c446d60971cffeeb2279a8088ebeaa5\" or \"c6f95889ef8b56ce7f37180bc75533d51cb22b24d3693144bb4a9a27a7a5f54e\" or \"619b802db74d6a7fa718d0716b17f26177c55ebde4f7326cfcf5af9798502032\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01175"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ffbda80d-e957-53d3-ac0f-8288cdd2126a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Hollow Funnel",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-01175",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "ffbda80d-e957-53d3-ac0f-8288cdd2126a_1",
+    "type": "security-rule"
+}

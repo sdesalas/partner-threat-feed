@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Juniper Teapot remote access trojan sample, as reported in campaign PTF-01668. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Juniper Teapot Remote Access Trojan: File with known malicious hash written (PTF-01668)",
+        "note": "## Triage and analysis\n\n### Investigating Juniper Teapot Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Juniper Teapot remote access trojan in campaign PTF-01668.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"6bdac4ee2bb9c99c23de5c86e93a31621665ba631a766997e1e36414b4002199\" or \"ee6982f26ff11a9fc67b360c432a12df549770a78f517d49fdd31e64221db02b\" or \"32bed8d58595ac2ede3c6388b5485e86c688671b20e395074d23a2b11bd56c13\" or \"22316bdd473689463aa50c097eaa76505bd51dbab0c69e8b705efb6432c124c5\" or \"da480c6f23f2ae32658ada35ee55bb5cc9d91c1d9f250f3afc0863c114723126\" or \"26c3e5c7177fee59d4958d47514f338ff7a430ad1e06ae2bb8b74d0b9d795b64\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01668"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "8202011c-d33a-51fc-a397-49b6ebe589bb",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Juniper Teapot",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-01668",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "8202011c-d33a-51fc-a397-49b6ebe589bb_1",
+    "type": "security-rule"
+}

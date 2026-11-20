@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Quartz Lectern remote access trojan sample, as reported in campaign PTF-01489. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Quartz Lectern Remote Access Trojan: Process started from known malicious binary (PTF-01489)",
+        "note": "## Triage and analysis\n\n### Investigating Quartz Lectern Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Quartz Lectern remote access trojan in campaign PTF-01489.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"baaad449ec72512f93bda6148d1d86a2c8762fd0e1dc5be93af6d6802f95a3de\", \"0d3eeb5f1bd53332928e418c11853780d986a73b4a3c1be6157ead3ec73fcf3e\", \"1c896719e792bde1296aa25f9639929ee1e1531313baa275765b56a63b169710\", \"5215aef1697fb47939a72bf779c08d8ccd0b15252d042345e73a9d862437aa70\", \"4ad9f407bf4698c7171c3f9bb79b0ced713f58ad7eab339ff61303df9b76f123\", \"4479703fa1da213a6741301dcfc74d5dfbdbad1e8d7eebe1b975f581c21874bf\", \"27d339559f7c58ca36e022de31e9372d49c0e48d95efeaa9d9c0169f4c174492\", \"f7e18ddedda135fdeb9cc30146bc8d4b0679aa8cde839e94a5e1f9baa40e63f9\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01489"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "56f85d47-1338-53a1-a989-2361f87f288a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Quartz Lectern",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-01489",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "56f85d47-1338-53a1-a989-2361f87f288a_1",
+    "type": "security-rule"
+}

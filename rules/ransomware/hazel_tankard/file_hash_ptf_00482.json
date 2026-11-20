@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Hazel Tankard ransomware sample, as reported in campaign PTF-00482. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Hazel Tankard Ransomware: File with known malicious hash written (PTF-00482)",
+        "note": "## Triage and analysis\n\n### Investigating Hazel Tankard Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hazel Tankard ransomware in campaign PTF-00482.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"61585554a4b4137069a492533d1d1c92484c904ccb3d3fefe3d4e6d6d187790d\" or \"dd8e1c68ba1d8bcf0dbc652d8f641b2bf9f58bac3577511afadbf15d69a8bad6\" or \"a85e951ac437b0037c161c9fa6003f68098c356a25c0938495136f978725f593\" or \"07903db9524d58dc754e96b06d02ff9b5d85541f66cf11950602a5aef92c6257\" or \"ab9265364f32747eb5b6e3f829d163aacd56c36f35873df0116f43331d73ff0c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00482"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "3ce18339-6106-587c-9277-8811c18e815b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Hazel Tankard",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-00482",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "3ce18339-6106-587c-9277-8811c18e815b_1",
+    "type": "security-rule"
+}

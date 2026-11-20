@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Driftwood Loom espionage toolkit sample, as reported in campaign PTF-00927. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Driftwood Loom Espionage Toolkit: File with known malicious hash written (PTF-00927)",
+        "note": "## Triage and analysis\n\n### Investigating Driftwood Loom Espionage Toolkit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Driftwood Loom espionage toolkit in campaign PTF-00927.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"95d313f71a62501173ddadf51540f30f62d693b0082748ab6be19a6c4503c0da\" or \"4f81451b1897c90b92558271bc95ae39a7911609d61bfbeef0663c02edd572be\" or \"100875d4c59306c1e6868cbb72b116480c9300f7a01b6a6d0cbe8d2334cc0c1b\" or \"f99b5566ff7f5dff5f1fc8a1aceea27d2dc8268809facd01e4026f5bcfd3865c\" or \"f4b1cf4be47f1577a50a319e620834ce20edc02ad070375e2ae7bc68f55d3fe9\" or \"6c1daae5e78910d884bebf632b9821057077990d5d2d7131ee01da5d7db826ce\" or \"4ce1ecadd6b8bd9a10bfc2f2a41f1a66839639e362f65dba3f192de43ca19596\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00927"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "3075c3e2-8039-589d-a4e9-1d5a5aae29a9",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Driftwood Loom",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-00927",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "3075c3e2-8039-589d-a4e9-1d5a5aae29a9_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies email messages from sender addresses used to deliver the Russet Funnel cryptominer, as reported in campaign PTF-02193. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-email-*",
+            "filebeat-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Russet Funnel Cryptominer: Email from known phishing sender (PTF-02193)",
+        "note": "## Triage and analysis\n\n### Investigating Russet Funnel Cryptominer: Email from known phishing sender\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Russet Funnel cryptominer in campaign PTF-02193.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "email.from.address:(\"accounts@files-media53.test\" or \"hr@assets-portal49.example\" or \"hr@media-api20.example\" or \"hr@portal-cdn63.test\" or \"payroll@login-edge19.test\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02193"
+        ],
+        "related_integrations": [],
+        "risk_score": 47,
+        "rule_id": "2dbf7f13-121b-5bda-b125-bd91782e1937",
+        "severity": "medium",
+        "tags": [
+            "Domain: Email",
+            "Use Case: Threat Detection",
+            "Tactic: Initial Access",
+            "Threat: Russet Funnel",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-02193",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0001",
+                    "name": "Initial Access",
+                    "reference": "https://attack.mitre.org/tactics/TA0001/"
+                },
+                "technique": [
+                    {
+                        "id": "T1566",
+                        "name": "Phishing",
+                        "reference": "https://attack.mitre.org/techniques/T1566/",
+                        "subtechnique": [
+                            {
+                                "id": "T1566.001",
+                                "name": "Spearphishing Attachment",
+                                "reference": "https://attack.mitre.org/techniques/T1566/001/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "2dbf7f13-121b-5bda-b125-bd91782e1937_1",
+    "type": "security-rule"
+}

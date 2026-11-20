@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Paper Pulley phishing kit sample, as reported in campaign PTF-00145. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Paper Pulley Phishing Kit: File with known malicious hash written (PTF-00145)",
+        "note": "## Triage and analysis\n\n### Investigating Paper Pulley Phishing Kit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Paper Pulley phishing kit in campaign PTF-00145.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"1652974d1e722afe5efb6a0a7ac15fdb057522a97a06224f7f5e2ce87f0ccda6\" or \"428e25289dc452e85ef817a0bd7e26e7b653c551d2aaef697545e75cf41d6115\" or \"1c0dbd974184b62c102732048235be0697e090420b1d761994743acb421d31e0\" or \"300495798fb39bcc74bee25cd62099d11c91938a373defb868aa72ca66c8fe59\" or \"c6f06405378680f6f473538db311a6434f39625cba185f2777c94c999cf72c65\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00145"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "7ace06d8-0c9b-5488-af0f-af114db92a83",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Paper Pulley",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-00145",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "7ace06d8-0c9b-5488-af0f-af114db92a83_1",
+    "type": "security-rule"
+}

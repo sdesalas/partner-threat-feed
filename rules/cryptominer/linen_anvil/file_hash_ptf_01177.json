@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Linen Anvil cryptominer sample, as reported in campaign PTF-01177. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Linen Anvil Cryptominer: File with known malicious hash written (PTF-01177)",
+        "note": "## Triage and analysis\n\n### Investigating Linen Anvil Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Linen Anvil cryptominer in campaign PTF-01177.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"5cb5231f71c4bc860cd8eb5f61896a3a54ace565db630cc7f19718fff2b49ca8\" or \"ee9d4f6570c253b4de939bbaf7a8f411ddf941a6e9c0ebc38760ec2b1b6d244c\" or \"0e4a82fe00c4364a381da7fd38be79213bf1e8d289f3e4af8b632fc294306d18\" or \"3777cab142c8bd28b366e8c56d2eb95fe975ab5fdeb8ecd881e52897d2370ed4\" or \"048a4f956c446677943cbdfe6456782d2a83ded9b437ad7427f87278f768ed7f\" or \"d158f3fab94c10cdbb13a36cbaf5fc74b6a57711cb7967c005d1e78eaff01931\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01177"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "807067e8-842b-5253-9f4e-fa3940512e12",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Linen Anvil",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-01177",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "807067e8-842b-5253-9f4e-fa3940512e12_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ember Trellis infostealer sample, as reported in campaign PTF-00827. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ember Trellis Infostealer: File with known malicious hash written (PTF-00827)",
+        "note": "## Triage and analysis\n\n### Investigating Ember Trellis Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ember Trellis infostealer in campaign PTF-00827.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"0c24c0e2d4292344976ea12125c3cdfdbf6e8280059eaba2e3cb0717e5b40557\" or \"cb930e44fd3ecca1b0a467090ccb7d0ac6ade3853f6712e8e84c7faca199e948\" or \"da6a979f43298295f45c9caf015bdd9a1673df35279ab0840d56aa4c27e69d8f\" or \"e50e2974d10af573418e09b8ab892968983b81f846f69728cb0ae6f13164ac5e\" or \"2a9680f777139cb1c3bcb95d4db74ab0b12b4b2fb69b4c988868fc8f4d0f5fec\" or \"8b4297c80437877d31406d07a4b1a0d1ddd778c48927f05529e7bd71139db1ed\" or \"29120df5a453935806286c98efdd2350520be4a4bceb6bbf8268a961bc44a74a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00827"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "a5c22aad-0b73-534a-856b-a5ed704dfcb5",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ember Trellis",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-00827",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "a5c22aad-0b73-534a-856b-a5ed704dfcb5_1",
+    "type": "security-rule"
+}

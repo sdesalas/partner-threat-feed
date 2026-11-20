@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Willow Stencil botnet sample, as reported in campaign PTF-00683. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Willow Stencil Botnet: Process started from known malicious binary (PTF-00683)",
+        "note": "## Triage and analysis\n\n### Investigating Willow Stencil Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Willow Stencil botnet in campaign PTF-00683.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"01aa5c6d4f49f3b8f8c54078cac6eccb359c7320f724ecb4985cb9f2a372f906\", \"36e8d5a37379fe3c12e34999a6e00c3d718247baccd4be430b9ce8424dd0deb3\", \"4ebd852c2582a0933d07b1627744682345e9eab7aa83bf19a813ae2f7a8ca432\", \"234cf2096a42bcbc06094d62e5be47ec5c0ecf0185458aadf5482813ce2d0ad8\", \"3980e75dfe97d99a5a9b66809512a33b00f12e60ca4b1f813d65b97d96124cec\", \"a3afccdd4ead976fd12024316a384e56e512ae9c2a89b61487631f2e0e7021c4\", \"4ceeaf40976a01585638cceacc5bcea3596a98f0f67c539564c4caed302a479a\", \"522c1905f3c6178ee7fbedf1dbf90ded72586a6808acb0ee91c8a20583f983ad\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00683"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "1aa8d860-e3cc-5b96-a98f-438899bd02d9",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Willow Stencil",
+            "Threat Type: Botnet",
+            "Campaign: PTF-00683",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "1aa8d860-e3cc-5b96-a98f-438899bd02d9_1",
+    "type": "security-rule"
+}

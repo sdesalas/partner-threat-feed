@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Paper Mortar botnet sample, as reported in campaign PTF-01203. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Paper Mortar Botnet: File with known malicious hash written (PTF-01203)",
+        "note": "## Triage and analysis\n\n### Investigating Paper Mortar Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Paper Mortar botnet in campaign PTF-01203.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"92a2de1944c4857a8b3e514a9da065b115693980fda2d76b5cbb581afe767908\" or \"54b50aacbe1db59bb82fd75d82d1ee088e6baccbf577070faede8a6a9070916a\" or \"f61a356e2482409423b4936a6ae4fdcf1f1575d3d10b1e97687d861c6ea09734\" or \"09613f4b75b5eb383b16315e676d1c6b9c15c50054b062a27a0a70997ef8530f\" or \"6fe8f3c1625f9b704ca28b98b738ff83871c78f027ef695b0d8f3b84cbd71dc6\" or \"2e3a4af3cf313cc7382e369d06bbb48b24d2b02bb558b45c7a52915e6be2d6ca\" or \"022474a529904a2dfa55be2407d7a7a3dcda4e870adc4024befbd7d13c2f1891\" or \"227ff737e0a762f2e2b5d52e1579df1241063bbccdf5be8f4435db70423ab07a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01203"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "605ef284-b90b-5fd9-bd6d-d535990abaf1",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Paper Mortar",
+            "Threat Type: Botnet",
+            "Campaign: PTF-01203",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "605ef284-b90b-5fd9-bd6d-d535990abaf1_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Paper Bellows loader sample, as reported in campaign PTF-01276. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Paper Bellows Loader: Process started from known malicious binary (PTF-01276)",
+        "note": "## Triage and analysis\n\n### Investigating Paper Bellows Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Paper Bellows loader in campaign PTF-01276.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"9de56b8f8f499e270c4215a5b8ecd9c1b79970d282ca8f2050b78e036b1e4aa2\", \"642d23e4fa0b54c298816b17855dadac84954c2138d9ed728eb639a101952c81\", \"51cf8efd3e866545a0289fc6da2bd9d132ad1715fd777aaa9d2992554733aac3\", \"30e3710b7220bca76c5b69bc612951d0af690437a850885740cc2584a8c2033b\", \"d6d1bb1009a2efac0ecab327097307b514a4137424c22cfe2db85036fa0ef172\", \"95251224ca286766716a5a058f7a94fa26e47a6ecf3dae809ca9235c3d427925\", \"b6a0c260cc8651769e3bf9a1946d80e8b6e03a3c409ba23b1361fed965a1753a\", \"2b494678d893fc2f577e62a2d66eccb6d9fdd5bbe9d5f3e2f0fa08d6bc04e54c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01276"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f5d560e7-0ae7-570e-a90b-bf7b52f3b4c6",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Paper Bellows",
+            "Threat Type: Loader",
+            "Campaign: PTF-01276",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "f5d560e7-0ae7-570e-a90b-bf7b52f3b4c6_1",
+    "type": "security-rule"
+}

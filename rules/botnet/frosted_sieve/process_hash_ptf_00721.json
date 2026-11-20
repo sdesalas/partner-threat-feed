@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Frosted Sieve botnet sample, as reported in campaign PTF-00721. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Frosted Sieve Botnet: Process started from known malicious binary (PTF-00721)",
+        "note": "## Triage and analysis\n\n### Investigating Frosted Sieve Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Frosted Sieve botnet in campaign PTF-00721.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"21e46acd04772505d23e8b37c08692d87ad711f11be8fd686482aa4093ff08e8\", \"64438fcad491c306c979cdea1160b2d6e55f2bb815d709de666cd8767202d60f\", \"ef5d5a3678414811f4041a8d8433a828688b51fee9160afacd23e06521b4965a\", \"34ffb88dae7a35da7cc8a050db89be0806bf2baf2e25624b0607f354384bcf80\", \"63976db659c5883eae4b7e1f196f7d6bd2dc902a0522540b241a8c5da1d39482\", \"d94dcc16ea4a0b1b57f3b2801589e5188897a0faecfea26f068b2202158f8d5d\", \"fb18fdc9980d4ec2bc57085ee3c0dcdc02746f76e4182db41806feaf8278c2f1\", \"081edab9fced2b55cbdd8cf05011cd26e9b89ed4884217aba0980dc3d02763c6\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00721"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "a0e45d3e-275b-5983-aeb8-e0e42a44c184",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Frosted Sieve",
+            "Threat Type: Botnet",
+            "Campaign: PTF-00721",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "a0e45d3e-275b-5983-aeb8-e0e42a44c184_1",
+    "type": "security-rule"
+}

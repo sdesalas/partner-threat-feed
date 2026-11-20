@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Granite Tinderbox phishing kit sample, as reported in campaign PTF-00434. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Granite Tinderbox Phishing Kit: Process started from known malicious binary (PTF-00434)",
+        "note": "## Triage and analysis\n\n### Investigating Granite Tinderbox Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Granite Tinderbox phishing kit in campaign PTF-00434.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"f17a7803a88a40b5495019c21fa34e15388a2fe76c424e62ad35b72308d08a1f\", \"705cda8428e9a3baa98c83c880f277d4ba73bcd1107efadbeacddac593a4eb31\", \"dec9af059e7d912c4f24ef3a92da94fe322dfd13f7d303e5898cd5830b236e86\", \"a50a9c1293198dc8a0ed7b9077bfc6b438d1e7c5c999fa1d47a341b7f6a53688\", \"ad6ce450497ae1568c85e9c63d7e621a1a8342b1dd66b74e9364f6d0e987fb18\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00434"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "3c5dacce-99fc-5727-ba32-4f13fed2f40d",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Granite Tinderbox",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-00434",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "3c5dacce-99fc-5727-ba32-4f13fed2f40d_1",
+    "type": "security-rule"
+}

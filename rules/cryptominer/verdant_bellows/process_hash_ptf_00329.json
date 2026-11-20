@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Verdant Bellows cryptominer sample, as reported in campaign PTF-00329. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Verdant Bellows Cryptominer: Process started from known malicious binary (PTF-00329)",
+        "note": "## Triage and analysis\n\n### Investigating Verdant Bellows Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Verdant Bellows cryptominer in campaign PTF-00329.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"553a1e68d8f9d946ae27ac858bbd107def0a34694e3dda404423665cb45b67a0\", \"611f64f9b96955bab675e419ba2824415a2006bfc0d66c4b2089e1810a2723ab\", \"a7c6cbf228fc7ee9c7158ef9498fcf3f06253823e6f3e2ef63d48b7b638326f6\", \"266aa6ece44c5a60c196b9c7b6361d3b87c639c95cf7242b20cc00ba07df0f8e\", \"3981496bcb2020ebc0dcd909c2f401cddb6a10098c0e2808069a9baa6920920d\", \"57193ddab619b26f81c3a98ed532f7c61da31a26d0111e2b5f62a3cbeea8c490\", \"bc52f9876325edae56cd8cd69e485f2fbc2cb5e3ec62ba46cb1de48a344d6fa9\", \"59da4be1d67657ca38060777a9b416b66485788ac80566d9a7c416dede0c38e4\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00329"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "bd30074b-cb78-584e-b991-eaf9e29b4b62",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Verdant Bellows",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-00329",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "bd30074b-cb78-584e-b991-eaf9e29b4b62_1",
+    "type": "security-rule"
+}

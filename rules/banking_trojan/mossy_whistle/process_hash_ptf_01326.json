@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Mossy Whistle banking trojan sample, as reported in campaign PTF-01326. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Mossy Whistle Banking Trojan: Process started from known malicious binary (PTF-01326)",
+        "note": "## Triage and analysis\n\n### Investigating Mossy Whistle Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mossy Whistle banking trojan in campaign PTF-01326.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"1ec59426af714b7f75acf18756a30e063df6ae38ab98fbf4a8c3dcee07d3b670\", \"164c9844d24be803650acdf027846b1950696e7de0f32e98ad56c97981c9c944\", \"8b4cce890494836918f7d83cc99334f330672943e9ace30c4b92a1c213f94ee0\", \"4c3614717e42a4729ec11489d7dbeaf0ae3d6a01781022a65eb216546cbcff9b\", \"f9cee55eb9cc35c3e3c803fddcb1595fd000606a851830c7019db2c58a103881\", \"2d0ec1c3c01bd8defe562a8f4fd1715360e880470c1b7fd545012b5627a0efd0\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01326"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "57b1bf45-18ba-5096-9172-040bd6af28b8",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Mossy Whistle",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-01326",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "57b1bf45-18ba-5096-9172-040bd6af28b8_1",
+    "type": "security-rule"
+}

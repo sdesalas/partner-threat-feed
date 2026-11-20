@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Dusky Abacus remote access trojan sample, as reported in campaign PTF-01344. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Dusky Abacus Remote Access Trojan: Process started from known malicious binary (PTF-01344)",
+        "note": "## Triage and analysis\n\n### Investigating Dusky Abacus Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Dusky Abacus remote access trojan in campaign PTF-01344.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"d87c44897919f228fdbf58cbd2a673160f69a97a6f68f13f6258bd4c474ec0c0\", \"be5e339c2473f5c6a267cee4a3b6f9bb3d6d9f727ff49498078159220ecd373a\", \"ca990f817718ef432e3fd7264079f2fa12b500bc6bb115ddbf3fb45b9419bb8c\", \"50d08e997303b984c77deca63355747495e742169a3ea6d5e1e402ae24c9ad82\", \"a225595e02168faed51d02fe614046789d029af637d2d8586055ae161113d031\", \"a926131470ef2b4cfb63acef71f7f1b854568789e407d251baa527e99bec35e2\", \"58644b1b91ff9efe5be6380aecd9b337e4e302ef38d8638cf06ef5218e7357b7\", \"9c65962e2497d5b9cef0850f3f27bcafcd3edd925f4d34d1ccb93c40da3b7b1d\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01344"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "c7266a72-30a2-55c7-abb2-45a06b05c43b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Dusky Abacus",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-01344",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "c7266a72-30a2-55c7-abb2-45a06b05c43b_1",
+    "type": "security-rule"
+}

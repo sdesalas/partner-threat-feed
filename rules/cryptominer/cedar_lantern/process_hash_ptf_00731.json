@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Cedar Lantern cryptominer sample, as reported in campaign PTF-00731. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Cedar Lantern Cryptominer: Process started from known malicious binary (PTF-00731)",
+        "note": "## Triage and analysis\n\n### Investigating Cedar Lantern Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Cedar Lantern cryptominer in campaign PTF-00731.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"30f210926976f1121f18eacfd0b74b8c3ef10371482f70f782b1d035427ac41c\", \"b4391d2438a9308c11da798748991f96323778269b5910f5269a7e4a87c0bff9\", \"2ea8ba748fd5cbb3e0658a1485ed4028c8dd31fb9eae110cd340d9d8d39f8237\", \"8b2f13fe955965c6e18464607bda2aed325a6e5e930596d335eb74eda742358e\", \"4be7e5a0fda6be48a4f5459f0fd11c2698a768f2fad952203084c80b87d85105\", \"50b985d8fc47cccab9810e3cd76d411903e53845dd76f18fbc2ee04fbc328200\", \"f92f96868dd183a528b6924931f16bd10b71f179382955e23f6ec718d6281b77\", \"190b4cbad23f1770dd9d916e17b6d4064c0616f6922e2bb59d28ad7ad321e02e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00731"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b89b2812-e64c-533a-9f40-b532bb854803",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Cedar Lantern",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-00731",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "b89b2812-e64c-533a-9f40-b532bb854803_1",
+    "type": "security-rule"
+}

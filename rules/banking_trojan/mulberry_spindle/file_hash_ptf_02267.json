@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Mulberry Spindle banking trojan sample, as reported in campaign PTF-02267. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Mulberry Spindle Banking Trojan: File with known malicious hash written (PTF-02267)",
+        "note": "## Triage and analysis\n\n### Investigating Mulberry Spindle Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mulberry Spindle banking trojan in campaign PTF-02267.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"1474c4b71cfcf7a21136344bf0faf6bfb6300c2e5a2972262713c3e18bd294db\" or \"ef5acc4afbfe6ee5ecd09a655d839135ed5ddcb89780d86a4295f4089d28182f\" or \"2035217ab2bed58112a528057fadfc9db585691476f74185eed880a91b043424\" or \"334ec596209f8ed3692d400c12e1757b31e13d8be0d59842fecdbf7181c57916\" or \"be01a7fde80896eb37155e8401c10c3a105cc31be5df4d5804b28c484db9b9f3\" or \"dd815b7ea2d90a436072c79fd582b144a97bf78b935951281d07ac3a127231c4\" or \"32c6d20db43fae858571028a85ebf9f73729fbf93ef09ab34df6548efaf3059e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02267"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "9014dbf0-2e6e-5e25-b684-5f4737223c9b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Mulberry Spindle",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-02267",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "9014dbf0-2e6e-5e25-b684-5f4737223c9b_1",
+    "type": "security-rule"
+}

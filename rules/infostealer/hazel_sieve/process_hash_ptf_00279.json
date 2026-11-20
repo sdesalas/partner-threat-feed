@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Hazel Sieve infostealer sample, as reported in campaign PTF-00279. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Hazel Sieve Infostealer: Process started from known malicious binary (PTF-00279)",
+        "note": "## Triage and analysis\n\n### Investigating Hazel Sieve Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hazel Sieve infostealer in campaign PTF-00279.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"db7a50a677fde5b279d781835024d0623f81ad16223191eed499de86c902ea00\", \"bff993d5f21ced7d91ef4a4c64aaddd99fbe2cc86702a26a9e30cc3b779e2bf2\", \"a2b89affddd3cd9e7d2e8d9c44e74534085a88228cbabe397c4d5b877718219d\", \"2a75cb97a3693941eec201347e5c3db67a1983b63f08400c133313e8dc6b27d3\", \"eba7af734fda9d086e17f754580fac15e64b4280118366778108cef1d1f21277\", \"0e88fe5c50540dcb553b467a821dda717226bf2d6515a92ab3eb4d2f02c37df6\", \"c5c144d30bed4ac2a214d71221e43e1cdba649bf80d74a9f94c369eb56ffc5bf\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00279"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "1b616d4c-09d1-5f52-a02e-2db23c186d89",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Hazel Sieve",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-00279",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "1b616d4c-09d1-5f52-a02e-2db23c186d89_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Walnut Mallet phishing kit sample, as reported in campaign PTF-02433. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Walnut Mallet Phishing Kit: Process started from known malicious binary (PTF-02433)",
+        "note": "## Triage and analysis\n\n### Investigating Walnut Mallet Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Walnut Mallet phishing kit in campaign PTF-02433.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"3d306b3e29bb11b076b35ab551e12020f2cb4717238678821a359f05418f46e3\", \"7c1a1acb9fe21ccf4a6f5c9661692a5a8ace9cd0e3f285a097c68d5725a9160d\", \"ef719af26c13ea4728eea536eb60b7574477186867fddf29ea9d937854619e71\", \"ce64b4f87bd27c2bd9b2a84655878d6d29504bd1d3a3ec3e752ee72686e07c62\", \"9bdad480d182e5c2e0c287171e0539a31a3b85473095f0006502c47ba13a0c4b\", \"d7ed3985124eb898ff7b5f9fe115bab8bf11ae96e3648e6f5050ff871c61d508\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02433"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "a1653d82-b12b-5f98-ad43-bf5a29c156a9",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Walnut Mallet",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-02433",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "a1653d82-b12b-5f98-ad43-bf5a29c156a9_1",
+    "type": "security-rule"
+}

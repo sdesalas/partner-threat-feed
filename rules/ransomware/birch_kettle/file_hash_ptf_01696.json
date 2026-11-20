@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Birch Kettle ransomware sample, as reported in campaign PTF-01696. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Birch Kettle Ransomware: File with known malicious hash written (PTF-01696)",
+        "note": "## Triage and analysis\n\n### Investigating Birch Kettle Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Birch Kettle ransomware in campaign PTF-01696.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"9c0c867a58afb03006eecd84f8eaf42b47aab7742250a1c2835b20873fcb53ab\" or \"a4b5fbbfbb2dd357ec77209bbc15e92ce17c8a5a263c4c75c121443e73b56031\" or \"5c283e8d0255d4e8945a68edd6fa438a8faf7bbdbac94732d011485a16dc3dc6\" or \"0b6d448c6507b9f32280db19a94aef289295e830abce08fd77a38331f8f3f78c\" or \"d5f9768b3e3f70105a4bd0ea8b3da0c2519dfaf61ceb7de462e03ccca6ea8aed\" or \"b6b185b90b5c10902a6332c3d6d4953c60da779f7677ade7ef4a5df3acdba10b\" or \"493a13cf976b204b97164484c36be269ba13429f7cd693b4eb59ee223c526883\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01696"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "2197020a-a8bd-54be-9ed7-80ed5e0706ca",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Birch Kettle",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-01696",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "2197020a-a8bd-54be-9ed7-80ed5e0706ca_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Flint Stencil cryptominer sample, as reported in campaign PTF-00952. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Flint Stencil Cryptominer: File with known malicious hash written (PTF-00952)",
+        "note": "## Triage and analysis\n\n### Investigating Flint Stencil Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Flint Stencil cryptominer in campaign PTF-00952.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"5cff64522cbb8d5af232e8871adde78b152cec5d7e0150374ae968b48c787a1d\" or \"24f59fc18d12321afd2379f518c1b0629ce0c4e47df9e206042209cb41f755c7\" or \"9b68397de5a779b7a310e7522298d2ddac155e0f79042f20cf252c44120be932\" or \"bd8c732378327f9ef459dee541ff7e64e96c47c77154d479a3d7171f74612d25\" or \"dd3618ec2f1af2303faa446bfb54d5d4d62e74d282c52aca06a6b18a056e8e0c\" or \"bd8af5806380600188d94b4bea3faa59381ecd31ebc08c9c861608b70c07a3c9\" or \"d08654e429d5369a74016127e670ec5e4d0609e6def5f5a1a7824341dba1f622\" or \"53ac77ab153f54b3f48f398fec7d6aae2bff317af5cb6dc4d1d4a889f5c22a49\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00952"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "8518e9d8-8369-5540-9121-12a6366d418c",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Flint Stencil",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-00952",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "8518e9d8-8369-5540-9121-12a6366d418c_1",
+    "type": "security-rule"
+}

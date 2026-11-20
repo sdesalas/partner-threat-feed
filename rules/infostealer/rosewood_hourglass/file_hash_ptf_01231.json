@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Rosewood Hourglass infostealer sample, as reported in campaign PTF-01231. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Rosewood Hourglass Infostealer: File with known malicious hash written (PTF-01231)",
+        "note": "## Triage and analysis\n\n### Investigating Rosewood Hourglass Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Rosewood Hourglass infostealer in campaign PTF-01231.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"842c7a0b414ceb18c2e407ce98e1629328c79f2611bf847e7c1d0c2f0777116c\" or \"c1e0faed048b9adcf5e0df1c4d6df5459bbef1989f7e9b83c94e989b3b5b54b5\" or \"ec5a48506a8be01e5215e44d23017cb81f73d232c5dd7478735f2e6c3ffa6bbb\" or \"77c89607e379e850c9efd9ce2e03953c7686f1052d9983327d59310f810f0ede\" or \"c0fb6e363eec0d0f2c14f1755a09b9d0b77da33009a3ff677792029203b5a2f7\" or \"a076e8886a4b66e466841fc4ec390aacab260c11a7eb3e73cd2e7104c9452b61\" or \"9f6703d3260d88bd81a85ce0cb916ea1bf66275ec76d77d370070db9811b47b8\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01231"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "a61dc62b-6dbb-52f7-ae77-f8d40ea58c39",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Rosewood Hourglass",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-01231",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "a61dc62b-6dbb-52f7-ae77-f8d40ea58c39_1",
+    "type": "security-rule"
+}

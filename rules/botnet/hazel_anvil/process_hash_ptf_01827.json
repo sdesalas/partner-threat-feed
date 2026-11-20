@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Hazel Anvil botnet sample, as reported in campaign PTF-01827. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Hazel Anvil Botnet: Process started from known malicious binary (PTF-01827)",
+        "note": "## Triage and analysis\n\n### Investigating Hazel Anvil Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hazel Anvil botnet in campaign PTF-01827.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"169b43a81ac9ec79e84c3a7a8afddc5469ebf68258f976dcc45983d4bea1e9ac\", \"542dcb26b6e88736399e04f8568d22cba961b18b448d23bcb06fed7cdb363470\", \"c9f945d02a5d0dbc2a5eefdbd7104aab46c3d18b6df2b91fec3023fc4169c82d\", \"4fd8e7ac4e515884f117f1f15890b463d6d34d8a1ce7304e254bdf70e28943a2\", \"0b718a9fc179f3ef8771c17b464b38b5d8e38976f02c0dce20d9a2e1dcabc777\", \"69b0c386f71cf8f9d4666b82a081ff16ee2071ab2539671fd5a9dcbe83a6492a\", \"f13b259f6e40df786ccd933c1e592d256dd4d1db9f2f9bdde4a4621549a45beb\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01827"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "881b25c1-cfca-561b-a59a-e33d93051104",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Hazel Anvil",
+            "Threat Type: Botnet",
+            "Campaign: PTF-01827",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "881b25c1-cfca-561b-a59a-e33d93051104_1",
+    "type": "security-rule"
+}

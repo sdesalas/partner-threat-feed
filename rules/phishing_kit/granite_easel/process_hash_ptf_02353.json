@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Granite Easel phishing kit sample, as reported in campaign PTF-02353. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Granite Easel Phishing Kit: Process started from known malicious binary (PTF-02353)",
+        "note": "## Triage and analysis\n\n### Investigating Granite Easel Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Granite Easel phishing kit in campaign PTF-02353.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"e353e2e130cf98ce3792669906560a146723316069edcdbba47b284371e31025\", \"a91c284a83dea34fa26cbdcd082617d21c909580e8e1af90e446a2e5a65fc8b6\", \"38abd678cc3a4d4487c2dcac2e0907f57a36d025ea5ec3ad81fdfaceb5e66497\", \"8298d992d7afa91d5ea8b2cb8e1cb7ba263007acc843fea2d9019d1c875ac327\", \"be3b3a5fa023357be3ceac50a61bfdfc1e1d3a63f8d26da9a831c202ae54af1b\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02353"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "8747d2f0-a35f-5ad6-b943-ad430bf5f4d5",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Granite Easel",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-02353",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "8747d2f0-a35f-5ad6-b943-ad430bf5f4d5_1",
+    "type": "security-rule"
+}

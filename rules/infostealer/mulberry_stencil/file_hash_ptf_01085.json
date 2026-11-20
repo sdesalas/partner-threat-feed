@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Mulberry Stencil infostealer sample, as reported in campaign PTF-01085. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Mulberry Stencil Infostealer: File with known malicious hash written (PTF-01085)",
+        "note": "## Triage and analysis\n\n### Investigating Mulberry Stencil Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mulberry Stencil infostealer in campaign PTF-01085.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"dbba2578d1d2ff3faf2a757eee646cf4c0089a11f57bb922cb0cdc0c104d4aaf\" or \"de669d139747a642e96e5b712bcd3c7e18785caa616224a67973f0d3052e1a56\" or \"6b5b0478c13a0bc5dbb0ea43584e37bc757c1fe790b0e0a993d6e4a83e7c160f\" or \"1be738b8279a634633fadf24e0077c262ddc409f0a96097d5111dde7a61dc75c\" or \"4880e04912560a5ad9fef0d9200c17074b377f5ea6d22cdf99ee1092c6e78149\" or \"4d755639e6755b57e469243dd5c2a5483b7db6d52f63223bc9aab3d11a63917f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01085"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ec80445a-a163-5ba0-a46b-ccb4597b2638",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Mulberry Stencil",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-01085",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "ec80445a-a163-5ba0-a46b-ccb4597b2638_1",
+    "type": "security-rule"
+}

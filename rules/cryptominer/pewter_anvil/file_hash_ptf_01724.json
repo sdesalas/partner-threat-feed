@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Pewter Anvil cryptominer sample, as reported in campaign PTF-01724. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Pewter Anvil Cryptominer: File with known malicious hash written (PTF-01724)",
+        "note": "## Triage and analysis\n\n### Investigating Pewter Anvil Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Pewter Anvil cryptominer in campaign PTF-01724.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"d9c3a4149a60b682d587dbdc81d7789d352f31352a1551971fe7606e5011c495\" or \"6d9c0ec430cc349c3d78cfb1fd234178c2a136d7b93769522d06336e20cb73e3\" or \"ffb5e599a347b4900c028f790f7440b0106a92a4b2a1739719a234cceafd6b3d\" or \"4f34933633e67f8405f5dfe552add906b9c386f69025f7135189a94ee2c1412c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01724"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e5cdf3d0-eed7-51b1-8552-09fa5c9bbfe6",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Pewter Anvil",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-01724",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "e5cdf3d0-eed7-51b1-8552-09fa5c9bbfe6_1",
+    "type": "security-rule"
+}

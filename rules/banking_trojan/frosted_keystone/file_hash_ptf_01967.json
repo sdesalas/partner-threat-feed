@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Frosted Keystone banking trojan sample, as reported in campaign PTF-01967. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Frosted Keystone Banking Trojan: File with known malicious hash written (PTF-01967)",
+        "note": "## Triage and analysis\n\n### Investigating Frosted Keystone Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Frosted Keystone banking trojan in campaign PTF-01967.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"10ac13c212036e41b07176549c95e40427207bd9aad0adcc501d1a71cf96dbf7\" or \"4b90cd17286f60ec32f86a444390c62930620ecaa42a8273a00d8c8c295eef38\" or \"a2ee4f7ca0cec83675b420b14b60443c4d0c1839d745c346c28c0a3ffd59a833\" or \"cd72f3ac3fb9c5e447f43f24ad7e9c3a8145e46cee5dffc5fd28b9ad885c2a5e\" or \"af6d9ddf0ef13c9a17375df49a88cc075a14fc215dd74d59008f23868e9c4e66\" or \"dcdef5c0077da2bf6249f9c94d3dd7d7a010fff0e2d9a506f8b0cd3b8b7e567c\" or \"79e1f7e2119d5b512e487cc38f934e59ba44bd01ee642673107f4b14d96640a0\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01967"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "1e48fd64-0c92-5602-99dc-593ae4665a1b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Frosted Keystone",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-01967",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "1e48fd64-0c92-5602-99dc-593ae4665a1b_1",
+    "type": "security-rule"
+}

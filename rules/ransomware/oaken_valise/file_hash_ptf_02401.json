@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Oaken Valise ransomware sample, as reported in campaign PTF-02401. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Oaken Valise Ransomware: File with known malicious hash written (PTF-02401)",
+        "note": "## Triage and analysis\n\n### Investigating Oaken Valise Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Oaken Valise ransomware in campaign PTF-02401.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"3f1325ccb48db9de00aac2e7de3029d1eb25d7f43b3c3b647cea6928eb426fb9\" or \"b986b1648e8f724a37829aa99706d292a19245ef482d81716d56189be7c246be\" or \"78c584bdc4169cbd116b98cafe92140a6f8e08b82d3bbcec9f96d88047d11fe0\" or \"20d5b03c5b240789242d6a2bf0f883fe4d22b654190f88ed4e8b6ff6ffd56aff\" or \"8f3ea49ef75bec8a501accbb93efcf32d9ab20cec9a12c766731a159ae389eed\" or \"3342a5a169fe41cef88d9e43b6bb0c52dcbaba91cb835824165d6f2d6039b520\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02401"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b6b5d12f-75dd-5c30-928c-0ef1dde07711",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Oaken Valise",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-02401",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "b6b5d12f-75dd-5c30-928c-0ef1dde07711_1",
+    "type": "security-rule"
+}

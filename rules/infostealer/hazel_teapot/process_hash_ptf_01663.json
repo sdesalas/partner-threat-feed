@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Hazel Teapot infostealer sample, as reported in campaign PTF-01663. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Hazel Teapot Infostealer: Process started from known malicious binary (PTF-01663)",
+        "note": "## Triage and analysis\n\n### Investigating Hazel Teapot Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hazel Teapot infostealer in campaign PTF-01663.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"7c02230fdc8e7b95163200a53c9e5d7e65c43168ad08570f71dc55639a1dd185\", \"25bb766cb7a3829932aafb1e7a22d519444d41e5cb0309b0e1c5af1693000d33\", \"4d1ffd88982a9663b982f99723d27e7a24b0b301441cdc0de94a8864b0d8a74e\", \"71a702ce78a05781280f56498136c0d91f2065df0133712e16fb5386c90a6dc9\", \"b7494f05a3f9b71e82956540204c389cde2bd6d9b65d06890ae47b1b2d785870\", \"e3375ffcd7b411d49efdf181e53a235dec02bf555809268cfee08ab6bab40abe\", \"0b306d52e9487bc580b6dada9da0db655dfac3cda3f3a99544daf1b24a5fec8c\", \"5f453c00d427c2019c72ef0acdf3769cd156efd52fe0eb3bbe3cc9f38f14c8c0\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01663"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "4ac0a6f2-09f4-5b88-b07a-284f0d897c38",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Hazel Teapot",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-01663",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "4ac0a6f2-09f4-5b88-b07a-284f0d897c38_1",
+    "type": "security-rule"
+}

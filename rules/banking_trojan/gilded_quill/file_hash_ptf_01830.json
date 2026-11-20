@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Gilded Quill banking trojan sample, as reported in campaign PTF-01830. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Gilded Quill Banking Trojan: File with known malicious hash written (PTF-01830)",
+        "note": "## Triage and analysis\n\n### Investigating Gilded Quill Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Gilded Quill banking trojan in campaign PTF-01830.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"389aa26c03ecf92e618ba9568c42aedfbde7c2e5abcb973074654755f831e8b3\" or \"f1e5d136524cca118a7d1ff87a7e7c78972d238842cdceb68971f589ed290af6\" or \"dd92ee4934a8ce059989388e016dcf2a6191e44873912255875813249aab1d20\" or \"0d4a5bce544e6d602a02cdf5e8b1ccac5234f45d47517a6b8eabb5b9fc45c79e\" or \"7675d7d97dd49e1a9aab1f71b883bbedab6440413d6f78cf1d966488b4f79eb3\" or \"7576b4418b555ecc396b9a782949063bbe88f7ff1376908713886b0685038ffe\" or \"682c8003b2a74e697fd9e03d68461bb9d45ca8320dc5b80c9d30a28d4082737b\" or \"4d1649b7bfddc8293e98c42aa8cfee3f3af7fb94db8689c6a4899fae24edd764\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01830"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "2ab3461e-5f0e-5b01-9c04-5e51a53e0ac0",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Gilded Quill",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-01830",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "2ab3461e-5f0e-5b01-9c04-5e51a53e0ac0_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Saffron Satchel cryptominer sample, as reported in campaign PTF-01286. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Saffron Satchel Cryptominer: File with known malicious hash written (PTF-01286)",
+        "note": "## Triage and analysis\n\n### Investigating Saffron Satchel Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Saffron Satchel cryptominer in campaign PTF-01286.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"7eea3f98879f089e8988f637818ec04338e0dfaa08d84fab5a30ce38392659e4\" or \"de23ab023bb2bfa933f96227aa78a88ff99becd72bd24a81554bac8a4c503cc2\" or \"28310a620f44940220594966745447f48c5bab0a3094b676ab9c2512fb5e9b3e\" or \"3fa4b028fcb7a3f288ac0640fd60abde4083a3bfe8d161d6a28ba2063a2d2ce6\" or \"03fe43a1cb06d169986d153ef4ebc1540fa1bf70dc4a0d490e7c5a989641180b\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01286"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "79b546bb-a408-5cc6-b680-393095835279",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Saffron Satchel",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-01286",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "79b546bb-a408-5cc6-b680-393095835279_1",
+    "type": "security-rule"
+}

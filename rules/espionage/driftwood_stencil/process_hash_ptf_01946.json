@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Driftwood Stencil espionage toolkit sample, as reported in campaign PTF-01946. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Driftwood Stencil Espionage Toolkit: Process started from known malicious binary (PTF-01946)",
+        "note": "## Triage and analysis\n\n### Investigating Driftwood Stencil Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Driftwood Stencil espionage toolkit in campaign PTF-01946.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"942945e1c09c7091f000839b291f8d0bea376b53ed8b1525a0f8eb70ee29039b\", \"afa9ede86ea73ba9f25c9a06e2e2f4c0c23b13d38ff95bf69ced341ce32ca7a7\", \"0421d858e7e7bac84bf0770cc717aae8a322427f168729482bb5ca5ae4a25b89\", \"5a885be2b39c579f62cc24986dcce8e987dde7a4b8e44cf232c2ab955e22aed8\", \"bec42168f05735db301f1248b0c5535878f1f55060a344596ee5782b080caaa8\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01946"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "c2107d0e-e52f-51d6-92e2-fd943fd52332",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Driftwood Stencil",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-01946",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "c2107d0e-e52f-51d6-92e2-fd943fd52332_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Granite Ratchet banking trojan sample, as reported in campaign PTF-02191. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Granite Ratchet Banking Trojan: Process started from known malicious binary (PTF-02191)",
+        "note": "## Triage and analysis\n\n### Investigating Granite Ratchet Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Granite Ratchet banking trojan in campaign PTF-02191.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"5e5dd8792fc2d9889cb520ade22ebe115168db918e2d7bb02647e1e6d547cf5d\", \"8ff9c1062bc828fee1164908ce04c5468b2c2592297cf66d52f18cf4526afd97\", \"a429aa1430fcd58ab5f1c4053b3158184ccc27f3743ded56a09f26533d5bdf4c\", \"f36c804ab2a4c751991e00586ad21c1259db19238ff15c5b01690ac92f549214\", \"8d08f4d96cd1a06710d9feed99fa8b5435671bd6846e5a81be238de4abb74dc9\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02191"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "73527355-583a-5605-9921-579604f1189b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Granite Ratchet",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-02191",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "73527355-583a-5605-9921-579604f1189b_1",
+    "type": "security-rule"
+}

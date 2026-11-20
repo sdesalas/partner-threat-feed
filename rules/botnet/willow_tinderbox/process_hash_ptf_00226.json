@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Willow Tinderbox botnet sample, as reported in campaign PTF-00226. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Willow Tinderbox Botnet: Process started from known malicious binary (PTF-00226)",
+        "note": "## Triage and analysis\n\n### Investigating Willow Tinderbox Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Willow Tinderbox botnet in campaign PTF-00226.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"0e505ff87234eceb9c094cd0dd9299f2dd13dcea270d0dbef7c24bc18d280d8a\", \"459949de6bfcee34702bb684decd409672abeba3a839be5cc572c98a7ca10039\", \"b32b623b722229c9711114ede29147b0bf751d52c79742c2aace19e7325d5012\", \"16b7e4ce103173cbd9f53e66e5bce7621b657e8f454cbb48b2b0e00192752eac\", \"a294f4536a5724d2cf5511d874f9cea5621862c5c294b16fad65c0ca2b9c98fc\", \"3f3a49592a40b577566b6b184592f5f81bf50c0916aaa4ad6d079186f6f5f778\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00226"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "c516fe90-d0bb-5ec2-bc93-e1ee30c8fb9d",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Willow Tinderbox",
+            "Threat Type: Botnet",
+            "Campaign: PTF-00226",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "c516fe90-d0bb-5ec2-bc93-e1ee30c8fb9d_1",
+    "type": "security-rule"
+}

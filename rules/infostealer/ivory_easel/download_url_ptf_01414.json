@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Ivory Easel infostealer payloads, as reported in campaign PTF-01414. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ivory Easel Infostealer: Request to known payload URL (PTF-01414)",
+        "note": "## Triage and analysis\n\n### Investigating Ivory Easel Infostealer: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ivory Easel infostealer in campaign PTF-01414.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://assets-track86.invalid/install/3310.bin\" or \"https://auth-media26.example/install/6905.zip\" or \"https://media-data9.example/payload/3268.bin\" or \"https://relay-update43.example/download/8590.zip\" or \"https://sync-assets57.invalid/install/8554.zip\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01414"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "13396d2a-8480-56b9-98d5-a71067d929fe",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ivory Easel",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-01414",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "13396d2a-8480-56b9-98d5-a71067d929fe_1",
+    "type": "security-rule"
+}

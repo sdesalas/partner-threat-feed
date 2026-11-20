@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Walnut Loom remote access trojan sample, as reported in campaign PTF-00492. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Walnut Loom Remote Access Trojan: File with known malicious hash written (PTF-00492)",
+        "note": "## Triage and analysis\n\n### Investigating Walnut Loom Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Walnut Loom remote access trojan in campaign PTF-00492.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"1f25acc5a151fac8e7622ae597fb6cdf70701e982a8e73db54af1dd3d29dba4c\" or \"cdcd988f1af49fccaba71934ea9330bc874b5cc1c36f24811332dd174c8284fd\" or \"0c2dbacc5373b8b30c8cea457e762f5fd40ad1736319e28e363ba0b89ddc5802\" or \"bfb65a75f58883da9696ef1b1574178fd640ed6b4153c625418bf7ee7a13cb39\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00492"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e7cf594e-64e8-5dd1-a9e0-52ad53e011b1",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Walnut Loom",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-00492",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "e7cf594e-64e8-5dd1-a9e0-52ad53e011b1_1",
+    "type": "security-rule"
+}

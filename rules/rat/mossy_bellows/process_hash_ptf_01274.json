@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Mossy Bellows remote access trojan sample, as reported in campaign PTF-01274. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Mossy Bellows Remote Access Trojan: Process started from known malicious binary (PTF-01274)",
+        "note": "## Triage and analysis\n\n### Investigating Mossy Bellows Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mossy Bellows remote access trojan in campaign PTF-01274.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"caa4b842e1a08c7668360761e1b2fa31665b13dde8e0a99c63e87f2497a68d13\", \"abba8ca9b295f7e5260e136c78946adc40bbfce6df01af7aba9c898a0de73d1e\", \"3e6aaebf15985c797b6c9fb1e29f7b453b4cf2ebb11358e81ad16ac20db9a191\", \"2ade0c11280cfe3c24c295ea4a1412bbd17477a24b6aa41b1bba9139100e4570\", \"731361fb5610bf72bca65d1c3cf30f93713662846d2c40f00a7a3de5215f8cab\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01274"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f3e0bcab-b40c-5fc9-b2cc-4bae3fdb553f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Mossy Bellows",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-01274",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "f3e0bcab-b40c-5fc9-b2cc-4bae3fdb553f_1",
+    "type": "security-rule"
+}

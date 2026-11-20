@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Hazel Abacus loader sample, as reported in campaign PTF-00837. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Hazel Abacus Loader: File with known malicious hash written (PTF-00837)",
+        "note": "## Triage and analysis\n\n### Investigating Hazel Abacus Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hazel Abacus loader in campaign PTF-00837.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"127e3106f41c56f8032378961284727a6fa84dd51f7f47a283b6e006bef44fb4\" or \"cd0788f011455fed439200b0d77ec73d6dbc2ffc1a98877b09b8355fcf21044b\" or \"8b1964df0557794afdfe3167bc7eea2cc65cc0adc436adf021666665577347ee\" or \"94bc49ba566cc98cbb0a7682a5f1b0c61bf4b692089b103aec161f8e38333a45\" or \"911e24c662c68ba3026ee00f1532c97fc3170c4771df5f19837e1b98f864c3eb\" or \"913ee7f15ebb274fc285bbf556322ee1e2f6dc5b03c974afb077ce204af3292a\" or \"8378a30f903644f89e91d43b731bd9df177f8c7f4cd262d7ebedcfdc1a531c59\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00837"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "fb269a7e-33e0-5211-88a6-84353540a4df",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Hazel Abacus",
+            "Threat Type: Loader",
+            "Campaign: PTF-00837",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "fb269a7e-33e0-5211-88a6-84353540a4df_1",
+    "type": "security-rule"
+}

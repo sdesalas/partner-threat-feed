@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Copper Teapot botnet sample, as reported in campaign PTF-00501. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Copper Teapot Botnet: Process started from known malicious binary (PTF-00501)",
+        "note": "## Triage and analysis\n\n### Investigating Copper Teapot Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Copper Teapot botnet in campaign PTF-00501.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"fd48fd81683f7030ed145b45b6677bcda809866c2b7e86dc261e3a59b0d08a67\", \"f9b2c82dfe9767c90ac36b40100cc456fe684dc9d97626df0c62e351655dbaa8\", \"c992e22440858cf9afff1c2de75d574586fd2598d406cb03bb97cc20b8b4f979\", \"09ab731fb14993b12a52a6f984b7f5a1fdd74071db45a4f758a43204ef91d549\", \"055caf260cc8acbd3e48ca31b254e3b1b573c3cba6b9aa2da0ecdd955da93bbe\", \"d7b95ec2d93cddf83cda50a79ca966ccf78e8cbc28101e813444c6df92aea9d2\", \"bd61082ae0cd1cd71b6236db0f98d4e5e7cfb5ff02a9742e8f57e58831ea1095\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00501"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "247ae13e-d6b5-5bbc-ac88-14aa848f4bbc",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Copper Teapot",
+            "Threat Type: Botnet",
+            "Campaign: PTF-00501",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "247ae13e-d6b5-5bbc-ac88-14aa848f4bbc_1",
+    "type": "security-rule"
+}

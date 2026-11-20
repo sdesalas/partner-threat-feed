@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Granite Trellis remote access trojan sample, as reported in campaign PTF-00281. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Granite Trellis Remote Access Trojan: Process started from known malicious binary (PTF-00281)",
+        "note": "## Triage and analysis\n\n### Investigating Granite Trellis Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Granite Trellis remote access trojan in campaign PTF-00281.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"428ba79cdc0d89075b0d1216e26444420d5a776357c284b83a8076084d958e11\", \"09ca9e6d59ff1b63e1e1313d676537e2703e14b9a38c89dd593ac8538f64856f\", \"0977e9870a50118307a4730071fc4f7a170f0d15dcc98e37ffcd6cacd7b9eb65\", \"2e898629a07383a66a15d52cb285dded083d031d4bded2c2243048c3d0471b6d\", \"ffde89d733078b1881a145baed163272e98005132f4e68a32f88e6024f6fa46f\", \"ddd4bc74c0f2557aa75b20c091d39c737416b8ff4038766d2002e9373f3c1c6d\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00281"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d21c4505-9990-5556-9f0c-e814d274947f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Granite Trellis",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-00281",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "d21c4505-9990-5556-9f0c-e814d274947f_1",
+    "type": "security-rule"
+}

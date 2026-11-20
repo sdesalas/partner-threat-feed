@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Cedar Teapot ransomware sample, as reported in campaign PTF-01840. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Cedar Teapot Ransomware: Process started from known malicious binary (PTF-01840)",
+        "note": "## Triage and analysis\n\n### Investigating Cedar Teapot Ransomware: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Cedar Teapot ransomware in campaign PTF-01840.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"e2c98def3144968dc09e4e37af16c2d258c4ccf03e8203c13caf10ca5657cd33\", \"0392e18626ac9446b1ec14e1afd3d8b793244ccef13edfd9e82216ca2c9710c4\", \"8395ffd34f509cb73c46de1170c43ff9f2e59089a5ecd9795c8c430b9db65913\", \"b96bad13b66ce2a8617d9a170187abc22f66da7ecdac024fc45fd2e130510696\", \"5402e43977e62491a4ae5496ff98ce2f97ab35b4ced9e0b3d4c0198be68f3262\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01840"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 99,
+        "rule_id": "2b2f443d-e1c9-5b20-a62a-60a47b094165",
+        "severity": "critical",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Cedar Teapot",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-01840",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "2b2f443d-e1c9-5b20-a62a-60a47b094165_1",
+    "type": "security-rule"
+}

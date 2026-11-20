@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Juniper Loom phishing kit sample, as reported in campaign PTF-01216. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Juniper Loom Phishing Kit: File with known malicious hash written (PTF-01216)",
+        "note": "## Triage and analysis\n\n### Investigating Juniper Loom Phishing Kit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Juniper Loom phishing kit in campaign PTF-01216.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"97809dc51b811aff84d96f24903b6b1e2c14c2212e0d4c4e10efb0efffe6115a\" or \"bdf0434de4cab3ca852c44a255288091077eb0f54592b989ba7b1df82a8c1f6d\" or \"8d02c0ecb7fdc5b7ebd1eacb4e8d29bdab5ec4ad77be9f1e35c8c6ce2e7b0872\" or \"7da6b0ae6e6567a86b5c1fc0fcb63e111dc0b01a53ef6175d4e67e39a9bd8608\" or \"b2b824ef099f8fd98b29260f5cf8b5960c6477d6086ab49aa5ac091a773794f5\" or \"04654fbfad97eb803ac9cf949b07fe64b91b297e64fd0ea465256d1b55ed0a84\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01216"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "6986fd66-d302-5c90-be50-348a647a8512",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Juniper Loom",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-01216",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "6986fd66-d302-5c90-be50-348a647a8512_1",
+    "type": "security-rule"
+}

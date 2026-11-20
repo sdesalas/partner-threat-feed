@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Lacquer Tankard loader sample, as reported in campaign PTF-00014. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Lacquer Tankard Loader: Process started from known malicious binary (PTF-00014)",
+        "note": "## Triage and analysis\n\n### Investigating Lacquer Tankard Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Lacquer Tankard loader in campaign PTF-00014.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"3c32548a0b13b8592585d6f86e898bc66aed949c9abc7369de3a0e9100ea18c8\", \"39ebe7e742b0e64e0534a13912dc7c45b3179c93548e1e734bff3069beee06b9\", \"0368ae27c9158710c5e84b18cb005a81a84f0e1e29d5d8c7d2bc4a1a970bb005\", \"9f999a786eae82c2366fadd946a08a0864405b9fd8ac6490bb606c689a279267\", \"dc78b4ba0e0b3cc6908548dd9231eb3d4a99cfa2a4cf31a44465a26d95668519\", \"5e36ffc822553adda002163f68be7eddd29ce5c95564997f5a6a83fb696aa37f\", \"3d277a1606caf41227cc0aef90bf38b94ce7c7fed6519494264e7637fc6a4820\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00014"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "12b61e61-55b8-545a-9666-93270a34b20c",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Lacquer Tankard",
+            "Threat Type: Loader",
+            "Campaign: PTF-00014",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "12b61e61-55b8-545a-9666-93270a34b20c_1",
+    "type": "security-rule"
+}

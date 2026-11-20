@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Paper Trowel ransomware sample, as reported in campaign PTF-01298. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Paper Trowel Ransomware: Process started from known malicious binary (PTF-01298)",
+        "note": "## Triage and analysis\n\n### Investigating Paper Trowel Ransomware: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Paper Trowel ransomware in campaign PTF-01298.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"34c1adaa6bce9e8cce0e23670889226bf02ee95165c0a792f4d43485d51824fc\", \"225937ac2f2aff452ef2ce22fa8b8a51aa6930f1f1afcd0153dae8c17779a0e6\", \"738ce2485f256d27140c21a81717da459ca09cac9941049698ed5a1bd9f531ac\", \"392038f9afa984dc5f716a5173f324bffe5c74d981be7e0d58e2e2d8b2245241\", \"5a84b2a871066593a6f6d7c6f4bcd4b8668b998073884941db5d548d35d514a8\", \"41094a7d9f23595d9f9e6e4a98879ca2a2f2c6a481a95f281bf937f912f077f1\", \"40e3f6fcbb836f2f4bd91b361468d0b6e597940a93203da42752948f7533f0a6\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01298"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 99,
+        "rule_id": "fb527fd1-8ff7-58de-a73d-17e64080a339",
+        "severity": "critical",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Paper Trowel",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-01298",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "fb527fd1-8ff7-58de-a73d-17e64080a339_1",
+    "type": "security-rule"
+}

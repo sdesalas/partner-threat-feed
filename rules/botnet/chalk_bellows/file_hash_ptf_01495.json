@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Chalk Bellows botnet sample, as reported in campaign PTF-01495. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Chalk Bellows Botnet: File with known malicious hash written (PTF-01495)",
+        "note": "## Triage and analysis\n\n### Investigating Chalk Bellows Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Chalk Bellows botnet in campaign PTF-01495.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"b4e48add8e45c274a02927b8e857aaaf50926f5f7d830163cae26d095cfc5239\" or \"80fda00cd6505832ab9f8d1e114594349d14dfc4ef7b2cdd61322062081f1c57\" or \"51c3b544dfe477fba93af165fa567679e9a45c03f9eb97bea683a4da89f22407\" or \"2be31070e48d54d20ea1f2cd339ffa9254f817b3ecce97c886b53679a07a9d31\" or \"d0e0aad07b4e3793fa5768c108bc476f508139352955cb86b136782d49b91287\" or \"9362b26d8d0ade789e01b79bf8fe71b97b254fd222078d9c693ef6b928f1ec63\" or \"549a11e85e6b42042ed88c23f52faaad4a993b1d1e4b81dec6e6a224bb3a10ba\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01495"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "fca88e40-1988-5d37-9e41-55f9de21051f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Chalk Bellows",
+            "Threat Type: Botnet",
+            "Campaign: PTF-01495",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "fca88e40-1988-5d37-9e41-55f9de21051f_1",
+    "type": "security-rule"
+}

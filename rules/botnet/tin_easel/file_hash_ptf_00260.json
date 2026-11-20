@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Tin Easel botnet sample, as reported in campaign PTF-00260. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Tin Easel Botnet: File with known malicious hash written (PTF-00260)",
+        "note": "## Triage and analysis\n\n### Investigating Tin Easel Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tin Easel botnet in campaign PTF-00260.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"29d87c7d5bcf8540557ab10fb7432cbe98ba893dbff5f59b22dbc608eed5a6ed\" or \"515d1bd3effda0465bb929327c3af4af52697e9cfcebf97126b12d52c7857a86\" or \"ac9b32d803f8556afb3a2e22c6f45e3551ad177b72a7f57d17793b4817b59c1e\" or \"c0036dcc99485e26104c7800e0156a44ae63437d596c451fd7c0a9e2236d9672\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00260"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "6fed3e80-04c0-575c-9f36-50e2f076933b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Tin Easel",
+            "Threat Type: Botnet",
+            "Campaign: PTF-00260",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "6fed3e80-04c0-575c-9f36-50e2f076933b_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Nickel Mortar loader sample, as reported in campaign PTF-01960. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Nickel Mortar Loader: Process started from known malicious binary (PTF-01960)",
+        "note": "## Triage and analysis\n\n### Investigating Nickel Mortar Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Nickel Mortar loader in campaign PTF-01960.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"c369729ef265c4fbcb26a57e58ca2734ea4805ac5dfca587d7d663f5ae037290\", \"bd5ffb7e1955f88d4a4dc37de3e64a5229c91079e34f10e3e599cd85798e0020\", \"ccc415b23f5c36b0cdce45f3493c4606cad43e0081776aede1fa8790349d6d0d\", \"f0a3b045e3ce9a971995bd5da6cd5217f1e071fa35300dd72c825d46c4e5fa46\", \"ba401913a1086365379926ba363cef00be29824a834bf612e01b1236de833fba\", \"e758e8d523332d828fdb2bf9bf84d7eb1432248d034492be2c921394859e4424\", \"7ca40e6a0338e6394556356e5b58da0f65d92fb92f53b4bdcc26e539e9c1bd82\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01960"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "9acb1cee-3551-5e61-a8d8-3a1016ce3559",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Nickel Mortar",
+            "Threat Type: Loader",
+            "Campaign: PTF-01960",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "9acb1cee-3551-5e61-a8d8-3a1016ce3559_1",
+    "type": "security-rule"
+}

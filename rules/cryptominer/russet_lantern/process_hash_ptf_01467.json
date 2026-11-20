@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Russet Lantern cryptominer sample, as reported in campaign PTF-01467. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Russet Lantern Cryptominer: Process started from known malicious binary (PTF-01467)",
+        "note": "## Triage and analysis\n\n### Investigating Russet Lantern Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Russet Lantern cryptominer in campaign PTF-01467.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"e2a6b05044bf0f86876939dd1cfa3086a575f40e2a9899db09fc6f7cf2b79bc2\", \"6874533e57aa39a5f1fa9da18cff326197949cba6db458da4baddee61cf348aa\", \"47e5c4643872ce734469627af50045f3f5cd722bd7733025a611870d8bce3890\", \"088e2e84aad0a6fb394c03109e4479891f0b55c7dc4b90ec096f5eb8c914f791\", \"8026ad01c733fcc97d473d573cab21b4a7a991639e1a2b680d67d9c13f74ef4a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01467"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "3ecc1ed0-4712-5770-8772-867e3bd5379c",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Russet Lantern",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-01467",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "3ecc1ed0-4712-5770-8772-867e3bd5379c_1",
+    "type": "security-rule"
+}

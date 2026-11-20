@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Dusky Kettle phishing kit sample, as reported in campaign PTF-01289. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Dusky Kettle Phishing Kit: File with known malicious hash written (PTF-01289)",
+        "note": "## Triage and analysis\n\n### Investigating Dusky Kettle Phishing Kit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Dusky Kettle phishing kit in campaign PTF-01289.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"8311eef796e1b6f3cc4c3a32731da11efa62e8cfa1b59a4c94aad454f7e6d63c\" or \"7447a9caf95326f3a759a2400a459502f598cab9f7e630febc758f55e5de2cf3\" or \"fdd42a31d46ce66412a67ab8f206ac9316db1454abd9829f7b50dbadd1a5c250\" or \"6409bc061d611ed12e51c4be96877cf47437adcc8c0b204108a377efadb4f6e7\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01289"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "8824fd21-a82b-5947-8e9d-648c08f88033",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Dusky Kettle",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-01289",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "8824fd21-a82b-5947-8e9d-648c08f88033_1",
+    "type": "security-rule"
+}

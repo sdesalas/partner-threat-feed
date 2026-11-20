@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Fennel Kettle ransomware sample, as reported in campaign PTF-01446. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Fennel Kettle Ransomware: File with known malicious hash written (PTF-01446)",
+        "note": "## Triage and analysis\n\n### Investigating Fennel Kettle Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Fennel Kettle ransomware in campaign PTF-01446.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"7ff523aa581310ed438e38143465b0bbd3c3eb52c1eb21d8bcc68018b6f92abd\" or \"550bc11e4edf70379a0aec7f37e1d52246b5e55ca86076ccfcd4faddd7582332\" or \"35c7084ccb394e6f4209643f8a4c06c4a35f911d57f52c8fb71aa03e365b8f69\" or \"560128623dacbbeb72a99fbb4c4572b1c2cda5e8ccda81459afb54079a9e3a57\" or \"9c9733b7a37ab1c803c09125a8e491b7e10ab95237ad95fe2f038164463a06f3\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01446"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d32d0cd4-b39d-5a6e-b423-d94acd0336ec",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Fennel Kettle",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-01446",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "d32d0cd4-b39d-5a6e-b423-d94acd0336ec_1",
+    "type": "security-rule"
+}

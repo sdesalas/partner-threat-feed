@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Mossy Ratchet remote access trojan sample, as reported in campaign PTF-00013. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Mossy Ratchet Remote Access Trojan: Process started from known malicious binary (PTF-00013)",
+        "note": "## Triage and analysis\n\n### Investigating Mossy Ratchet Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mossy Ratchet remote access trojan in campaign PTF-00013.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"b7ff7ffdf8a807a5e6203eeaebef505306e4ffd113bda8c325cf25d3e3ea3838\", \"ad1d555da707422f1d854f44e29ba4f0e9fa905f32c637cf8b16c74c751c9e7b\", \"c5b13d806ac83410648cb90e78700ec381e0e30a7ae8b09af9dab3f04bf1e741\", \"4b102ffe4c207e6ef9fe9f2c069a84bed25831ee0b4934d27c82777829201d28\", \"37e8a99c4096186885937ec23dd85a657377e9be5a9c3e5013057b9396fd96cd\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00013"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f8bfc9d1-ac74-5571-b5d8-9a7122ec68a0",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Mossy Ratchet",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-00013",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "f8bfc9d1-ac74-5571-b5d8-9a7122ec68a0_1",
+    "type": "security-rule"
+}

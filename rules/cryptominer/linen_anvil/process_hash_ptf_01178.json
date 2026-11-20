@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Linen Anvil cryptominer sample, as reported in campaign PTF-01178. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Linen Anvil Cryptominer: Process started from known malicious binary (PTF-01178)",
+        "note": "## Triage and analysis\n\n### Investigating Linen Anvil Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Linen Anvil cryptominer in campaign PTF-01178.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"01972f7c26307f51cb39ae37d462642c27a0d897f4c44cbbb1ba129d097737dd\", \"bfed87fd5b6fa6f74dcaf59c5725fa39e2d4dce238e66af8ad2ab49823a77293\", \"f29552947e2c6bbd80cb98bd370bc52fd9c2e7eee69002dec63c64a474b5ec4e\", \"59c2d8c684a786cb372a44e60f52798865211f4e4baa6c88de79098fa2b3ce8d\", \"7f4baa47ee80fa36774bb0fac35da49c4d36da7a6ffa5899ba7d8a04285ca6f7\", \"1b0fb74c5dcebc489e9fab34f800a02dd0db26d14e0bd2daaf8e6ed1237f394a\", \"2680c2a8a0e61f05e8fd8ebffc02b9e8877d068f0afe7ffd948cda82ae0e7b85\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01178"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ab8f1656-d8fa-5439-9b22-b9e9dbc1a1c8",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Linen Anvil",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-01178",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "ab8f1656-d8fa-5439-9b22-b9e9dbc1a1c8_1",
+    "type": "security-rule"
+}

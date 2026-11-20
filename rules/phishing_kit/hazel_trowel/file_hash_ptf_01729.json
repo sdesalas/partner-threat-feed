@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Hazel Trowel phishing kit sample, as reported in campaign PTF-01729. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Hazel Trowel Phishing Kit: File with known malicious hash written (PTF-01729)",
+        "note": "## Triage and analysis\n\n### Investigating Hazel Trowel Phishing Kit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hazel Trowel phishing kit in campaign PTF-01729.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"1a96095768863ae4cef518fbdbb68e5be545ded188f46e09208e3fa608392bbd\" or \"00cf2a7b206a5ab2bdcbffff72d23d15e3ce66e430dea58a44b02057cd5d7e3a\" or \"d7af01e39bb43c5396d79c3fd5f62f8abeaaf1ffdd39e552d98f5ff8eee0bab1\" or \"ce0ea773e464316b05618fe8640b687562e5bcb8d6f7977f99034e4138db00f3\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01729"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "9e0bdde8-c4c5-5569-8a41-bb1c73b14f9a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Hazel Trowel",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-01729",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "9e0bdde8-c4c5-5569-8a41-bb1c73b14f9a_1",
+    "type": "security-rule"
+}

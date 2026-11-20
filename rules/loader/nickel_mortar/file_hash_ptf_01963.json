@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Nickel Mortar loader sample, as reported in campaign PTF-01963. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Nickel Mortar Loader: File with known malicious hash written (PTF-01963)",
+        "note": "## Triage and analysis\n\n### Investigating Nickel Mortar Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Nickel Mortar loader in campaign PTF-01963.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"23dae00e702b2143e3affd06ab639876dc14114d15261952677e5e84482b5eaa\" or \"34641a2c2f1880b92c800d654bc0b58478322e60e86f8faf5aedb6c70f19a7da\" or \"5556be4d2a04699293d01b0570741510c4e728c6f66e783606dd3a489c97edb7\" or \"36bbf0824acd6eb9e6b9d2de0daec61fd1c9a815ea877c94762c1a161d621d52\" or \"e2b4e445070dc96b1b26c0d90bfb6885fbcd3bcd32aaff2fc74f2f7b65b5dd96\" or \"01c6430780045ae63265e4b93ad1ae7d9308843a0077d88b6a1ec01890cb0e21\" or \"a9165626ec13301afcd4ba39b689c54263f8593fe45ca7a59db0752ec2f67f25\" or \"2f428379707581c886c7128e3e6aad90e7bb1e02e0c7ca91f0ef36c60ff5d222\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01963"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "1ac12e5b-ec7d-5923-9277-f513c64c0777",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Nickel Mortar",
+            "Threat Type: Loader",
+            "Campaign: PTF-01963",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "1ac12e5b-ec7d-5923-9277-f513c64c0777_1",
+    "type": "security-rule"
+}

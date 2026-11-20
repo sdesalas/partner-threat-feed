@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ember Ratchet infostealer sample, as reported in campaign PTF-00005. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ember Ratchet Infostealer: Process started from known malicious binary (PTF-00005)",
+        "note": "## Triage and analysis\n\n### Investigating Ember Ratchet Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ember Ratchet infostealer in campaign PTF-00005.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"eda9e8f0c04c989a70d48bb5abfaf9307c7b8a3883bc454435bbd71c6aee1f47\", \"d52f5c145451ece8f51c611f1384343a0d16286326f50bebd79c7f43bc1b9f7a\", \"1453dab689e354f62fe6eeb011b112e32af51b97df20d4fc715f21c5899c9416\", \"924b95ad9ed514880a2e99b253140842cef328eba953b4e3e7697b1cfe26f6c7\", \"d4931429e71a972a3ef21152b81d104b2f36c914a216a1aaeca8c4689ef3fded\", \"8091d2de53f4e3270497f8968ad8f8db746b60fd897b1c7a9611507ff02cdfa6\", \"34708e6695ff4c626f9342a2563f958e25163b4ba302f8522ce5576874e8ad5f\", \"dd950aa92a405c494f3522f39cf79feb5568d79aa1a821282a86e49450f8c9ee\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00005"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ec3b1fdd-a7f3-5373-9fd6-ba4a19a48a22",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ember Ratchet",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-00005",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "ec3b1fdd-a7f3-5373-9fd6-ba4a19a48a22_1",
+    "type": "security-rule"
+}

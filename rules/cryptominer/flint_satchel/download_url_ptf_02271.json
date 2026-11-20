@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Flint Satchel cryptominer payloads, as reported in campaign PTF-02271. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Flint Satchel Cryptominer: Request to known payload URL (PTF-02271)",
+        "note": "## Triage and analysis\n\n### Investigating Flint Satchel Cryptominer: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Flint Satchel cryptominer in campaign PTF-02271.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://data-assets30.example/install/8702.bin\" or \"https://login-login28.invalid/payload/7561.zip\" or \"https://portal-media85.invalid/install/6159.bin\" or \"https://static-connect41.test/install/9170.php\" or \"https://sync-files15.invalid/download/3013.zip\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02271"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "e3a57634-fc8a-59d7-bdc5-51af0447146b",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Flint Satchel",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-02271",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "e3a57634-fc8a-59d7-bdc5-51af0447146b_1",
+    "type": "security-rule"
+}

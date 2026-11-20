@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Russet Funnel cryptominer sample, as reported in campaign PTF-02193. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Russet Funnel Cryptominer: Process started from known malicious binary (PTF-02193)",
+        "note": "## Triage and analysis\n\n### Investigating Russet Funnel Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Russet Funnel cryptominer in campaign PTF-02193.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"5857f7cf4f821ba72ccb9bdd1a312723bdbb167d342512415d3ad1be1caa583c\", \"0f430900a7b740d481b74f05ba97a315aef95068e5995c7dcb9140e3f89f23f9\", \"1945c3f06e0e14700acaab288ee1aeb133cee5733749d9ddc6f6f6b3ee515aff\", \"59b3b44b52c83245642deea42f15745e1fa8695b458c8f7b49033514dbc18a0a\", \"da3f986660bafde7eff4208d3b0387f7d509817b0b4c631908a417fb83427853\", \"dbc5c9ed4eebd3613578ba12dfe8825cae843bf8ef564f800477284e1d0a48a9\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02193"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "a28417e0-9624-5cac-8cac-1a6424340074",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Russet Funnel",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-02193",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "a28417e0-9624-5cac-8cac-1a6424340074_1",
+    "type": "security-rule"
+}

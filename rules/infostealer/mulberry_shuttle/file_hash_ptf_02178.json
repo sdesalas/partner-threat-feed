@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Mulberry Shuttle infostealer sample, as reported in campaign PTF-02178. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Mulberry Shuttle Infostealer: File with known malicious hash written (PTF-02178)",
+        "note": "## Triage and analysis\n\n### Investigating Mulberry Shuttle Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mulberry Shuttle infostealer in campaign PTF-02178.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"20bdd7fd1996ca6e61eaae69614e6b5bd2143f3a9489f2c64db04f32c72d7023\" or \"ebad1de2ff3be86f040ffc7916e2e3fc2de915f19fde81a8ddd48a4a9957860b\" or \"7c81527e20535eb7588d88cdaa7eea01cf09045e951fcb4a8580a15c588af4ea\" or \"d98324288fcc68850342978613893a6e8cd9200a41a39e362d56728e153f7f4f\" or \"0fbf50f295b3b529bdcebdc5d379bd08ba49afad6263abea3d4bb308c18ab24d\" or \"5ca9eec06f0dd56def72a88a041f104635159b3a0f42ffcfb1ceb2d6e2709f98\" or \"d1b463f4c761c9466d3b8e3050d9872089c6203a9d08126ac77e5649a6e7fcd7\" or \"34a49b7eb9be568b7fe08a9d80439ebe95bcfec666291db829537aa9300f5074\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02178"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "9d0e16e6-76f9-52df-ab39-4408aaad76a4",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Mulberry Shuttle",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-02178",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "9d0e16e6-76f9-52df-ab39-4408aaad76a4_1",
+    "type": "security-rule"
+}

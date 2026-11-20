@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Granite Spool ransomware sample, as reported in campaign PTF-01119. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Granite Spool Ransomware: Process started from known malicious binary (PTF-01119)",
+        "note": "## Triage and analysis\n\n### Investigating Granite Spool Ransomware: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Granite Spool ransomware in campaign PTF-01119.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"9c317f3e604af2dfd011e27bacc7752aa5ac529764c0a54a1cc93d20466ec796\", \"481838969d674f8aa69ad7e8d2a54b5b2269cbe724c468160d58c046ff6b3fa4\", \"4ba24489ced3495ef6d781bc7947f767b89bcebdc3c19c69079f45ef65269492\", \"3221543dec41ea8e3a215bb0eef3fe5b5846e791ed00e5a8e649cca1ed62d370\", \"72584d5aabda24699ac5fae08aa49857f520b44619ca79c362914fe8e2d43051\", \"65897c39a744ebebe05c0450c5ee62f681d148287742f75de9ec9f6052de9324\", \"7c6b1a71076e245c52bb84d8a7728ac9975f577d9bbbdcb7f9df83625e6da47e\", \"20a5750ac2862133fa11ff28059af77fb0239bd4128c773e18246d5da5a57c7c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01119"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 99,
+        "rule_id": "caea207e-2deb-5a2f-a52a-96e4a4b3e30b",
+        "severity": "critical",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Granite Spool",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-01119",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "caea207e-2deb-5a2f-a52a-96e4a4b3e30b_1",
+    "type": "security-rule"
+}

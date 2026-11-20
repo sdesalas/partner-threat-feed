@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Tin Pestle loader sample, as reported in campaign PTF-01999. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Tin Pestle Loader: Process started from known malicious binary (PTF-01999)",
+        "note": "## Triage and analysis\n\n### Investigating Tin Pestle Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tin Pestle loader in campaign PTF-01999.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"515dacf166eaf56815026090c1507ea8c1d33b6e36bcf3daa1c2951703695401\", \"b163885795ab9bf039ed095905be993d6bf12d8346a3b7cd18a4b1ede740b1d9\", \"7bd4789ab1b4038ade2f1e01d5bbc4e0e73cd3d3410eca6fe96a40bce1b9deee\", \"f651e0430a3dc60e9a97c659a9684ac2ad791c9b384d84f7bfdf130d319c1022\", \"4400f73725068846937f4fef42037163f400236604af58e7030edf63a563fffd\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01999"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "c998ecf0-550b-5415-bb2b-f9254bd934bc",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Tin Pestle",
+            "Threat Type: Loader",
+            "Campaign: PTF-01999",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "c998ecf0-550b-5415-bb2b-f9254bd934bc_1",
+    "type": "security-rule"
+}

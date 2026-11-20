@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Granite Whistle botnet sample, as reported in campaign PTF-01134. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Granite Whistle Botnet: File with known malicious hash written (PTF-01134)",
+        "note": "## Triage and analysis\n\n### Investigating Granite Whistle Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Granite Whistle botnet in campaign PTF-01134.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"dd1b484af149cb2d97ece666487bfb5697313312bc7146ef4ee2f02471e5e5d1\" or \"6731b85e3bf7063b02e4613b4e9723423a6845bb45bda566113cadc83815c217\" or \"8ea7b5a54bedcb5439c1e50a14aa761d6b29835587c4dce20296d1159ba784cf\" or \"6c888c19ccdffa988a1933c40c05c80da1c3a3d979837421895a3cb19f57951a\" or \"c510ecebee57bb3f3aaad587310cd2e87a986fc8c1b82e77225e05ed463a6206\" or \"7764a3f41ea6a60c7a67f2131985362a62342cb5740aaa9620315e85ebb3e510\" or \"d1509def4e3281d15879e62bd0b3b017065ba8d0949879041cb8d2a8bf09b4b6\" or \"8e4e714eb4098d015f2662bcbfd4fb834c580ca09931614d1d70f6c9de108cb7\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01134"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f7d9daec-aee4-59ad-9a18-6bffb12383e2",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Granite Whistle",
+            "Threat Type: Botnet",
+            "Campaign: PTF-01134",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "f7d9daec-aee4-59ad-9a18-6bffb12383e2_1",
+    "type": "security-rule"
+}

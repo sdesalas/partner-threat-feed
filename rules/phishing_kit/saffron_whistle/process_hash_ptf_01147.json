@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Saffron Whistle phishing kit sample, as reported in campaign PTF-01147. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Saffron Whistle Phishing Kit: Process started from known malicious binary (PTF-01147)",
+        "note": "## Triage and analysis\n\n### Investigating Saffron Whistle Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Saffron Whistle phishing kit in campaign PTF-01147.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"e99670f19c4518876c38f0e57dca2e1edef67be0f672ede786dd2af80ecba645\", \"940329bee3f2daf1e8c76e64fd4b28aea90bb3221dd47a43a25c9ace5a2c8cf7\", \"10861d349de67bf1e1514c5a47d1ec18ba661f57ae1861b8892c356df91393df\", \"b8965609622a6c761ccbc1f4f7d1a20d328949c1b2d085f57d65f1a9b4f406a8\", \"4c095c5ad58a5c08c5cd6167cda3d6c4578a931c15729074912618fe75b3baec\", \"2f659fe05757a7cffa2104693b32b5223542706503147381f59eb88f3e68b3a3\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01147"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "631d4726-f3c0-5bdb-9bc3-078ac33e30eb",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Saffron Whistle",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-01147",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "631d4726-f3c0-5bdb-9bc3-078ac33e30eb_1",
+    "type": "security-rule"
+}

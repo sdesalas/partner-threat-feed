@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Brass Loom cryptominer sample, as reported in campaign PTF-00063. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Brass Loom Cryptominer: File with known malicious hash written (PTF-00063)",
+        "note": "## Triage and analysis\n\n### Investigating Brass Loom Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Brass Loom cryptominer in campaign PTF-00063.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"ed9484125ab75ca63e345252702f0045323a23e2b6f6d3c98c2ebe9bed02dcbf\" or \"0c4da6a2e13d68c7484fd728c57d9be5d986d8d6acdfd4943ee85aa8c104caf0\" or \"3f16db07f5285ef46fd79b7a32cc8277476995678e54d0119cb77d6dedd8316a\" or \"86fd85074d387848e6d71d66061dd977dfbdc51343bed07b94803a3cb8b62a75\" or \"dfe5a1015e7202a0b3005131a4b38528a4a4ef2ba6ac34bceeb4d879bd4625a8\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00063"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d4748f8d-8ca9-54ce-804e-ec7da5f6fd0e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Brass Loom",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-00063",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "d4748f8d-8ca9-54ce-804e-ec7da5f6fd0e_1",
+    "type": "security-rule"
+}

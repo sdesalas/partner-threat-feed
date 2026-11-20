@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ashen Keystone banking trojan sample, as reported in campaign PTF-01897. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ashen Keystone Banking Trojan: Process started from known malicious binary (PTF-01897)",
+        "note": "## Triage and analysis\n\n### Investigating Ashen Keystone Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ashen Keystone banking trojan in campaign PTF-01897.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"4c353a36a1867b5662316ed316aeacd0fa09f54ce5ea2e6ce016efc12a0c5efb\", \"0b373c93c6cee6a34b53b135b8085c6bc00d4677bfb0c3fce4c67af4298427cc\", \"d716929f859780830e8e089e3e3a2f79ed177d317ff19ea639aa19dc23b0fd3c\", \"2b6bfdcc05c85c8551ac683deebbf15ad14f40092d0e047db6bf26de8cf85f33\", \"cb4e9eb6b2e1dd3d7f18683d430e1605bddc0b3616f5f4e28c92bcaff4983a5b\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01897"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "5b495ec3-46bb-5f4d-b56d-708c843f76dd",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ashen Keystone",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-01897",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "5b495ec3-46bb-5f4d-b56d-708c843f76dd_1",
+    "type": "security-rule"
+}

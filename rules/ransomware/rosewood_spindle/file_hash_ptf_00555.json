@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Rosewood Spindle ransomware sample, as reported in campaign PTF-00555. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Rosewood Spindle Ransomware: File with known malicious hash written (PTF-00555)",
+        "note": "## Triage and analysis\n\n### Investigating Rosewood Spindle Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Rosewood Spindle ransomware in campaign PTF-00555.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"d548b25d7252ba38c1b99b956b27b8de49cb8025ec3a855f1fd6125e27d5bfcb\" or \"ca6c27562b6190779c419317bef74979fc8aa808d95f64433d3583ed76221608\" or \"4af27bbc07e600ea024084bb08e8d687cef6c956b087e7b34e3363104f5a69e0\" or \"30f4bbd70e9163720b9f142cb51baf054d96c34462637cc4a26c0b37548f18eb\" or \"79d83f47bd867f6ee51dd46c3c8b37f69997974d8821cae21c0f2426e0c93ce9\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00555"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "c8c48f84-5f64-528d-aad3-77ebfa01c4d1",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Rosewood Spindle",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-00555",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "c8c48f84-5f64-528d-aad3-77ebfa01c4d1_1",
+    "type": "security-rule"
+}

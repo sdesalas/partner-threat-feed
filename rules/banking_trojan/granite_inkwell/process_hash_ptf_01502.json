@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Granite Inkwell banking trojan sample, as reported in campaign PTF-01502. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Granite Inkwell Banking Trojan: Process started from known malicious binary (PTF-01502)",
+        "note": "## Triage and analysis\n\n### Investigating Granite Inkwell Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Granite Inkwell banking trojan in campaign PTF-01502.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"f68528930b5419f6c51d6cca9e65a1e63b7e4a842d463204335bde117b67cba2\", \"a2de289dbc2f42d9564fdde165535f13509b0d8658c7366f8dcf433a11b35bee\", \"4664dcf4703a5137128218548b9ba6447a81b4ca63f3b96034ec90ec41a288ae\", \"9ca598d26f135773b7a9ff94e45d8f018cba8ec1eef667551b2c72e1194e5d31\", \"657c944be9717febcd663bc27b403c674b63e200393d227138cf62449e866b93\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01502"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "bd051528-dd4b-5028-b789-b3d3a00d63d2",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Granite Inkwell",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-01502",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "bd051528-dd4b-5028-b789-b3d3a00d63d2_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Rosewood Funnel banking trojan sample, as reported in campaign PTF-00196. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Rosewood Funnel Banking Trojan: Process started from known malicious binary (PTF-00196)",
+        "note": "## Triage and analysis\n\n### Investigating Rosewood Funnel Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Rosewood Funnel banking trojan in campaign PTF-00196.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"892ffa70de60948527bdfa283bb754a190990e19ca16b0a6fc75391f7f899162\", \"359b4f79a7b38d410a27b473036bd293583113216bbc5e7dadd9fb7c5a96a662\", \"0cbc9b68484e43853c631e997741174187af92513e7ac4e3573a805b990b089b\", \"3c5a941c7cf5d5d166f213f46a6cc11e4a419dc1ec264e2513616e39452c6b06\", \"b9437c5b8db8aee6ed45a7773c34a0ace67b15fda0336cc165be136e39388666\", \"970c641d9d6ec0617a3fcfc897d1fd8c61a3f744f307edf8fb8ab16c583d6867\", \"a4f6c00b18f16d43ffa88dd603abcaacf036a6458dab99b704d658b5a0c519b6\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00196"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "0b8908a8-e533-57c4-a8d0-f3650904b9be",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Rosewood Funnel",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-00196",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "0b8908a8-e533-57c4-a8d0-f3650904b9be_1",
+    "type": "security-rule"
+}

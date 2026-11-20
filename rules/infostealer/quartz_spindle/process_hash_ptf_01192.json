@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Quartz Spindle infostealer sample, as reported in campaign PTF-01192. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Quartz Spindle Infostealer: Process started from known malicious binary (PTF-01192)",
+        "note": "## Triage and analysis\n\n### Investigating Quartz Spindle Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Quartz Spindle infostealer in campaign PTF-01192.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"8198cf12cdfd68a7e3657854c1f3e1b46d1e5688d0cba015dabba97e52039a17\", \"2e0d63dad379ab4243a1b782f7f7c9bbb5adaa6e1bdfafeb33155a9fca3fea10\", \"3d1698e3480ca4c300c1a2b6c3da57010f5f3639506305ab6b2143e28c2e4e4d\", \"7610da35028d5971d0b501ebe9698aa2ce7376b312a6bf920a722b7831d9e53e\", \"6bbfdebb137e656333c593aa0103ba3dc48f11f025f945865fabcca893ae1154\", \"61a780d2f887bac3f6908bca8bad72ba9b88fe727a2bbb0d619cdaf0ce867b50\", \"d464e6ebfe3fc3638ce3d2e67eaa4980ffeff32f0045680d818c72a7094b6274\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01192"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d1f3bd0c-0fcb-580f-a19b-401ba7819d78",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Quartz Spindle",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-01192",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "d1f3bd0c-0fcb-580f-a19b-401ba7819d78_1",
+    "type": "security-rule"
+}

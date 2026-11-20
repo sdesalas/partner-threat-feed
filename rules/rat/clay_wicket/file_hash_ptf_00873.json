@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Clay Wicket remote access trojan sample, as reported in campaign PTF-00873. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Clay Wicket Remote Access Trojan: File with known malicious hash written (PTF-00873)",
+        "note": "## Triage and analysis\n\n### Investigating Clay Wicket Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Clay Wicket remote access trojan in campaign PTF-00873.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"15068ce282ed0c309332946f5ea3e70cb3dcbac9baff5e3a04a79bc1bd934115\" or \"85def77a0c86bb5f786970049c2648ae79b3f8b73d49feff6f4b3f31c2599a94\" or \"170dee91e897f7b525e21494dd0c6d724f7c50287e188a95f0665a359b8b74ef\" or \"7c9994c0cb90d8048f7222a1de440c8d7893dcbb72d8d4c9f8591076562c7ab2\" or \"04f71ae964d74e5ffd2ff48b676f8eba2511928f7a26da4ad85b8ee1e1d9017a\" or \"c6d7e56d6eaa9e16a31df8d9a8640f2fce90da68724ef08810492fd4410a2da5\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00873"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "3a572381-5d6a-53f7-babe-622980d1299c",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Clay Wicket",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-00873",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "3a572381-5d6a-53f7-babe-622980d1299c_1",
+    "type": "security-rule"
+}

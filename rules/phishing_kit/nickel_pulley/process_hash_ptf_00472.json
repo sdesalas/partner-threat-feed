@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Nickel Pulley phishing kit sample, as reported in campaign PTF-00472. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Nickel Pulley Phishing Kit: Process started from known malicious binary (PTF-00472)",
+        "note": "## Triage and analysis\n\n### Investigating Nickel Pulley Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Nickel Pulley phishing kit in campaign PTF-00472.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"fdba6879a986e51f2301987a8758a11475fff8c617388f54814651db3aea6a24\", \"bee167d3e2f646a997f80d8c1da960549a5527aa3f8de3cb98f18bdb2deb977b\", \"12d492311fbc6ccb92fd60ccfa76bf0670beec0cdd3b524a80be7090a8ab2349\", \"a9ce96c48bdff1451a76b93c252187b1ac1245e51721f79044f361a4a9ff6d1c\", \"251742ecf5306533991d60e62eb91198a7e882e63605624cbab54b43cc961e32\", \"d46b93cf876901b5d833305126d0b4e0fc93fe91b2f8b816713d45554c57585d\", \"17d7d7e626457a088534b2869939681821bd2878c208a9e58c78cb1cfb06bbfc\", \"eede749cb23dfdcf8a76122e32411c0dac356f560dce7c388debc5b4d951d546\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00472"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "8c5af897-e73f-58bf-af70-b573c57152de",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Nickel Pulley",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-00472",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "8c5af897-e73f-58bf-af70-b573c57152de_1",
+    "type": "security-rule"
+}

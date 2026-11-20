@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Gilded Easel banking trojan sample, as reported in campaign PTF-01392. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Gilded Easel Banking Trojan: Process started from known malicious binary (PTF-01392)",
+        "note": "## Triage and analysis\n\n### Investigating Gilded Easel Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Gilded Easel banking trojan in campaign PTF-01392.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"c244ece509a7a8cb7f6f3a06e246a7c7b33ad9494aa2e03ee802735b20e75cc0\", \"5a314a595431ce1db359667bf97163ffb84e012346d040c6a9248299960832c2\", \"217a5c5a583626508a4a6bd1f7bc279c198341cab0fb546a8681889ad35fa625\", \"246d2cf6731f1db7c6762d2594255c0a9784cc1639ecb35408759a1e9fc1bce1\", \"c7617a9793ea5930d9887453fbd1636b7774f04809c75f7980e1e6cee6135386\", \"4033c7af29ec0c38806ddc044e7d479d02c59de385f480ee5e21c9dd5968d738\", \"9229c0b0afa0b3539923b70677bac4c9841992d044c6b84701d73ea999b9ad51\", \"73c1290853a4912752ea0ed1e25006ccabfa33ef293de2ea35e31a886bada339\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01392"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "85f231a0-2f04-5182-9c12-c2a4fdd8944a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Gilded Easel",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-01392",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "85f231a0-2f04-5182-9c12-c2a4fdd8944a_1",
+    "type": "security-rule"
+}

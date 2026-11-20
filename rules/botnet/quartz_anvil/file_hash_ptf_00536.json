@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Quartz Anvil botnet sample, as reported in campaign PTF-00536. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Quartz Anvil Botnet: File with known malicious hash written (PTF-00536)",
+        "note": "## Triage and analysis\n\n### Investigating Quartz Anvil Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Quartz Anvil botnet in campaign PTF-00536.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"3ed06142a38e389498c5114807a1dc17d41d09ce3a3457d4b656239621aaca1b\" or \"906ab5692fac10c92a23db03d760e00fc55343829079d93df12366de8d666aa6\" or \"9d391bb9c7d211b2196363d131f379f6e2e43a8b8d0d0b7e2236b893fd5106f0\" or \"41c1e808e2f3124042d0528368d0387ed23ce7b229a7008c8a719bad6fb9ad5b\" or \"cda17efb738ff96c4ce5fca2c31c078dc9cf180b16fcd3a79b2df29b496ef1f4\" or \"69bb101ecb044f8a99aeb3aa060f6e617d6aca248b1d2f84fdd14b6820d7939e\" or \"aa03b71ece303a2117c031bbab03a16d6fab1a639fa82d2abdb80684ca0ce53a\" or \"5f30c5bd712a12257ff5b4576f4246297dcf7b748482c50d8382f42ff504f52c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00536"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "7378b83d-75b7-5f74-b6cf-41dbd495f490",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Quartz Anvil",
+            "Threat Type: Botnet",
+            "Campaign: PTF-00536",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "7378b83d-75b7-5f74-b6cf-41dbd495f490_1",
+    "type": "security-rule"
+}

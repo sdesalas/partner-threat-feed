@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ivory Mallet espionage toolkit sample, as reported in campaign PTF-01072. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ivory Mallet Espionage Toolkit: Process started from known malicious binary (PTF-01072)",
+        "note": "## Triage and analysis\n\n### Investigating Ivory Mallet Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ivory Mallet espionage toolkit in campaign PTF-01072.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"49bc89ebb5275bf8d7aa81beed0e33e7db56612640a3b376a318df3cc11fc65b\", \"e82dec946e4da4ef60d7d2061c82130aafa940c1d2171c29c6bb07451d84d098\", \"d3e733bce9b2b9db8f8fa67fccafd237e005abb0b9c43fb808aa0957ea64ebb2\", \"16715a0918011d9f7e3227f1972eb0fa442ad456a2fbe586d4c3f5d5a252d1cd\", \"46443ef6477169c4820c168118138cf8710d4c2158c24d50cc314813b23ceb85\", \"74b56ac393c0e7ffba6098f7a901779d1d9467819f0a5936fe010e022c710d48\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01072"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "824e11f1-f38b-565f-b7ba-333d804bb16f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ivory Mallet",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-01072",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "824e11f1-f38b-565f-b7ba-333d804bb16f_1",
+    "type": "security-rule"
+}

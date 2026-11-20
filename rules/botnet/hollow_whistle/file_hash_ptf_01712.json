@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Hollow Whistle botnet sample, as reported in campaign PTF-01712. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Hollow Whistle Botnet: File with known malicious hash written (PTF-01712)",
+        "note": "## Triage and analysis\n\n### Investigating Hollow Whistle Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hollow Whistle botnet in campaign PTF-01712.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"ddfc2f67808197ddf61746221f37b02529260d6768036f125c78d7e83331d853\" or \"2dcc538f11ca278c25f6b5990c86bb697b1b1de4b14bcbd6cc139850f6fd3f4f\" or \"0a9a3c6f77277ef9f16991f0b070ccb75a1eb4e024bc2766eba9eec4a83bf22d\" or \"fc33f63828c05260ada7e96cc76bd9da3a43761a7fa5e08ddd42b6cb0460b82f\" or \"cd900074f6320835a0552a103e3827c8e3c0d60dfb73e4f44415003674c5a09b\" or \"de3fbc1717f040d1bb859ec5cfc49cfed590869fe50e882dfacb8b213d65f683\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01712"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "83b0f047-71f0-5160-8977-0d08979c2a44",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Hollow Whistle",
+            "Threat Type: Botnet",
+            "Campaign: PTF-01712",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "83b0f047-71f0-5160-8977-0d08979c2a44_1",
+    "type": "security-rule"
+}

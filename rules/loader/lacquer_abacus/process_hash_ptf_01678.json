@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Lacquer Abacus loader sample, as reported in campaign PTF-01678. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Lacquer Abacus Loader: Process started from known malicious binary (PTF-01678)",
+        "note": "## Triage and analysis\n\n### Investigating Lacquer Abacus Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Lacquer Abacus loader in campaign PTF-01678.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"0e873277b5873abc2abe96f631b78f8e05684aed5a29631dba0d1b53a46b3ee1\", \"5ee2dd71901bb581347c5b38249598d23c0a6df222725d59285a5c879f56d459\", \"9aeb09a4002095e76f0aaaa6dcde51c43100d7407bf46ed2f75e9d3192b2d0d0\", \"cc51d4bbbdfca7e075b8fcdd44c6ec915f5e9547ac86059f54db0fa2db0dd84d\", \"67145c900ca9423a41cb9e5978e7bcbb5f3547460861b75490aad932a06b177a\", \"11fb3ece64c0314347f80c90912395eacfa2f3594b4fa9e99ef03620a5e348c8\", \"2a1b605d2809941096a8261ab1d56482c986a4a99ce4d4483f5c1d5423816916\", \"09c4f57580a5b7b2885255802811b6e87f00ed196ac85c8917fb07a965e2cd45\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01678"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "c75fa091-2d0e-54dd-a4fc-3684fa025ec6",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Lacquer Abacus",
+            "Threat Type: Loader",
+            "Campaign: PTF-01678",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "c75fa091-2d0e-54dd-a4fc-3684fa025ec6_1",
+    "type": "security-rule"
+}

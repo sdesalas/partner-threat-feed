@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Hollow Kettle ransomware sample, as reported in campaign PTF-01338. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Hollow Kettle Ransomware: File with known malicious hash written (PTF-01338)",
+        "note": "## Triage and analysis\n\n### Investigating Hollow Kettle Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hollow Kettle ransomware in campaign PTF-01338.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"61ca39076c2812eb1ee4e4d1f1652c61f59eff4c675a6b4e7278215ab3aafd3c\" or \"fc753891c07bad248978246407892876bd3cdbf906802e8b9b4b68a9ddaf033a\" or \"87a2f673abb0d0b4e0f0c6b78f32ef3b01e6a061dcfff5e969cd96130acdb056\" or \"a0e4665facf72f77e7d696595d9082147d482d11b5782ce56a07724bffaa332b\" or \"a617addb44a399f6a0ccb7ae3d5922039ad7c9470cda7c0007314eface04a614\" or \"b2ebe31962319973b5325aee537f4c2df19fe7408ca53b924f82e31c1ce4ad43\" or \"7e9b82a6773477552e46e6e59fe621b67596974da3b981ad0a5a7b923bf4d8e9\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01338"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "7e53d8c8-65d2-5b99-9e0e-9eb91bad76a6",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Hollow Kettle",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-01338",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "7e53d8c8-65d2-5b99-9e0e-9eb91bad76a6_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Hollow Easel cryptominer sample, as reported in campaign PTF-01869. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Hollow Easel Cryptominer: Process started from known malicious binary (PTF-01869)",
+        "note": "## Triage and analysis\n\n### Investigating Hollow Easel Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hollow Easel cryptominer in campaign PTF-01869.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"b920e79702db3c6b15cae19885eccacc562c853bd8bd6a9e41f3f226a414cae0\", \"904567bd35847f37fcd85cd21bb3847b54460dbaeddec95aeafcb7109e8af473\", \"9785c638ebc532af3e6a7c0e92d3c279dde090fdffcf7c90e602d17114d2d861\", \"31bddc12d4d827073c51e0707daa8dca37c2849e13dd24f0ed418c3e9c1ca16c\", \"1b2bfe8809f5f4bb5fbf0eef75332fe4194955577164e67b0d35732721c83874\", \"74571c9bf38cfbbc5cf6ef336751f07b3df9f6f4bcb2656f659a4c6548516a21\", \"a4bab14735ae3a801df5a0b9c85343788fe997ed8ca0b9cafb2a8bf83cc86602\", \"0be09a8b30f87f3d55e8934b1da423da53dad50c73c9c74406b2de396c5b9c1b\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01869"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b6d00c6c-ebfa-54c1-9767-a82770f4caba",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Hollow Easel",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-01869",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "b6d00c6c-ebfa-54c1-9767-a82770f4caba_1",
+    "type": "security-rule"
+}

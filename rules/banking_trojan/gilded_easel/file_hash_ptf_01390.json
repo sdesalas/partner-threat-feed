@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Gilded Easel banking trojan sample, as reported in campaign PTF-01390. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Gilded Easel Banking Trojan: File with known malicious hash written (PTF-01390)",
+        "note": "## Triage and analysis\n\n### Investigating Gilded Easel Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Gilded Easel banking trojan in campaign PTF-01390.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"500b9c1026c6686d423f36f0cb917d30c0f20b48905d0cd74d4e95debe33ca11\" or \"6ca5c7ab3f0048be5585382d00d7e8373750fa3cb196bcfe6fca514afc1664c3\" or \"a59118177b549ab4507be81a57ec1a6c334b4644d698dce04d3152e1ed60efee\" or \"362a3436b4a6c0c1ff0e4e3a11b5195d2dc7701d2e0a4a3e97a1edbf1f7ff8fb\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01390"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "47be60f0-18da-54df-95d5-433c714e69d0",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Gilded Easel",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-01390",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "47be60f0-18da-54df-95d5-433c714e69d0_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Juniper Sextant infostealer sample, as reported in campaign PTF-01269. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Juniper Sextant Infostealer: Process started from known malicious binary (PTF-01269)",
+        "note": "## Triage and analysis\n\n### Investigating Juniper Sextant Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Juniper Sextant infostealer in campaign PTF-01269.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"72b8877351db76c00d47164d242fc80169baf7a094dc2a73393d8d5508fea4c6\", \"08ce77d64db5a4a8d976f5fa76d8a0ce792917935b07183d8366d20422b71c1d\", \"54502821627d1410c741b0aa101d98d3c6d3cfb0f75ac76e489e0cb14a63756a\", \"b0af77f26bf47bbde94390fa69fa22fff1240837b134417221e9f70a67d9fa8a\", \"8f2f4b1dc7120012c43c28f3fc99e7abc117a148714b32f736ee73ef30551faf\", \"9079ddad67c9dc5eab5ca78e2538fc2d497106c91acce7851f2a13f6d86927cc\", \"917fc8ffeac89c009da18542e4d9b42bd41dd7a4c8414e8f1b7fba7657c00754\", \"c64fbfa7dd1eea4c610e0070e4aadf037589248bd26795afa3ebbafc91354421\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01269"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "c1c5d441-1942-5453-bee2-110c3c256bd1",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Juniper Sextant",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-01269",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "c1c5d441-1942-5453-bee2-110c3c256bd1_1",
+    "type": "security-rule"
+}

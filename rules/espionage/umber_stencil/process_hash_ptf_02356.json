@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Umber Stencil espionage toolkit sample, as reported in campaign PTF-02356. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Umber Stencil Espionage Toolkit: Process started from known malicious binary (PTF-02356)",
+        "note": "## Triage and analysis\n\n### Investigating Umber Stencil Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Umber Stencil espionage toolkit in campaign PTF-02356.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"9541b0c85e300574b667c8d86c0728befb5f547804a1ae2f7b5291ef6fa28aad\", \"e2f39f785d0eed163d681775fa32c3a5a13c1c6c1908aac44e2acb69b2b56062\", \"7557bdecb76e415fbcb909150d1c86fdc6d2c79dacf8917aa9ac807283b70311\", \"04b7bcaed5eef0bd309162acf8c711419574d159083eb1277c22bc685a38cfdb\", \"cb52da24f222a4742adb692c86df779d947bc30db37010555b656c50bc97f54e\", \"4fe34682030810f0ad9cc99672c0ec1a1ca2bde9b6476a58516b0254d24bfdba\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02356"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "2f1cce7d-059b-5008-bdd8-4ecbd37bbaf6",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Umber Stencil",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-02356",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "2f1cce7d-059b-5008-bdd8-4ecbd37bbaf6_1",
+    "type": "security-rule"
+}

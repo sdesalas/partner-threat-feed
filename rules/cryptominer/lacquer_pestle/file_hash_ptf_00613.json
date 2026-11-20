@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Lacquer Pestle cryptominer sample, as reported in campaign PTF-00613. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Lacquer Pestle Cryptominer: File with known malicious hash written (PTF-00613)",
+        "note": "## Triage and analysis\n\n### Investigating Lacquer Pestle Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Lacquer Pestle cryptominer in campaign PTF-00613.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"7de053746518c3efabd615eda712d13965d75d18e1ac79855744309e18039ce6\" or \"050ff98aabb90d53852f48cf22ae7bde2831d6f0f94850c7c106ded967bcb6a1\" or \"7ec10f76d3acfdc38f422246fc904809246574ff9f7ce99bdcccea3cbe536aac\" or \"5a1d6f9c46da88934dd2e7d6153ef237f032ef7ad31255a1a384bdff2e5b1e1a\" or \"1cdec721c3a161b514ba3f1345d376877b1c92f24f56eb3264de1956876c0a34\" or \"3b56a205e4cc5f64badf7714334b8286b5f17c1960d0d8cd4a9cb0bce242f00b\" or \"e4844d9feae8ad7897c5846f8a458b93a6a3cf94978d842a34965187a7c7d998\" or \"c40420fb9918f14021d2dc23418e6997433acb0a606326e32b2fabf130555ab5\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00613"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d1283156-b307-5d13-a25e-312efcaf29e0",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Lacquer Pestle",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-00613",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "d1283156-b307-5d13-a25e-312efcaf29e0_1",
+    "type": "security-rule"
+}

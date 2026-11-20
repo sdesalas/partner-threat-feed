@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Nickel Quill loader sample, as reported in campaign PTF-01017. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Nickel Quill Loader: File with known malicious hash written (PTF-01017)",
+        "note": "## Triage and analysis\n\n### Investigating Nickel Quill Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Nickel Quill loader in campaign PTF-01017.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"2cd1a7730268de476e2fa8e93dfa63c51b7650570e69bc1bf497ba88aa8554d5\" or \"4e80f46b179f32c687ef18d9b01b9148056f945f7b7791700b2b75b972cd0d0b\" or \"ed1bb90bd93628fdea405cbe6ddc63294dbde3860153dd150275b673972ea290\" or \"1ad376b3428163b75e943e08330960b619488d0f9309f19c48d9ededfdb7a7a0\" or \"1f1be2f530ba1bcc55981e7f6eb49a37b2b3e65fcc9e418dec4dff18850fc215\" or \"b22ceb86b59453db2c931182c196e1d30e5897d1ddfcb557fbe997f81efa5290\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01017"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "a213678d-4697-55de-a4da-2d809902b897",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Nickel Quill",
+            "Threat Type: Loader",
+            "Campaign: PTF-01017",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "a213678d-4697-55de-a4da-2d809902b897_1",
+    "type": "security-rule"
+}

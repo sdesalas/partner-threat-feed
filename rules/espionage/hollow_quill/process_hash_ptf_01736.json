@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Hollow Quill espionage toolkit sample, as reported in campaign PTF-01736. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Hollow Quill Espionage Toolkit: Process started from known malicious binary (PTF-01736)",
+        "note": "## Triage and analysis\n\n### Investigating Hollow Quill Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hollow Quill espionage toolkit in campaign PTF-01736.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"05e58e850edcc0493124d9f0824974961c11ec249e5b7e2641aeb7095f0f1cdc\", \"f72c353fc2fd0a99ed8d9d0a64d437a0ffc892b08ef070ad32edb1f8fbbd30d2\", \"a5fa207d991cabf6e904c6d457f07f692693bf3e503cff7b1043a61d80971ac8\", \"c467f4192278b233af350be79f57f446fd4d86e961f29cab4cec5f2ef8729b09\", \"9638dd985791b950101016f330b0631ba1733b0b70c420920debb0e8d410249f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01736"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "21c06c79-7751-5e8e-adb6-fdec719edea7",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Hollow Quill",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-01736",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "21c06c79-7751-5e8e-adb6-fdec719edea7_1",
+    "type": "security-rule"
+}

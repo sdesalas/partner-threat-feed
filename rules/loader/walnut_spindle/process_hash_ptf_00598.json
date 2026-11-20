@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Walnut Spindle loader sample, as reported in campaign PTF-00598. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Walnut Spindle Loader: Process started from known malicious binary (PTF-00598)",
+        "note": "## Triage and analysis\n\n### Investigating Walnut Spindle Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Walnut Spindle loader in campaign PTF-00598.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"4c11110dc36369529622cd0739f15a00619f710f49390dfebb560b0e4ae252a4\", \"c2481bea5f44e2160ef9f9981f218a247b934d73e2a4624a8c04b4ca95dce4ae\", \"276a347aeb85cfd4db872aee2dd3672a47369572c48aa0da03fc16bc08871343\", \"34cc33f29d293e7fa0dba7ccc3cf2e796aa86015c05bf79a863c84946f02a533\", \"2ef7112d766b4da035020051c47e79ab17329bc60e7f55d16818a0a6780cecf3\", \"60fcc4d0fe0b9becc93c01f3800f33380693fa7f45459c4470fe992820407ecf\", \"4f5a8a0267cc4318dc8db15ce5e2092be60749b8560fd06820e3e67677f4a748\", \"5065f37fb2516fc9cf4243d50a358e57d8fc9066f4eca11fb5ae937443b3ec5c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00598"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "54a1dbbf-506e-50f9-abec-6bcfaf821016",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Walnut Spindle",
+            "Threat Type: Loader",
+            "Campaign: PTF-00598",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "54a1dbbf-506e-50f9-abec-6bcfaf821016_1",
+    "type": "security-rule"
+}

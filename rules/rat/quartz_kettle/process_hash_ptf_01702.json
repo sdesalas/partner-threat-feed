@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Quartz Kettle remote access trojan sample, as reported in campaign PTF-01702. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Quartz Kettle Remote Access Trojan: Process started from known malicious binary (PTF-01702)",
+        "note": "## Triage and analysis\n\n### Investigating Quartz Kettle Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Quartz Kettle remote access trojan in campaign PTF-01702.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"df0abc2167d5db6d432c47c9037267ab44766783210a81775257fbf8217940d4\", \"752749604aa6d0635239fab19eb8447e87d766fa99db649cd9b91f487f464f9d\", \"880901a6d639177a8f8e374ddf01833c9a8385cd4b08550129a3fdaaab4d42ed\", \"c06ef25ff3a70c5a6220d009e04b4274e975f4205ef2f7ac9ddc0fb74cbb7130\", \"8a09d54cfb3981a8c7aabd01fc7d4d3ea5a52bcad1cf48e3c1098198b5be5e36\", \"f3fe9e9862f63537316d19198315894dc538a78cc20c2264830564512d1604b9\", \"cb005bedce787b31890e5261af1a59231d967e06c85e066dd8b2f6fa85380f3b\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01702"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "fdf81b7f-fbd8-5324-8cf6-fcfa6198963c",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Quartz Kettle",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-01702",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "fdf81b7f-fbd8-5324-8cf6-fcfa6198963c_1",
+    "type": "security-rule"
+}

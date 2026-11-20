@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Mulberry Bobbin remote access trojan sample, as reported in campaign PTF-01233. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Mulberry Bobbin Remote Access Trojan: File with known malicious hash written (PTF-01233)",
+        "note": "## Triage and analysis\n\n### Investigating Mulberry Bobbin Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mulberry Bobbin remote access trojan in campaign PTF-01233.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"0471c20854ebfe1d63d0782ec6739e300b1d5928a3396ebc3c4ff6c9540e5891\" or \"d355bdee44634cef2c0a0410af900e37152a8d78ff31f58a12355c9024e85343\" or \"7ee36ebe72fc6b02e62051590db3059973e7b2ed19bb3e08f2fc8f64dd2ec51d\" or \"b65c2af8b923b8e382e13d4db43e0916a7167978981b3758843ca6823d5b85a8\" or \"74b7a025861c177587077c1ac43df63d3e0907bc5f1962010ab138df63295359\" or \"eca5a6bdfac7a8088626b8beb49145d58f159f7ecf82e785f28a51a4fef57d6c\" or \"39d09cf178d2af3a5f849bb6cb62fe8c8e39dceb9bfe5c71e9538d36e59760fd\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01233"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b63161d0-9f20-5982-a197-4926bfdbc9b1",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Mulberry Bobbin",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-01233",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "b63161d0-9f20-5982-a197-4926bfdbc9b1_1",
+    "type": "security-rule"
+}

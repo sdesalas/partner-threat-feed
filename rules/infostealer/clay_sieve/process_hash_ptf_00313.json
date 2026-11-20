@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Clay Sieve infostealer sample, as reported in campaign PTF-00313. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Clay Sieve Infostealer: Process started from known malicious binary (PTF-00313)",
+        "note": "## Triage and analysis\n\n### Investigating Clay Sieve Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Clay Sieve infostealer in campaign PTF-00313.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"f4ef8dfed90bf2721c2890f8efc0599470b83f98309b96e4bcf54381e0a19c18\", \"cad4396882ab14b3aa4fe2f33e2d4d9353306d76e2931413b8f51c519be7c318\", \"81a63d99944f243f2f2789bfcb43896839714f7d7d3d125998ee1925a20459e4\", \"4f78aaa044df24fa7587c164bf33ce9cad1cb8a04138bfab3212365832e87432\", \"ecfadff3975ae0f28c20018ed254ec6f6754427c9fe23e58cc0040d7f88d67fb\", \"a597d5b4f423b7cca10292861ac3b4d34b87a2975861b92f3b0894387468fdda\", \"1b24296a8f91cf963840fb3bc620ef60924c122a29ace5534fbd535f47056879\", \"60927730cc3e598ea4691632189883157b01967122a2739eded1d6b3c378c85f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00313"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "eaccab4e-7db1-5a92-ac0d-fb762caebac3",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Clay Sieve",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-00313",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "eaccab4e-7db1-5a92-ac0d-fb762caebac3_1",
+    "type": "security-rule"
+}

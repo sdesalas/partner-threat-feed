@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Birch Keystone cryptominer payloads, as reported in campaign PTF-02084. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Birch Keystone Cryptominer: Request to known payload URL (PTF-02084)",
+        "note": "## Triage and analysis\n\n### Investigating Birch Keystone Cryptominer: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Birch Keystone cryptominer in campaign PTF-02084.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://auth-edge57.invalid/download/9078.php\" or \"https://cdn-update69.example/update/4141.php\" or \"https://connect-data78.example/doc/2302.zip\" or \"https://mail-sync93.test/payload/6938.msi\" or \"https://portal-relay85.test/download/5825.msi\" or \"https://relay-login87.invalid/gate/9309.msi\" or \"https://secure-update72.invalid/download/8680.bin\" or \"https://track-edge5.test/install/9413.zip\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02084"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "f4df617f-b208-5333-9902-f54fa7743d23",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Birch Keystone",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-02084",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "f4df617f-b208-5333-9902-f54fa7743d23_1",
+    "type": "security-rule"
+}

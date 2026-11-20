@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Tin Pestle loader sample, as reported in campaign PTF-01998. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Tin Pestle Loader: File with known malicious hash written (PTF-01998)",
+        "note": "## Triage and analysis\n\n### Investigating Tin Pestle Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tin Pestle loader in campaign PTF-01998.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"ad5b57eedb741ae3a29388cad978302d5e34b5024af6f3b4520d92614d0e79f1\" or \"c7ca6347d6133eb411d2d6daaf40ff80d635c76e3aae23c2ac60254c8cd63c9a\" or \"e3d648b98495c1282c62ecd170ef7e4d9fb0368e572263d0bf940982bf8d31b5\" or \"bd20fe970b6b93531a5bbb9a46aa2a0fb97862d083b7277f2d7a013803d65eda\" or \"665b8d1302698f8b89a4c98e937d64b3e3347f2c6507fb78f1847a4744babd2b\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01998"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "eca9b8fe-b904-5fef-80d7-904fa02c8779",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Tin Pestle",
+            "Threat Type: Loader",
+            "Campaign: PTF-01998",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "eca9b8fe-b904-5fef-80d7-904fa02c8779_1",
+    "type": "security-rule"
+}

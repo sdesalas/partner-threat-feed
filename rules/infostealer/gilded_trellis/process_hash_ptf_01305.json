@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Gilded Trellis infostealer sample, as reported in campaign PTF-01305. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Gilded Trellis Infostealer: Process started from known malicious binary (PTF-01305)",
+        "note": "## Triage and analysis\n\n### Investigating Gilded Trellis Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Gilded Trellis infostealer in campaign PTF-01305.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"254040f9df95cc5d3c529524f62ff51d23524e9a01e1c40747edefe299e8a5ba\", \"e1b4a7cf3dbafe317d2d9c70aa1d58bf04c8349b8055c03358dd66823eb5e6d6\", \"f30d2e019fcff610957614c0e6c1862505d63fddb57688747f3982cd50903e1e\", \"2ed1650ea873e5a5f532e2ec85b8a75014de96ca9e8b596091ab324f7a67a5a1\", \"fa4eee76cde7f5c455ab63463c7a4cc8ef33dc956a52e70647238aece78d60e9\", \"984d86213be88a387eab1580fd5ae705938896adb2d3bb5f449d516583034509\", \"78a704214b559f37a1212471c9924a657794972c7bc48643ac353e39621217f6\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01305"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "cb69c9c2-2e08-5073-a2bb-c536834575b2",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Gilded Trellis",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-01305",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "cb69c9c2-2e08-5073-a2bb-c536834575b2_1",
+    "type": "security-rule"
+}

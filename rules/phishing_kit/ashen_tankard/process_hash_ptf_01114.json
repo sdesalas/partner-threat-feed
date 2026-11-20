@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ashen Tankard phishing kit sample, as reported in campaign PTF-01114. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ashen Tankard Phishing Kit: Process started from known malicious binary (PTF-01114)",
+        "note": "## Triage and analysis\n\n### Investigating Ashen Tankard Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ashen Tankard phishing kit in campaign PTF-01114.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"9616445c7051b5c44feffbd213c9224a8193d7cdbd88a22f55dde5077f0d13e6\", \"c4dc3ad069bdb136ccb12cb67e626f2c85582b9950ab32cd1c43cc067a69c201\", \"ba3b86c8cd5b583c0c2aca01719ad87a8edc7b448d2f8883c1e0452c53e160ef\", \"37a816ba14cd4160102eeb833976125c5c79d39df36807953757025f8b5e818c\", \"fdbc99a6d83669a849391c31316f2a00498f375fde6b934d7c8a375a1988f16a\", \"60dd5a930fa27950e3141034519b940a6cff44238c1cd00d09fdf001e1a840e4\", \"e05280c66255dae4efaa1371dac9d835070a80f1466d39da46b08716d6b1c0ad\", \"234def3692dbfa0eaedf83ff1d8c60eb2fd6447e20d0baa5fd0fc3ca0cae4991\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01114"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "6a1b7748-9b19-5535-bffd-adab77e7a790",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ashen Tankard",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-01114",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "6a1b7748-9b19-5535-bffd-adab77e7a790_1",
+    "type": "security-rule"
+}

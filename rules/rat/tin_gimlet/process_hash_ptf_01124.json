@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Tin Gimlet remote access trojan sample, as reported in campaign PTF-01124. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Tin Gimlet Remote Access Trojan: Process started from known malicious binary (PTF-01124)",
+        "note": "## Triage and analysis\n\n### Investigating Tin Gimlet Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tin Gimlet remote access trojan in campaign PTF-01124.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"f0b58d1b7e6e3e7f63aa99f635ce314fd618b3da611d159a531cfce23f55d7fd\", \"a3c1d71afbb3fd1a48f52d2f4b8505ece0b2da9d415ca05ddceaddc55d19d72b\", \"fce836151f0a7ec73e5173732021b53912859e7e5fbaf05293d630706d770c68\", \"e6aa0655b96a2ab51f29f5512de18f95c97d0c1b9acfcca2ecc7bfcd622f7c2f\", \"636022686968a9bed46b0319318e9924e2082782c29d1a78bb2396990378a208\", \"48b497b323fd6801b9eb6222078490b9740a6e23967b6c8ed681230a759a4ada\", \"4337b6a8dbc0ac5c5882b26ab7565d52319e61486ed03c52448a75f6474b6075\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01124"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "35214b1c-a3f6-52c1-9145-73617a977491",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Tin Gimlet",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-01124",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "35214b1c-a3f6-52c1-9145-73617a977491_1",
+    "type": "security-rule"
+}

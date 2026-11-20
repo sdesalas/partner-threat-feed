@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Quartz Tinderbox infostealer sample, as reported in campaign PTF-00637. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Quartz Tinderbox Infostealer: File with known malicious hash written (PTF-00637)",
+        "note": "## Triage and analysis\n\n### Investigating Quartz Tinderbox Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Quartz Tinderbox infostealer in campaign PTF-00637.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"65b87245e08a94da8d4cfcee117137bcce82c2132665d5a51a9f305ac1835f1a\" or \"69d3885d7e9ce34c11f446a56dd6ff2f8f298bf446817d35c2770164c243bc30\" or \"ec64ca7a7d5f74b0fcf48a2043726ab14ce38631905afaba68934fdcc4cea3cb\" or \"855284c2840dc89fd216cd3161a37d9f979830e409dc749b6986a5ac5496edbf\" or \"2d2f4d876613af62f2eddd171457c0f16a7fb1ea7bc1c7f5bead8202ab8de892\" or \"133cc66ad041c1c71f2348340d37c55df1de9c78056629318d6e2299fc47a9b1\" or \"3083e24864776a10b7a5fbc15a28562d150df4b3f4d2d19cd64eb506649171c9\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00637"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "362da507-b41e-5652-9d05-d9732589a9e9",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Quartz Tinderbox",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-00637",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "362da507-b41e-5652-9d05-d9732589a9e9_1",
+    "type": "security-rule"
+}

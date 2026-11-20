@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ashen Funnel espionage toolkit sample, as reported in campaign PTF-00963. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ashen Funnel Espionage Toolkit: Process started from known malicious binary (PTF-00963)",
+        "note": "## Triage and analysis\n\n### Investigating Ashen Funnel Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ashen Funnel espionage toolkit in campaign PTF-00963.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"7a3a3afeb4b03e9763249e71cf3ab8f9f3e778b3a8654519814a42ab2cf55d5b\", \"a72207383951a77b8735eb13927e029e1293e4ac39505313b614e612ea4bd6cb\", \"990fa8a67e7c5c4f8835ea6bf1dd4989c31b0adf4825a6d69a9785bf969ac088\", \"6b3a292cff9d867ebeed75a6aa02af09e7ed258bc4a28d64d697d32f0391d13a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00963"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "0c68c6e5-82fe-5ce4-ae13-03f5a472601a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ashen Funnel",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-00963",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "0c68c6e5-82fe-5ce4-ae13-03f5a472601a_1",
+    "type": "security-rule"
+}

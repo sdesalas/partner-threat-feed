@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Rosewood Inkwell infostealer sample, as reported in campaign PTF-01158. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Rosewood Inkwell Infostealer: Process started from known malicious binary (PTF-01158)",
+        "note": "## Triage and analysis\n\n### Investigating Rosewood Inkwell Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Rosewood Inkwell infostealer in campaign PTF-01158.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"8cf7eb29770a818791d5b9eed28315d04cf1dfadb7ffc06e3e3be20d9293bf34\", \"3bda4495c3a8c79e3f09b6bed1ff029b783a94c9f6adc21cd4aa6666163383d9\", \"4f4f9f7869e08746316cd871527b4d4f16fa32d170c213aa23bdd9469c9d3c3e\", \"72372de7c2ed39cc97b3d3fb72e47a0f111d761c8704dd1ee24b876e2783ab3b\", \"813ba21de2b3e533fbc3d9e47fbd3c5f95081e9ba0dad140cf3e649f331665be\", \"b43be890f222739e7497d78a038c7530fb0c47c296e79354d883c6f8b3833100\", \"bfb3d5321742bda458e70228364553540b75c2625f44bc5e7a5e579697e4dc46\", \"fc07b6aa19cac25ee8b5e14c168d20c5fca9f50b0b32e0bdb645404d28e0d8d9\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01158"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "5f7ee0a1-1955-5c64-ba1c-4f6230413bd6",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Rosewood Inkwell",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-01158",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "5f7ee0a1-1955-5c64-ba1c-4f6230413bd6_1",
+    "type": "security-rule"
+}

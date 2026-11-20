@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Mulberry Stencil infostealer sample, as reported in campaign PTF-01085. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Mulberry Stencil Infostealer: Process started from known malicious binary (PTF-01085)",
+        "note": "## Triage and analysis\n\n### Investigating Mulberry Stencil Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mulberry Stencil infostealer in campaign PTF-01085.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"cda603235b1dce47825792a85b7eea8c276f6b660d44f5b5142325dbfe53961f\", \"7f7877727f43a264f133a247be98a05f645cfb1fcbdda832513a288fa60d0615\", \"1ed03f3915a8ec7ab568c10b7c6012b961aed758debbd03887000cd1f18d8310\", \"17b204bbfc230d6861ead99225725882dc32eb60d2e12ab891fb6f834ef3f5a5\", \"1e69bbec79a1c1db34cbd7a77b21ca4c7e90a1753a352c0d785781e4ee2ddec4\", \"a636cf76bfe9d920513af37feb9b0f4691f8a321026939c57bc33ebf2830aa80\", \"26f80845f944af49bcf85a2dd81173e5b2bbaa12a9fe3324c13509c0a1bb22ac\", \"f4dc9c2fb86c028bb924b98c6a147aad09be8193b1d0b4d48d285826e68bc560\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01085"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "170da7fb-f85d-5bb2-aac6-ceb25e7f38dd",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Mulberry Stencil",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-01085",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "170da7fb-f85d-5bb2-aac6-ceb25e7f38dd_1",
+    "type": "security-rule"
+}

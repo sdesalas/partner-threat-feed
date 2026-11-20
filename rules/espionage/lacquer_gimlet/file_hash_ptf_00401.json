@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Lacquer Gimlet espionage toolkit sample, as reported in campaign PTF-00401. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Lacquer Gimlet Espionage Toolkit: File with known malicious hash written (PTF-00401)",
+        "note": "## Triage and analysis\n\n### Investigating Lacquer Gimlet Espionage Toolkit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Lacquer Gimlet espionage toolkit in campaign PTF-00401.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"ffbbad738655c308355ff0ba07a5d44d66c7a02c7261966631119175c8e3bd46\" or \"cb4fdbe04024da4f70823d5e9f5a8a45e47c5ce414cb93280bb14b4d58b6485d\" or \"39d3e366a62cbab3b348aff3d5c13211fb6a4a5f28b13a6b7ebd7e39d94e4896\" or \"d39a994e101135757f7a26d00cb0aa05190e70100f3f9ddb80c4f11b3f418cd7\" or \"3b48c98838272650370765d961df8793462d024ea8c1e8aab6844f981026b152\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00401"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "54fb1251-2a57-5ed1-92ae-5a448598ee05",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Lacquer Gimlet",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-00401",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "54fb1251-2a57-5ed1-92ae-5a448598ee05_1",
+    "type": "security-rule"
+}

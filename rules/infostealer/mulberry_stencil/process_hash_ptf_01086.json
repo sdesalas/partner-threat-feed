@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Mulberry Stencil infostealer sample, as reported in campaign PTF-01086. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Mulberry Stencil Infostealer: Process started from known malicious binary (PTF-01086)",
+        "note": "## Triage and analysis\n\n### Investigating Mulberry Stencil Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mulberry Stencil infostealer in campaign PTF-01086.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"43446af3fcdcd166372810c1dc41fbf2e9bbd8741f23fbbcd8d87376cd847a3b\", \"281a71506bf78c96b93fac8e3066f50dcc420df8a9d44226ca02fe3f2f9ecab2\", \"e8209535c41103cf8f8e44d8a86a9ee3aeaea7a4ee6ed44dc7f749fa0d26f9fe\", \"e39a24c2767fe3303b9643f5c8df92ad43d4496521414f505b5c484dbb31cc73\", \"0976a10e1c36146a2e1ae2687ecdba78ee50fe11a8c5eb447ff609cd2a1cb83e\", \"74405a8157ba63ca0c86f7c4882696922da9747589996e013bf740fb8f87f068\", \"070c4858b53b29c7f3cfa5b82b19cd678b6586397c6378d716148e8cb91d2ab2\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01086"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "146c8e9a-de38-5823-a4b7-2104dc326cbf",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Mulberry Stencil",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-01086",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "146c8e9a-de38-5823-a4b7-2104dc326cbf_1",
+    "type": "security-rule"
+}

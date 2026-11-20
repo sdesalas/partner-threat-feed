@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ivory Spool phishing kit sample, as reported in campaign PTF-01402. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ivory Spool Phishing Kit: Process started from known malicious binary (PTF-01402)",
+        "note": "## Triage and analysis\n\n### Investigating Ivory Spool Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ivory Spool phishing kit in campaign PTF-01402.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"9de2f0b310377671da03836f612ed2dc8bfb3f23a2e344355cb265ff65a3e742\", \"cbc19783c83e8afb6f788770fbf61140acda4b5fbfbd314b75bd3725d737bfa2\", \"cf36425a63629e2e891b55b73a1af8c8a82390c00f63ca6610bb00f76ae4369c\", \"dc600537f8d99d649d535e796abd6711e455722bb2029af6484f25d4fa57b823\", \"f1dee2e49b5f356b451b8ac741a17186d7dc2de41b726428b71a5720bd77a698\", \"c054bc588651a3568d803814a8ea4c1a9acac607c3a72c8d58dfe3ed202693c3\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01402"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "2e456615-a992-573b-9898-f45a08a5f70c",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ivory Spool",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-01402",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "2e456615-a992-573b-9898-f45a08a5f70c_1",
+    "type": "security-rule"
+}

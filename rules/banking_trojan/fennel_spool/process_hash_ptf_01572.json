@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Fennel Spool banking trojan sample, as reported in campaign PTF-01572. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Fennel Spool Banking Trojan: Process started from known malicious binary (PTF-01572)",
+        "note": "## Triage and analysis\n\n### Investigating Fennel Spool Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Fennel Spool banking trojan in campaign PTF-01572.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"6d8443ececf6b33dc68a063934a7002268e6ccd51a9f28edec140592a56c0f76\", \"f668d1e35522dd2075ccd4b71d4c88f4c3e03a6b728fbf2285d09441015cf68e\", \"5a212a34aa0d188c9587c19e68d7c8167cc9cbe26fccc2c0cafbf5b831b1cb4f\", \"958c52a4464b45bfd30093ae3319bec3db820f6561217ad79744838b94efe09b\", \"03670f2a1bd1e3997b7e2e1febabec275f5ab125e5d6be3557f618871dca14d5\", \"aad56e36f8b646fd41ae2ab03a8c3bee5e2a75d4865a2b51f30b5a074aa07fe7\", \"b64087585088183b03945b2995941328841974efe393a3c1557494c59e07aff7\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01572"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d933c128-b027-5721-b89d-4539e423d668",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Fennel Spool",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-01572",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "d933c128-b027-5721-b89d-4539e423d668_1",
+    "type": "security-rule"
+}

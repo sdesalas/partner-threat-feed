@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Flint Easel loader sample, as reported in campaign PTF-00497. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Flint Easel Loader: File with known malicious hash written (PTF-00497)",
+        "note": "## Triage and analysis\n\n### Investigating Flint Easel Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Flint Easel loader in campaign PTF-00497.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"ac9a4b6a91a02ba643ec005ddbb06fb494f7ee5dbbc1f732d528befd9b108cd0\" or \"792b19b58082f383e80db945b1ffe814f1f64007d7689a29c3f57e246ea7e405\" or \"9205e66da1c26ee50803dba67e27cd7b6315a6fa7155f307e48620541e0edf3a\" or \"654a60ca5ef1b6460163dc1bad22faadabffd30d4970d77e5f74dd1c8413a5a5\" or \"005aa73202a111642b7612c1a989044278becd7ccb5c74c0c6cfb8df96a8245b\" or \"545078796235d3906821919ec2fd2515e7bfd4a2de22ccd4cf00bc0d5e09c05f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00497"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "9b8a9fde-dd44-5fd9-8f68-aa08c027f262",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Flint Easel",
+            "Threat Type: Loader",
+            "Campaign: PTF-00497",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "9b8a9fde-dd44-5fd9-8f68-aa08c027f262_1",
+    "type": "security-rule"
+}

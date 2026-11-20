@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Rosewood Inkwell infostealer sample, as reported in campaign PTF-01159. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Rosewood Inkwell Infostealer: Process started from known malicious binary (PTF-01159)",
+        "note": "## Triage and analysis\n\n### Investigating Rosewood Inkwell Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Rosewood Inkwell infostealer in campaign PTF-01159.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"9f5748d44b5c324959dcbbc8de4ed894d5668d0f36ed3d759ce68d2edea92294\", \"8959f2cadf18ed4c7743ac0540c5a4f8946c225d6f68ce435c379a7ecf6b6538\", \"ac94ec751ed338d6680e76349fa69b12ea5445ce54f1864914cfda80eb624cfa\", \"2c408022b210313ddd1b45349956c93487c2e7606c0b0bd851403c5122c90d52\", \"2c89bf366315b1827339937f7019a2e9e5b58b5fd4fb7208e22ce3065eb3a655\", \"f5b56b8b90188783427ed893351fcac63f93b978101debc2fd93ed29530dbe22\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01159"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "a2b1ee67-0d9c-5095-8d8e-1c841483b7d5",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Rosewood Inkwell",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-01159",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "a2b1ee67-0d9c-5095-8d8e-1c841483b7d5_1",
+    "type": "security-rule"
+}

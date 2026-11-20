@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Hollow Pulley espionage toolkit sample, as reported in campaign PTF-00997. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Hollow Pulley Espionage Toolkit: Process started from known malicious binary (PTF-00997)",
+        "note": "## Triage and analysis\n\n### Investigating Hollow Pulley Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hollow Pulley espionage toolkit in campaign PTF-00997.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"5d8c6531a9993ca987527340aadf778641c8ca22fa31b1739ad7e526caceabf2\", \"524e21b62c0d261bdd4e1ec2a715851b663535d837e5eaa8897eb7f21e8eaa55\", \"b5eb8cf7a69a25583e82a2de7e589430f167b36893c451358e7ce56f5d32574f\", \"84c3c89b0e2409617ee6b5451413c6d1864e33f398f283b1d9958ea34079a8ab\", \"f09ecd1069641bf8e7529c15e3b4d4552a4d02490d853eccf99a2f88fa32411a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00997"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d9ba1a1c-76ec-5616-877f-a53a849ec122",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Hollow Pulley",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-00997",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "d9ba1a1c-76ec-5616-877f-a53a849ec122_1",
+    "type": "security-rule"
+}

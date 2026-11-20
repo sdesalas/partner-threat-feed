@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Quartz Lectern remote access trojan sample, as reported in campaign PTF-01488. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Quartz Lectern Remote Access Trojan: File with known malicious hash written (PTF-01488)",
+        "note": "## Triage and analysis\n\n### Investigating Quartz Lectern Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Quartz Lectern remote access trojan in campaign PTF-01488.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"b4f5bbae5f058aa031c1ed7207bc2d67847ee610346290b23360199ae0812c6d\" or \"3dbd5000cdb7a59e58538adc85e638aee6d5441bfde3f8e93bb54467751bc15d\" or \"44b8451f6385d06189e7aad51e5887bf405e4488fd019199ac7a0d7c1d6769b9\" or \"b4b618a064cf2a915c3d52e9ba27e381d3302ad5c6ddd78965c5f1e40a7a612a\" or \"60de6f1dea89fe98b7e20ce5a3caa949a895d0ec7a9e4c4ba674d255a624a41c\" or \"f54336b4a9e02d66c63592f895901b4c66daa1850bb16b838f7a91731775f580\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01488"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "859d3ae6-3c7c-5494-a3f4-4dad5d0c38e1",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Quartz Lectern",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-01488",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "859d3ae6-3c7c-5494-a3f4-4dad5d0c38e1_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ochre Trowel remote access trojan sample, as reported in campaign PTF-02407. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ochre Trowel Remote Access Trojan: File with known malicious hash written (PTF-02407)",
+        "note": "## Triage and analysis\n\n### Investigating Ochre Trowel Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ochre Trowel remote access trojan in campaign PTF-02407.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"707ccbfec715f6ea424d749155489d32b16b5812c0d41ced3e7d8526dba9bf42\" or \"23e4ffbe2d779ae7b5803874208df6c5cfc118e9211be7671b9c65721f773aec\" or \"6f2c26468fd1137a3abda73475add919ea63653b6dd58b7e59b91f836a6a03e2\" or \"7b0c1201707fa9c6570a3c25067962d4a2f7d6ec939449ce6784191e60708174\" or \"d62ca3ba7ca8b488133c977e143b15de4c1b7589de5c6adf30d7680f650cdc63\" or \"9c5ba0eb194ad85b7db5dccb88794a63c3b1e2e6f33beabc6f6d845373abf7cf\" or \"e42133dfce8031d1fc7aa83c4b36735ce7df3fb3383e1fc84cc400bf889c000a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02407"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "2c0b31c8-e180-5941-84b1-cac477b79ecb",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ochre Trowel",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-02407",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "2c0b31c8-e180-5941-84b1-cac477b79ecb_1",
+    "type": "security-rule"
+}

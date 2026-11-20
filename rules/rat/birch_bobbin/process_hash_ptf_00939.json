@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Birch Bobbin remote access trojan sample, as reported in campaign PTF-00939. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Birch Bobbin Remote Access Trojan: Process started from known malicious binary (PTF-00939)",
+        "note": "## Triage and analysis\n\n### Investigating Birch Bobbin Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Birch Bobbin remote access trojan in campaign PTF-00939.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"3bd8d90d8dd4ab8e8c427a0097a774ecb4396d721189fb5051901a003661849b\", \"33e6efea64d56cac6d987c2ca96e92103f4aace3dd7e4ba9586d0a3b0cecae31\", \"69da96cb5b76f3c5a643155bef9890970b7b76d1fec5cdd168b226a834606141\", \"02d5894061ee594f5715c27c8d5cee761950aa66891eb916ca3645dbee5a35ed\", \"e9ad6a9ac85b8f95a7e498f682b1b2bf9eb76f1994a3ba3444bf316e5072ea16\", \"7c2334e401166e3038cfa1a16ae88a725bf04d1c1a1bf75e4ab9e2a945403580\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00939"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "85741242-d111-578d-bb54-b04c7143581a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Birch Bobbin",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-00939",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "85741242-d111-578d-bb54-b04c7143581a_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Juniper Mallet botnet sample, as reported in campaign PTF-00983. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Juniper Mallet Botnet: Process started from known malicious binary (PTF-00983)",
+        "note": "## Triage and analysis\n\n### Investigating Juniper Mallet Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Juniper Mallet botnet in campaign PTF-00983.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"742ac05e3fcfbe3bd43403a47aba928baadcc766f96e8911d6ed6761e74d2b71\", \"8310a9be2ba15a868a9595127dc41f77374c2238aa3fe87ab3f82c3bec2ffd29\", \"18572ff7034735be7b91618254da57e8d406dd533cff4113c5c101cad657a89f\", \"83be430b29b60709c33e05b2b6754fc869ac397e3c4e633e5c956c5e19154c3c\", \"b6db2978358252a939b34d7ab66bfb4fbb13a9b028748458599bda83a940502c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00983"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "293982b9-0917-5345-a99f-97253fe9142b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Juniper Mallet",
+            "Threat Type: Botnet",
+            "Campaign: PTF-00983",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "293982b9-0917-5345-a99f-97253fe9142b_1",
+    "type": "security-rule"
+}

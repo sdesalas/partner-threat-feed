@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Clay Quill loader sample, as reported in campaign PTF-01557. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Clay Quill Loader: Process started from known malicious binary (PTF-01557)",
+        "note": "## Triage and analysis\n\n### Investigating Clay Quill Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Clay Quill loader in campaign PTF-01557.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"7a799f5071fd98d5f424d76307b4cdb4feccde43ab34adae7088f81e97baf102\", \"7cd08e1759f99b924a26248adbaeffe0e888c86be7c45c4960aded88e4612d46\", \"ee4bdbe881d21eb0ddf7080c920ecbb9cb4b32a5c04307374666ae2ef017f4ca\", \"2e77b09218d56a330468d663dacec69e22eeccd3f10e9904330562530e444a63\", \"ee3667e1691fb1d96697691d9db2b7f8875f39230d5a5080e51c4dda9f2ade7a\", \"18931f9125b80e107c31b4a88adc56a9e31b2ef6174a7ba68b28da743835c23d\", \"77196a5cc48fb036895137f4506a0fd906c8ce0063124d5ea2fcad363306f38b\", \"5d3ed3ef376e465f8c8758dbdbf35e782afa2aef100190265fb217f09d5c759d\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01557"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e3c77461-671b-5be8-9579-9db78e7ed6f2",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Clay Quill",
+            "Threat Type: Loader",
+            "Campaign: PTF-01557",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "e3c77461-671b-5be8-9579-9db78e7ed6f2_1",
+    "type": "security-rule"
+}

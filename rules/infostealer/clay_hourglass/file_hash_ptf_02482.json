@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Clay Hourglass infostealer sample, as reported in campaign PTF-02482. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Clay Hourglass Infostealer: File with known malicious hash written (PTF-02482)",
+        "note": "## Triage and analysis\n\n### Investigating Clay Hourglass Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Clay Hourglass infostealer in campaign PTF-02482.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"98ce696dd234bf1368c689f93518d0431a911e851d175786dcc2965154f8ba05\" or \"45866a33c5d49fa9ec000262db3886d53ac1217c4ceb3b41b906a04c5ae09579\" or \"7f79641053b29a506af9b303be457faefbe0b516b1bb5cab248808aced90fd82\" or \"d40d46c90fe03bc5464a2b69204c46a47cd9a2676a2a064210677ddc30ae11d4\" or \"42d82ad275d087c2014ea8b5b0a940f7c379a922b05626f87ac5990e4382072c\" or \"74944c929da180ce62b7be18535f5e4a09adaed48c596e3b1852efa40a372907\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02482"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "515cff58-0b06-5499-8bc1-ae331b0d84c3",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Clay Hourglass",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-02482",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "515cff58-0b06-5499-8bc1-ae331b0d84c3_1",
+    "type": "security-rule"
+}

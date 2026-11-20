@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Copper Stencil cryptominer sample, as reported in campaign PTF-00032. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Copper Stencil Cryptominer: Process started from known malicious binary (PTF-00032)",
+        "note": "## Triage and analysis\n\n### Investigating Copper Stencil Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Copper Stencil cryptominer in campaign PTF-00032.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"4a1bc385e5a2d7714dbb7d5039326a5f63a8593ed3aa9fb1daf3b21eb2db3f65\", \"6fa6fb926762c124fa2355b64e0c3d4266493a110a275616a6e7fb7f151e6a59\", \"f887b713a03de553b4a59e5c36d2bd055a91a2b4e2c2901361a577c87ea047e5\", \"daa80bde3e3ea271a66a4eed36121b76218cc62dee613960469dd79b6054f0fc\", \"2667ceb72c74c055cd84a63ae7f210f899c2daf003e7445cf3f133fffe3a7a9d\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00032"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b2fbe2ee-b935-581c-8917-9c8ce370fe44",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Copper Stencil",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-00032",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "b2fbe2ee-b935-581c-8917-9c8ce370fe44_1",
+    "type": "security-rule"
+}

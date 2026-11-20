@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Nickel Needle infostealer sample, as reported in campaign PTF-01917. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Nickel Needle Infostealer: Process started from known malicious binary (PTF-01917)",
+        "note": "## Triage and analysis\n\n### Investigating Nickel Needle Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Nickel Needle infostealer in campaign PTF-01917.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"af5c8314e32d0ed33de3e770f07764ef48e7fe4d314eda6c80ad06c6e72f5b58\", \"b714464b6fe2fba283ab6e7f9426920c092c5bb7ae05b5eec95e411618c7e9d7\", \"a8b78cdc54c73e77617ecf6da379b1750bc82a842adb1304278251b278ebf944\", \"80fd175186bb77ccb49f44de647226f2e326019277e6a43045141a330a6555fc\", \"545fa0a4b00738984c26ebc295fe00b88da1fcc554696e708a1c03280f7fb01c\", \"7969d09d3661b7c84f2fcaac6a869d8ba323a39e47cf973a165c7c82e1829839\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01917"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "8ea9f1f0-bbba-5b03-b2a3-753a6de52de6",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Nickel Needle",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-01917",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "8ea9f1f0-bbba-5b03-b2a3-753a6de52de6_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Slate Mallet remote access trojan sample, as reported in campaign PTF-01449. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Slate Mallet Remote Access Trojan: File with known malicious hash written (PTF-01449)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Mallet Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Mallet remote access trojan in campaign PTF-01449.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"04424dd0fe689824fce1b7b20d14ef6b7718d359c5776d6ef1c1a159eea0d51d\" or \"807f9ceb808efa9cb01a1d9ce2cd5d22a6f80ca60888b5ef42bbd8cfc71ceb5c\" or \"a8250649bc1179396c9f8ac220b4d7f0061dc540f7c04a6a3ca1896dada8d5d4\" or \"c1bc8c561c4365176f309f6f26c2e9ffb497f7ba9f626326f14e6e9e5b12f7ce\" or \"18b5e374d547b3aa29af10c3133a66729dd00c46d76d2d8e4e9780aee75aa30d\" or \"5cc81c7e636b962ba05c8541bd93099a8dda54f525ce55db167a5b558abe0a88\" or \"afe718d5e8b9d40ebd6167f90120a29cc80ed7a55f53c9f0c53c038a1eda108b\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01449"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "2647b81d-b6e0-5897-a58c-bce469a62509",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Slate Mallet",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-01449",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "2647b81d-b6e0-5897-a58c-bce469a62509_1",
+    "type": "security-rule"
+}

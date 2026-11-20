@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Tin Easel botnet sample, as reported in campaign PTF-00259. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Tin Easel Botnet: Process started from known malicious binary (PTF-00259)",
+        "note": "## Triage and analysis\n\n### Investigating Tin Easel Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tin Easel botnet in campaign PTF-00259.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"0cf83771df16d2791d776c63150136c8a95d620277114b7c7d3ab5f830d93f5d\", \"dd085a6edfa34611f01a7dc49a7e79af252343576feb6c08564bc163ff046faa\", \"e8dfcf0c68dca531ee0966db94a88425d30b1958c86353a7068c91a9a74ffe16\", \"d833a9eaedc026194b8ee1868cdb8191df4a99608b5ac0304ba9b6d0073aef4f\", \"92222c82ada30031b0082fdd2d500177ebb5eba892a6cc73340d0c1364669a21\", \"497527a10631323deab1b7be7c16db4d965b607cae365cea0678b6163b9b7ce1\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00259"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "66eb311b-1f20-59e3-855e-0e960c95d694",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Tin Easel",
+            "Threat Type: Botnet",
+            "Campaign: PTF-00259",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "66eb311b-1f20-59e3-855e-0e960c95d694_1",
+    "type": "security-rule"
+}

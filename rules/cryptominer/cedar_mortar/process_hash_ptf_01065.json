@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Cedar Mortar cryptominer sample, as reported in campaign PTF-01065. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Cedar Mortar Cryptominer: Process started from known malicious binary (PTF-01065)",
+        "note": "## Triage and analysis\n\n### Investigating Cedar Mortar Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Cedar Mortar cryptominer in campaign PTF-01065.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"75da99448a272599941ea1222afc29b7a5dec1bc4e05209c6fedacad945da45c\", \"55a1dea860807aafdcf67360cdc6dbadef182ea3efd730864b27b05f43ecf58c\", \"e4c21c93dbbe829166a4133efdd33f66bf5f4a86d531ae69397bee122867feb5\", \"cb4937dae415a604f2c30c51c07cf8713a8b25c943cba6668093e960f82ba08d\", \"d596355323e1315fff64614275fe9dcb5a7cc49be044be936ef85108cab5f55b\", \"03aa194ffd04b21b46ac6e4c68ae6a9a43b9c6fb08325acd2dc657a8e7ea76c3\", \"3246d67cd4880a8137b2b1b275dda3ca0d939d090c5bfe5fcdcc63b2da1998d0\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01065"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "682102a2-a880-52c2-a8d6-9f6f12822498",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Cedar Mortar",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-01065",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "682102a2-a880-52c2-a8d6-9f6f12822498_1",
+    "type": "security-rule"
+}

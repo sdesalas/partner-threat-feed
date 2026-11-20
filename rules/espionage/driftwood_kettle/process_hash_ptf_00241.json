@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Driftwood Kettle espionage toolkit sample, as reported in campaign PTF-00241. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Driftwood Kettle Espionage Toolkit: Process started from known malicious binary (PTF-00241)",
+        "note": "## Triage and analysis\n\n### Investigating Driftwood Kettle Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Driftwood Kettle espionage toolkit in campaign PTF-00241.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"ad56eff8ba090becdd604c1f5b6f8a9b94ae4caed6e0a53caa1db648a28009a2\", \"0560b02e8301e59727037cdab0ada2d043d32ae4d2d4353d63f2f75110e731bf\", \"54c57d2c858b59330ada77e7c62cd570ce639c3e63c90c9b406a35e3fc36be9b\", \"18e03b92d8085d86b6320c8cf7191f0721920fe4d7645f37aef893b0aa5df6ff\", \"3e0f8199d17bb21d62c5374a5c77b8f96c7e9f05a137946072e7b99dd32986cb\", \"657194c5d2786ba43eac5a0dca33695283f97b6b6e6a0156c2ba0b0e15c518e1\", \"7fa99e10a2a794393d0e5805f0bbe44857d9e0c4a795534ccc7267ae76d3aedf\", \"d4751f487f9367eeffd5fe0d97c398ca3144c3fa5bc7f312879fbadc7ae6e0d2\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00241"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b64b0f89-d262-5198-9f71-37a8b7382ea9",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Driftwood Kettle",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-00241",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "b64b0f89-d262-5198-9f71-37a8b7382ea9_1",
+    "type": "security-rule"
+}

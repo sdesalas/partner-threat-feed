@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Mossy Keystone loader sample, as reported in campaign PTF-02373. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Mossy Keystone Loader: Process started from known malicious binary (PTF-02373)",
+        "note": "## Triage and analysis\n\n### Investigating Mossy Keystone Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mossy Keystone loader in campaign PTF-02373.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"11acd7bf248e60873bba4d73eb1c7947029cd27bf3c2f4e2d12e762eca341ae4\", \"c56a6be1ae210c6c21140333ff7e862df7643eb199dcb5e2304379c897eaa311\", \"a9cb965a1b43a68f3c5e739901d63c2ad6ea65561c72ed121c0038fd432206c3\", \"58e6f7e24ba547baa16303b72284ad63072926617507778f79b850a3190ceffd\", \"20c4253c6a0b80d901103a19ed4a80562238a464b3e2279bdccedad70dc22b29\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02373"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "edacf813-476e-517c-b18b-e6367d41b56d",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Mossy Keystone",
+            "Threat Type: Loader",
+            "Campaign: PTF-02373",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "edacf813-476e-517c-b18b-e6367d41b56d_1",
+    "type": "security-rule"
+}

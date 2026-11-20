@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Mulberry Ratchet loader sample, as reported in campaign PTF-02222. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Mulberry Ratchet Loader: Process started from known malicious binary (PTF-02222)",
+        "note": "## Triage and analysis\n\n### Investigating Mulberry Ratchet Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mulberry Ratchet loader in campaign PTF-02222.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"050dd3a618da57238a49b898407adbc9f21ed80f13d101cf4f948897ec8532a8\", \"0ccee7ef11cff9b693bad7c0dc7b173724a7c5f4dc0e547110d7411bfe2a4834\", \"09c2e208319532ead07c773e597cc0dc83a6bb5bffc2294fbc2238e03a08e644\", \"99696cdfc64bc9e150054abb0aa6687bd832b60015c7822f12a8b18304627256\", \"459a15707a964726eca7a1456cfb179d6e39ff5eca9e7479242c6b55e4131b97\", \"d96de10ce97ae3e4d3d4782e332e5460694258a003b7ef731d12d5fc75533afc\", \"365059fb583a8f8f507a84488a1769667ccfb8371915a6638683c1ad4365f3ec\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02222"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "cef54310-3ab2-5bb8-bbb4-e973a9224374",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Mulberry Ratchet",
+            "Threat Type: Loader",
+            "Campaign: PTF-02222",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "cef54310-3ab2-5bb8-bbb4-e973a9224374_1",
+    "type": "security-rule"
+}

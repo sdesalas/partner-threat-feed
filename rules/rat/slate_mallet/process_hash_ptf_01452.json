@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Slate Mallet remote access trojan sample, as reported in campaign PTF-01452. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Slate Mallet Remote Access Trojan: Process started from known malicious binary (PTF-01452)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Mallet Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Mallet remote access trojan in campaign PTF-01452.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"4df6938a3c7b7a0a0d8cba1ed7ce3bb3bf379ae8a0cc0fdcbd93c082d1a7dd39\", \"025ee216e07e2b56d953d925374ef17f4a9d324ed1121af2393f01f10eb61ef7\", \"c58598acf6a50a0aa1c95a8b0f3d54e6b9d344a5d6781c9d49965dc02a147e26\", \"701a2e63d9f78802e79b842353c1e622532de35e21e1f97fbe1d79cbbef3b5dd\", \"c2347d20a26d7cd6059b592eb76cc6fb2379692fbd455fce4d4d7cb6312e81ee\", \"fa2380d4277c80ba2b44e80f790909327d594fa667c71956aad7868f11b4d76a\", \"97b045e73cf76907cf1d75950f7b5ecceefc659053a2379a13868b3bd98cfa39\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01452"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b9b204dc-27f5-5bbe-8505-3634450222a1",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Slate Mallet",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-01452",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "b9b204dc-27f5-5bbe-8505-3634450222a1_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Walnut Stencil botnet sample, as reported in campaign PTF-02419. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Walnut Stencil Botnet: File with known malicious hash written (PTF-02419)",
+        "note": "## Triage and analysis\n\n### Investigating Walnut Stencil Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Walnut Stencil botnet in campaign PTF-02419.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"97310e0b565c87cd4f8bafe1b0b327c36aea5e5d2524c23640e94d4dbeea45d0\" or \"fa4bb4d4e3cbc79ba72089ef9d47cbe93ffe5f04a2b4b08cb0dc157b658cc604\" or \"ee2f2f3936231ae9b78fb23452f83f8ebf3618e652207fb48bd6b9cb558559d0\" or \"302c39b267b136886f4463a5e4e6dfe7caad2c7949cb85b4c0f3e38f2d07901c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02419"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "1675c251-9915-59bf-a721-f972e18291ae",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Walnut Stencil",
+            "Threat Type: Botnet",
+            "Campaign: PTF-02419",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "1675c251-9915-59bf-a721-f972e18291ae_1",
+    "type": "security-rule"
+}

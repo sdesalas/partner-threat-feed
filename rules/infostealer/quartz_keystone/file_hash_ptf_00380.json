@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Quartz Keystone infostealer sample, as reported in campaign PTF-00380. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Quartz Keystone Infostealer: File with known malicious hash written (PTF-00380)",
+        "note": "## Triage and analysis\n\n### Investigating Quartz Keystone Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Quartz Keystone infostealer in campaign PTF-00380.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"0e8573d44cb6ada68724c5f3db72d70b0eabf61f31e80c39f07bd45d22cdd4b3\" or \"675c4ab4404e417ef21ad3baf4ad643fd2f273c92707d386b479f892a1c533e6\" or \"10e68f0d2139ba450515f984fc8d1503dc48cc213a668991323c8c38e95beeb9\" or \"171ed0eda16beed68cb6a861f7eadbc5241c870e969ade68c5092bd4367346db\" or \"c81181ae819d2b59f7deec41e9aa326722e08e8fcb4b48bcb58352231fa8a694\" or \"f343796230edb5988c84e95916c175e317225aeef24a2740cbdb766160dcadfc\" or \"7a6716127651fd14b59a6e399b68e308813c3d401237796395c5bcf019c2fbbf\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00380"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "82996d11-a156-5b9f-b103-1a660f7e0726",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Quartz Keystone",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-00380",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "82996d11-a156-5b9f-b103-1a660f7e0726_1",
+    "type": "security-rule"
+}

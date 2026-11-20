@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Copper Gimlet banking trojan sample, as reported in campaign PTF-01359. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Copper Gimlet Banking Trojan: Process started from known malicious binary (PTF-01359)",
+        "note": "## Triage and analysis\n\n### Investigating Copper Gimlet Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Copper Gimlet banking trojan in campaign PTF-01359.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"13e8ec3bad55e0ac3115613d92a70bf90ad74ee9fd1551543548a0e2fd8319d6\", \"9dae6589f7308d27b7883bc4a21e039c961638354168ba6c5eb3f62d89f00e82\", \"bd12654e02659c726b7f5aa16a481055ef797d796c8de141d686405dba490e9c\", \"a37dced024f4a6aa5ff5a595a2b5f031d5b7bcc94942ba179241fa3d0e02acc6\", \"46aa34a353d2e27f29b05ede1009e63deace79d5a7f616a13264b201a137c7da\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01359"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d2e21333-cbe3-5c90-b660-34bd00fc64ee",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Copper Gimlet",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-01359",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "d2e21333-cbe3-5c90-b660-34bd00fc64ee_1",
+    "type": "security-rule"
+}

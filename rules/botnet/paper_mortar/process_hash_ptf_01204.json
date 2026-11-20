@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Paper Mortar botnet sample, as reported in campaign PTF-01204. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Paper Mortar Botnet: Process started from known malicious binary (PTF-01204)",
+        "note": "## Triage and analysis\n\n### Investigating Paper Mortar Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Paper Mortar botnet in campaign PTF-01204.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"90e13c361ce9002037e92256fa7cdf13ff58c53f22adfb6e18a2f7b7dcf307eb\", \"eedc5102b3afe6f5f10fda39ab7cab23bb294721211479ad06dee705065dfb4d\", \"b12484ad8786502c3e4b1969a297256686663778791c512090892087d5e59173\", \"818ace957127e219cc6803e342fdf8f8a59e6630e957ce9f39d79f475ca65b33\", \"35fd875df8346bc6cb3415cded9433ee997b7365371082a90c4ee91dbfd8eeaf\", \"5fee21cedc321ac15f6e5d28f7a534d6a0eb6c7a2b1823ca8f2a2aad257ee3b6\", \"ae9b477d60b77775472b097acd65c1c9dc5931e066c94f693de8e442d9724839\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01204"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "afd15c5a-4688-5423-aa30-769cc206469e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Paper Mortar",
+            "Threat Type: Botnet",
+            "Campaign: PTF-01204",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "afd15c5a-4688-5423-aa30-769cc206469e_1",
+    "type": "security-rule"
+}

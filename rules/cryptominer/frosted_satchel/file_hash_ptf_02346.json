@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Frosted Satchel cryptominer sample, as reported in campaign PTF-02346. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Frosted Satchel Cryptominer: File with known malicious hash written (PTF-02346)",
+        "note": "## Triage and analysis\n\n### Investigating Frosted Satchel Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Frosted Satchel cryptominer in campaign PTF-02346.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"55ee5b3df60390576c78267356f60e6db6c337d79f88971329b1cce9c1abe3db\" or \"a6cab093c7cdd8164d06a67915d4dc76160bfd100231dc3c7fc5bbac8cb684be\" or \"df763413aafc8102e4d9a2e5ecc781a166d3aec623b49d390fc929a32fbbf10f\" or \"d1ebf4e65727038d914518015b59d6b9cf1a03f60839894013e8be868ccc3c89\" or \"bc0b5a492da89fc78e4d368af2148e7755aa5b9534d1665793780b083a5d9597\" or \"dc0898d6f0316fdce4e4341e893dea91569392d06c7f42b3e0009c1b2590165c\" or \"720f3453ad834c9f22c097da4097c932c94c9b18818b380a507f11b6a02618ed\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02346"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e2d3d011-33f8-5736-b870-e7d7d3d85019",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Frosted Satchel",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-02346",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "e2d3d011-33f8-5736-b870-e7d7d3d85019_1",
+    "type": "security-rule"
+}

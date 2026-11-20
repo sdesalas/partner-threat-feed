@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Verdant Valise cryptominer sample, as reported in campaign PTF-01434. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Verdant Valise Cryptominer: Process started from known malicious binary (PTF-01434)",
+        "note": "## Triage and analysis\n\n### Investigating Verdant Valise Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Verdant Valise cryptominer in campaign PTF-01434.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"eac7142f300fd30ba78bdf6baea904f71f116e7d97af2fb87a75689df2879668\", \"deaf4d4ef3b13d3e0be4c1c36aea107a9e531656b85394d43f663e0a6e97748f\", \"a4a5158378c03dae9038239f8d8a2cedae5e038891562e445fc307b781a90c0f\", \"86184c3c7340e1f6a926a9280a43855e7b4e1f6391698cb5c056d4f471e446fb\", \"8e170f5b31d431f60a52c112893be030b835323096cc5ba3763b25f628ea54d5\", \"4c2fdf0c98fe29baa70b6bb19edd67e43c977f450bb41cdcf471f6e17157c251\", \"5b15ba8358ecac90e4b55c55fa201a0fd49b0ece9baa458531f2d6d9fbc363a3\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01434"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "89c1ddb0-e9b5-5f97-81cf-c59ab986fc5f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Verdant Valise",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-01434",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "89c1ddb0-e9b5-5f97-81cf-c59ab986fc5f_1",
+    "type": "security-rule"
+}

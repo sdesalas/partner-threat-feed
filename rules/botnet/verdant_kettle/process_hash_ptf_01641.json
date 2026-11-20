@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Verdant Kettle botnet sample, as reported in campaign PTF-01641. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Verdant Kettle Botnet: Process started from known malicious binary (PTF-01641)",
+        "note": "## Triage and analysis\n\n### Investigating Verdant Kettle Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Verdant Kettle botnet in campaign PTF-01641.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"4a3988545639babd62b6b6f3568c71a4a1ed3e20c90dda9a6b023f8d2e037a31\", \"b64c771e35f1c3cfe0f7cf7d34f93bc2b1b160fd51ab9f0e24f684490c8699d0\", \"02896e27380ed2984e8cfc53b9e347b5914c366349465b0dfa469177f00f7fd4\", \"698d6fe2dde02f4765f5ffb77466ef847beb20cf8a697951ffa62622c97f1122\", \"6a1ba90f2792ecb06473af1a653e3356f0594eb476314e1c0f95a1ad3fa1599e\", \"6997d04991b7ef33743cf5a4928c8a4e5dadda48be49db8b45b946699c429989\", \"af4b1361c356ca76e5a87eefcc31e34ac4a8eb69e25a4cf8a6df1fc2444e23e3\", \"735dbbc68f7923a0703fd6af74686f46c37679d1caa74200d8cde4a9e7eda0f8\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01641"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "60e3c8a2-6638-5986-8f91-1e7e337f03a5",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Verdant Kettle",
+            "Threat Type: Botnet",
+            "Campaign: PTF-01641",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "60e3c8a2-6638-5986-8f91-1e7e337f03a5_1",
+    "type": "security-rule"
+}

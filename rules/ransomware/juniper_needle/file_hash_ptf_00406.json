@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Juniper Needle ransomware sample, as reported in campaign PTF-00406. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Juniper Needle Ransomware: File with known malicious hash written (PTF-00406)",
+        "note": "## Triage and analysis\n\n### Investigating Juniper Needle Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Juniper Needle ransomware in campaign PTF-00406.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"ef69791124f1da399369449e7c9c7592512b2f472323b55b2384b9fc4a8acaca\" or \"7a67b49b87114080e86336c8531887df5fa6aeca3f6b7afe022689ecdfc59dbf\" or \"ed665353e4f6ba34d4e27814f29430b8ae6e26cc717915379815e553f0978f67\" or \"bcf4186021ce32af48f3b999571df9ba76627120a0ad0e1f507d0a2fa098c41b\" or \"b77ef93509f68a6a571e671248c27f481989a0581e999e8ef2f3b747a8f9a37b\" or \"22474ea64646224a3617c5af0d0bcbc7ab751357393fbc705961c8d354b5e141\" or \"84edd1fc50abdbeda6a8377d5ce77bad6be64db97f3dad145e7c5d66d1550f3a\" or \"a26116f970556a03a1abf82e2d852bedea942e11cc865c6202749ff25fef0252\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00406"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "592c80ce-826f-50cb-a4d7-14db3ca6f8cc",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Juniper Needle",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-00406",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "592c80ce-826f-50cb-a4d7-14db3ca6f8cc_1",
+    "type": "security-rule"
+}

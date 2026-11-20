@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Chalk Needle infostealer sample, as reported in campaign PTF-01047. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Chalk Needle Infostealer: File with known malicious hash written (PTF-01047)",
+        "note": "## Triage and analysis\n\n### Investigating Chalk Needle Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Chalk Needle infostealer in campaign PTF-01047.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"0e6f45e2f3af08b62b06c89f664a4d8d99d083e8d2ae32e60702b29fdc178fa0\" or \"102195863ac7ee55cb9376de8f998fb66d89101bf6b95ba933cb151fcbd94687\" or \"4cf0c36026066ddc85ef73bfb5be545d2e4561462e4baf87c034f774bb87f872\" or \"3737fcc2bf294f49efee790f9bc8c408e9e26090e8fd9b3712e7560e3da3102c\" or \"33a3ef2d69f39ce035cfdc6c35f5afafab8fe89bc23959b2604b2915b5340580\" or \"a84a8211afcb6c7ff35954c750f128626ecbf003cad32ffbfa994fda6fa377e8\" or \"89594b996173c70516ab072e3c2dfdf8348a5891e6285f9dc016dad2e31009eb\" or \"5f42e896d723eed6185e97beecb9aa6998d76df9ece3f1b9379ddb443e74aec3\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01047"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "a7513a5f-b3e9-5370-b55f-b44c4c3ffdd9",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Chalk Needle",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-01047",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "a7513a5f-b3e9-5370-b55f-b44c4c3ffdd9_1",
+    "type": "security-rule"
+}

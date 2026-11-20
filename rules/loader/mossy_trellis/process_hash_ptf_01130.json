@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Mossy Trellis loader sample, as reported in campaign PTF-01130. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Mossy Trellis Loader: Process started from known malicious binary (PTF-01130)",
+        "note": "## Triage and analysis\n\n### Investigating Mossy Trellis Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mossy Trellis loader in campaign PTF-01130.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"ba45f379bf01ece2bbcd2ec793d8d2d2b16a0e4c9ccde9a38fdeaea4134cf15f\", \"18a58cf8dfec23f81e562b2a58cfaf2f5611b14aca3f58893313dd7072aab25e\", \"f3c23d7b92ee702706191bd041d091f142c189d41f030534436d161f6ad216d0\", \"84322f54cb47d738b7dc0cc04e3cc492fdcf1413eb8c8fd2f7c1d246c3965d90\", \"77454c665ee4a17e463eb803dba1f8c20cc9ad627796b18e71f3d216d7df57fd\", \"5c9c2421b0dc61215a1150d2dc7f563e5b3dc2a28964dac967035351aaf059e9\", \"d7e9ea67206512ea6ed43e1d9ce24f76f5d549fd094842170fe8acc2d78070df\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01130"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "5128bb34-bd22-505d-b351-cda6f2a76140",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Mossy Trellis",
+            "Threat Type: Loader",
+            "Campaign: PTF-01130",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "5128bb34-bd22-505d-b351-cda6f2a76140_1",
+    "type": "security-rule"
+}

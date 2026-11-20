@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Frosted Bobbin infostealer payloads, as reported in campaign PTF-00933. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Frosted Bobbin Infostealer: Request to known payload URL (PTF-00933)",
+        "note": "## Triage and analysis\n\n### Investigating Frosted Bobbin Infostealer: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Frosted Bobbin infostealer in campaign PTF-00933.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://cdn-portal66.test/install/6378.php\" or \"https://edge-sync17.example/doc/7510.msi\" or \"https://files-auth23.test/install/2715.php\" or \"https://login-media21.test/install/5827.bin\" or \"https://node-login65.invalid/payload/3040.zip\" or \"https://secure-media16.test/update/7695.msi\" or \"https://secure-track7.invalid/payload/3497.zip\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00933"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "cea074b7-a50a-5ef5-b3a1-057804b4e203",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Frosted Bobbin",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-00933",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "cea074b7-a50a-5ef5-b3a1-057804b4e203_1",
+    "type": "security-rule"
+}

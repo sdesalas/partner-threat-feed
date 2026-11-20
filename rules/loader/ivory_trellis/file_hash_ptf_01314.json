@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ivory Trellis loader sample, as reported in campaign PTF-01314. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ivory Trellis Loader: File with known malicious hash written (PTF-01314)",
+        "note": "## Triage and analysis\n\n### Investigating Ivory Trellis Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ivory Trellis loader in campaign PTF-01314.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"9e209a30f581fe8fd8bc525cbef7978e043fd27e321aa131d8d739c4dd26754d\" or \"0f3c46b46734ece73607b20ca474dfac05a4d9ce260176c2390c8d8f1108593d\" or \"d75cfb83c86fc3ff5bb89a0eaf0a07abda08f89fd82d778469cfbebaf7e52a84\" or \"0c389c588c8bd36f61c47001beaca8b99d457196e46d4d99b75b46f1455c6770\" or \"3b31377f90247062749cdf634542687f77c47e220839baaba4e2196d41c793e7\" or \"647277f5e5f83dd1516db548f78f4c2b66880f2ead1a602e7166f531a5990fe9\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01314"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "8f298df7-5d48-5f17-a6ce-29e29e0185e4",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ivory Trellis",
+            "Threat Type: Loader",
+            "Campaign: PTF-01314",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "8f298df7-5d48-5f17-a6ce-29e29e0185e4_1",
+    "type": "security-rule"
+}

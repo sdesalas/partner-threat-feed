@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Cedar Kettle cryptominer sample, as reported in campaign PTF-02013. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Cedar Kettle Cryptominer: Process started from known malicious binary (PTF-02013)",
+        "note": "## Triage and analysis\n\n### Investigating Cedar Kettle Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Cedar Kettle cryptominer in campaign PTF-02013.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"cbf6c1ca732030c593ccf3c612401f9e4c729c48c2d70516bbfd03fec38892c2\", \"be88e3f9b16dafa4cc3041052e4cfea58bfd7332306fa762d3810fe5456b9238\", \"63f502a2ab931618e23c32dd4c4a7ef5d13cfba397d581d9daff1bfe07e09a6c\", \"28e9db9c0abee3ab00bede2d2be63dabe640780fa7911a170a85524a5a4cc87a\", \"2a66bff22f85916cf6fb1e8f6b0cf31c9b81c478b5a4044a47a557c68170f175\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02013"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "8a848941-6ac9-5cff-8f78-513b861a25b5",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Cedar Kettle",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-02013",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "8a848941-6ac9-5cff-8f78-513b861a25b5_1",
+    "type": "security-rule"
+}

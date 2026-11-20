@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Lacquer Easel banking trojan sample, as reported in campaign PTF-00648. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Lacquer Easel Banking Trojan: Process started from known malicious binary (PTF-00648)",
+        "note": "## Triage and analysis\n\n### Investigating Lacquer Easel Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Lacquer Easel banking trojan in campaign PTF-00648.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"c5160a7c4c3e5e860e140a33c1ab9abeda1898cc72f470148454f4a904023684\", \"e4caf0f382280bfa21c507a812ef3117f87024b5c0b9aeeb33da2f5b06ab81ca\", \"69c337f7d8ded703f1175b616409d54d58be72e6100ac9c454b1472dca934a07\", \"79326d27af55b6b3c0f16f03aa662e909e5cdf02561cbbac7fc040e6645746d3\", \"6afe053575cb9cf09b2d573ff4658c34632f6c45b5e40c7ff32ff29cf79c11a8\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00648"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "344cb16b-850a-5c38-afed-72df55306138",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Lacquer Easel",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-00648",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "344cb16b-850a-5c38-afed-72df55306138_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Cedar Spindle cryptominer payloads, as reported in campaign PTF-00694. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Cedar Spindle Cryptominer: Request to known payload URL (PTF-00694)",
+        "note": "## Triage and analysis\n\n### Investigating Cedar Spindle Cryptominer: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Cedar Spindle cryptominer in campaign PTF-00694.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://cdn-connect97.invalid/install/3894.msi\" or \"https://cloud-track50.example/update/3846.zip\" or \"https://edge-login28.invalid/download/8058.bin\" or \"https://secure-sync80.test/invoice/6346.zip\" or \"https://sync-api46.invalid/update/7996.zip\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00694"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "5a4fc934-b2d3-52d6-ab5b-dcc4e7fb6b9d",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Cedar Spindle",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-00694",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "5a4fc934-b2d3-52d6-ab5b-dcc4e7fb6b9d_1",
+    "type": "security-rule"
+}

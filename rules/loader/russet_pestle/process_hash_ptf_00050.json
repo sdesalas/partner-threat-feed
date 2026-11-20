@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Russet Pestle loader sample, as reported in campaign PTF-00050. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Russet Pestle Loader: Process started from known malicious binary (PTF-00050)",
+        "note": "## Triage and analysis\n\n### Investigating Russet Pestle Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Russet Pestle loader in campaign PTF-00050.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"292c0979f4fca728ecb5f244f2164128370ed947ebd47fc6412aba810c4c02e1\", \"7a7c197bc8ba54d4eae69ba24907f67c2a7b883f09360228ea150f9ffc926360\", \"9197e0dbf2f4c4d66a880ea42645891aace2c88520c55b0b8b163a434dd60966\", \"80bce3db84809a1c580782b705f154bdf8ec46d79bd08be35dfdd7cd0b4bbb7d\", \"39d8419c2434ea4f21381b4a910e25bcfabf4c59a8ab6a774a68a1602d55af09\", \"f50d8104bdde396e2e1417d978b47eec898209c575895b92ee27d9686341f05c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00050"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "36b0f4c5-c586-58fa-b05b-15678c5e1ce2",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Russet Pestle",
+            "Threat Type: Loader",
+            "Campaign: PTF-00050",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "36b0f4c5-c586-58fa-b05b-15678c5e1ce2_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Cedar Gimlet remote access trojan sample, as reported in campaign PTF-01525. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Cedar Gimlet Remote Access Trojan: Process started from known malicious binary (PTF-01525)",
+        "note": "## Triage and analysis\n\n### Investigating Cedar Gimlet Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Cedar Gimlet remote access trojan in campaign PTF-01525.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"383f5af36476fd1531913bc6a6c0f96e87e4945bc3decdb0a78860ab9e33a200\", \"37de089a399e37c53ee738b74387d6b747f6473cfa37c27c2199a29a4443f4a7\", \"de3ae9925d102633608227dcd6b2eafd11683aab194fa11dfdb8a7e4f8b8acab\", \"a6f07fb6591080c145caf70b52f7b86863414dc6ce29656eda38f72ca227f59b\", \"270dddb8893e3ec0d0d90ed8f411d00ab942e089ba7142bd75ed1ad45b3cbce1\", \"7f3e023c220b2a5a47b1520ae75792541bf28a8391244fe2656865cbf5a7edd8\", \"93c3135471047511ed359d368e6d6b7abdef19f4a0550cead5f526d8d0bde641\", \"40727ab5611fbef2ea6a5bab44337ae25d917aa5775d4e86016d4545d6e09f82\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01525"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e160216f-541f-56f9-9572-8a9ed3f9fcfb",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Cedar Gimlet",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-01525",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "e160216f-541f-56f9-9572-8a9ed3f9fcfb_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Hazel Quill banking trojan sample, as reported in campaign PTF-00610. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Hazel Quill Banking Trojan: File with known malicious hash written (PTF-00610)",
+        "note": "## Triage and analysis\n\n### Investigating Hazel Quill Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hazel Quill banking trojan in campaign PTF-00610.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"4d12c1485a8caaaf3036a73cfe993bd8577347b2f153c6e86d5c9d991c911859\" or \"155715c1e88b41da211666f374e0412e188dd819ae91f915befae6571ebda359\" or \"d5c7fd311c951e9b163cbfce8b226dfebc55e1a982739c34b03a9c9c29f57b7c\" or \"af61fc76c113a50e8949f08b6c50439ea0f05091e9d52636340e9a95ad391e8f\" or \"b727b6cd82ec291c006c874879dfc1c490ae5dd7fb7d947bf6fe882475f6e567\" or \"301c0c240ec550c44ab8ad630088f528aa582ef70bf02c5c73769ab397ada03c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00610"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "244f0380-c06e-5c82-bfce-e4ddada1e647",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Hazel Quill",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-00610",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "244f0380-c06e-5c82-bfce-e4ddada1e647_1",
+    "type": "security-rule"
+}

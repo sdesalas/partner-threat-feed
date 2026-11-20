@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Juniper Spindle banking trojan sample, as reported in campaign PTF-01280. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Juniper Spindle Banking Trojan: Process started from known malicious binary (PTF-01280)",
+        "note": "## Triage and analysis\n\n### Investigating Juniper Spindle Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Juniper Spindle banking trojan in campaign PTF-01280.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"aacaeca40ba49e3d20e55c4645054c974d69a68b697ddd571e52ff7eed34d5bd\", \"17302f4f0b451c04893c9b0ae75869714a2484cda4113ec52b0aae7d8c02c105\", \"a459f811ecc159a15f280173a5c45ea024e28d7b0d084efd61486c986aa03852\", \"9371329f7c74abcfc8efa917dd37056853aadffa4016223e2d9f502e1d63e42d\", \"0f4ef20ca7a9cdf8a7fda01419754421026ca9248254d3cc7354467344c54450\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01280"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d888d469-bcea-5d3c-9231-cd7d69f8f7f5",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Juniper Spindle",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-01280",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "d888d469-bcea-5d3c-9231-cd7d69f8f7f5_1",
+    "type": "security-rule"
+}

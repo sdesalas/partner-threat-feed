@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Slate Sextant phishing kit sample, as reported in campaign PTF-01538. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Slate Sextant Phishing Kit: Process started from known malicious binary (PTF-01538)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Sextant Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Sextant phishing kit in campaign PTF-01538.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"d7a8791762aed500c6a39b8e12db4784e7fbfef081bce774df6ba979c834b123\", \"6db37e30a8a1790bd808ee382ae364c3d674fac9fbfb918da9955a489609f29b\", \"d798c90467f6139e24fb8e284f6bb4fffaea9ff0b6b371f223526e3bf01c6a1e\", \"a2ae706c4f23459047069dd8a45c05934e57cbeec8c7b6b27e78363365c0fc77\", \"862f9598986e7c6e597bdc449c8b5c4ce5a5710d0e74b2ff299de7838fc4b08d\", \"364be0d2b010da9d01c8c8dfe029a3f78a5b6975bc62b13b28ebc4792703f3e8\", \"08f2d70b915a934c4f342de2999c666d921531b6b94fa0b5cb8302be73b35a2b\", \"5f602d956c6a44ad5bf30ba06e661c3c965d0cb5d19f9a690784295753be7fc7\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01538"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "c4366c04-980b-514c-9aab-db3f86e5aa5b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Slate Sextant",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-01538",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "c4366c04-980b-514c-9aab-db3f86e5aa5b_1",
+    "type": "security-rule"
+}

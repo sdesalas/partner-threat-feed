@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Rosewood Lectern espionage toolkit sample, as reported in campaign PTF-01334. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Rosewood Lectern Espionage Toolkit: File with known malicious hash written (PTF-01334)",
+        "note": "## Triage and analysis\n\n### Investigating Rosewood Lectern Espionage Toolkit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Rosewood Lectern espionage toolkit in campaign PTF-01334.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"9aee7376f55cf1566d86c60add5fed8b6831a967cdfcecba1fddde435a241c0f\" or \"8ca8a94a1b5ad92b7d2309a3f0b37add59dd624219aa1a60790f992b50ab2be4\" or \"a2ea99b583670734f09e50524fd4767020cb2781c1af125128b441de1718e26e\" or \"905e6ece94e1ab6e609197bc8376422f01280a3a04d58dc8da40f656902cab9e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01334"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "054b3d00-0d04-5a6e-8795-da06ae2f18b9",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Rosewood Lectern",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-01334",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "054b3d00-0d04-5a6e-8795-da06ae2f18b9_1",
+    "type": "security-rule"
+}

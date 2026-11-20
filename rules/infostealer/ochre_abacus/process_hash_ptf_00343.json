@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ochre Abacus infostealer sample, as reported in campaign PTF-00343. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ochre Abacus Infostealer: Process started from known malicious binary (PTF-00343)",
+        "note": "## Triage and analysis\n\n### Investigating Ochre Abacus Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ochre Abacus infostealer in campaign PTF-00343.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"d9242ea03e805a1c284392b24a7a5b785b5beb525624768b130aea0172e743d7\", \"f0a3036211b37c198ba3d583a5447e2eb68d28172ad75c21c11323345a149b27\", \"e75f524125049b334bb5d4afe7d74aebb190775abb16cbfde64dee3d1386c193\", \"45cde256c19a03d25cb25c679fbda3c0c2a0397ecc0e3a4376922f09cbe258ab\", \"de8177ce55ac1047f41c624553255c9196a09ff2d34d31e6e9c936b9badbc028\", \"ec4826a4999545cb1d4e3accab3157146b7e84d4b0c32a3ef3241946835af3b9\", \"a0d5b140c1d58c3cdb4314e4985c41e828f3c74973544a0ea640c520aeb3936c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00343"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d0e67ac3-4576-5ef3-bdf8-4321b065fb84",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ochre Abacus",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-00343",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "d0e67ac3-4576-5ef3-bdf8-4321b065fb84_1",
+    "type": "security-rule"
+}

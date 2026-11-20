@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Linen Inkwell banking trojan sample, as reported in campaign PTF-00951. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Linen Inkwell Banking Trojan: File with known malicious hash written (PTF-00951)",
+        "note": "## Triage and analysis\n\n### Investigating Linen Inkwell Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Linen Inkwell banking trojan in campaign PTF-00951.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"81dbde202264f10feba0896ebdb0b06248e74eb3ee624c7a29da377eca6843f5\" or \"102e45b851cf179ad0e054aecde3655b39b57445a93b064433ca569dfcd76bb6\" or \"72f11ce8a48de970ac6f2dc96939f071aa26f8e09fc416af49a3999d9d1ac157\" or \"d18fc9881c1ae127f74643260f219fa0c962e5200a18102c716bb8c8063a103e\" or \"28b33a7bcc1e233270dd06d5655f1bb46310c43a591a47e0bef4b1413bfb8d40\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00951"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "774b796d-20a6-534f-a1d7-b07571caa3ad",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Linen Inkwell",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-00951",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "774b796d-20a6-534f-a1d7-b07571caa3ad_1",
+    "type": "security-rule"
+}

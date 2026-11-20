@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Walnut Kettle espionage toolkit sample, as reported in campaign PTF-01293. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Walnut Kettle Espionage Toolkit: Process started from known malicious binary (PTF-01293)",
+        "note": "## Triage and analysis\n\n### Investigating Walnut Kettle Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Walnut Kettle espionage toolkit in campaign PTF-01293.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"144e30ec1f2332bd74a6339f94d182f575aeaa3939aaf2b9ecae6848615a9874\", \"c035611f44c7a8482d1f717f068dd9f05c6e37b672f524641587ad1694cbabbc\", \"b81f3e5b086367d9bc5076307fa24c761120d2255ee694944af18967f5dd2ad1\", \"5844a5bd374fbc6acf66351f3592eaa078934f73fa0d6ed44edceed2a501820b\", \"b24c8f6b653192c7349942bba38e2ffe5f2e34d9d004062e18fd6945f1a45770\", \"a80e83c71629647c05fb39569845c6b8ce228a42628811866d2a1861e7c25ae2\", \"0d50a229b65cb01dba6816efefb96282d8e0cfebe8ecab809fe6c475e33fe8c6\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01293"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "88241ff8-1dba-5843-9869-7941d6c574c9",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Walnut Kettle",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-01293",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "88241ff8-1dba-5843-9869-7941d6c574c9_1",
+    "type": "security-rule"
+}

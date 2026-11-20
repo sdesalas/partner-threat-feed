@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Slate Anvil cryptominer sample, as reported in campaign PTF-01938. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Slate Anvil Cryptominer: Process started from known malicious binary (PTF-01938)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Anvil Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Anvil cryptominer in campaign PTF-01938.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"bcd8bd9e65207749e8b6f073dc8dc6383cfce2134a34019e191cc7e97ca02bd4\", \"ef8c717f82f943d8f3a884a75574768091248ab749ca93ed78456e848617ad05\", \"2ecc0f996fa67096214e03187e78e40d7022d363e7e7985db4a3def85e773015\", \"b3450e1b77f3b4b04da6f2b09c1895703abbd7e054d522318dc5da9d79cd3513\", \"e369597248128181b71f844f346d95eb3ddd25460f811a3d7006b057238180fc\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01938"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "a81b70d3-b642-51d7-8c12-005e297695d3",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Slate Anvil",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-01938",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "a81b70d3-b642-51d7-8c12-005e297695d3_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Frosted Sieve botnet sample, as reported in campaign PTF-00721. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Frosted Sieve Botnet: File with known malicious hash written (PTF-00721)",
+        "note": "## Triage and analysis\n\n### Investigating Frosted Sieve Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Frosted Sieve botnet in campaign PTF-00721.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"c51be90497b8c7be8927f70a7650c69713f960088c28388406ad9a90e20a8bc8\" or \"3e391e35176e783710eb1d9f0181405986db28bd4e72fed0bbf479015f704579\" or \"4850c56b806c02dd8cf40394336d5973e916fb7aa563bb28631cda75e6cf13cc\" or \"a5defad08a11dabab72b349181fa5f062e8ca98fa508eb0a51cd916a9328d763\" or \"476ceb2009864deabd52c32303c6a43909f3a11c1dd37558e083b34c455463d9\" or \"6ab62f9e7b8b587a75322ec3a7f49f93d173d5694c509faac63015929e8be915\" or \"fcf933da91e26969d58d19ba82716d2393432647e68b3f54fd18765a1964ce7e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00721"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "44a39a49-7467-59a4-b341-f495dd9a96fb",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Frosted Sieve",
+            "Threat Type: Botnet",
+            "Campaign: PTF-00721",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "44a39a49-7467-59a4-b341-f495dd9a96fb_1",
+    "type": "security-rule"
+}

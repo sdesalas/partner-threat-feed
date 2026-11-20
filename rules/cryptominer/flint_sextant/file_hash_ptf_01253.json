@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Flint Sextant cryptominer sample, as reported in campaign PTF-01253. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Flint Sextant Cryptominer: File with known malicious hash written (PTF-01253)",
+        "note": "## Triage and analysis\n\n### Investigating Flint Sextant Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Flint Sextant cryptominer in campaign PTF-01253.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"343bc8dd0205761a44c0a513588c694ce1332260663d0d297796a9be226ac846\" or \"099a4f73dd5db709f1f1b9587b77a9ce77d2a183d69984376efc843a50011973\" or \"0fe4b3b1901c029bec3a5bf24ee52bc9e76b32164c5e8bfd92901fd32bfa122c\" or \"1580a3e0e1b4b384ef00182bc518e7a333a8bb9698a8e7788d4a61d7ae03484d\" or \"4c8b1b635e24d71ba360f9b620d15dac0cd736d31a1934be55dfb04c849f9944\" or \"c894a8c9b61cbcf88228085c240aa4d0bd966e0a4de02bc236c18706c5a6c128\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01253"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "dd2a58a2-1c75-5152-8293-f29527d180c3",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Flint Sextant",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-01253",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "dd2a58a2-1c75-5152-8293-f29527d180c3_1",
+    "type": "security-rule"
+}

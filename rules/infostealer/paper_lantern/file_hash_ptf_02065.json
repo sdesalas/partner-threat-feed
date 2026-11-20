@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Paper Lantern infostealer sample, as reported in campaign PTF-02065. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Paper Lantern Infostealer: File with known malicious hash written (PTF-02065)",
+        "note": "## Triage and analysis\n\n### Investigating Paper Lantern Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Paper Lantern infostealer in campaign PTF-02065.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"4c3efbf1761f39ae159e0ff709be9af9f734cc23f192111f121f173645294f06\" or \"ce8a695918541a5d47b9d83bb67b19f745b297909edd9cb8cd6a3cc32cbbbeb9\" or \"bbc8e33c9697059602bcaf7bc480c03858f76c3162af3178d11a143cf8dfcc04\" or \"c4627e2cfab3a1d45ca3629db750208644c217c53bfde0bff0afb570cc5f9b25\" or \"b25e3d10208d7bdb72f0fd24685f4068f25a5d4695e09e4b872658adcbc20998\" or \"12859d023ae3d163a78a746999e7ccf3bd4bd1a0171107012e5dd9021e85b0bc\" or \"11e3f1cc8f695148034435bbf9610e2afe81f121504b265e12326882c2331d50\" or \"76187c2b4eba43b9d036fc60736e2b9a5c9b0dd9d97f312d89a6b01da369d859\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02065"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f65650ca-4ed6-5a28-aaf6-f2f845ba4728",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Paper Lantern",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-02065",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "f65650ca-4ed6-5a28-aaf6-f2f845ba4728_1",
+    "type": "security-rule"
+}

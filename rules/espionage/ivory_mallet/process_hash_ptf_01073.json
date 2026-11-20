@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ivory Mallet espionage toolkit sample, as reported in campaign PTF-01073. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ivory Mallet Espionage Toolkit: Process started from known malicious binary (PTF-01073)",
+        "note": "## Triage and analysis\n\n### Investigating Ivory Mallet Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ivory Mallet espionage toolkit in campaign PTF-01073.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"0eff68b0029d285891d40facb96ae03aaea7176da3f891b323e1e75554be8fde\", \"6fde46816cf31368bf5a6d9c02f2a7120b653dc249333ba996f65d9cbe6bdc36\", \"7c9ef2265a6cb5a37162f9461a7d0bffca39bc212dacd400d7cf81cbd9b3e89d\", \"d106c73f8e9aa87302ceb210e4f63ac78dd620b8a3f2ed83028cdbff32882f5e\", \"e344f60c2959a1179ff499420657010b76c42a50d7513d874d65043e4db694e3\", \"5fc7febe413163cb680dd1c90466f5b551d9784676be3c6040665272bdccccde\", \"c90d77b181019e22795805a5b3a5c34f7903230aecc3ede3fe3428ebbb260faa\", \"ec59e1dd3827e21bc7d20cf2f1b2492a9522dd2c6ad4a29bc39f38e4b6508b92\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01073"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "52c47440-c486-59f7-bdff-7370bc473b7e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ivory Mallet",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-01073",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "52c47440-c486-59f7-bdff-7370bc473b7e_1",
+    "type": "security-rule"
+}

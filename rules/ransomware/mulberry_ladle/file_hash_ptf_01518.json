@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Mulberry Ladle ransomware sample, as reported in campaign PTF-01518. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Mulberry Ladle Ransomware: File with known malicious hash written (PTF-01518)",
+        "note": "## Triage and analysis\n\n### Investigating Mulberry Ladle Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mulberry Ladle ransomware in campaign PTF-01518.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"0dd914b976baa298a2ff76f07e41bdf76683d4258ab5075809efce9493305738\" or \"9db397c5c673a7f4c3f4abced0210b1136faf464bf899c6f6580b245eb75249c\" or \"747bf8a08853f686bccbcc963e1a8bc93597ab556152f785133d7916f3509fdd\" or \"1dd2d6c8b7eebec11c099688de7c74dc338718727e63573a66a55c2974fbdf15\" or \"e75cd0131709dd09220037fe82672accbe223bed4a186507649a5b55f61770ef\" or \"3f13f5806fea588ef1f6a706112779cb6a2fa2665777e0f2e8a0b867eabdf011\" or \"54f3d978d98c2f93912bd76e08e77b3c4314d57ce49d4b6325a549e9cccd5d34\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01518"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "a9580b02-dacc-5881-b32f-e4a634dab0fc",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Mulberry Ladle",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-01518",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "a9580b02-dacc-5881-b32f-e4a634dab0fc_1",
+    "type": "security-rule"
+}

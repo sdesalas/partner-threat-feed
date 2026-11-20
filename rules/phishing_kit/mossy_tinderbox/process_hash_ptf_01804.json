@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Mossy Tinderbox phishing kit sample, as reported in campaign PTF-01804. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Mossy Tinderbox Phishing Kit: Process started from known malicious binary (PTF-01804)",
+        "note": "## Triage and analysis\n\n### Investigating Mossy Tinderbox Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mossy Tinderbox phishing kit in campaign PTF-01804.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"2339432bf04fcf764b664f6235ab231321f255ace99b8476ace601f7c590a66d\", \"13cb6403f693ee02e9d259f4313c9b3b7c9c16b4df01c91f162c410c940dfc3f\", \"9b7d7ada7b2b010d8e1e5e86b52276015b6617950d1d8de373c509063c771de5\", \"97f8e9d375fe6a3a3cd889d9b73440b54ee9bb129304a28d1229ecb4af49e9a8\", \"e0bff7663ed168542443e88a10a765b02655f36bd98ce3e86156517f6b204d92\", \"28069bd33d23bc9ac263b605d2d0eb16eb5f6710d993771fdd05936f9c5e86e9\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01804"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "efd59f59-3d4a-57e3-ad88-c9e8dbe8c55a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Mossy Tinderbox",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-01804",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "efd59f59-3d4a-57e3-ad88-c9e8dbe8c55a_1",
+    "type": "security-rule"
+}

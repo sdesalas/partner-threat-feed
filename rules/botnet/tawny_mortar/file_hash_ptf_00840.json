@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Tawny Mortar botnet sample, as reported in campaign PTF-00840. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Tawny Mortar Botnet: File with known malicious hash written (PTF-00840)",
+        "note": "## Triage and analysis\n\n### Investigating Tawny Mortar Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tawny Mortar botnet in campaign PTF-00840.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"cb03ed71a5651f368620c30d9e7dd4f42dcabee36cd54aa5d7360adaea5e9fad\" or \"e11f0e2a5830de78baaa24c066d7606018d21ef3a6d35a89c360da9a3ebea51b\" or \"79da122fb1707b345fb388e5801d1d476c0df4949a723588cf0871a869980ece\" or \"b1cfeea081f4f0aa3de7b3ec3ccd4c1e2da0cf61ce20b2469b54ff26d8ef5a5f\" or \"819d71659092edec1a2a72e43c952d73ba767051f1f13d9c4f3f911059468be2\" or \"68431165e15acc264269b91027b97fbcfa703a511ffbf93452f9e9fb30b35df4\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00840"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "516496c6-6d2c-5487-be0b-344eec15158e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Tawny Mortar",
+            "Threat Type: Botnet",
+            "Campaign: PTF-00840",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "516496c6-6d2c-5487-be0b-344eec15158e_1",
+    "type": "security-rule"
+}

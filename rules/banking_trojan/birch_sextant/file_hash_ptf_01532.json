@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Birch Sextant banking trojan sample, as reported in campaign PTF-01532. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Birch Sextant Banking Trojan: File with known malicious hash written (PTF-01532)",
+        "note": "## Triage and analysis\n\n### Investigating Birch Sextant Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Birch Sextant banking trojan in campaign PTF-01532.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"15023df519fbaf9d7f103133c524aed82787affa59ad6cedc9afec278e46655d\" or \"18f2e1ec62d900a8a9e7f5cef494e7207f8176ddd0e8c3cf65dbf41e4b2fa05b\" or \"ffa250a662e75997a4f5e1732446b7def2bd75d50dafdfc013799b4db9664f9b\" or \"9d12a88844c31a8a13202f382bc1d474532ec7d85eada4f6db126eaad31a0c98\" or \"04789a36519082ac774a2ea82d716cdc16387e2e634ee3068ac9753d866d8d4a\" or \"d238f4e0c2b9a20083d15d3dc39cf15d95b2d4340cc26858d2f2afe13dde0fca\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01532"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "9fbb0301-4125-576c-87eb-1c69b22d36f6",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Birch Sextant",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-01532",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "9fbb0301-4125-576c-87eb-1c69b22d36f6_1",
+    "type": "security-rule"
+}

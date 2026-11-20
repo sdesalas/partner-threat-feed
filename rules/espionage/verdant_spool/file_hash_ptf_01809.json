@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Verdant Spool espionage toolkit sample, as reported in campaign PTF-01809. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Verdant Spool Espionage Toolkit: File with known malicious hash written (PTF-01809)",
+        "note": "## Triage and analysis\n\n### Investigating Verdant Spool Espionage Toolkit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Verdant Spool espionage toolkit in campaign PTF-01809.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"db945b531b49b3a529fdd950b6e8662eff69efd8c5fb45adb83845fbec933a81\" or \"114db99952fdd59ec3afe930f0a97cb6c5ab10955b1153a9de38f16d030de92e\" or \"828f49b111dcd352f49fb00c8c0ace0402d2a4359eba82130d2d5c917b7683fe\" or \"2f60c20a8c6956213f261f1d1fabdc20ffb64589a6c739dc1e0121cc4c4577e0\" or \"003d18207bed1be41a77e0a84346f7697681324bc74d35fe4eaea58495a389a7\" or \"c5e1ce9316355c95029b7cf6c378abf4623986f5481b6bfc3cc2814421243070\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01809"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d50c9b55-750e-5762-bf14-87b77bc0a49a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Verdant Spool",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-01809",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "d50c9b55-750e-5762-bf14-87b77bc0a49a_1",
+    "type": "security-rule"
+}

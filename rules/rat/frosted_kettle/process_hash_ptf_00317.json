@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Frosted Kettle remote access trojan sample, as reported in campaign PTF-00317. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Frosted Kettle Remote Access Trojan: Process started from known malicious binary (PTF-00317)",
+        "note": "## Triage and analysis\n\n### Investigating Frosted Kettle Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Frosted Kettle remote access trojan in campaign PTF-00317.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"8ea3f07a2e353017dfcc69cd82052d5046dc98ea98262a88bafa23fce9c618dd\", \"31195b48fd6e2a6eb09b11ac6b61094f624442942c6f74ff57226ce9fa268e42\", \"b529eff9b9ee98f8e877e56a8598aa106cdb875ebc885e71257000e2cd4b9279\", \"e7d14c42f9ad9bd0a2e2e2af01ebd835732d158dd3ac6fd7fd0b9ffa1c0605cb\", \"b60716ae819ae0955c3a5ae0874f4ba8a94123e95031661ff521e17d96ad6242\", \"def69a8ddcb0eb31782590a48b453d7e7763a327572aede81af236b2f220513b\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00317"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "1370ceb2-ee02-5b18-b59e-a1b736413a12",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Frosted Kettle",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-00317",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "1370ceb2-ee02-5b18-b59e-a1b736413a12_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Clay Trellis loader sample, as reported in campaign PTF-00676. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Clay Trellis Loader: Process started from known malicious binary (PTF-00676)",
+        "note": "## Triage and analysis\n\n### Investigating Clay Trellis Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Clay Trellis loader in campaign PTF-00676.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"e60f01c0b9c09be3064b4ee36e8c2fd9cbf4f2279eb5cd5b16b7f7587691d3d3\", \"38a17680a6d73ed4c875343ff5ba9fe8b3b410308e2f42e8a2b43e9550e8b84c\", \"17bf0712a4f66baf09728b7d1a10e4994a121c38eb6f4da9bfb7b49f00d8f622\", \"f67261aab396ca4d5fda2ec558ca81f0a30ec0648c6087cd8653bbd86bddd90c\", \"321a5552b5f1ed479b09b35ca5498c06153dafd5e977152e4b978ba4271807f5\", \"8b7426c5ecc99745070069070312e04efc934a422135ea4bc7824c2e6176e408\", \"ad44effa68c245b909d5dfcfd914a48d06ee47c9c7f0958d471d5a42d9dabb38\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00676"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "404819eb-2cbd-5063-9bb5-47e59dc7c814",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Clay Trellis",
+            "Threat Type: Loader",
+            "Campaign: PTF-00676",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "404819eb-2cbd-5063-9bb5-47e59dc7c814_1",
+    "type": "security-rule"
+}

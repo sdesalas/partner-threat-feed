@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies email messages from sender addresses used to deliver the Rosewood Spindle ransomware, as reported in campaign PTF-00553. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-email-*",
+            "filebeat-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Rosewood Spindle Ransomware: Email from known phishing sender (PTF-00553)",
+        "note": "## Triage and analysis\n\n### Investigating Rosewood Spindle Ransomware: Email from known phishing sender\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Rosewood Spindle ransomware in campaign PTF-00553.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "email.from.address:(\"accounts@track-assets9.example\" or \"hr@login-login9.example\" or \"support@cdn-media58.test\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00553"
+        ],
+        "related_integrations": [],
+        "risk_score": 47,
+        "rule_id": "33381c92-6728-5cf2-8a05-cc041af12981",
+        "severity": "medium",
+        "tags": [
+            "Domain: Email",
+            "Use Case: Threat Detection",
+            "Tactic: Initial Access",
+            "Threat: Rosewood Spindle",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-00553",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0001",
+                    "name": "Initial Access",
+                    "reference": "https://attack.mitre.org/tactics/TA0001/"
+                },
+                "technique": [
+                    {
+                        "id": "T1566",
+                        "name": "Phishing",
+                        "reference": "https://attack.mitre.org/techniques/T1566/",
+                        "subtechnique": [
+                            {
+                                "id": "T1566.001",
+                                "name": "Spearphishing Attachment",
+                                "reference": "https://attack.mitre.org/techniques/T1566/001/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "33381c92-6728-5cf2-8a05-cc041af12981_1",
+    "type": "security-rule"
+}

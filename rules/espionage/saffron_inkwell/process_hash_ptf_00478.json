@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Saffron Inkwell espionage toolkit sample, as reported in campaign PTF-00478. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Saffron Inkwell Espionage Toolkit: Process started from known malicious binary (PTF-00478)",
+        "note": "## Triage and analysis\n\n### Investigating Saffron Inkwell Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Saffron Inkwell espionage toolkit in campaign PTF-00478.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"2dd0827b3eecf0bb8099a73745b898d9c384ced1473cd29986b282d770cff00d\", \"d1ba24bbe784d94eed75d1077ad18ed9bd7caa4a9ee36454f7b1634b5dd93409\", \"efbd101ebaab9a0dc3d6c9329d8bda3790f7791f1c6ad5ffe45ec748a0dff340\", \"083b0355ece183347bc0714ff04dc9552967f6d4537ba0d60072c4d5a5779da7\", \"c126e529736bc13020c1a3d8e388bdb9dc1d5be6c9acebc7b52d69ddc582b3ae\", \"f9e9786773ed5675624d5ec7790b6bfd2fec4595aaa4fa78df8919249e6cfb73\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00478"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ad21a565-f40f-5215-bfd4-9257d14ae720",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Saffron Inkwell",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-00478",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "ad21a565-f40f-5215-bfd4-9257d14ae720_1",
+    "type": "security-rule"
+}

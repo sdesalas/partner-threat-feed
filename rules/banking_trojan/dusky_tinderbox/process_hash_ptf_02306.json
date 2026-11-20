@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Dusky Tinderbox banking trojan sample, as reported in campaign PTF-02306. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Dusky Tinderbox Banking Trojan: Process started from known malicious binary (PTF-02306)",
+        "note": "## Triage and analysis\n\n### Investigating Dusky Tinderbox Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Dusky Tinderbox banking trojan in campaign PTF-02306.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"1ab153e2556832364865f0ed4eb04acebb92575c8db6d3b75efa485a59ccb012\", \"a65f14182cb23efd05f73b9c2cd002e5cdbf253a5b00ff29f755e98b30da3ef6\", \"4a654d86fe2ca56c090f72bfeac0d343fe3b99901c0b28ee079ff2c01ebf68e2\", \"3ed09fc6d0c78e4b59878be3dbb8838b526c9070734a973d9f384fc139498591\", \"a728a994813be47202cb32caa9ee9b1e1060d2010c5084ad4e07248c7e5e9bea\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02306"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "aea76dec-c7ed-568b-84de-257551abbbee",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Dusky Tinderbox",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-02306",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "aea76dec-c7ed-568b-84de-257551abbbee_1",
+    "type": "security-rule"
+}

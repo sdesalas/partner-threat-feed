@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Hollow Funnel banking trojan sample, as reported in campaign PTF-01176. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Hollow Funnel Banking Trojan: Process started from known malicious binary (PTF-01176)",
+        "note": "## Triage and analysis\n\n### Investigating Hollow Funnel Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hollow Funnel banking trojan in campaign PTF-01176.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"1b6fecf06a0c93ce00e9b5f42ba60738b1b215aeac92c5bc65e2c870d73e2b8f\", \"bea4e83a5cc4e1f129ba65eb1d57a6d90bde826689c4dbe2c196790d5cfa4266\", \"e9dd5b390770b9cc99c9ee297ec4e0ffc0cacad918d26017907782e1b38643f6\", \"149ce562ed566a7b26f4b2c979fe35e4d84f0cd3fdffe810d13e88f1e6d72a09\", \"0457b5fd0cbe15ada655de3ee2a62300826043a21bcc998ea56088afc7e3b05a\", \"88440cae16b9654f73adb79010118e7f80a1daa8ef758598140ab07e16142261\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01176"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "fbf99b4f-5dae-5d4a-8c7e-ccef77f6ac57",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Hollow Funnel",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-01176",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "fbf99b4f-5dae-5d4a-8c7e-ccef77f6ac57_1",
+    "type": "security-rule"
+}

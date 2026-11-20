@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ochre Sieve infostealer sample, as reported in campaign PTF-00900. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ochre Sieve Infostealer: Process started from known malicious binary (PTF-00900)",
+        "note": "## Triage and analysis\n\n### Investigating Ochre Sieve Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ochre Sieve infostealer in campaign PTF-00900.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"7de67830a1ee0067e8678554565bcdefef3c680d3f92508cf1681a3b1e984a32\", \"780f6a5dd1522e67cc9d90bea1f719397dc5a9a2133172cd171245eaff1e088b\", \"3bd7c8e8dabe3b7c36896be028dd0f342df4ad2e5df537a4807267617ad97673\", \"b5254d42024907b29ef48fe85d5f38cc462551eccdd91344cbdcde1f0a2b4685\", \"005995be7d4b942be7e5f999227da04d8e2e715057e582b9c816146e903e1d8f\", \"f470dabf361e4f64380e3383dcda8a75f2e123effced395039777a79a9b3c48a\", \"ce2aa6aecc7ea28436668e4474bcf4765a8eb45ac13b73bb87ec1b7e36fe7523\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00900"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "4bc54bef-75fd-5e34-a7d5-543dcdb131fd",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ochre Sieve",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-00900",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "4bc54bef-75fd-5e34-a7d5-543dcdb131fd_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Mossy Pulley botnet sample, as reported in campaign PTF-01759. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Mossy Pulley Botnet: Process started from known malicious binary (PTF-01759)",
+        "note": "## Triage and analysis\n\n### Investigating Mossy Pulley Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mossy Pulley botnet in campaign PTF-01759.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"81bdabf208d725eba752d6f63f68179e311a379b2b47731aa0a7b56b47b922c7\", \"5a25103279d4cf6718e65b722673f202d8fd966ffbef62f3811d68d610e89821\", \"448d7b4835b541174c5b388b1f31024eae070c2935fce34ddebecdabd434ee70\", \"be327fd5790c4745036e2a03f550affa9378a854d519f74e1772b1aa535f8f64\", \"c8085cea4c2cc7b9c2a6359e624856d509eceb3ab4c929787e2d9450347a7d6d\", \"7331a290d19150608052ce1534569e89e95e3a52746c912d4476594aa85c3c5a\", \"47681f57d65b4a088a63b4939763c61d50b3a9325f5378117d79289488bd17a0\", \"393a26c655dcfbe4875cca5f29d25ffc44ab9352b6b76027f7b50e15ad91c9c3\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01759"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "70426b31-5ec3-5c2d-86df-2f39e1bf165f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Mossy Pulley",
+            "Threat Type: Botnet",
+            "Campaign: PTF-01759",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "70426b31-5ec3-5c2d-86df-2f39e1bf165f_1",
+    "type": "security-rule"
+}

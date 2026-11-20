@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Slate Teapot remote access trojan sample, as reported in campaign PTF-01553. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Slate Teapot Remote Access Trojan: Process started from known malicious binary (PTF-01553)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Teapot Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Teapot remote access trojan in campaign PTF-01553.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"7ba2c145258e0cdff2e0a2a88bf17f17a60d7b27904eb80c790e5c9789b5101c\", \"0f7ed56a92f4e63192371f51faaa9683f567cb975f3452cba09a2467703ecfa5\", \"fc1a80fb00aeb21eaad45cfae4718f4aaf49a2b5d429624faafa64b676ad1eb9\", \"b0257939b6a0071fd88a1614d259656869ca75b31e51c45ad24f5b507828c903\", \"d58beae0d3c38e9b4123644a306e504bc47b6ad35cfab19eeff937710284e564\", \"3ed3ca870e7342f5eca0ec9f3fdb3c8dd3f8cd16e784056bcc5e17a6f92c21f5\", \"3c79af301a37d88b2055cbaeac9519acf7ba7f099ea5d297db817742f14e8897\", \"1383c5d9d825ccffb274808074e67984963270d05e170a995f3774d02ca964dc\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01553"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e4160cf4-fed8-5658-af2b-4e818574ed54",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Slate Teapot",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-01553",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "e4160cf4-fed8-5658-af2b-4e818574ed54_1",
+    "type": "security-rule"
+}

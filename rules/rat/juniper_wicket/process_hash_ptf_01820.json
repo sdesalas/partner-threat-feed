@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Juniper Wicket remote access trojan sample, as reported in campaign PTF-01820. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Juniper Wicket Remote Access Trojan: Process started from known malicious binary (PTF-01820)",
+        "note": "## Triage and analysis\n\n### Investigating Juniper Wicket Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Juniper Wicket remote access trojan in campaign PTF-01820.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"ec79e356e9f6c9f976f01eec562d6c3e5694083b9e04ccfc8071cd0cc342b0be\", \"58a7e78df574a77ab95c0ef1d9c07071555489def8ebe4876812cd92501c26c1\", \"31a4dd149e18ad142639ddf1c90470efa5262794f5258b5d40fda6fea9be6981\", \"18ff63cb3f9a7804b9acb5bc29f2d3fc64f5eb6692ee3bf0bc100471167adf8c\", \"fc4ca03b431343046dbebbd216553dafe9f996ec415e11f18f510c0b410e8ab0\", \"5230b139dfa958f8518080baf6c15901374064a109251502de736ec61166b0ff\", \"0bf895182a0ce1e306adebb22cd3516b7c67f29c754b0f17d218da1d3cfd6ca4\", \"8a74550aa4a5022476856c77b6d65dd26968aae4ba8b3d06770e13000a873213\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01820"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e6735299-f9c2-5ec0-9a5d-50b4bbf2b63c",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Juniper Wicket",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-01820",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "e6735299-f9c2-5ec0-9a5d-50b4bbf2b63c_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Driftwood Easel phishing kit payloads, as reported in campaign PTF-01768. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Driftwood Easel Phishing Kit: Request to known payload URL (PTF-01768)",
+        "note": "## Triage and analysis\n\n### Investigating Driftwood Easel Phishing Kit: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Driftwood Easel phishing kit in campaign PTF-01768.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://cdn-api43.example/install/1588.bin\" or \"https://connect-mail53.test/update/8832.bin\" or \"https://login-static30.invalid/update/4048.php\" or \"https://media-assets73.test/update/5309.zip\" or \"https://relay-login37.example/download/8338.msi\" or \"https://relay-node89.invalid/payload/9669.bin\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01768"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "15c81a6d-8b4e-5ecb-8365-3ec87766a839",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Driftwood Easel",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-01768",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "15c81a6d-8b4e-5ecb-8365-3ec87766a839_1",
+    "type": "security-rule"
+}

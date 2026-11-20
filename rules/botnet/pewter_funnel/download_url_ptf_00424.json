@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Pewter Funnel botnet payloads, as reported in campaign PTF-00424. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Pewter Funnel Botnet: Request to known payload URL (PTF-00424)",
+        "note": "## Triage and analysis\n\n### Investigating Pewter Funnel Botnet: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Pewter Funnel botnet in campaign PTF-00424.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://auth-auth31.invalid/gate/5288.zip\" or \"https://data-auth52.invalid/payload/2156.php\" or \"https://edge-static31.test/invoice/9777.msi\" or \"https://node-node33.test/invoice/9710.zip\" or \"https://update-cdn96.test/payload/8205.php\" or \"https://update-static72.invalid/doc/6364.bin\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00424"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "5067c432-4906-579c-aacd-ab6ddfed4fca",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Pewter Funnel",
+            "Threat Type: Botnet",
+            "Campaign: PTF-00424",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "5067c432-4906-579c-aacd-ab6ddfed4fca_1",
+    "type": "security-rule"
+}

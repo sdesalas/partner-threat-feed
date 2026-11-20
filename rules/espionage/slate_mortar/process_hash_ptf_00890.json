@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Slate Mortar espionage toolkit sample, as reported in campaign PTF-00890. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Slate Mortar Espionage Toolkit: Process started from known malicious binary (PTF-00890)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Mortar Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Mortar espionage toolkit in campaign PTF-00890.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"e20826d9b4731ffcf1c7d8da2c1b33457a4bbdfeb4448c57e9f79049fb0ccda2\", \"aee0116c9920747222a6104457d3c343de7c3cc7aea23a6620eea0169cc43269\", \"9acc820fce257b2e8beeba732e68ac3b62d0bd161a36e52cfa6d768c2f5aa489\", \"9c295948a694258037b728acd7ae5ae3c9932d26a06842b90b6fbba70a664e81\", \"5ae12d70ca0926eebae92797ae2fb901be95c0ffa62116600994753c7a96b17d\", \"9f6a5fec0b430c72367b0d550e945d36f95f98b21c8830b03ef1651f2d0deee9\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00890"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "66ecc09e-21ae-5d9e-85f1-f06469f2134f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Slate Mortar",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-00890",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "66ecc09e-21ae-5d9e-85f1-f06469f2134f_1",
+    "type": "security-rule"
+}

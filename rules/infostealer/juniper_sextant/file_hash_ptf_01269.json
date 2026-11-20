@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Juniper Sextant infostealer sample, as reported in campaign PTF-01269. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Juniper Sextant Infostealer: File with known malicious hash written (PTF-01269)",
+        "note": "## Triage and analysis\n\n### Investigating Juniper Sextant Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Juniper Sextant infostealer in campaign PTF-01269.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"d5651cb90367fb66f73f67a0c91aaa7be97b5333d62ae04468ff7d960e2b7a45\" or \"ff0bd33a7d870bfaf00b4df0dc5a0db66cdfd4a7a58c82bc037fb8cd94721d90\" or \"259e8f6e60d168461ef1ea73061968a6dd13d091fad26438ff6bb3e0a80dceae\" or \"d099b62c65ede36cd0906d5b31bed02c7de925604331f973158026eecbbc47f1\" or \"3aa552cf8af90ecb059afa6fbd079b8fe123991aa43bc7e0952ad8df381fb59e\" or \"e2b58c0a8c17052a0095700fcc14dceff67fff01c96971a37e4b92e55f15714f\" or \"2f106d7130e8b84e9ed15e3fd87802b7e784859eb6d6f4348a98b8174cfa128e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01269"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "5fb65f70-cb5a-5cfa-8705-57d608ff80ad",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Juniper Sextant",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-01269",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "5fb65f70-cb5a-5cfa-8705-57d608ff80ad_1",
+    "type": "security-rule"
+}

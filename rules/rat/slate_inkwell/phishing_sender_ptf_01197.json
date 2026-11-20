@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies email messages from sender addresses used to deliver the Slate Inkwell remote access trojan, as reported in campaign PTF-01197. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-email-*",
+            "filebeat-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Slate Inkwell Remote Access Trojan: Email from known phishing sender (PTF-01197)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Inkwell Remote Access Trojan: Email from known phishing sender\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Inkwell remote access trojan in campaign PTF-01197.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "email.from.address:(\"billing@cdn-static60.test\" or \"billing@mail-api27.invalid\" or \"billing@track-assets48.example\" or \"hr@auth-update58.test\" or \"hr@sync-assets68.invalid\" or \"it-helpdesk@track-update55.example\" or \"shipping@node-login96.invalid\" or \"support@api-media77.test\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01197"
+        ],
+        "related_integrations": [],
+        "risk_score": 47,
+        "rule_id": "fb8db13c-67a0-5eec-a727-1d094b092fa8",
+        "severity": "medium",
+        "tags": [
+            "Domain: Email",
+            "Use Case: Threat Detection",
+            "Tactic: Initial Access",
+            "Threat: Slate Inkwell",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-01197",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0001",
+                    "name": "Initial Access",
+                    "reference": "https://attack.mitre.org/tactics/TA0001/"
+                },
+                "technique": [
+                    {
+                        "id": "T1566",
+                        "name": "Phishing",
+                        "reference": "https://attack.mitre.org/techniques/T1566/",
+                        "subtechnique": [
+                            {
+                                "id": "T1566.001",
+                                "name": "Spearphishing Attachment",
+                                "reference": "https://attack.mitre.org/techniques/T1566/001/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "fb8db13c-67a0-5eec-a727-1d094b092fa8_1",
+    "type": "security-rule"
+}

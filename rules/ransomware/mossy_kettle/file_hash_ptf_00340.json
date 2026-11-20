@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Mossy Kettle ransomware sample, as reported in campaign PTF-00340. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Mossy Kettle Ransomware: File with known malicious hash written (PTF-00340)",
+        "note": "## Triage and analysis\n\n### Investigating Mossy Kettle Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mossy Kettle ransomware in campaign PTF-00340.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"281d53bea6b5df680f89aefa0f9fcfffc1bc61ae6b8327102fc039554efe05cb\" or \"147049cf7ba1f5ecbd46693b3df6d6fd596ff430e74ad4361ebc2913ab5d055e\" or \"c68067adefb291f3d10b4a3d30c0ae36c26f211ff5e5d1b4ff6b31e2c4f94373\" or \"269e5138ba085ac6382ad6c953e3e7cf75046b3a9b2ebc894b74b019a76e1b65\" or \"ffc4a88f0d6ea07cd63e0c3dddad638822ef9912743b37c49df6acc4a3e14bb6\" or \"0674b521400f84151b3ceadf8b81751a267c8a379162fa676053f78e30f909d2\" or \"cdd1bf659704d631c484649f21b54823dafcd80e467ee8111a4554e65066aa76\" or \"c0cf7ac4e58987e4fbfea5eeb549545b104f477d7ac6d15418dc095ee6e0784a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00340"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f5eebc92-5c2c-5031-a721-e2e13f3257d9",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Mossy Kettle",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-00340",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "f5eebc92-5c2c-5031-a721-e2e13f3257d9_1",
+    "type": "security-rule"
+}

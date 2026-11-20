@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Verdant Funnel loader sample, as reported in campaign PTF-01494. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Verdant Funnel Loader: Process started from known malicious binary (PTF-01494)",
+        "note": "## Triage and analysis\n\n### Investigating Verdant Funnel Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Verdant Funnel loader in campaign PTF-01494.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"5627cabb37ddefef3b53483b0da6c2dbf05ba78873dac51c5a93877282b21c16\", \"617a7fe0cb87a956b418205927a3732e53df862939dc0d0a07d5e5266a8c1021\", \"fc559363e785f31768ebefc0493cabaa717f6a2f40ec62988b97f446290c4f99\", \"35ac099b4f432f7efb669cc80e8062fd05065419cbae376b911c276a551419fa\", \"54971c131bedf86cf1ba7f567012425cef552f92e6a576b4f1d78657d9b02b7e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01494"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "fd10b074-9b74-50da-8da3-c9b20d59377a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Verdant Funnel",
+            "Threat Type: Loader",
+            "Campaign: PTF-01494",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "fd10b074-9b74-50da-8da3-c9b20d59377a_1",
+    "type": "security-rule"
+}

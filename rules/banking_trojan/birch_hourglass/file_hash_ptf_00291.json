@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Birch Hourglass banking trojan sample, as reported in campaign PTF-00291. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Birch Hourglass Banking Trojan: File with known malicious hash written (PTF-00291)",
+        "note": "## Triage and analysis\n\n### Investigating Birch Hourglass Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Birch Hourglass banking trojan in campaign PTF-00291.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"615933821f52b76d1c4e1bbdf4762ca008bf5bb5dd6533ac5319a09fe65f49f5\" or \"8b1d4786ca1cc8c29c66ab1a36fc65ecd4ed4a44d6790be1eab2564e368e80f4\" or \"e7dfb3f6d826bf0ef4c990ac8e54f7ec467726bad03ae23b1a3b7f80f6b258b1\" or \"5a62c4588be4c76b4714e18a6be6bfa6420e80f0b0289154dc6773ab239d1f65\" or \"25206316a52120b744182f718ac73745df5c231fdd0a6efd2e7e807cd1a90902\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00291"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "729bdeb5-b152-5288-a0c3-14b864d2bd1f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Birch Hourglass",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-00291",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "729bdeb5-b152-5288-a0c3-14b864d2bd1f_1",
+    "type": "security-rule"
+}

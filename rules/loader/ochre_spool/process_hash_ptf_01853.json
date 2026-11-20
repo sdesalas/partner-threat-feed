@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ochre Spool loader sample, as reported in campaign PTF-01853. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ochre Spool Loader: Process started from known malicious binary (PTF-01853)",
+        "note": "## Triage and analysis\n\n### Investigating Ochre Spool Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ochre Spool loader in campaign PTF-01853.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"bd2a47ee56b6d9c22c446cf1a84b315ce7394f09303e6b0e68620418dfb89c86\", \"50ee6ff048fd81d598e8bfdc89701031d67741b96086e6084637c45d37dd597e\", \"337bf6497539a257254cdc22ca381f572c8dee78d28fd1c0b9d8f6920235a0ba\", \"6f5095d233352bd3af789d7e5807bc44dc531ff7cb62c8ff902e6bac1b5095fb\", \"c7402a9a6d0f25cd482c078520f36d6a8353470d62a86d0b2e9d6f7fac9c5136\", \"e58023792d21a037d9386c05674c20aafdbf8b64798cb7bb5d1f5152b54083d3\", \"b1bcbc83859a3cdf23ed61cfb9752a38046c14de9190340aa5d630f30a1afe11\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01853"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "77a16be3-2279-5488-9a3b-207b26945946",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ochre Spool",
+            "Threat Type: Loader",
+            "Campaign: PTF-01853",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "77a16be3-2279-5488-9a3b-207b26945946_1",
+    "type": "security-rule"
+}

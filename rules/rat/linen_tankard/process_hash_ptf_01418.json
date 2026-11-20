@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Linen Tankard remote access trojan sample, as reported in campaign PTF-01418. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Linen Tankard Remote Access Trojan: Process started from known malicious binary (PTF-01418)",
+        "note": "## Triage and analysis\n\n### Investigating Linen Tankard Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Linen Tankard remote access trojan in campaign PTF-01418.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"d0685d47bd1bed14a6d4fbddb06b2cb9f148d2d0926f395b14fb0b375dae3b93\", \"5decce483220b4ba36cd7685883461c87010a75e69f73200180f164477aea92a\", \"0c3430c80c5336fbaaa2f7e67fdd13ec7d8419daad83aa694f3a31344eff7d3b\", \"53440432b6164a15f6d186120db42797017ea8c015bb0bc894a7b29bb3ced059\", \"4afba1567020ce0ef73d77877834ae705d99354595a01e64aea01d483bf12cd3\", \"191149eacd463a62530cdaf9a8b55eef1e17b751c08b1368c0c832118424369f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01418"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "a9b4df96-5245-51f1-9a5e-a2b119b4cf11",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Linen Tankard",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-01418",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "a9b4df96-5245-51f1-9a5e-a2b119b4cf11_1",
+    "type": "security-rule"
+}

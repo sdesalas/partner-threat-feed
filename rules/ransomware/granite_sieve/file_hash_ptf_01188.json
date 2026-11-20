@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Granite Sieve ransomware sample, as reported in campaign PTF-01188. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Granite Sieve Ransomware: File with known malicious hash written (PTF-01188)",
+        "note": "## Triage and analysis\n\n### Investigating Granite Sieve Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Granite Sieve ransomware in campaign PTF-01188.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"cc3d6eb24d581625571fd4f0a97a8fa8a9c3c32ca50b23a314161ed63ee71e71\" or \"54853d7c6e3540b1ac78d0ff8b53e167bbfd8a75a0f1186d6ad36c78e9d6746a\" or \"a460dbd782ee4cb5b9535d67c44c9a806d79c5b7231f5752435331b03ccce882\" or \"ccdf3571b491afe10811874a28e688cbc7f0f4ca031f38267f8419e9f00285df\" or \"7da9a6b523467012925c7500cca5beb8c6b143aa63ee9e666d59b6e2448bd6d8\" or \"6b94e2a7b08fdbd451677d2e5bf10b9b54f77dd87f00540a47886b49ad3c4817\" or \"403657e63cf2598fe98b4a55b92459c54fce814b996937a70398b118a0bda84c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01188"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "57f5e549-e441-5a0b-b26d-3e945d1a6253",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Granite Sieve",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-01188",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "57f5e549-e441-5a0b-b26d-3e945d1a6253_1",
+    "type": "security-rule"
+}

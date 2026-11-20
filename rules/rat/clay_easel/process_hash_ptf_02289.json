@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Clay Easel remote access trojan sample, as reported in campaign PTF-02289. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Clay Easel Remote Access Trojan: Process started from known malicious binary (PTF-02289)",
+        "note": "## Triage and analysis\n\n### Investigating Clay Easel Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Clay Easel remote access trojan in campaign PTF-02289.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"641bdbd135be6e941a7cb016d628c432b382b454f40867b4d5819744f31ef0b9\", \"05a0a2f47114d0e1eb54313369233ffd13df377e59d10d5316a1a034ebc648cc\", \"5dc29f9a2387cf1ef2befbbddde9653eb49ae7fe5a2442ff62db629c2046856a\", \"3f68d8f42bbaad4d391d48fba6f718ced0de23ebad2477e085e1771ed274d30f\", \"4dbed88690e65b86634108ff152469ed714f2b18f4056ebf1333c18c986ba9cd\", \"d592a63ea4b829de0c7cc6d078b9bd79029a9ca16a5461c6e309185861db1473\", \"080ccfe74a06ff4022a01296bac08cf169a8cf247a39f738e4517a8d93a294c9\", \"6ef58f98005163c27666aaa5c9e16ddc5439b1e292ff4ca791c6bc03dd83f783\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02289"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e4a0de32-d5c2-50d6-a9d9-9ef849e772c4",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Clay Easel",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-02289",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "e4a0de32-d5c2-50d6-a9d9-9ef849e772c4_1",
+    "type": "security-rule"
+}

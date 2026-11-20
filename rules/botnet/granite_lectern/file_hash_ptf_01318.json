@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Granite Lectern botnet sample, as reported in campaign PTF-01318. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Granite Lectern Botnet: File with known malicious hash written (PTF-01318)",
+        "note": "## Triage and analysis\n\n### Investigating Granite Lectern Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Granite Lectern botnet in campaign PTF-01318.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"5d2fabf6ccb92d3d554643578f0dd68223868e6bdc0b04b1900e12779c275c69\" or \"353542a1cc0443caa6b6122b4147d3e8b4f8b070e3e6b7a1d59a6a7f0578caaa\" or \"2c9958a094bb92556ca897b717150e7a2a5eb088e30b61d6fe2f311d025a4d36\" or \"004404460b78d17ddb90d01f7acdf19d06f363587d1750792b5de107de30877a\" or \"80eff3b7a53adf22bbee2b94df52b9a2ea35a1deef509b437d999460b56f2f69\" or \"5e6c74f24bc578cc42d52ab0f7466a62027911186741dc2a0ca10e5af4799b55\" or \"6c8b6c43b988c1266e1163be5e9b14ecc8dd11eafc1e7a49b7f6343acfa645de\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01318"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "c12e8b10-5554-573f-aa2c-8fef09a0adae",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Granite Lectern",
+            "Threat Type: Botnet",
+            "Campaign: PTF-01318",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "c12e8b10-5554-573f-aa2c-8fef09a0adae_1",
+    "type": "security-rule"
+}

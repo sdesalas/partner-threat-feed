@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Gilded Jigsaw infostealer sample, as reported in campaign PTF-00209. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Gilded Jigsaw Infostealer: File with known malicious hash written (PTF-00209)",
+        "note": "## Triage and analysis\n\n### Investigating Gilded Jigsaw Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Gilded Jigsaw infostealer in campaign PTF-00209.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"1f53f222bfa1639ecb2aa0558cfc7e9daa4704955cf4caf9a128e8e03d0554df\" or \"b56c95bfafeb03486a1cbc30bd30a24ba0226b3db9a45b2502b8a33689e88eb6\" or \"716b2de21a324a8afe1ca27b6071b873d8212a7cebee8fcd61a9375d75200ef9\" or \"e0b588673a936ddbfd499f8aef56e5da299f9bbf833fb8d334212d66f29ca79c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00209"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b879ea55-037d-52b2-b4c3-9198112b5f13",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Gilded Jigsaw",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-00209",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "b879ea55-037d-52b2-b4c3-9198112b5f13_1",
+    "type": "security-rule"
+}

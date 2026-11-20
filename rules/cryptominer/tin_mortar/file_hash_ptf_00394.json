@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Tin Mortar cryptominer sample, as reported in campaign PTF-00394. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Tin Mortar Cryptominer: File with known malicious hash written (PTF-00394)",
+        "note": "## Triage and analysis\n\n### Investigating Tin Mortar Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tin Mortar cryptominer in campaign PTF-00394.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"6397a95a8c16be7ffd7d021c197d8ca9def002942286a83219b8e294e75f4a49\" or \"5d17a6073d6730344ee9f62f03071b1ce74ffd96c3530e2be28d3631994939d7\" or \"7d008f330d6adfe08d9b4dbe4c0087dcd297c164959f095adc46ac0495aa281d\" or \"5d2de0d8df95c2f75195add189410b007e35f967ada7397a4ac7aeb3bda307c3\" or \"03d9db42bfd4e61546d602a36a0c6f376fdb813d19f7bb82718b282e91661e97\" or \"ee673f07e0f60127929a8beae8073043c4f04499c00a8d610bf31ff5879b65b4\" or \"ec76e3233cfbaeddcc7e045fd38220ce980f17ec061d017f2909561f51d3334b\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00394"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "af96a424-b0d3-5da0-9c38-725aa146fd98",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Tin Mortar",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-00394",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "af96a424-b0d3-5da0-9c38-725aa146fd98_1",
+    "type": "security-rule"
+}

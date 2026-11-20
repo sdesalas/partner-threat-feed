@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ochre Keystone loader sample, as reported in campaign PTF-00941. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ochre Keystone Loader: File with known malicious hash written (PTF-00941)",
+        "note": "## Triage and analysis\n\n### Investigating Ochre Keystone Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ochre Keystone loader in campaign PTF-00941.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"f2c52a9d6ced97dc3c1380e290d5dc4737dc6d5bdad26b95bef8b49c7782f445\" or \"a78a31981a33f062aaffe743f7c173c6c67bd710d0b3e031f000187443b565f6\" or \"1bb7a1f7b402f7df4e8f244881786b4b83bfb545370650fa1bd4325de2222787\" or \"24431cee91cd28478628b46934b353e806c920007451153e721afbb224b81f8e\" or \"f29148aa102e1ebf4db455621c74ad096f3cb835a6d18b1c74f95bcbc1834676\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00941"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "0b4f570a-5fd9-5551-9006-d3a3a4f3802e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ochre Keystone",
+            "Threat Type: Loader",
+            "Campaign: PTF-00941",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "0b4f570a-5fd9-5551-9006-d3a3a4f3802e_1",
+    "type": "security-rule"
+}

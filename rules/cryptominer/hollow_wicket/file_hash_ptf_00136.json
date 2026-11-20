@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Hollow Wicket cryptominer sample, as reported in campaign PTF-00136. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Hollow Wicket Cryptominer: File with known malicious hash written (PTF-00136)",
+        "note": "## Triage and analysis\n\n### Investigating Hollow Wicket Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hollow Wicket cryptominer in campaign PTF-00136.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"e918b8aaa1ea31278ce5530bed8e3f5dc552e388a1ad1d86794e6ff6bf59699a\" or \"36aa36f3f8587dd29c4283363e0d798bfe248edaaa84991dd5bd679915806d3c\" or \"1eda6cca4948f2d644d428ee516c88a4f018c43ab1859e979488f6dfa1f0d608\" or \"cad9daefd7e87955297eb89264c41b9d1f6d66f401ce89ee6f8951ed6803cb29\" or \"cacad586c39e623c82aad281ea70478da1f39b4efd7bcf386bb1e1e62045e95d\" or \"fe7ae7bcb4368cfb7f17fd7bf5766846ca5e93a517ccf958dbb3db6d31888541\" or \"41facd6ec493822bfc3396ccca374ff9d2ee911d0eebe07491777a8dda6d83b1\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00136"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "6e3ca118-fcfb-5ffc-9c31-a5d0fcd7f536",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Hollow Wicket",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-00136",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "6e3ca118-fcfb-5ffc-9c31-a5d0fcd7f536_1",
+    "type": "security-rule"
+}

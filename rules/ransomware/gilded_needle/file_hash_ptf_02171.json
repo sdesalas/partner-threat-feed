@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Gilded Needle ransomware sample, as reported in campaign PTF-02171. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Gilded Needle Ransomware: File with known malicious hash written (PTF-02171)",
+        "note": "## Triage and analysis\n\n### Investigating Gilded Needle Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Gilded Needle ransomware in campaign PTF-02171.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"a3630e373af1349a2afa4e701a83828d492c4f3ea197dae3d8947b3d4a05dc87\" or \"1a1dde81d2c9baa4cd5c54cbbf798a80e0e99a9b61f6469a7ff46fd081de06af\" or \"1e2a8f403af9a8b4d83e52a61e2f585d8859b6340473197cf1788693a6bf3dcc\" or \"c511baff736249e5f28de12396bd53520f1cdf868c928e99ee839bd8d39548a2\" or \"c52ca99db412b17b33ac582bf03030b701b7a9858000d61b629c1b25e7ae36df\" or \"4addabe452059480dbabeae07e599c4cb70990e3f529747eab2aae5585ee758f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02171"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e7140acc-eeb6-5517-8775-6caf5dc829a9",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Gilded Needle",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-02171",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "e7140acc-eeb6-5517-8775-6caf5dc829a9_1",
+    "type": "security-rule"
+}

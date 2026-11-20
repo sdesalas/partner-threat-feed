@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Hollow Anvil infostealer sample, as reported in campaign PTF-01747. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Hollow Anvil Infostealer: Process started from known malicious binary (PTF-01747)",
+        "note": "## Triage and analysis\n\n### Investigating Hollow Anvil Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hollow Anvil infostealer in campaign PTF-01747.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"bb5024667db6bd159633c5a4485e78d03c0376589e070a30e2cd62aad0c6ee67\", \"c51678b04ca09fa7c9bea752dfce0d83d71bb58dbb4089d1fa8ced731a8194cd\", \"d2f5b0ca32f588e29c95d9a38d924ef11e68e2254591a349af8349a5d5e5b28a\", \"a88aca6fcbb0722d5cd476552ac9ad9a565e6430e6ed47a9df1b03a636b9e1f7\", \"e1152981786bcfc0c2c134c8211388d1a099d63f54369f57b49496de7f1db9e5\", \"8ed449e750975100b5521ff929b9d7e9e33fb88674d3e35a9725bac76801c76b\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01747"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "fedd6d9c-7553-5ba7-b380-5dffdd3c5de1",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Hollow Anvil",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-01747",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "fedd6d9c-7553-5ba7-b380-5dffdd3c5de1_1",
+    "type": "security-rule"
+}

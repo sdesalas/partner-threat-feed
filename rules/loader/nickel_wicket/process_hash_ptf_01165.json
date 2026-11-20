@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Nickel Wicket loader sample, as reported in campaign PTF-01165. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Nickel Wicket Loader: Process started from known malicious binary (PTF-01165)",
+        "note": "## Triage and analysis\n\n### Investigating Nickel Wicket Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Nickel Wicket loader in campaign PTF-01165.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"1319bd5302f573ccea40c52224251ef638905c2ef749c72ec42f43c919174e16\", \"95dad0ddd9216a5bef1e534acb88699b56f6bea3198cbaf0287cef9d42bab87f\", \"b3ab01f99a6f97c543496b1d292c794eb0dba9fc62208ceb3a6a5d6dba180860\", \"378e367456eae11bf848c578d646c6e7b4fb6ecd4159ef9b5088cf4b8e9db553\", \"77547c46aa50244053b6ac27c6c523477ffe618e664d4c1d179f3f5c2ab44d5d\", \"04e8ff87ff1aca1a89f66b4981a9620b61232185bb97397e847b528711b94457\", \"3ebdcc2502b8df6398e1f563d2956ba21723ae65868c562725922bf0dd1c89f0\", \"61f5daca23449f96b7ef0d9a1c9acfdd62992e2c53a19de33797099bd5d48788\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01165"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "6ba35087-a1b9-5f5d-a3be-28690c77b4cb",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Nickel Wicket",
+            "Threat Type: Loader",
+            "Campaign: PTF-01165",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "6ba35087-a1b9-5f5d-a3be-28690c77b4cb_1",
+    "type": "security-rule"
+}

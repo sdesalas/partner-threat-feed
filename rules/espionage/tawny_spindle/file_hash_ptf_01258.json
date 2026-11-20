@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Tawny Spindle espionage toolkit sample, as reported in campaign PTF-01258. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Tawny Spindle Espionage Toolkit: File with known malicious hash written (PTF-01258)",
+        "note": "## Triage and analysis\n\n### Investigating Tawny Spindle Espionage Toolkit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tawny Spindle espionage toolkit in campaign PTF-01258.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"10ce8de94d5ee2d0d1760b4f9c80e55c45ff6706192475865199eaea51540be0\" or \"b9826c4f7a230de03afcc949f209f354cf6ae56356938d378601eaf1b521b1a1\" or \"b7306426bf473c251d79f4f697c226da48a7bafd1b8f3f6c5a415adc3d23a399\" or \"6071483b11896c6dc2e6b51ae8ae749a749bc973ccd946be74cb005f9a60af12\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01258"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "4acfecb2-1dc7-5f5f-bbb7-668a543b62b7",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Tawny Spindle",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-01258",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "4acfecb2-1dc7-5f5f-bbb7-668a543b62b7_1",
+    "type": "security-rule"
+}

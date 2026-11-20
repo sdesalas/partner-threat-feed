@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Verdant Turnstile phishing kit sample, as reported in campaign PTF-01940. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Verdant Turnstile Phishing Kit: Process started from known malicious binary (PTF-01940)",
+        "note": "## Triage and analysis\n\n### Investigating Verdant Turnstile Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Verdant Turnstile phishing kit in campaign PTF-01940.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"495b49628670d062c529418b5808f18b5f413797350496bebc1e0d0100b0b0c7\", \"17a905ba24de798fdbbd09abe0578606fe30cd49722ebba36118b64f463551e2\", \"98fe3db77ebbbec897c6fb3c7e6776fcd6f100b1e22724cd978d6696af41a90e\", \"dc4a05a6dc664d9d893e7719792f4eacb595415df72428447fd5834a87f1aeb0\", \"c1b1c66197c69bfd5b4e1fc214458f1672c9bac24e932289c0944666634729b1\", \"d771447474ad40f2f756a10c0f137a27e5bf33098f9f7e1d4a5830d0fe9148b9\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01940"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e9da7230-4796-5516-85a5-5c2b84bc72e9",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Verdant Turnstile",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-01940",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "e9da7230-4796-5516-85a5-5c2b84bc72e9_1",
+    "type": "security-rule"
+}

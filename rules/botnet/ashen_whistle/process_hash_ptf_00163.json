@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ashen Whistle botnet sample, as reported in campaign PTF-00163. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ashen Whistle Botnet: Process started from known malicious binary (PTF-00163)",
+        "note": "## Triage and analysis\n\n### Investigating Ashen Whistle Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ashen Whistle botnet in campaign PTF-00163.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"f73b642b698fd357244d4084bcc6596ce29225c1a07b2093cbcada85e68d9a44\", \"d16ed230c3716fd16a84dacaffccd1836388cc516d3230f8f462c5430ee323cd\", \"d96204d75a989f808eaa42c6b9a5b5b56f918c64ee611f95b1d3201884c8714f\", \"3ae44992f8c0e4f369eb6e4bcc030d362a81c57e9b38dde8ead0d4e1df497de9\", \"d628d598277574eba3a8acf2bb4dcfdc57681e78079871f72dd353a53433adf7\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00163"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "03ec8a81-e02c-5ce4-939c-dacef372a417",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ashen Whistle",
+            "Threat Type: Botnet",
+            "Campaign: PTF-00163",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "03ec8a81-e02c-5ce4-939c-dacef372a417_1",
+    "type": "security-rule"
+}

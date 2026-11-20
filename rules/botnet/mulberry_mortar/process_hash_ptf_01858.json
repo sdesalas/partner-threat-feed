@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Mulberry Mortar botnet sample, as reported in campaign PTF-01858. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Mulberry Mortar Botnet: Process started from known malicious binary (PTF-01858)",
+        "note": "## Triage and analysis\n\n### Investigating Mulberry Mortar Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mulberry Mortar botnet in campaign PTF-01858.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"6099c35cffba0880307e450e60099fc80b29853f944d563d506671bd48c0f4ca\", \"51cd68fa0d41d537784fe1ba0d191a5075401878d00c8360a154419107280f94\", \"49c00858445a1d7cc5eb9eabf9926101bbcedea9ec3ee60d364c3b7e6dfe1c07\", \"f421bdcd6bc224c01b89adc61f05510e8a840baca6d6e47c28a15ed21bac2296\", \"5fac330f8ebf61eea2b41f2288deda37eb6c8a5336c7d1e8d1a31a1405b4721f\", \"14d5c23554047cfc103e237e3e9988a80487b7577dc7d75313fa2ea55c2fe56c\", \"8c2351f10554892d746be075bb2ff0400cfd021b26886455523c940c17898c92\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01858"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "8317fe4c-72a4-5db8-b30a-3b56a99ba6bd",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Mulberry Mortar",
+            "Threat Type: Botnet",
+            "Campaign: PTF-01858",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "8317fe4c-72a4-5db8-b30a-3b56a99ba6bd_1",
+    "type": "security-rule"
+}

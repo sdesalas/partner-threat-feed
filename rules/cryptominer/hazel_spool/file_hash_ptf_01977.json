@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Hazel Spool cryptominer sample, as reported in campaign PTF-01977. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Hazel Spool Cryptominer: File with known malicious hash written (PTF-01977)",
+        "note": "## Triage and analysis\n\n### Investigating Hazel Spool Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hazel Spool cryptominer in campaign PTF-01977.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"c4f6504099352acf79c6b047c1e8b1d3923ed91eac62c901b00016093754193c\" or \"d89e1e1d7d16c7c00a9d938819900fd69900c2dc9eb26f48332434f6a364f16c\" or \"912a16cf2709bddfe4e8ed893e6c64650a6dd7a5558c5c99f182fb520d222cda\" or \"4f85763e590cfba2c8efcad82b2a33c03ff5603877f719684c78b51bb44c46aa\" or \"bbaae08d1e1b31e96ac1670f0b105e9b20bc980d27ed81d2c7907db86f957cad\" or \"e9dadd5e7243253db0628ab9f86caec5dc84136b2972d6b6d7ac6b6c64350b7f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01977"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "1f601492-ce10-578f-a6a5-0eef00fed957",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Hazel Spool",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-01977",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "1f601492-ce10-578f-a6a5-0eef00fed957_1",
+    "type": "security-rule"
+}

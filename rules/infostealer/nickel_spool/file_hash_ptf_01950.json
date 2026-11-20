@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Nickel Spool infostealer sample, as reported in campaign PTF-01950. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Nickel Spool Infostealer: File with known malicious hash written (PTF-01950)",
+        "note": "## Triage and analysis\n\n### Investigating Nickel Spool Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Nickel Spool infostealer in campaign PTF-01950.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"cd04cb768d58067ee7202382bbe6fb1265b97b05c4709ea702d8667eaa35dd82\" or \"cb1bd4e415bca4973a3de3ec68359a00da2c2971a2fa6f9149c8d36cd17f011c\" or \"2cd351f886cae71bc3cb29c8d94e95e2710138ad860121c0950fd73a894925e5\" or \"42eea6ad819ea7fc9e365993d32f5119b2e0dcbc8978b9388ee8c1494aea2064\" or \"33e231896e01a96f520088c5bd7656975b6580337df4f7ccb542a3692492dba7\" or \"3e4633cc3baa89dc9c242b890ccb2c0b1dd13dca8bd131eb335e127adda056c3\" or \"649ca3a3375d68e1c9a7e267bd461d0784993ba0ea92d7b06d6738823505faa5\" or \"30522fb96a8d0700e1c5dfd169f69dca54ab7ee5f30ea8cfb00146572b6b8770\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01950"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b20bc8d2-4a8c-5a4c-b672-bf14b138939a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Nickel Spool",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-01950",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "b20bc8d2-4a8c-5a4c-b672-bf14b138939a_1",
+    "type": "security-rule"
+}

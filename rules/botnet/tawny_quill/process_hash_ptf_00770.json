@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Tawny Quill botnet sample, as reported in campaign PTF-00770. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Tawny Quill Botnet: Process started from known malicious binary (PTF-00770)",
+        "note": "## Triage and analysis\n\n### Investigating Tawny Quill Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tawny Quill botnet in campaign PTF-00770.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"65adcf38e07a7cbc70eae23731adaed29a1d49552cbf89707057ee682d82ce32\", \"8dfd5a51e70ae147133f49ac9a9e3c9f005e383561193ecebd58145a7231a2f6\", \"4a150d9f758100065d6979bc3b929887bfe18592f7a8ca1b709f3b1ed6475f8f\", \"561f06bc2648886915e55183e354fe5f32956c019c0299bd087fe4396d693944\", \"a71ac8c7e39b1d47668a66773fd31ebbef447ac12dd47655a8e02caad9470c0e\", \"8de20ce1e432529c2a27c1fd0f43763e5e15168754cfd739cd80a0d853f70f5c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00770"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "7d26a369-26ac-596a-b761-65c66570e421",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Tawny Quill",
+            "Threat Type: Botnet",
+            "Campaign: PTF-00770",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "7d26a369-26ac-596a-b761-65c66570e421_1",
+    "type": "security-rule"
+}

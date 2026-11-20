@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Hazel Thimble espionage toolkit sample, as reported in campaign PTF-00107. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Hazel Thimble Espionage Toolkit: Process started from known malicious binary (PTF-00107)",
+        "note": "## Triage and analysis\n\n### Investigating Hazel Thimble Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hazel Thimble espionage toolkit in campaign PTF-00107.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"acc1b13d83a5c12ff644bda7a98078ad9219b9d8abc1ecb34a5917d3528d8727\", \"cf88a8560fbb4adbba4ea4de429692b4606ba572aa7b4166296589d40900fa8a\", \"5adf2f4b857aeb300f900c98f1d24352cacb5cee475b7c8041f115e174d4c293\", \"9bf7885a4f6ff56f7f98e0a32c42bdd2ae378b7fc3678041b24a4393cb0aa577\", \"017c322808703ecf9132b8da874c833a4a1c0823422aaa1b5c2083b3a4abc157\", \"7b639e1fa488c55ebac5c0dcb13a83ad39d8e5db76f45ca98152622cab7836b6\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00107"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "57d82dbb-126b-500f-b513-85a73b2fa484",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Hazel Thimble",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-00107",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "57d82dbb-126b-500f-b513-85a73b2fa484_1",
+    "type": "security-rule"
+}

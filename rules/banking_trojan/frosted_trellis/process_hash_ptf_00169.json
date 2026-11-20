@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Frosted Trellis banking trojan sample, as reported in campaign PTF-00169. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Frosted Trellis Banking Trojan: Process started from known malicious binary (PTF-00169)",
+        "note": "## Triage and analysis\n\n### Investigating Frosted Trellis Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Frosted Trellis banking trojan in campaign PTF-00169.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"96bfdb7f944a8cf7a7e572fa7cb0fead02bc8cb6c0bfe61598142b7a4887038d\", \"be3e989c86bf45259d3067cb2d84669a14d2c18f9bba9587ad6de5f533823273\", \"5a653b91ba4b29915c38858e2d2ad0fbe4abe9ada8a76fa2c7abcf0327f390ca\", \"8bd634942916b3ec8faa719492033a2f1a2f633fbb58953a69dbb15363dd9023\", \"9522a4e1d5f3c8dbfd13260222c87ecc36cd828a836e51ce40b8ffa6df6899ea\", \"4cf7915ba9e220ce64f12d2a260292d31e5e713b031876b54760098ac096821a\", \"a9ab57b79183c098d328aff9f49236d04c9907866fc3475a65626091543dd3c0\", \"3d03e4939f772802c27bf848c167cd2bc5fe664d4092b21f168957feb908ecdc\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00169"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "4a113279-6a7e-5def-8b03-b59bf7b28d00",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Frosted Trellis",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-00169",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "4a113279-6a7e-5def-8b03-b59bf7b28d00_1",
+    "type": "security-rule"
+}

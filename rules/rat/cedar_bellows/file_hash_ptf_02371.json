@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Cedar Bellows remote access trojan sample, as reported in campaign PTF-02371. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Cedar Bellows Remote Access Trojan: File with known malicious hash written (PTF-02371)",
+        "note": "## Triage and analysis\n\n### Investigating Cedar Bellows Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Cedar Bellows remote access trojan in campaign PTF-02371.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"e4f74bb682ac7766d0de01c862f91c5de5c55eb59b87bdbf3d4bb45acc21ac86\" or \"a2ab63be941150de1d770f852ff3a3872d6401e8b8109064c61e593bdf4f6051\" or \"64def482b515daed294ed3aedbc83043a81e578c36c3b19aa7a7e6f00d48b20e\" or \"a2d28ee7babb12693decf117df19d87d554c3af549578b73b8e6ba00b4d69fa9\" or \"d38920d4eecd8f509fe1638a884ae500d54b34e36ea659d341634f796c5ddd39\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02371"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "81f31e0f-82a1-5d77-8633-a9b82343e25a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Cedar Bellows",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-02371",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "81f31e0f-82a1-5d77-8633-a9b82343e25a_1",
+    "type": "security-rule"
+}

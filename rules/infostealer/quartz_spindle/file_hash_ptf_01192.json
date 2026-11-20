@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Quartz Spindle infostealer sample, as reported in campaign PTF-01192. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Quartz Spindle Infostealer: File with known malicious hash written (PTF-01192)",
+        "note": "## Triage and analysis\n\n### Investigating Quartz Spindle Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Quartz Spindle infostealer in campaign PTF-01192.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"7434f3c4e8bdc8d83753d16f72cdc8a933ca1c2681151f0566d50f5e97296186\" or \"fd77be1b299087792042890bd9b4f30307095154d9283f9b7f6f695a24388b4c\" or \"47c639b4772f6b4ce78c7d9b5071f1db61b941a2c67b7a507c5d1d4ff4564058\" or \"bc6524738783dc22350d1a5003903a82ed03c0103b861da1f679f20fd620f7d4\" or \"5867ece71759299bac1f2e6b4f58e8e217cabd089b483361dc9c9e778588b125\" or \"4daee553e7a3114d9fa49dc16a023f23379487bad0c86ace855daeb486bdf132\" or \"d5783978dacf13f24f2f1cdece0ec0f07906abc69fccb06a7ec9621c2d78f3a4\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01192"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "1226689b-5b34-5a7e-b170-1c717044a159",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Quartz Spindle",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-01192",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "1226689b-5b34-5a7e-b170-1c717044a159_1",
+    "type": "security-rule"
+}

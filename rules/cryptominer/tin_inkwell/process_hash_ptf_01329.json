@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Tin Inkwell cryptominer sample, as reported in campaign PTF-01329. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Tin Inkwell Cryptominer: Process started from known malicious binary (PTF-01329)",
+        "note": "## Triage and analysis\n\n### Investigating Tin Inkwell Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tin Inkwell cryptominer in campaign PTF-01329.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"c520faf5d0b3fbc4d3f6fe4a713f3e0ac565adffea7bfb0b988e2a36e7839da4\", \"151aec9a6d7f554c7cba61612540227713a7363adcb482171a025af9e705f036\", \"1ce559cd606002397e0db504c8e820907f72bc6dd579e6134ae29dcf7dfb0339\", \"40e7f7fb7795a7f77b9f5ce8a1c83dd2cb436aba09c2ad067cac0babb04fc2ca\", \"06b0e45e0eb2ab5f7e1ed37500945c1c9c60c8c0ad53aeeb3752815c9cdf01ff\", \"dbd569268055a94a217be5b9ea40b42c073662c414fd53706e0f778e9ea33a72\", \"081f96a844be062ccf34ad3f1fae2fd8bc9355adce26ca7e5990a51da8d246e3\", \"80bc88bf1b1f4098775380d779f2c1a230162748405d67ed86d1067c45e98b17\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01329"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "4399ac90-083a-5d6f-91e1-cab063cc066c",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Tin Inkwell",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-01329",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "4399ac90-083a-5d6f-91e1-cab063cc066c_1",
+    "type": "security-rule"
+}

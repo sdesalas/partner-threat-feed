@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Linen Mortar banking trojan sample, as reported in campaign PTF-01249. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Linen Mortar Banking Trojan: File with known malicious hash written (PTF-01249)",
+        "note": "## Triage and analysis\n\n### Investigating Linen Mortar Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Linen Mortar banking trojan in campaign PTF-01249.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"cfc54a72aee42d06e7d58e0d7f1f12e083e0d442224b308e2e6d3ab255ccdeda\" or \"c241936c2a7b3746f4226d8cb5ddb2a69821c4b2a909dc6c15db1ebe3f417d6c\" or \"ac99015e82cf6ea51fe22349df26b6e8a669ff0d2262c6e91a21d40151f02dc1\" or \"decbbfe1da31292ccef26b6909f203c70510f50a9b1ee1d0db91e32adfc69811\" or \"d29cfc6ab87165ff7be060fc6114961f3883e079a2e42776ef704a26aa8015c3\" or \"e8a7873e5a50e7e938d02dd9da35c033b26a89a9e3a6f0b29af5a897fb175af9\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01249"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "5df68a58-3df6-5192-92b9-40dad044aa0d",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Linen Mortar",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-01249",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "5df68a58-3df6-5192-92b9-40dad044aa0d_1",
+    "type": "security-rule"
+}

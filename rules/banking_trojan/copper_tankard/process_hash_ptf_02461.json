@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Copper Tankard banking trojan sample, as reported in campaign PTF-02461. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Copper Tankard Banking Trojan: Process started from known malicious binary (PTF-02461)",
+        "note": "## Triage and analysis\n\n### Investigating Copper Tankard Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Copper Tankard banking trojan in campaign PTF-02461.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"3d701d96670e6fd04ee20c3c4f5c940da2a7211d7f74120c624f55a1fe44884f\", \"4c2b436f79bf61d379e077f9e7ce6f56ea7a0d90d2f9d8e1fc6ede216f427731\", \"fa5a3b80fb5f46486ef4a74c27a73148b4dfada41de7fb14c4255ab1c6d7fdd3\", \"e1175ba8e665e78175034a6aab952597d97b75bd4d7b0efe43c4e29f0c6e05dd\", \"582c3fe5ae4eba83501bb9c1def6f2c5c1020c3d46cee33a3640e681924ab379\", \"a2f6c8ad90c8766d7f62e54860e29b48da8a233fefba4a7ab3ada26f55236ebb\", \"c92f2f23f52988116470bf0706fe50493773eb8f965be54a1f78a966d55ab42d\", \"f033e820ac68f1ad92e53795ec38d1d107fd4f5586b4139ebc00946d12ca89c6\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02461"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b0855386-1034-5389-958d-aad05e35fce7",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Copper Tankard",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-02461",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "b0855386-1034-5389-958d-aad05e35fce7_1",
+    "type": "security-rule"
+}

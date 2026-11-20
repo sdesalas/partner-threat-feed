@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Pewter Hourglass botnet sample, as reported in campaign PTF-01355. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Pewter Hourglass Botnet: File with known malicious hash written (PTF-01355)",
+        "note": "## Triage and analysis\n\n### Investigating Pewter Hourglass Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Pewter Hourglass botnet in campaign PTF-01355.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"78365d698e4a3e8c72769d6cfeafec59f21e5ab972acb4576435f651268fce68\" or \"fc355a9c4e053fc82b8a652b5f1291a9a83e493997912bbdae2be9b34aa139c9\" or \"19d802af2994a140a2ca1ba447e66a8069d94c7ef858be92aa6bb6375d1503bc\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01355"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "66666a6e-c6d1-5274-b015-1da23725c5a9",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Pewter Hourglass",
+            "Threat Type: Botnet",
+            "Campaign: PTF-01355",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "66666a6e-c6d1-5274-b015-1da23725c5a9_1",
+    "type": "security-rule"
+}

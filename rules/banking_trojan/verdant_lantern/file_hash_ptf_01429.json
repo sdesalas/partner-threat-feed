@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Verdant Lantern banking trojan sample, as reported in campaign PTF-01429. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Verdant Lantern Banking Trojan: File with known malicious hash written (PTF-01429)",
+        "note": "## Triage and analysis\n\n### Investigating Verdant Lantern Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Verdant Lantern banking trojan in campaign PTF-01429.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"2aba68b297ed6613b32276579cbf1d0d29a244c6b3f22878695b01011e27b3ee\" or \"7193bbbf3e153f9ad50abb37325686ff0d4f5499d9d06f3415a7f628e91326e1\" or \"4dc026fbbae5a285fad0a085344d39b81806e7c6fb3abf409b39063d71194d48\" or \"cd3200bc1291d40660227852aaf37f61fe8d1a31bfaac6e40ed93d70f9e3f26d\" or \"611f32f7375ff7b449842e8be452a8ad54cdf94c4e4889f84908352c037fc0e0\" or \"47817f99f12480d16f72ac4f8199cb6b7240b369dff11aa2359ec1c791fdd67c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01429"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "7bacb9be-5e4f-5234-a1d8-54494ed4a7f1",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Verdant Lantern",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-01429",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "7bacb9be-5e4f-5234-a1d8-54494ed4a7f1_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Quartz Kettle remote access trojan sample, as reported in campaign PTF-01703. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Quartz Kettle Remote Access Trojan: File with known malicious hash written (PTF-01703)",
+        "note": "## Triage and analysis\n\n### Investigating Quartz Kettle Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Quartz Kettle remote access trojan in campaign PTF-01703.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"e595f443f776ef627a6c6fb0496b4b5dd20c795bddefa56a0de364e4e163a913\" or \"e566cc539fae2cf08ed4414e4f393851ddb8f1e456e7b622d98d5377447fcb9d\" or \"6a1ffd3350dd672e6596585549f7626fabcb365acb4fb14cec63f4d794427b1c\" or \"c3bf98d51e4e97357713b28a10d5ccf833f56050e3cf42364d43ba5efe0f715b\" or \"5690d6b45c82626ed7cac734780ccab075d6c3b3f69adbc7d754fb7a59eb8162\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01703"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "bbbae58a-ceb6-557d-bec3-e70cb48830bd",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Quartz Kettle",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-01703",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "bbbae58a-ceb6-557d-bec3-e70cb48830bd_1",
+    "type": "security-rule"
+}

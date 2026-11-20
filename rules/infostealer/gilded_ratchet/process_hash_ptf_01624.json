@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Gilded Ratchet infostealer sample, as reported in campaign PTF-01624. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Gilded Ratchet Infostealer: Process started from known malicious binary (PTF-01624)",
+        "note": "## Triage and analysis\n\n### Investigating Gilded Ratchet Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Gilded Ratchet infostealer in campaign PTF-01624.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"8269921bbff7663cdecdd9dc02e5444f02bdca6134594445a767a76ad5ae1d49\", \"dec948d7bee4bf6063c5bd314b108abbdcd2b1c131a4bdeb018aa906b9dc15ff\", \"85b1c60a350794338c07e651f2016f87e7641c8b542a1e9c3670b42f02d10b40\", \"b9aabf9aee05a44299834a2467b7cb4ea161c59ee357dde75fc817f063206358\", \"7efe3733ce94964c0bd0f7a5ab65b42c8e43605fb57c1c05e5e55aee9441b793\", \"61fbc0bf8786b0986fef18b79404ab41f0ea9154219298b63285d97b5993a9b6\", \"58d49ab06d65d1e6634a6b62ea3026fadcd149165f4e395067aad4d6fff3fcb7\", \"e4392abc617a69ac3f35c69adf6bd3ccece91852fa52fccdbcc37ab858967983\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01624"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "7ad45811-4d74-5f80-be3e-0fbec47c26bb",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Gilded Ratchet",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-01624",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "7ad45811-4d74-5f80-be3e-0fbec47c26bb_1",
+    "type": "security-rule"
+}

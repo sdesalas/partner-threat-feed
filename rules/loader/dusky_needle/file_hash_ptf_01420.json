@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Dusky Needle loader sample, as reported in campaign PTF-01420. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Dusky Needle Loader: File with known malicious hash written (PTF-01420)",
+        "note": "## Triage and analysis\n\n### Investigating Dusky Needle Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Dusky Needle loader in campaign PTF-01420.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"376304b08dc08bdac299303db3ee78b6952951114c35b4e1c55c902cc6e04866\" or \"0796e20a53aee74e08118c2dc4a00abc02dcbbedc1d97119c44f28226211d341\" or \"51ad494490a8b14eef8c3e24628785040e8566c6b474cb9d1f6f28569d9caa94\" or \"211dbad5dc4333d7d2c48ec9a6530de6871dbdeae96719eef43434e5399c9b50\" or \"a52898af9601d8b3f5c8f38e3afabd29427fd5fe2158b7446c4d22d2de5b4fd8\" or \"2ed03f4dbdceea210d49e86c77ae62881abef416cfe36a65627a6bcd424794d2\" or \"9d70d9eff1cd98ec9321bb36250ff4ea0bc2ae4af960982e72a945c6b957a43c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01420"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f296e2d4-a71c-53c4-9233-c435ce567220",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Dusky Needle",
+            "Threat Type: Loader",
+            "Campaign: PTF-01420",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "f296e2d4-a71c-53c4-9233-c435ce567220_1",
+    "type": "security-rule"
+}

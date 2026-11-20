@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Fennel Valise botnet sample, as reported in campaign PTF-01565. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Fennel Valise Botnet: Process started from known malicious binary (PTF-01565)",
+        "note": "## Triage and analysis\n\n### Investigating Fennel Valise Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Fennel Valise botnet in campaign PTF-01565.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"c590f52788a39b06a0c59c211e0c53f48c7348e803931fdf346c7312a93c4c5a\", \"66470c5947a72372f72b451460a0858ea67edfb14eb82b136fbe9f8fdf5b7c99\", \"f0ec9d382b429dfca640c584515d6121f4323d1e2b588fba199e75aa3ca00fdd\", \"fa4d0437a82b567c77835fb6a9458170177c1ed5b60df5653ece77c643838025\", \"158d7ebca96e9998ae4bf8f3c26cea13da39fb2f242e749066ef3f5d907efaf0\", \"cd7cc567f8e7aae51f8fc5a21da0740173efde6ad139d7a1e40f8da3a71030f5\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01565"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "76ffe958-a4c7-53b5-ac92-e1c0146a589a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Fennel Valise",
+            "Threat Type: Botnet",
+            "Campaign: PTF-01565",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "76ffe958-a4c7-53b5-ac92-e1c0146a589a_1",
+    "type": "security-rule"
+}

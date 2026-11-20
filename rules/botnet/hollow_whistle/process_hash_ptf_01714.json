@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Hollow Whistle botnet sample, as reported in campaign PTF-01714. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Hollow Whistle Botnet: Process started from known malicious binary (PTF-01714)",
+        "note": "## Triage and analysis\n\n### Investigating Hollow Whistle Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hollow Whistle botnet in campaign PTF-01714.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"832c728696a881601ed22fe0950868a7efbaea790af157d164c0733f79111f1e\", \"294f951e9f4009fb6f45a5ad2c2bf56d8b0a20c35aef70989d1dbda105146013\", \"46b47f58eb8a33a5a583e0b664c036986855dc4728b9ebfd46656668d96af64e\", \"69b1035b9588a55f8d4a296a65da97fc8dc532a37f8c397cc5553737dca21962\", \"d2f62674e476bb4e0e60364ee134a9a57a501bfaf95db56b5589243d52f953a7\", \"c2463f26f2fbddfd4d5c6724d2e7e4776727f64abd68ba28307683397cdc6d7c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01714"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "4fb7a952-a168-5460-86fd-6eb6880931e5",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Hollow Whistle",
+            "Threat Type: Botnet",
+            "Campaign: PTF-01714",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "4fb7a952-a168-5460-86fd-6eb6880931e5_1",
+    "type": "security-rule"
+}

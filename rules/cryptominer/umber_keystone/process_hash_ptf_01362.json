@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Umber Keystone cryptominer sample, as reported in campaign PTF-01362. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Umber Keystone Cryptominer: Process started from known malicious binary (PTF-01362)",
+        "note": "## Triage and analysis\n\n### Investigating Umber Keystone Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Umber Keystone cryptominer in campaign PTF-01362.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"71a82112c7ddf9d4ebaaea39ad6967f1bf6eb48ec0fd7d9799a4d797ca0cb38e\", \"f72bf28bd9b0916818e0cd3f858f7c638ab6b6b0cde23c2b06a584148530e1c5\", \"393ecabee38050b2d456789568330d919baef4a17e69f229868ae26c912fa305\", \"94e8a8850bec3542e64abae79afcf77eaeb5532b01074c734fe4e01b4938e908\", \"3d2c0497ea95159abf607d1577cb0b63d6d4ba5c6385725df5d67e202a0c1897\", \"ef01a2a6d5983b8eb312a61cc89fc93599d42c6eec6c5272a84a461a49e0e73f\", \"092bf857b3727d65f930779db3a0a527678a3f4caad63d54a2df8b99a498f326\", \"850924b98f2942dc04ae1a6fa3207410af694033ce5d1101ed4925352cae332a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01362"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d477d633-f431-50da-9a13-0bf4e17c5ab6",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Umber Keystone",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-01362",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "d477d633-f431-50da-9a13-0bf4e17c5ab6_1",
+    "type": "security-rule"
+}

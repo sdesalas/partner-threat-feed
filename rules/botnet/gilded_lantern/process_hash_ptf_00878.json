@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Gilded Lantern botnet sample, as reported in campaign PTF-00878. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Gilded Lantern Botnet: Process started from known malicious binary (PTF-00878)",
+        "note": "## Triage and analysis\n\n### Investigating Gilded Lantern Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Gilded Lantern botnet in campaign PTF-00878.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"9b78da5001a2278a3043d2188f1904fe21db802e2c2fb20b64523a5fdd10fae9\", \"c3d4f2cc8c6e4f00af563b8d729047da067c63c2651abb1630268008bc1f817b\", \"f37cf09adea1cc178ed708731f0402c832e75daffce3b05935644c9ae0903785\", \"a85e1b08c446e870160bfbf88d20fd34db1e9b8ea65a00b121bfb207816ccecc\", \"eb5736a59ee87124089208a0c3897e9e3a6ca4a19217d6f54d20b0529a0d2800\", \"d7bc75a6a3d9af2bc8fe06d9943b93f27f329536a3af8024f93001b4132b6b37\", \"9a394fa76d53ddbdd4aa7b7381b1e05274f22e2db410cb79ee53066f337e157e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00878"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "7235d7e9-1b00-527b-9d52-8a619d4bbff7",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Gilded Lantern",
+            "Threat Type: Botnet",
+            "Campaign: PTF-00878",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "7235d7e9-1b00-527b-9d52-8a619d4bbff7_1",
+    "type": "security-rule"
+}

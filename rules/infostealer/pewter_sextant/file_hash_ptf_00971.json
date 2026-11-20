@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Pewter Sextant infostealer sample, as reported in campaign PTF-00971. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Pewter Sextant Infostealer: File with known malicious hash written (PTF-00971)",
+        "note": "## Triage and analysis\n\n### Investigating Pewter Sextant Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Pewter Sextant infostealer in campaign PTF-00971.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"451bb1e55d9901a832f8fcba5f7c1e596a2d7a132ffd5eff4a4c6a6aad663d01\" or \"ddbeb37dc4b2228d974a85cb3aab229821eb1684970a41c7080b762c316680f5\" or \"2413aa8b00ea16f9a61ef84e0dcbd4793ebcb1571b1172cd7244a244b12dbccf\" or \"c4bc2968b288dc9cc9ec4ed55cf1dfe91de868bec7570644086bb4f4e1fab46d\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00971"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "a9e73418-f6c3-5b7b-a4ab-18176476f570",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Pewter Sextant",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-00971",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "a9e73418-f6c3-5b7b-a4ab-18176476f570_1",
+    "type": "security-rule"
+}

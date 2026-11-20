@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Hazel Quill banking trojan sample, as reported in campaign PTF-00608. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Hazel Quill Banking Trojan: Process started from known malicious binary (PTF-00608)",
+        "note": "## Triage and analysis\n\n### Investigating Hazel Quill Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hazel Quill banking trojan in campaign PTF-00608.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"1cec66a8ea3b7170b84f126dfdf257aad88243dcfe9626f079faa2d584858a43\", \"a376ff2a57d62c620a388a5d17e3245533746ea95267d0237ddb10335a063431\", \"6d4205cdf86dc6f82a8dc177bebee9dedc3464ac8f49f8e73dfbcbd7e86d2c47\", \"7092895474a19058eaece1261fad64460eaf2457a7df6867e9e31eb8fa58c353\", \"651a7dde148be73a9fdaa2907f716f6a35ffc1c184eb3053de2878d7a76761fe\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00608"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d61e9133-0202-5164-ae0e-8faa690cef4c",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Hazel Quill",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-00608",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "d61e9133-0202-5164-ae0e-8faa690cef4c_1",
+    "type": "security-rule"
+}

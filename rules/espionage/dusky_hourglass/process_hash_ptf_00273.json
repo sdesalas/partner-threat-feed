@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Dusky Hourglass espionage toolkit sample, as reported in campaign PTF-00273. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Dusky Hourglass Espionage Toolkit: Process started from known malicious binary (PTF-00273)",
+        "note": "## Triage and analysis\n\n### Investigating Dusky Hourglass Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Dusky Hourglass espionage toolkit in campaign PTF-00273.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"2bf0c4a21a0a893a26fcda0cc341a55341390a966ecc6478d64c8a69947023ed\", \"5f53d8c49dd52eee852668633cd5c2a355738fb6852e52a2b33d7921a699652b\", \"866612786c749bb86308eeb7be0c71902d8b8ae055a65d53af457992383fe04f\", \"a2619e44958eabcc0f014f2929370c8ceb1f8b7aa5caf7f26cda7f898b081fec\", \"0c826d3ce271825e89213b923333d959add50407f08129738a04ed3faec221aa\", \"9e29930d0c2899d3242c89e1bcb48b72213172054adb3ead007133cc2a950d9d\", \"2e577d2f42497b05075a56fa63eb08fc76c99b9ea39ee422c59f976c482a8221\", \"da0730da3e7d3ca5d0d6b9e4d50ee868fc492870deea0f23432f3fa30425274a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00273"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f25dc6a6-b371-56ef-a9de-b9d869d79c73",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Dusky Hourglass",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-00273",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "f25dc6a6-b371-56ef-a9de-b9d869d79c73_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ashen Lectern cryptominer sample, as reported in campaign PTF-00199. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ashen Lectern Cryptominer: File with known malicious hash written (PTF-00199)",
+        "note": "## Triage and analysis\n\n### Investigating Ashen Lectern Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ashen Lectern cryptominer in campaign PTF-00199.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"f6941d8fcf37d2ea11b154bb35066ef3a9c8d99c0d250860fd846385d412300c\" or \"7ba0f217725e62028e84eb39f9f49ac5306fcf9ae7ae16bddf2b9f065954e845\" or \"297484bcd9ba5141ee358bd7105662784b943ed4cd34d2913a22a792d29e1a24\" or \"cfb2e1a345851828eb4048979a74f348d64d6b708d90701abd0a7f2a82a4e53f\" or \"b365982faaa3235892509bdebeceb8d5c1646a502fd7d8508b6216b6b2919744\" or \"d95ffe0387355d080be05caf77cc75ee06de4c5f2a8782cfe1ecd5efc8b51847\" or \"1cbda8b41019555c4d6980a150ec57b45a0f72388d3db0150cc7c0715c0a0fdc\" or \"97bcdc56dc75e34377d6376bbceda4c8bc0c02044201f0e9824ca52a67f455bc\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00199"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "a746d007-cb0d-58c4-8db3-9ce4ce9c516a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ashen Lectern",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-00199",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "a746d007-cb0d-58c4-8db3-9ce4ce9c516a_1",
+    "type": "security-rule"
+}

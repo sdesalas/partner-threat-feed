@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Pewter Teapot ransomware sample, as reported in campaign PTF-00708. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Pewter Teapot Ransomware: File with known malicious hash written (PTF-00708)",
+        "note": "## Triage and analysis\n\n### Investigating Pewter Teapot Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Pewter Teapot ransomware in campaign PTF-00708.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"287e574cb23157861b4847275e58168437730c5c3d0f01e0eb3d3b4e7c391ff6\" or \"80062a4bcd6f3f465b968855f32ea0039d5a349aae8205f5e401c71a0177c405\" or \"8f6601b37213758066cd5e66afc5a2ca2ef3c96b42a957ce9c2f523fd8a5d03c\" or \"e1f3b43e7b703b95091046db09fb078bd3cdc8f38db76767b9a95c1069b193ed\" or \"f485d82bf750fba70c1340104d1f58a3f7922966596f09ac8c9e9d02eb2d5606\" or \"b0d1c1615f2471a58fbcf9fd59cb8dd352f67ab1de2b1def1d0bbd11f0b33234\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00708"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d17cfc80-a058-5b37-948f-9185745a6741",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Pewter Teapot",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-00708",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "d17cfc80-a058-5b37-948f-9185745a6741_1",
+    "type": "security-rule"
+}

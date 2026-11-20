@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Gilded Mallet phishing kit sample, as reported in campaign PTF-02087. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Gilded Mallet Phishing Kit: File with known malicious hash written (PTF-02087)",
+        "note": "## Triage and analysis\n\n### Investigating Gilded Mallet Phishing Kit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Gilded Mallet phishing kit in campaign PTF-02087.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"7c411b55a0943f2e0ec8f15e026511a8be4f2e10abb557decad96cad4a6f5ec6\" or \"172e0929678d3e64c986135269d76b4a51c2123e7170009d0f7cf764e6f3618f\" or \"49efc6af6c6465ead937615f1ea5914faa08d0b6b0e278a0674ca61d917e1d4b\" or \"a49dd758a4c289aad59a9eefd0e88340db58cb2b33eb93029496d33b74f3f046\" or \"eadcb58192af3d9ca6526ea76f6fb11f1db87d35802e5b5ebf217300897ce6f6\" or \"36da6593ea4a5f7f0cec03a598aa282d536932cc36bf9ecdec4e8c8711c82557\" or \"01a05ef434f2ed7a6a161ca78c57d8fdfe7466262faca7e9e355a2a6222fd229\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02087"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "4d754212-d239-5111-9b19-c3c9031f6552",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Gilded Mallet",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-02087",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "4d754212-d239-5111-9b19-c3c9031f6552_1",
+    "type": "security-rule"
+}

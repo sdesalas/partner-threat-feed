@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Granite Wicket cryptominer sample, as reported in campaign PTF-01399. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Granite Wicket Cryptominer: Process started from known malicious binary (PTF-01399)",
+        "note": "## Triage and analysis\n\n### Investigating Granite Wicket Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Granite Wicket cryptominer in campaign PTF-01399.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"c29265ad146d2b98812f7e30d387f2e421cdbd65ef0dcfa0afea8b6f2fcfb3df\", \"7fa97f815042df2ee2ec5d5f88f7f01174a6ccadefc08a0dddf3f1b62f03a490\", \"f4fe8da1456a12521e35e2f216a9cd26ab8aae8c2621589a757a56f23d06d127\", \"471ebe419516c3d7cb6000e233a1dc5cdce6b9b3749697e9ba72c2b200e5f95d\", \"a22fd57ac92e57bfa235ecb45c1761e19d283dc808435fbaee019e25294cf83e\", \"e232350c599ec8cf2f765411ccb9297773631bb8ac15b19ed0642ec3a0e52881\", \"d4ce3aa33a406d50394973d4a3e5642890e87a9fd8f0bfaad30e95a0eade9a59\", \"c1073d4b73a8da18937393bf2b7a159886474897cb0b53ffd784ac29209ee95f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01399"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b4c5fb46-b7b9-5925-9472-cad6a0360dcb",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Granite Wicket",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-01399",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "b4c5fb46-b7b9-5925-9472-cad6a0360dcb_1",
+    "type": "security-rule"
+}

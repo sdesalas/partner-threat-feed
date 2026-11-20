@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Brass Valise ransomware sample, as reported in campaign PTF-02283. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Brass Valise Ransomware: File with known malicious hash written (PTF-02283)",
+        "note": "## Triage and analysis\n\n### Investigating Brass Valise Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Brass Valise ransomware in campaign PTF-02283.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"7ce052df4b9b8d1e35cf5496e357ec2cf50cd6a201b0e4ca19518d71a9fc2707\" or \"735021d935446c1cc8961056517880a2676616d15cab4a4f65d24d0bc081ee17\" or \"c6a021b3e4d9a90668453af86456cde8f5eaba14aeb627d2a39632f399878b17\" or \"1ceccd97cc8375b63d1e09cc5090fddf32d92272a733595d8810f5030f032d36\" or \"1844705d59862f9444d0388b00e7d7abd33abaea09b4b4208a1b94d2bd505418\" or \"f31c8c69370d08f865ea6cc02275050eb4aa0ceecee2dd7571b540d917a680a3\" or \"9cc5e3fc7f7debbac9d9a69398bf65327ed5a4eacc1da15a3302a705c3a60c11\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02283"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ddfaba09-61b6-5ccf-8e5c-ffa5dc5432cb",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Brass Valise",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-02283",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "ddfaba09-61b6-5ccf-8e5c-ffa5dc5432cb_1",
+    "type": "security-rule"
+}

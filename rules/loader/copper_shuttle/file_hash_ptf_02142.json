@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Copper Shuttle loader sample, as reported in campaign PTF-02142. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Copper Shuttle Loader: File with known malicious hash written (PTF-02142)",
+        "note": "## Triage and analysis\n\n### Investigating Copper Shuttle Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Copper Shuttle loader in campaign PTF-02142.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"8cea15e868179bf447d3325089e04c1d591307a59e40274d96c3c25f02a91a49\" or \"6cf684d38c9f4f94b225c366c9c525fadda613640ae883f09dceb16e123118b2\" or \"6bf77a23c866dcee0fb152bfe11efff0a24d21dcafa1df6c2ee29ffea14393f7\" or \"5d2408835c01e2f10834a126cbb4855352d175e6c4f7a01fabef1aedd0e1c640\" or \"4247b3bc2e67d5113e3f35e1828b1ce634ed546d579c533d663fbfe4b7ebc57b\" or \"2d325a575ec62eae9794830a0a6228a184cebcc173a26d9e96f62144b5602d4e\" or \"c37faec9ea1df3cb75804721cd1b5cf75489a9d1944d212f8215aa9614a7d857\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02142"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d0609f9f-fdca-5c07-b8ef-b7efe6b437e2",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Copper Shuttle",
+            "Threat Type: Loader",
+            "Campaign: PTF-02142",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "d0609f9f-fdca-5c07-b8ef-b7efe6b437e2_1",
+    "type": "security-rule"
+}

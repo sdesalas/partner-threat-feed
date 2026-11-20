@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Mossy Pulley botnet sample, as reported in campaign PTF-01756. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Mossy Pulley Botnet: File with known malicious hash written (PTF-01756)",
+        "note": "## Triage and analysis\n\n### Investigating Mossy Pulley Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mossy Pulley botnet in campaign PTF-01756.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"58dd7d8fe6dcbc6150072017b0a4c98298d56e02c61877460d1f9e23f710d063\" or \"22d3df57d5f72d4a945d9c37e369c3b12c80d33d311a49691c1a336554202593\" or \"1a2bf90c336dfbd9f612d67bb344922e13424b5bb9e9136b00b6b40b7080504a\" or \"66b7a7436eb90ac06bccdc77b6df1278de3fee695dcdaa931b884e633b042929\" or \"f7c9318acb9b6f199cc8885d49b4a315dba1257379f825876ae72ab834cc2574\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01756"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "033dbecf-dbcd-58e2-95b7-86d1c0b7dad4",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Mossy Pulley",
+            "Threat Type: Botnet",
+            "Campaign: PTF-01756",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "033dbecf-dbcd-58e2-95b7-86d1c0b7dad4_1",
+    "type": "security-rule"
+}

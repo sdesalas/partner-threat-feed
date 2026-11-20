@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Granite Bellows phishing kit sample, as reported in campaign PTF-00814. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Granite Bellows Phishing Kit: Process started from known malicious binary (PTF-00814)",
+        "note": "## Triage and analysis\n\n### Investigating Granite Bellows Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Granite Bellows phishing kit in campaign PTF-00814.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"c61e149c69b5a7f7c4001de54076f2e990604b2d9631c9a929549c2ec6e603c6\", \"85cebf3abf5d9c537c36a10c976ca2d1848b5e8cf829a146bc1bec0321642094\", \"fe5a41a5add4e4580aa3e288c36ea81b2de68b8cc6992430e1c5a259ca01663e\", \"4c5cbf5d9e4755db94b77490dc520890ae8c98e8ca13e4a35b21c03f92377f29\", \"710e371f9e551386db08911f188d6b7f847a356df5570a7569f532d503606067\", \"98b1c29f3df83387239b92c3dc0aef8ab7e57b849a52d5248b05eeabf71e1566\", \"fd4aba7dec336294300fa228248b855045f548cdcd6e2fcc247455d45de068db\", \"cbacbf1b57a9fb65651c842827dad6199c06e9dfb2ded18ee96ad2aa08a9a666\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00814"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f2ae7da9-378a-563c-b942-ec5cf9c64c1e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Granite Bellows",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-00814",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "f2ae7da9-378a-563c-b942-ec5cf9c64c1e_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Fennel Loom loader sample, as reported in campaign PTF-00453. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Fennel Loom Loader: Process started from known malicious binary (PTF-00453)",
+        "note": "## Triage and analysis\n\n### Investigating Fennel Loom Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Fennel Loom loader in campaign PTF-00453.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"a11e36a51bbba611b99035ab9296291861a4b7e1c41a5e555406f24c226c315d\", \"22f2bfe942741775c054a3e27fd9d27ad6066a8011416b9c047a3c9e393991e5\", \"1291a53c565983d83bd379eeb615ab75c2e9795d28259cb636c67f88fc390767\", \"a8a7494f7aff5543416e56ab8b8f325659651fc6b16d7f832bd963a1f204025e\", \"bd4576cb6b2d5949288ecf1f09a2cc8e802312f10332a7d31b0bd04984ce6e09\", \"b319b965eadcfc4bf3662b7d7639a2d318a4d6831a9ed2e26af19910f55cfc27\", \"4327c67d2770e87377c009dba40cca5f07d017894dacb22ac9c3b1acabfe0015\", \"6c62877b1172d174633cd17eab4e89429999fcda80f984b72dfcb86419416700\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00453"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "c996a652-e1c7-554f-92b0-c57e8a30acba",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Fennel Loom",
+            "Threat Type: Loader",
+            "Campaign: PTF-00453",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "c996a652-e1c7-554f-92b0-c57e8a30acba_1",
+    "type": "security-rule"
+}

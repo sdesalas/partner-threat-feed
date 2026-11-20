@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Juniper Stencil phishing kit sample, as reported in campaign PTF-00886. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Juniper Stencil Phishing Kit: File with known malicious hash written (PTF-00886)",
+        "note": "## Triage and analysis\n\n### Investigating Juniper Stencil Phishing Kit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Juniper Stencil phishing kit in campaign PTF-00886.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"bb1819629f39a7d18edaee8c0fd7955cb4f64307b1942e1d64ab0eb329aaaba6\" or \"b4d621642102b93eb2af2b730dfaf702573ea852a668c6dd5798c90c9d5e372e\" or \"0e660ebacf97f1129aaed10992abe35f6db56e67dbce59c00e1de1f741347220\" or \"bc03d1b26ab8c3c68b2d348a879bebcd5b6e2b5b327a2d62e30a31c643d2b721\" or \"0e85515253a029d288c5203643d9e6262104a27d34b1b09647e6fe56ec2b434a\" or \"61f572402ea76caa8cbabbf930a5c3e112cd7b9665132311adb58a1d1dab565d\" or \"8e806a029f59541ad607884f90e836c5806b54a834e44d73bf9d188a0b946465\" or \"99d151cc4e70b0747d2642987cab168a7a7f260154ce21dc1c45dff54af26a86\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00886"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "6c567ed3-c6b6-5a8d-a64a-26f424d5a754",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Juniper Stencil",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-00886",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "6c567ed3-c6b6-5a8d-a64a-26f424d5a754_1",
+    "type": "security-rule"
+}

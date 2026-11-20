@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ochre Sextant infostealer sample, as reported in campaign PTF-02405. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ochre Sextant Infostealer: Process started from known malicious binary (PTF-02405)",
+        "note": "## Triage and analysis\n\n### Investigating Ochre Sextant Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ochre Sextant infostealer in campaign PTF-02405.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"a03fba8dcec2b28f93fd2d934408c199472e5e43bfae1fca79684a95854ef306\", \"9da37c6b5b00c52ad9c2148d9cee0054fdaa762118c68a4bceb54b77f2234d21\", \"2edac7d065e3119f45908dc709459c101c708c97c4f61f31c8224db03f45b3a9\", \"cf386376eda5a076652555b4aadbc33ecf20203dcc02cd01aead3d745e04ced1\", \"8525a126b8df857cd6f215e4af954672c703b3dcda7af9b47f2d5395d676dc20\", \"4567eec027b4465897eb2edb2422eb1729cd798bbf69471c77d430eeac042435\", \"bf0a191f0fab138ba4306560183136d23a92b0a97a55a659d493d811ad5b240e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02405"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "a0c0ca41-7db3-5cd3-b25d-1f247238b353",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ochre Sextant",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-02405",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "a0c0ca41-7db3-5cd3-b25d-1f247238b353_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Brass Abacus espionage toolkit sample, as reported in campaign PTF-01777. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Brass Abacus Espionage Toolkit: File with known malicious hash written (PTF-01777)",
+        "note": "## Triage and analysis\n\n### Investigating Brass Abacus Espionage Toolkit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Brass Abacus espionage toolkit in campaign PTF-01777.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"cf73251ba913370b3ed1ab6d030ae27548f1c25d9e109ce1951e7f0803660937\" or \"4112fd2813ec556a611291391277ad7a7f1638a62c50625db641ff54809d725e\" or \"1a11f5c939bb63f52514de7f6494ada58704ebd16a62338bada94af97e883841\" or \"a1232b53d00d83370216939c15c8d5e7b48cd2ebab0bd3b351c788a465842322\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01777"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "1c404ad1-c1f2-5307-a02d-a178c0592daf",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Brass Abacus",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-01777",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "1c404ad1-c1f2-5307-a02d-a178c0592daf_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Mulberry Keystone loader sample, as reported in campaign PTF-00980. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Mulberry Keystone Loader: File with known malicious hash written (PTF-00980)",
+        "note": "## Triage and analysis\n\n### Investigating Mulberry Keystone Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mulberry Keystone loader in campaign PTF-00980.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"9facfbded3a4ae978153c971029ab2fe67f16ba9cdf3fb71f2e5b122d0b7fc3f\" or \"0b885e267ce1b9f69559dfcb3860f0fb0d487710edbc4cd15886b6c8b5d5efe4\" or \"70284ba00474789e90cee88b307b1bf7d7308395d11ed75268aaaf86d7e2ee3a\" or \"096b425a9970640f454ce0d445ea3469b1dd522b0cb95699b2c66e8e3897806e\" or \"f992c202e3cb953e05cc65c4f7d3103ea7d3a64bf10591361d91ab32e3ea2700\" or \"6fc55fa0f100e7b896639cdc2aae1e0be5f27c07ef0206f36a5418dbc7779b8a\" or \"9dd1fb107faaf8b2247eda289947d4af639a28268b83f8adb3ec0538c4a9f66d\" or \"b38389d28e3419f15d07792e089727be410142a60b50945659ea16f19f656aa0\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00980"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "64a0d708-701b-590c-80ec-843e897dd737",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Mulberry Keystone",
+            "Threat Type: Loader",
+            "Campaign: PTF-00980",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "64a0d708-701b-590c-80ec-843e897dd737_1",
+    "type": "security-rule"
+}

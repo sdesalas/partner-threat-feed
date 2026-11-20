@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Flint Mortar remote access trojan sample, as reported in campaign PTF-00383. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Flint Mortar Remote Access Trojan: File with known malicious hash written (PTF-00383)",
+        "note": "## Triage and analysis\n\n### Investigating Flint Mortar Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Flint Mortar remote access trojan in campaign PTF-00383.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"f456e20a9578aeb2a01645af64e3916b6bf4c07262695ba918e69409a1079908\" or \"433b9a077d81859671b7a0455725846b7b95a5b045fdd69d3dcee3534d626fce\" or \"a2f1ac83c08e96ebb521c275b79da90302495dfba7efc682a311bd47c0330e16\" or \"eded90c52e367a12080c809cadc7046035af4cce73a1327bb9a77aabed5f1afa\" or \"c079c476f7cc239841771dec92eeacd8dec3848f7d9b0e5bff2191c668149b97\" or \"80eca37114c9013d601b6bb1061c88427b4e05f4f0f9d49dc8ec923320ea3024\" or \"e600630ae26f2ea4a50f5b2e842390de6c8c31c0fc149ac34d5d07b770db7d9e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00383"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f28f57e9-ad83-574a-9ebc-02f2d5b08ed7",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Flint Mortar",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-00383",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "f28f57e9-ad83-574a-9ebc-02f2d5b08ed7_1",
+    "type": "security-rule"
+}

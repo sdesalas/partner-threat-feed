@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Juniper Teapot remote access trojan sample, as reported in campaign PTF-01671. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Juniper Teapot Remote Access Trojan: Process started from known malicious binary (PTF-01671)",
+        "note": "## Triage and analysis\n\n### Investigating Juniper Teapot Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Juniper Teapot remote access trojan in campaign PTF-01671.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"3cb6672c9fc0621b1261faf2f41e36c1de5c7578fb04811c2a4a81cb9e6d8f36\", \"022bd030d49b79be60e875926300b44b656af9452701bb5ebfd1a6711f7e6468\", \"b644a61acbf7700a1d0951d07ba81eaeadc5b4b0e37ceae8ecda86f747cefcd2\", \"e7f57da4d484df9b5d33efed1dd2b569296e55a058d7ffa64fcba15b0d0d8818\", \"aa9ed5730057b52b3b578a47e15b9c47b087f95dec05849544fec297fc1c63a0\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01671"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "55b9746c-108e-559d-8eb1-abe62dd9eb47",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Juniper Teapot",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-01671",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "55b9746c-108e-559d-8eb1-abe62dd9eb47_1",
+    "type": "security-rule"
+}

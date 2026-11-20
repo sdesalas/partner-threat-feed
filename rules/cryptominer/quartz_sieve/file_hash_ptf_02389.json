@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Quartz Sieve cryptominer sample, as reported in campaign PTF-02389. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Quartz Sieve Cryptominer: File with known malicious hash written (PTF-02389)",
+        "note": "## Triage and analysis\n\n### Investigating Quartz Sieve Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Quartz Sieve cryptominer in campaign PTF-02389.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"1b8748cf83b1760e32a55c87ceae5ce5b5c0cc0f4b912fb7e2b312e20436a380\" or \"f7298a1750887e187ec27a6d380ef6e2164d4df8ab2c44e933b17c2f54797ad2\" or \"4155d1b6cac36056a274020d453e9f85f97d0f4394749a2ad78713edf8f678f5\" or \"48512eea3713a39f3a01d5467ac350ccc61bd911fcba61ba046d20f656e5de9d\" or \"fe0355756b699644296b6b5710730bd1ecf194aa200c475e73212aec72f38918\" or \"acde52a4993231549a57baa41c7fe8bc145fb7360dc1d56de2287283e0c11a39\" or \"9699ab32b760f09ae167e1cf3ff6ab14eb68d2fefbd13b89bc8d476abb271e87\" or \"451ac8dc684327daa1907e045837fedbbf330032b7929d3501428d633ba1b70c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02389"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "0ab16cc1-6957-5964-9dbc-fd2d4368b8bf",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Quartz Sieve",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-02389",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "0ab16cc1-6957-5964-9dbc-fd2d4368b8bf_1",
+    "type": "security-rule"
+}

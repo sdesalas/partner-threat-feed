@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Oaken Thimble infostealer sample, as reported in campaign PTF-00449. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Oaken Thimble Infostealer: Process started from known malicious binary (PTF-00449)",
+        "note": "## Triage and analysis\n\n### Investigating Oaken Thimble Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Oaken Thimble infostealer in campaign PTF-00449.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"5e8a18c19d388beceb586f0ec8c637dcecefc3cfd9b8e313d5e281f0b0057e3a\", \"ed735323baae88216cbb6a68a02a47f2d6450360d59e1d8c02fb99b2cf034918\", \"47b46c899a939133873fff2ddfa483aa39ed13db732545409233bdc51c39bbac\", \"51089f9d46c9295e603a64f948a8fb5cb4eecf7887abb5ee11a4427d75d3be0e\", \"39391de6ab3c36a978060b45ef19e250abf375031f78412fa106a9ad764b51b4\", \"1c4d21f7cb45d538b484e3ba097c209d884e11d36235872977af5050369f434a\", \"d1c359e9056ec4f755529d00699871c70dd6f993200dae263d3ee7e7b566a85f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00449"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "6c0d6ffc-c5b9-5661-bf0a-0785f1116622",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Oaken Thimble",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-00449",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "6c0d6ffc-c5b9-5661-bf0a-0785f1116622_1",
+    "type": "security-rule"
+}

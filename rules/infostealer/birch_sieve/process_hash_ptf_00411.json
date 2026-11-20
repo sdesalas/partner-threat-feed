@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Birch Sieve infostealer sample, as reported in campaign PTF-00411. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Birch Sieve Infostealer: Process started from known malicious binary (PTF-00411)",
+        "note": "## Triage and analysis\n\n### Investigating Birch Sieve Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Birch Sieve infostealer in campaign PTF-00411.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"cb172734fd27f53b31466e5280ddd52263131e2e3fe3d5fd8eb90b2379bd15f9\", \"6160d2f8126879eb058d119bd3d24f1816304256ed0b6d1d880b99d7564fa37b\", \"517a74f7111a266c119c8cb3fd9c57735aa11de47d6351afca3930331ec9c60e\", \"ec128e5d27528de49ccfd223cc7513bb9e02ce62a9d783cac801fd8e080e819e\", \"724af28fa07e0b49f12bc8f5da79d9577176bf5f0c9b025e1fe36c508f91476a\", \"23763b396ef4745c384eb2cb0e171bbff1be1b036ab4a8b0de3097cbdf128e77\", \"b9952617e08c7391c2f1354ca20852437f9d758dee567bb228a333897f39a0e3\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00411"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "516ffeb8-4513-5043-8551-7bcb04ea096a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Birch Sieve",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-00411",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "516ffeb8-4513-5043-8551-7bcb04ea096a_1",
+    "type": "security-rule"
+}

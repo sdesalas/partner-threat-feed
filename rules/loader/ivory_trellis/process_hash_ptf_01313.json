@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ivory Trellis loader sample, as reported in campaign PTF-01313. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ivory Trellis Loader: Process started from known malicious binary (PTF-01313)",
+        "note": "## Triage and analysis\n\n### Investigating Ivory Trellis Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ivory Trellis loader in campaign PTF-01313.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"292a74c73f6498d36aad00a1c40718316251ee82aafd1788cc968a830a51b0de\", \"de310083709373190e65f104194fdddf03ee0150aacc5fed318f3bbf85362047\", \"11887bbd82a46adb4c349cf95da90043eb0023a248ed7be35953ae4c5b7dd124\", \"079c245349f1373b38495138c5316269e68125e3382fbc613ca1018796f09954\", \"872f6930f4309fb610353730a5ed692446f4f4e8bd52c42c1b8e8eafe28d3260\", \"1f17c693b4cf80be36b51cf3e77941aa58c482069b06cfe207e61ffea29dfaf6\", \"97b98ca6876ac04ac54e6b91548a435d93e3fbbf6748b69b065e3bd7a5d83c4a\", \"f2b456e7b786fa617ca6f85e008e07e86911b183f99d66b387e55a44ed8e06b7\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01313"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "772dc56d-cfe3-5125-a1c8-dbd2e86595b4",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ivory Trellis",
+            "Threat Type: Loader",
+            "Campaign: PTF-01313",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "772dc56d-cfe3-5125-a1c8-dbd2e86595b4_1",
+    "type": "security-rule"
+}

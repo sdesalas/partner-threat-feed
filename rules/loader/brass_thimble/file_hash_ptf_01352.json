@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Brass Thimble loader sample, as reported in campaign PTF-01352. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Brass Thimble Loader: File with known malicious hash written (PTF-01352)",
+        "note": "## Triage and analysis\n\n### Investigating Brass Thimble Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Brass Thimble loader in campaign PTF-01352.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"0a1688b1c5d28daf2b895d1fb1dc41ccb0bc5d1a267658a34a0d32d9db8888eb\" or \"ca92b3b229567fb557e988c4a8af40db41da089971010dc21fd5bb1a258c71ff\" or \"0221dd635b39a17f750826849c4d2a5382fd8edfc278d9f57e6333b2eb112d52\" or \"5e8ebd75cfd3032027f9ccc92f42fa83c8c555593cf132d2ee821619ac76e612\" or \"0d72a6f65288d6419bcba461d57719c7c1652f1488aa6c69800dee83d976c93d\" or \"38df17d2e8acee8b14757e8121cb57d7b64c712922c27ef893c7a49a9fe2dca1\" or \"58407d53296e830c34579f2ccf26ed19241e20410290f0026ee7794eaf2924d4\" or \"04633f672ff16b9e42f06b7d9f5bd389dc4efbdc5cfd0b9645fca2b9ce482957\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01352"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "da8437b3-92e8-5ffe-995f-c5eba5bdb585",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Brass Thimble",
+            "Threat Type: Loader",
+            "Campaign: PTF-01352",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "da8437b3-92e8-5ffe-995f-c5eba5bdb585_1",
+    "type": "security-rule"
+}

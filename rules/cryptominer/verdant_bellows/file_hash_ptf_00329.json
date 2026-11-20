@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Verdant Bellows cryptominer sample, as reported in campaign PTF-00329. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Verdant Bellows Cryptominer: File with known malicious hash written (PTF-00329)",
+        "note": "## Triage and analysis\n\n### Investigating Verdant Bellows Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Verdant Bellows cryptominer in campaign PTF-00329.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"cec455f20718f2c9dff0b691b5d5b17392ae2b5bd4c38685bd83c3325d25a080\" or \"9c6fe9a6da81eb32748962e08d04cbee91b760b9eddf5a8fcc684a1e01c31633\" or \"dda523a180ded1fee94faedf31a4147c71690df28169be6ced188d25a784c09c\" or \"b6269a578f5a2a24ae973ea31abf3e1171422a22bec83c108f45c9f2e60dfc5d\" or \"e1bbcfd7c54f6773306bbc83cab1ee44fd00f4bdd080260ccb177adf90918d9d\" or \"a6e18f8f4f8ccc2be098285c297fda6207c393db388e789daa1b4f9a65cb3535\" or \"f687246a4c3367c67c2ee7daa64c2a9e840a1a6207f36cac0b13b3222da8f747\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00329"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "27562ec0-496e-518c-91a8-c61d6db7952b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Verdant Bellows",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-00329",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "27562ec0-496e-518c-91a8-c61d6db7952b_1",
+    "type": "security-rule"
+}

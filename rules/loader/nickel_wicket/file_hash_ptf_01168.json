@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Nickel Wicket loader sample, as reported in campaign PTF-01168. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Nickel Wicket Loader: File with known malicious hash written (PTF-01168)",
+        "note": "## Triage and analysis\n\n### Investigating Nickel Wicket Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Nickel Wicket loader in campaign PTF-01168.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"ef66692ac2971bed3d7159b770f6c606dd82d9c457c474a1c5933adf9da0ca42\" or \"8f4d9f6bc004df5dca51232b9a483f1278677ec228cb931fcfe665c873be31e6\" or \"750990862b5303b90f11933caa273e8034da348c50d7470154f1b7bc2e06d2f7\" or \"59af4295dd0c63aab898ee79adf2e082201e9103db2a7de839c9552b2b57de71\" or \"65b337166fa234fbf32a6e0eb231739a1936b3d780ba3e5b4bd20dee006e016d\" or \"2042c9d83ef02c60214b36b142884705f268d15e71c7af66a038cf020840016f\" or \"43c762de0ca6425bdc724a5c2ca63213e25b00bcb820181901cdc698c2aa6130\" or \"b7cf12cf907f350213d0edbaee4ab1760f8f41b3b7db8a2aa9bf8b25bdea77ce\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01168"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "0379a18b-01c6-5bdc-902d-c07de47e8724",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Nickel Wicket",
+            "Threat Type: Loader",
+            "Campaign: PTF-01168",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "0379a18b-01c6-5bdc-902d-c07de47e8724_1",
+    "type": "security-rule"
+}

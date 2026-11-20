@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Brass Turnstile cryptominer sample, as reported in campaign PTF-00987. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Brass Turnstile Cryptominer: Process started from known malicious binary (PTF-00987)",
+        "note": "## Triage and analysis\n\n### Investigating Brass Turnstile Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Brass Turnstile cryptominer in campaign PTF-00987.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"53590eeaef3d6dfe1ac8af733be508e9b259a03c238ec22cd81bd5bcb25f9092\", \"9b70769b3fca82aa5274555993868aa222d1b1a0998a5bf983b401d52593adcb\", \"cfa08757b032a916e5776a1a824a6d48ed7709ea4539cb06f5fd9bdd37dba4f8\", \"0f3a0ac52d202d6af5f01fa4a7efbe74ffdf0ee495f5a4471fddf9d6c554e513\", \"b0eb33054747da2de0667115e93adca322a57795bc9a753c7933fc2118bc405c\", \"521702fd799c1eae1b7ddc429b2fe746ba7cb2521cb4e7d51beb80a8e1d43167\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00987"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "78f9d91b-e52e-5925-b3ca-a11075633133",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Brass Turnstile",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-00987",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "78f9d91b-e52e-5925-b3ca-a11075633133_1",
+    "type": "security-rule"
+}

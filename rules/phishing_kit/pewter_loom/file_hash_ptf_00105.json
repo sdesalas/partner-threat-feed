@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Pewter Loom phishing kit sample, as reported in campaign PTF-00105. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Pewter Loom Phishing Kit: File with known malicious hash written (PTF-00105)",
+        "note": "## Triage and analysis\n\n### Investigating Pewter Loom Phishing Kit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Pewter Loom phishing kit in campaign PTF-00105.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"f4bfacfe9dd43aec7b1a201d08d5f1484caedb3a8c7793ded014e5ee5196e55c\" or \"7d02eb1ed40f9b00ec50e519b434f07e1eb7552f10fed6e2b1c562444f69ac80\" or \"0e7e493cbe049b29ec02965a00ac51dbd1b8e51263f4aa62ab83c95ae51ed5a3\" or \"e0b81342917182075e17508a2da40c1a511f72347b673983b354af042a804932\" or \"8a900959eb9559867cb8a3f46fd734fb2a45468b33aabc45e61ad138861f2c65\" or \"62a7b8316a9b24644d603742290cd9d2451392c778ae797d4ae2ed7794e4fe86\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00105"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "43932f72-dd07-5e9d-95a8-2c4e6b8d2412",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Pewter Loom",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-00105",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "43932f72-dd07-5e9d-95a8-2c4e6b8d2412_1",
+    "type": "security-rule"
+}

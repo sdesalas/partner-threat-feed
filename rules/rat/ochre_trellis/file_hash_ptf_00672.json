@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ochre Trellis remote access trojan sample, as reported in campaign PTF-00672. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ochre Trellis Remote Access Trojan: File with known malicious hash written (PTF-00672)",
+        "note": "## Triage and analysis\n\n### Investigating Ochre Trellis Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ochre Trellis remote access trojan in campaign PTF-00672.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"f252dc43ddf2b32301fc565ab5ef4b6356afc3ad845f8b271429204b4473a093\" or \"083e1137564c3fe8dc88a2137c7036e07696b5b792c7576e4840f2a14450c369\" or \"bb8ab5ea4530e6bf02b2d077d38d582ce8400b55f0b40fb85e68753bf8622234\" or \"a0f751db7f35e4d5c241bc29d455ffef504816ff457c5a3beac3c2294116f9b1\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00672"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "cd8b0206-9176-57e5-9242-f2370c4f1943",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ochre Trellis",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-00672",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "cd8b0206-9176-57e5-9242-f2370c4f1943_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ivory Satchel banking trojan sample, as reported in campaign PTF-01715. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ivory Satchel Banking Trojan: Process started from known malicious binary (PTF-01715)",
+        "note": "## Triage and analysis\n\n### Investigating Ivory Satchel Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ivory Satchel banking trojan in campaign PTF-01715.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"eee23120b9a223673f8187c1797d3360c70681667fa39dc61cef29e54d0f9ef3\", \"6ba1fb6d6d9500a29816c9ba3d777ed805c590d88f1e7aed5720cff760ed8787\", \"cd8751d188b680aec29cd4804380ea23816596ed2b287c4d229f4a94daab8b23\", \"bee8053ca254d72f654acaa57e930fdea4fc96aa0557273dfe22e2a8ebe3be4c\", \"9b5f4e4a84c6891976088e7cab509cf3988cbd72e016f6c15ef7fe1a16125c2e\", \"c2db9272d9613a362e2d767732103fad7f9ab77e090ac278d4fc282d13a2dc54\", \"03df2824e9a7e3d49bbc0b350a99a4fccbfabbe6cc49e3f71b22075f55c97e5b\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01715"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "6c45fefb-0424-50dd-8ff5-805acd53c750",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ivory Satchel",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-01715",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "6c45fefb-0424-50dd-8ff5-805acd53c750_1",
+    "type": "security-rule"
+}

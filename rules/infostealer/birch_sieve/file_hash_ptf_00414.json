@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Birch Sieve infostealer sample, as reported in campaign PTF-00414. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Birch Sieve Infostealer: File with known malicious hash written (PTF-00414)",
+        "note": "## Triage and analysis\n\n### Investigating Birch Sieve Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Birch Sieve infostealer in campaign PTF-00414.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"f92b560fea84fed732bc37f105aa0b67d22633211d6ba4f97d902d65e84744f2\" or \"2533d4aa38f68b707aafe76687abde0d4c8138f7bb28e7edf6dcc88f6f621f35\" or \"6cf913f2ea5a4857034e34cfae1347a35fcc295d67feaf55b94ef19ff125d9ec\" or \"f6961e02ff20770ba56d6befa4f2ffb49ad6d5a8e7cf9d54bb128f2ac5f91591\" or \"c60f9fe96ca47dd52416c57bc07602c5a3ad3e6149ff6df821c15bc4e4652999\" or \"dd90bb6f8f6332aab7afa6e8c6a396b76249c14f5519e183bf6fc3b4686fc7ef\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00414"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "8b69b0c1-d1bc-5042-8097-7bbd74ab797f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Birch Sieve",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-00414",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "8b69b0c1-d1bc-5042-8097-7bbd74ab797f_1",
+    "type": "security-rule"
+}

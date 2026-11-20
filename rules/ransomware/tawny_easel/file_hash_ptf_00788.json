@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Tawny Easel ransomware sample, as reported in campaign PTF-00788. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Tawny Easel Ransomware: File with known malicious hash written (PTF-00788)",
+        "note": "## Triage and analysis\n\n### Investigating Tawny Easel Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tawny Easel ransomware in campaign PTF-00788.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"65b47e356eaab96d5f4c4c474069209143b492a9bb8661b548ce8aa66920dcf3\" or \"3b448e204e910ff8c74106ded8d7827e9edb77e4682fea3b8b123face27f8a04\" or \"e9eafbc2a1463472867395f3e353f4e4a386be3e2ff9852f8f78e245c6deed25\" or \"d16f165dc40dc5bb12f065744c50b0ad99b44fcd24198e1199748f4afe86dfc4\" or \"e74672752b4f46e52702570842513f52fe6c37df56e13a933bd24064529191fd\" or \"cdb5c6b46d5df1833d678179fa71a9cf741329c96ed9575a57d74f8654ee632a\" or \"76cbd7ef047683f7252d20ae08cfd1302b1816d136ee05ee7d3827e63d240301\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00788"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f56a98a8-3322-593e-95c5-23a577d1ab4e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Tawny Easel",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-00788",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "f56a98a8-3322-593e-95c5-23a577d1ab4e_1",
+    "type": "security-rule"
+}

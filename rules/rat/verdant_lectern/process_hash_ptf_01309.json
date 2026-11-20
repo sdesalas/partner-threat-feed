@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Verdant Lectern remote access trojan sample, as reported in campaign PTF-01309. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Verdant Lectern Remote Access Trojan: Process started from known malicious binary (PTF-01309)",
+        "note": "## Triage and analysis\n\n### Investigating Verdant Lectern Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Verdant Lectern remote access trojan in campaign PTF-01309.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"18420f4914c504d5467af5333dae2980fbb263179b4f4e9473d0e070a2b81814\", \"1e690ebfcfa7b2974a5026b6afbf2a3c625006ba99a272be76f686bb1a490ec2\", \"332095bcd31bebeabc4fef3a3731b5e407205bd1ebdff2674fdcbe279cc6d6c4\", \"4713b7814b5127fec65f0f84eb359886f376a415036c0c41900a1914c4be9df6\", \"f442e2bb104121b95e5248a8d5941c78fb14dea07d4ad9ada04c0b5b64590ae0\", \"fd22769e35adfcd3f27706046b3df9edb33293e7ba763d9fb39f6ff1b2335d3f\", \"00549e2be8f266f08f37a29f3b201a36e0d3f136c036deb8a675cc8ae69ec40b\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01309"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "644fa3d2-bf45-54f2-990f-0f6dc79cbfa8",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Verdant Lectern",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-01309",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "644fa3d2-bf45-54f2-990f-0f6dc79cbfa8_1",
+    "type": "security-rule"
+}

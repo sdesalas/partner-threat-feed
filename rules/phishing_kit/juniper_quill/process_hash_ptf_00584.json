@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Juniper Quill phishing kit sample, as reported in campaign PTF-00584. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Juniper Quill Phishing Kit: Process started from known malicious binary (PTF-00584)",
+        "note": "## Triage and analysis\n\n### Investigating Juniper Quill Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Juniper Quill phishing kit in campaign PTF-00584.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"cf9154eabc0efe22d2415dbf15077695307a57356e1a8296bfc9e88219cfd78a\", \"e226e664faac8db34d8e9c54cb067ea12a11b9cf478d6a2e3bd32dc757732005\", \"16a93513d9f71473737d5d5381ebee75c5bf58558b871ce42517904d0b3527fb\", \"07bf761226c8cb89780a182b29e0f1ef4a3cd69ca2a99875da529381ead2f654\", \"7de44695dceadb89ad651078040f4fd9bd7f9293a9cddb14d6d9568d9592c20b\", \"86125ea4ea773c61c7b0e3cdcb33dc59b5390b02a911cd592846f728d726b327\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00584"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "a2c12a34-32f1-50e8-ac90-b9d987675a58",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Juniper Quill",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-00584",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "a2c12a34-32f1-50e8-ac90-b9d987675a58_1",
+    "type": "security-rule"
+}

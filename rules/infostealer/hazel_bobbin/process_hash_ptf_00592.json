@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Hazel Bobbin infostealer sample, as reported in campaign PTF-00592. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Hazel Bobbin Infostealer: Process started from known malicious binary (PTF-00592)",
+        "note": "## Triage and analysis\n\n### Investigating Hazel Bobbin Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hazel Bobbin infostealer in campaign PTF-00592.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"9d4adbcb31507b4ae721f7de37c1feb3670bb50dce8c8563471a5ec5f1d74856\", \"3d0ce05a1c932410e56f1ba7b7f1c326c2b89d09987c76b303670c06662d1933\", \"495d2da15364459ad9cb35586bfe24f4805584656afecc85fd63ed3184c56884\", \"ce31524c2ebea364056067f78241c592f91ab07d976feedfc34aee55aed448c9\", \"936eb253be7c2c127aeb7eae5ece92b936706094e4bf8cb50e0f95ad7e9f319f\", \"d2603d1bf73377cdf9a5399cccf76f4a2c0ed53ba4741a15a6fdb1f8f4a1408a\", \"ee9291d5441c9961a6d6afa2a8e175ac2c3f90cd5bfeca82db5d049ce226703e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00592"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "df90dcf8-3c0b-5678-b15d-57b8266cd246",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Hazel Bobbin",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-00592",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "df90dcf8-3c0b-5678-b15d-57b8266cd246_1",
+    "type": "security-rule"
+}

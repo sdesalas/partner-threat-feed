@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ivory Lectern espionage toolkit sample, as reported in campaign PTF-01441. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ivory Lectern Espionage Toolkit: File with known malicious hash written (PTF-01441)",
+        "note": "## Triage and analysis\n\n### Investigating Ivory Lectern Espionage Toolkit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ivory Lectern espionage toolkit in campaign PTF-01441.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"ebbc69d96c4ef922544c32b1ebe6fe96cc82a1884b5763efc0796a9759b3b171\" or \"cb5ed4e68b17a1052a2a3056f6394c13aa5d7cfc6b5e3a17cb32ec6b4eb2860b\" or \"a8ab4e82803d070122287133aa6ebd07e7ac0ee1904453d93dc54c90d268a2a2\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01441"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e6f2f1a4-aebf-5876-9925-0ca206191cd3",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ivory Lectern",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-01441",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "e6f2f1a4-aebf-5876-9925-0ca206191cd3_1",
+    "type": "security-rule"
+}

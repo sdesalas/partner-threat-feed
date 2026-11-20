@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies scheduled tasks created with names that the Mulberry Gimlet remote access trojan uses for persistence, as reported in campaign PTF-00716. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Mulberry Gimlet Remote Access Trojan: Scheduled task created with known task name (PTF-00716)",
+        "note": "## Triage and analysis\n\n### Investigating Mulberry Gimlet Remote Access Trojan: Scheduled task created with known task name\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mulberry Gimlet remote access trojan in campaign PTF-00716.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where host.os.type == \"windows\" and event.type == \"start\" and process.name : \"schtasks.exe\" and process.args : (\"/create\", \"-create\") and process.args : (\"HelperMonitorTask\", \"SyncMonitorTask\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00716"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "8c04f3d8-fcca-5e3d-a057-628eef482661",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Persistence",
+            "Threat: Mulberry Gimlet",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-00716",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0003",
+                    "name": "Persistence",
+                    "reference": "https://attack.mitre.org/tactics/TA0003/"
+                },
+                "technique": [
+                    {
+                        "id": "T1053",
+                        "name": "Scheduled Task/Job",
+                        "reference": "https://attack.mitre.org/techniques/T1053/",
+                        "subtechnique": [
+                            {
+                                "id": "T1053.005",
+                                "name": "Scheduled Task",
+                                "reference": "https://attack.mitre.org/techniques/T1053/005/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "8c04f3d8-fcca-5e3d-a057-628eef482661_1",
+    "type": "security-rule"
+}

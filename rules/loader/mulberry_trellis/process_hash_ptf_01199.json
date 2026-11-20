@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Mulberry Trellis loader sample, as reported in campaign PTF-01199. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Mulberry Trellis Loader: Process started from known malicious binary (PTF-01199)",
+        "note": "## Triage and analysis\n\n### Investigating Mulberry Trellis Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mulberry Trellis loader in campaign PTF-01199.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"9f00c683f2cba627dca1187c4efdf63c3090d94f9ccc31d7122057a589ed96e7\", \"615ef2d4b21c49c3eb4417fd18c3a421dec540e35df05097c54f6bda4c5fb4db\", \"bef88b58b9895e8a9d774ec7c1d683bfc510489f2514647fb681937c10ebe419\", \"c021c6e8eb473a521cd26d764767c65d9d47eff5b3652d861df3295be59cdd3b\", \"e8b523ae6a59b248b3f60078d15417a8cbaf3d3a17988b5c6d1801115d7fc6aa\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01199"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "7102bf24-506f-5fa2-8e3f-944e63cb6f1e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Mulberry Trellis",
+            "Threat Type: Loader",
+            "Campaign: PTF-01199",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "7102bf24-506f-5fa2-8e3f-944e63cb6f1e_1",
+    "type": "security-rule"
+}

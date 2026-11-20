@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Gilded Spindle infostealer sample, as reported in campaign PTF-02137. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Gilded Spindle Infostealer: Process started from known malicious binary (PTF-02137)",
+        "note": "## Triage and analysis\n\n### Investigating Gilded Spindle Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Gilded Spindle infostealer in campaign PTF-02137.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"e01433c9a28fab37a40f378b4a22791573d5d10c8b7c677f2dd68a78b7d371ec\", \"28baddc0a42e4682765ce1381fa3ece768f9da175ac1bb3097a7e5dc3ae61a85\", \"88d72dfe1268984046529378949b3e92975192bf9e2ed5febc81da67f8167168\", \"500c3206d760c58da07866618c042b832a2240e726b9647dd359c6aa24a86834\", \"89abaab1fa6f0c6754706096b7f13ce9b5cfe4a2a3ebf608a8651ff0440c7774\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02137"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "c5fd2800-e3f6-58a0-bad7-f382dc04bc8f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Gilded Spindle",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-02137",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "c5fd2800-e3f6-58a0-bad7-f382dc04bc8f_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Fennel Valise botnet sample, as reported in campaign PTF-01562. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Fennel Valise Botnet: File with known malicious hash written (PTF-01562)",
+        "note": "## Triage and analysis\n\n### Investigating Fennel Valise Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Fennel Valise botnet in campaign PTF-01562.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"81140de19eabdadf0a75e3ef803e4a81bb7368f075cdf01b3e070ea6ddf11022\" or \"f79eba7c985162be50cc300831867746521fb0c440e87209c03d876da70f57d4\" or \"84f6ec75148e8b095e7ea3d11f2ee8511b4da20162def4e7f933c4191c517a90\" or \"9c54dcc0d369cc4a7ef2d46751816be5e48b3089b829547831b58b5ae7b0591e\" or \"211bcab685617f73e7e43b5564f749ff807265bbe981aff62904240afd101943\" or \"c1a30f7e51cdb5672d1102e59be291ca2200ddcc7f324197ad502c919ccc465e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01562"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "319af491-d27e-55a5-9ec1-be54d843332d",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Fennel Valise",
+            "Threat Type: Botnet",
+            "Campaign: PTF-01562",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "319af491-d27e-55a5-9ec1-be54d843332d_1",
+    "type": "security-rule"
+}

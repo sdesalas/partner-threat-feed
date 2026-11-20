@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Willow Anvil remote access trojan sample, as reported in campaign PTF-00975. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Willow Anvil Remote Access Trojan: Process started from known malicious binary (PTF-00975)",
+        "note": "## Triage and analysis\n\n### Investigating Willow Anvil Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Willow Anvil remote access trojan in campaign PTF-00975.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"dd1c447df0812163d669668add396f15649a39f222faa645454b20d7860cb8ac\", \"20919042baffcf93f581ed00aeec92f4cd8a32eae778f0dacf62ce2ca4e5586d\", \"fdb82539c9dafa7aa9187c203dc54003302b6e0d309ffe7767f90429854b78c9\", \"974520c290a689834fefaca14585099f355f165c0f3abe69f7cea6b0c2f077fb\", \"1ae56a97fedaa006afe549734fc4749441a66605ee46138686de66ecda392c78\", \"5cd5b840df16018c56a71df72dcb0855afdf9c29cbafd752632301c5c1e0d17a\", \"b6083d0f16aa5c61bd36e676c7b42dcf98603d18a73dd4a5d0f92c8cac30dd3e\", \"37bc3498aafd65a84851701174b8ffd783b81c0af1af2ae235c11c15976c124b\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00975"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "95d0b178-1135-5693-a62f-c63934d88bc6",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Willow Anvil",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-00975",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "95d0b178-1135-5693-a62f-c63934d88bc6_1",
+    "type": "security-rule"
+}

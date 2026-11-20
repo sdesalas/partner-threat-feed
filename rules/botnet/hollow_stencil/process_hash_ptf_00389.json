@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Hollow Stencil botnet sample, as reported in campaign PTF-00389. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Hollow Stencil Botnet: Process started from known malicious binary (PTF-00389)",
+        "note": "## Triage and analysis\n\n### Investigating Hollow Stencil Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hollow Stencil botnet in campaign PTF-00389.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"6597db83850555cc37d8eeb38562f6721334f902621e846195405a1ab21e81c0\", \"d5ead17c40aa87566c81d587dd271792190e8baf519447746f0c0ccf6ab48599\", \"5ab598f2616ab96fcf2e0a7e041cd6947c9498a5f25dee3d8f35aa425b6170a6\", \"5506fddf461b5a3508da3b0d6acee194af85a9832771df8a2bf748fcd11f8faa\", \"e108292165df50b3b84c812a40e4ba7a2a21b3cc9e683984f380a4792541564f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00389"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "da805c61-4796-53cb-aaad-f647e4ce1899",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Hollow Stencil",
+            "Threat Type: Botnet",
+            "Campaign: PTF-00389",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "da805c61-4796-53cb-aaad-f647e4ce1899_1",
+    "type": "security-rule"
+}

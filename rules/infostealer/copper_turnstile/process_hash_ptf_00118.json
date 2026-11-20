@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Copper Turnstile infostealer sample, as reported in campaign PTF-00118. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Copper Turnstile Infostealer: Process started from known malicious binary (PTF-00118)",
+        "note": "## Triage and analysis\n\n### Investigating Copper Turnstile Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Copper Turnstile infostealer in campaign PTF-00118.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"4dbe518094c070a2345cfd10ba44ee04795a20f7c76682a8c6a26263588fd284\", \"b53754fbdf796c2af91cc4418a56e215bfd7bb90f8165498f0146def164dc9b7\", \"945843ce5b198c7a0e5158db1258c856a35206cb41515d409b0f2917db82f08b\", \"89e095a29dbd8973ed9d543582f55d60110fc55ffc2558fbab2cb306e862b8c4\", \"8458080141f7ed32ebb758558e23187531959ec8befab00fc80b1cbc80f87c08\", \"240cff6cc1c1dc4f51f99b7d4cb99a6821359606a740d5b020d6d1c3f665a313\", \"de366f1a448967b13bae45a740be8d4798b431543d4fc685610244a76c279b38\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00118"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "aeca7c5a-4a67-5a3a-addd-1311dd7bcd78",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Copper Turnstile",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-00118",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "aeca7c5a-4a67-5a3a-addd-1311dd7bcd78_1",
+    "type": "security-rule"
+}

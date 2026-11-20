@@ -1,0 +1,78 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies a host making 20 or more connections to command and control IP addresses used by the Clay Whistle botnet, as reported in campaign PTF-00801. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.network-*",
+            "logs-network_traffic.*",
+            "packetbeat-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Clay Whistle Botnet: Repeated connections to command and control IP addresses (PTF-00801)",
+        "note": "## Triage and analysis\n\n### Investigating Clay Whistle Botnet: Repeated connections to command and control IP addresses\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Clay Whistle botnet in campaign PTF-00801.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:network and destination.ip:(\"198.19.131.17\" or \"198.19.177.176\" or \"198.18.139.123\" or \"198.18.97.50\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00801"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            },
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "efa0ddfc-96f8-5d4e-9c55-8e6021c1dcb3",
+        "severity": "high",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Clay Whistle",
+            "Threat Type: Botnet",
+            "Campaign: PTF-00801",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1071",
+                        "name": "Application Layer Protocol",
+                        "reference": "https://attack.mitre.org/techniques/T1071/"
+                    }
+                ]
+            }
+        ],
+        "threshold": {
+            "field": [
+                "host.id"
+            ],
+            "value": 20
+        },
+        "timestamp_override": "event.ingested",
+        "type": "threshold",
+        "version": 1
+    },
+    "id": "efa0ddfc-96f8-5d4e-9c55-8e6021c1dcb3_1",
+    "type": "security-rule"
+}

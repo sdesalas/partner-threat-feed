@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Juniper Kettle phishing kit sample, as reported in campaign PTF-02202. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Juniper Kettle Phishing Kit: File with known malicious hash written (PTF-02202)",
+        "note": "## Triage and analysis\n\n### Investigating Juniper Kettle Phishing Kit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Juniper Kettle phishing kit in campaign PTF-02202.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"d3577dd0467a16546b2105255cbba8b7c27359a208adb573117a3f00cfaaba61\" or \"130ef1c3b6a735cf8952a92aaaab30ff1acc9f04032964c3f289af40517e95f6\" or \"e7e4ec8fe4820a6271ee7969ac01fe6df0c7a48fbeed88a93b9e41f777e4c4fc\" or \"056ba1ec0fad378f1e47f42895519e700d84c3c5261b4e47dd5dce1cf6965767\" or \"c364003799ecca8f4c8902233d43dd5d2f048afe65ab765afa510fa9a50c41a6\" or \"a885c436bae0a85cd78e532051d36f33c4ec6e9f326be3ad77d3ae1800885286\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02202"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "4852e62b-82ab-5823-a924-141a3b0daf53",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Juniper Kettle",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-02202",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "4852e62b-82ab-5823-a924-141a3b0daf53_1",
+    "type": "security-rule"
+}

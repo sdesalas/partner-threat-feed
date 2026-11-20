@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Linen Wicket infostealer sample, as reported in campaign PTF-01448. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Linen Wicket Infostealer: Process started from known malicious binary (PTF-01448)",
+        "note": "## Triage and analysis\n\n### Investigating Linen Wicket Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Linen Wicket infostealer in campaign PTF-01448.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"320c608e9efd37e6457bbd3bb4312e9988266830a5e3c353d941050c8d194740\", \"cbb04adc2d9ab2d1c16fa291ce837df76dd8e6865e8ee24f821d54ce5bcbcef3\", \"327414343eff6e27d4123532711f40c8b033049318ed70c2b99692ad4c85dfa0\", \"a8962556eb123aa03384d80cd4c544327a74904141737cb72a63b1509d1ac0f9\", \"cc14469a58f669423d00d8cd0ac96173ec22002ba101529b7abb6c0d5a8dd10f\", \"4d1b18b79ee904f4de8b46b3bdfb9bf1fef81617b85924efe275d8fc3f5f017f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01448"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d09e52e7-31ad-5468-992e-6e433c18212f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Linen Wicket",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-01448",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "d09e52e7-31ad-5468-992e-6e433c18212f_1",
+    "type": "security-rule"
+}

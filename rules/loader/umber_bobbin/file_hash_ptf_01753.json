@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Umber Bobbin loader sample, as reported in campaign PTF-01753. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Umber Bobbin Loader: File with known malicious hash written (PTF-01753)",
+        "note": "## Triage and analysis\n\n### Investigating Umber Bobbin Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Umber Bobbin loader in campaign PTF-01753.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"3b7bab01ef96724f9dabaad64b87514c39ae0761aec1488221e506b642d91536\" or \"c195f877404b3c6be7c13bef359c4ac9b5b99097a92fa9fa79c497f6b0847987\" or \"d95ba52676b7844352457be39a2a3ada11a6309ba4ac6ed5ab55083e345508b1\" or \"20eb5e652641fec22f121a13c89c962f2fa078d9d4b7996255f0538dc4afb2f5\" or \"79785468c212571f77924fd51944a6d26d4bad3dafef6e06464b0acc88277d74\" or \"0b5fd5ca780408211db7575b9b70cfcabf89a95110bf75f2a5beec04d20264b6\" or \"61973d7cf544486657d6df21e6ae7cd402421ddd64f3cb149d46695fa6ca6e77\" or \"457ab85ee44b8a6edfa30ee51309f415e4c3ef8fd0194aae807d7e5c3b94037f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01753"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "9e3e2825-38b5-547b-82dc-578dbe501cd0",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Umber Bobbin",
+            "Threat Type: Loader",
+            "Campaign: PTF-01753",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "9e3e2825-38b5-547b-82dc-578dbe501cd0_1",
+    "type": "security-rule"
+}

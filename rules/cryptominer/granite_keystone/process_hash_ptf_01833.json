@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Granite Keystone cryptominer sample, as reported in campaign PTF-01833. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Granite Keystone Cryptominer: Process started from known malicious binary (PTF-01833)",
+        "note": "## Triage and analysis\n\n### Investigating Granite Keystone Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Granite Keystone cryptominer in campaign PTF-01833.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"58e6a14ecbc92946add114c9126a585d107968ba80f8a78b652dfb01ceb5343f\", \"66289cb3a4f1548c9e56acfb88da898a5ae2c27338f6daed77022c0d9d62e538\", \"c730cdcdc69bbe93121cd1e3d85072ee5ddd37260f6ee301f2171a69e25862ca\", \"3eb405cc5edea5db65cca6d29eb79358c2a539421093344027fdeb818fba557e\", \"67618e017c40c2de6dd438140dcdf8b47371dafd677f243c7d4e0f0fb34037a8\", \"995bbe4312c9b424b0876aafe9f6da9f951b9b30a398fc097bb4ea4d728b5e17\", \"1a3a4773bed6ee7be1d2da9f2b8c2e9ebc7d8659d2e3e3230d7506415a546d95\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01833"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "172254be-6f8b-5011-b45d-136436f34915",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Granite Keystone",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-01833",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "172254be-6f8b-5011-b45d-136436f34915_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Tin Gimlet remote access trojan sample, as reported in campaign PTF-01123. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Tin Gimlet Remote Access Trojan: Process started from known malicious binary (PTF-01123)",
+        "note": "## Triage and analysis\n\n### Investigating Tin Gimlet Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tin Gimlet remote access trojan in campaign PTF-01123.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"394387a9be6c2f96824100053a46c5520acc4cc07848d0778a145cf7d8609aa0\", \"6475afd9529b50d17d764c16a8b7098a54ffa42eed851865ae5669a989494842\", \"b57d8c7d0140568958cc879ca29280e35baa4b2a879005b5aeb334e263212712\", \"cb3a1371388f8952d8a2d50b74938e8d70ae03c11e4876bf1e829e70b973d8ce\", \"4f09ea684e15ae86605a6d0167d028adc9b4eb2123a52e16e5238036ce314911\", \"8bfb4131c6a15297f264ced24a49acff55259b4ed2c074b4fc671e5a8023ebcc\", \"7c4fb608acca92708588d44b14cb28379672a6361a2061c819ba987a94979189\", \"883b7dbd22e6708eb6d4201c42abbce4f03c5bee27da0b3aa3d2e5a9b560b1d2\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01123"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "23eed46a-e0d5-59ff-8d25-45832b10e442",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Tin Gimlet",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-01123",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "23eed46a-e0d5-59ff-8d25-45832b10e442_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Juniper Easel botnet sample, as reported in campaign PTF-00289. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Juniper Easel Botnet: Process started from known malicious binary (PTF-00289)",
+        "note": "## Triage and analysis\n\n### Investigating Juniper Easel Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Juniper Easel botnet in campaign PTF-00289.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"cc61266234e8f9a9b9f6d512e2941c2b655b03a61698118490fe6b37d4cb389b\", \"79f1293692e7db3468c03f40a0aa09eefe1a597d8040976f647b0711e6f20a51\", \"949b419b0dae3ccae1c72e8c6a16d03f06dc15658bf9e838da67ccd40d094dc3\", \"9fb36c547ebe6c645a850d18b9cb829ce3b6eff88809dbcbb46a2fe15f26a856\", \"e891267205dc9042fb15ed6b52dfd380fb1aec3cbda7fdb450bb7ee570d9c78f\", \"63f8b23734f5f76e0811b922c91116b00f43500a0e14dd1c545ecc54b51e2adb\", \"6637455d5eb8226cc41fe6926519447eac7c6a942ef9ef3f8ef1b41c8fe04ba5\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00289"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "0bea8f46-d1fe-5189-a795-698f218ef3dd",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Juniper Easel",
+            "Threat Type: Botnet",
+            "Campaign: PTF-00289",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "0bea8f46-d1fe-5189-a795-698f218ef3dd_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ashen Valise botnet sample, as reported in campaign PTF-02033. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ashen Valise Botnet: Process started from known malicious binary (PTF-02033)",
+        "note": "## Triage and analysis\n\n### Investigating Ashen Valise Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ashen Valise botnet in campaign PTF-02033.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"e3a7899502dd3ffbf67c32b9ed000935ecc77184752d32220efdd8eeb6a9ebf0\", \"e2040dcae526d7f8e33ba458ac24b2984f6d5908e40ba663de8b1380c2ce27de\", \"827e2d7d2b59fb6b5724cbb4e541d3f4472ba16f8ed0b7d00c1ad16b1d943648\", \"4279fb1a9b18ec768f35cfd97e2c9a253f57b2a58afe80268e94323bc78b614d\", \"b4ec389412b4597e7262dfcf3a585c136cc96975f185dbf100b894e89fbd4bb4\", \"de325806dab927c5d47a278e43047d33f07733f04ff18e9c9aa8af7c40f8a9d6\", \"5e79532a8f057cb573ebd5a3069363bae6ff8e572e68611e5f5a259b9a9a808e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02033"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "1a549b58-41d1-531e-9c39-37a4564dbe8b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ashen Valise",
+            "Threat Type: Botnet",
+            "Campaign: PTF-02033",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "1a549b58-41d1-531e-9c39-37a4564dbe8b_1",
+    "type": "security-rule"
+}

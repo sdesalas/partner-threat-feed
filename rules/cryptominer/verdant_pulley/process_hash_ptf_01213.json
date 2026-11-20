@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Verdant Pulley cryptominer sample, as reported in campaign PTF-01213. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Verdant Pulley Cryptominer: Process started from known malicious binary (PTF-01213)",
+        "note": "## Triage and analysis\n\n### Investigating Verdant Pulley Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Verdant Pulley cryptominer in campaign PTF-01213.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"fde740a1bce1058a91bf34ab6700b680de2647c848537654a9d326ffb6bf7675\", \"949d624fef89a7968c39a91f80bc1620d48e6a0c3c0c4fcd16a5af605ebe2ed5\", \"e8d99d5e70478c7a9422e0fa825e3c56a4fcfe4954e19c0beb0595aa2f68a5e9\", \"00eadfa694426f79b2e96366d5a7dc75748d75b65948bc1859448096da97db14\", \"d4a8e412e1ec4dfc8a65f833029337a2f38c8aed1a5a67060c7b26762bc09871\", \"e05e5dc49a9be6c671968e87f587e468947c35bb70b8989272ec4f4a70f78300\", \"bf5db14e4765fcc6caac79bd36ea8fc0d4c2c38bcf37fe97b5c3ca331ec66778\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01213"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "5f9dc3bc-e854-5026-b7d3-18b6ff34d31b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Verdant Pulley",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-01213",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "5f9dc3bc-e854-5026-b7d3-18b6ff34d31b_1",
+    "type": "security-rule"
+}

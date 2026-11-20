@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Clay Quill loader sample, as reported in campaign PTF-01558. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Clay Quill Loader: File with known malicious hash written (PTF-01558)",
+        "note": "## Triage and analysis\n\n### Investigating Clay Quill Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Clay Quill loader in campaign PTF-01558.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"7c0ea4463a203eeaa5df4a77e8ebbab74783b36e54826ad504da1c3e9e3b3233\" or \"46b0b9ffddd0f524f94225a600df7ed296c62829c3978590e024b00d6cac36e5\" or \"4131ea0039ef137925935425cdad38da25a4235c2f55ef6080e3d2fc04db96d9\" or \"23b9e6e317389cf0a8535b39ee5db8df71ed53ab8e0e0f778208df64c29fe1f3\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01558"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "978e01bc-cf64-5f88-90b4-23c0110b9459",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Clay Quill",
+            "Threat Type: Loader",
+            "Campaign: PTF-01558",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "978e01bc-cf64-5f88-90b4-23c0110b9459_1",
+    "type": "security-rule"
+}

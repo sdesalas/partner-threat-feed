@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Copper Tinderbox espionage toolkit sample, as reported in campaign PTF-02477. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Copper Tinderbox Espionage Toolkit: Process started from known malicious binary (PTF-02477)",
+        "note": "## Triage and analysis\n\n### Investigating Copper Tinderbox Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Copper Tinderbox espionage toolkit in campaign PTF-02477.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"6507d0a86e22379433581b098ec9311a08a7588b95948e76482177bd80c114f0\", \"126fe35679a9abdf0b74a508516777a7028474ddb1a5e1367e50c661037474b7\", \"1ffa2f5cd4aa76c447c6d140f009d35d1e27df53cc3fc44312f57724b2ac4a44\", \"c297e6eeb7122a0534df89c1426cb502103d191240d615474162943002fa402c\", \"237a0f7ae99b3aca25e965ed6badb371c11a660bf2c0fb262b70ccf9c27db091\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02477"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "0a76a62b-78f7-581d-9e96-140ce936628f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Copper Tinderbox",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-02477",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "0a76a62b-78f7-581d-9e96-140ce936628f_1",
+    "type": "security-rule"
+}

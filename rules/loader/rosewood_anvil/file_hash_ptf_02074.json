@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Rosewood Anvil loader sample, as reported in campaign PTF-02074. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Rosewood Anvil Loader: File with known malicious hash written (PTF-02074)",
+        "note": "## Triage and analysis\n\n### Investigating Rosewood Anvil Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Rosewood Anvil loader in campaign PTF-02074.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"7490ed5f4a3a6246b5b64e04345420c37f6cfdc3f9e0f9d3bec6db9e6d65eb2f\" or \"103e6addc7a6caa7c5f58174edd8792cbf3ec91a42ed552db7b593fe95fdcf8b\" or \"a15019f2cba835098a4904abe5ca618ee3333419b28ac37bc5e0ba3c7cffbdd7\" or \"9ed58742c1e340c248f2d5f5301e6fccd993cc16a3082f686522e7e8fb821907\" or \"8ddb68f2568820b366e943a994042ef1a2220d7b320182c7f035d0539554face\" or \"5c69998818620e8317ce11de0263479b8b86163dbeee28ceeeb6391565e53c6e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02074"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "781a5632-ef56-52b6-86b1-93a07cfa3b80",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Rosewood Anvil",
+            "Threat Type: Loader",
+            "Campaign: PTF-02074",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "781a5632-ef56-52b6-86b1-93a07cfa3b80_1",
+    "type": "security-rule"
+}

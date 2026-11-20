@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Quartz Tankard loader sample, as reported in campaign PTF-01385. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Quartz Tankard Loader: File with known malicious hash written (PTF-01385)",
+        "note": "## Triage and analysis\n\n### Investigating Quartz Tankard Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Quartz Tankard loader in campaign PTF-01385.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"c4d535efaa1921a6dbfef5a5f208f17bd11654a788ec497c15f2e09531f680aa\" or \"9400eef0dabac34134834981bca57a76d5c62f13e796f8d16b97fdeef9d2afe1\" or \"aa6378377e8fedd49ab306ab01d4d3e4e4cd6e5c764237d80268b792644e0191\" or \"f28684ab6f5e5a8227e56196d4a45b1b45496e70cc6a3bf9f29f7aa597d073c8\" or \"887c3cb8245b7efc1d707e136f5a5eec6a106a78f6e4f0d6659e898ab2372401\" or \"ccfdc44aa0a98145141664f5d6c7eb8d9784d174e839b2921ed4db9931186cf2\" or \"96fd0bd4dd8ff574c573cf8fa61ee3bc612f384c6ecfe23ab9b22d1f2cc88111\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01385"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "7b066c8a-ff54-5be9-aa5f-3fa66dc0bcbe",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Quartz Tankard",
+            "Threat Type: Loader",
+            "Campaign: PTF-01385",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "7b066c8a-ff54-5be9-aa5f-3fa66dc0bcbe_1",
+    "type": "security-rule"
+}

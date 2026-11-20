@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Tawny Tinderbox banking trojan sample, as reported in campaign PTF-01103. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Tawny Tinderbox Banking Trojan: File with known malicious hash written (PTF-01103)",
+        "note": "## Triage and analysis\n\n### Investigating Tawny Tinderbox Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tawny Tinderbox banking trojan in campaign PTF-01103.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"c53c10af73df85f430dfc3d3d1067a339a0195e071f80ae0feb3c1fca07fb62e\" or \"b95cd2d42cfd305b4d24190565ad73fbdc4231697e0e74290dfbd037b509aa73\" or \"91225ec99fb7b6ded363d8df4c06f0af903705fd7ab6ff12689f9a418b9aaf13\" or \"69d1021cba2efedf4563523cb766bc1b49c912870d6a15f4979bf307c8e44c51\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01103"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "db69cf0f-1fec-533e-9a68-d74ed8a95799",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Tawny Tinderbox",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-01103",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "db69cf0f-1fec-533e-9a68-d74ed8a95799_1",
+    "type": "security-rule"
+}

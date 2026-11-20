@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Umber Spindle ransomware sample, as reported in campaign PTF-00591. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Umber Spindle Ransomware: File with known malicious hash written (PTF-00591)",
+        "note": "## Triage and analysis\n\n### Investigating Umber Spindle Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Umber Spindle ransomware in campaign PTF-00591.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"b9db92307feffeeea65d4afe6c36e96ad7899aaf7f663fd6602197e000f50818\" or \"6d7053b9dd7a2c36c28091f713b3a4233a03a1c389a31fca4d0adba26011c31c\" or \"2f6a463746b699ef990ae692ce083782b85c00861966838e808502c94d7a8148\" or \"6891734a7f06dc6eb0bf68880783b546e04f6890bf875fec349b7a7b76e9b85b\" or \"323215cf78c5722f513e2d87b1f152a2a6d81b9e8d51494c2f16caf05a34f6cb\" or \"2240594d59251b4559ca5d99e858effb9308b3d4ab4778440b190f96d63dc053\" or \"3d75a71ca8d520ab7b738b2ead5064141ef87aa8a4b4dafa046689dc929d0144\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00591"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "3ccffa53-9c06-5fd0-8eb8-020c83996c00",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Umber Spindle",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-00591",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "3ccffa53-9c06-5fd0-8eb8-020c83996c00_1",
+    "type": "security-rule"
+}

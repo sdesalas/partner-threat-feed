@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Verdant Quill espionage toolkit sample, as reported in campaign PTF-00787. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Verdant Quill Espionage Toolkit: File with known malicious hash written (PTF-00787)",
+        "note": "## Triage and analysis\n\n### Investigating Verdant Quill Espionage Toolkit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Verdant Quill espionage toolkit in campaign PTF-00787.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"725ff793142e70eb818e467e828f3fc289a6763386cc655c972bb5d56302d448\" or \"c0a357fd0f78139863d2b803984762e3945017f69a43533037a788c589eabb5a\" or \"07d3f663ac89486c70930349844b05bb8fba58164ef293b34529a103a944e620\" or \"7387c8ef5ac9bd795964ab79a19d507d4965e54464cf08697528fa4fc3024cf6\" or \"b9be8f63a4b473251d1fe2ee07cf104876e8d8eadeaddccbb5165330fb6556ac\" or \"34390fe5862b65b320ce6388d33f4411f7d8d2919546e91316c3a2067d09af64\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00787"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "7486e8e1-8b15-5971-9c66-9d261c7f7763",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Verdant Quill",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-00787",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "7486e8e1-8b15-5971-9c66-9d261c7f7763_1",
+    "type": "security-rule"
+}

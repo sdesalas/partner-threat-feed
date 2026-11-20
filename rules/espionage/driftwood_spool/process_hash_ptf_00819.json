@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Driftwood Spool espionage toolkit sample, as reported in campaign PTF-00819. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Driftwood Spool Espionage Toolkit: Process started from known malicious binary (PTF-00819)",
+        "note": "## Triage and analysis\n\n### Investigating Driftwood Spool Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Driftwood Spool espionage toolkit in campaign PTF-00819.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"d8e8988bdf2d9eb37cb7f03b91b9435a0bbf8ac514d747cffa3b0a4786d1df67\", \"db28a30f0fcee134a7c9e171d8d1b8ce9b778c9ddd8cada1313c184c555cfeca\", \"4dd6784258d8e9409d894dc3192ed2e11b3105814d46731b0eb961bb94642031\", \"a1d43e2a52f9ecbd5a508a941539005144215bda0baf6928ab2dfd1632f86224\", \"7b0a1c05c93b01d641ecaa7fc435564d72c96118562f5710619702a34dff041b\", \"636d97a24b2bea27679d8f5a853431966b464f8c8c65a1f66e0ca5b72d6bbe2f\", \"295ec97cf6e408d5a0b32adc52f007a31960fdb7e02e2a9f76c89aeb75dbaaa5\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00819"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "bcb25d53-4ba3-54fe-a8de-59d1b55ea7d0",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Driftwood Spool",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-00819",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "bcb25d53-4ba3-54fe-a8de-59d1b55ea7d0_1",
+    "type": "security-rule"
+}

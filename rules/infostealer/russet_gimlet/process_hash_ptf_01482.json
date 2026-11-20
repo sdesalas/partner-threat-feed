@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Russet Gimlet infostealer sample, as reported in campaign PTF-01482. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Russet Gimlet Infostealer: Process started from known malicious binary (PTF-01482)",
+        "note": "## Triage and analysis\n\n### Investigating Russet Gimlet Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Russet Gimlet infostealer in campaign PTF-01482.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"c2db43396601b52e5bf432275c9762003ef55281d1f47b7f5b2968a4f7741203\", \"dc17b5641b5d4af445b2f14238e831a38346d276875e9c395021ab6cf6db70ac\", \"946615916ff301efbc09ff16ea2cb75cb742581142cde03e215d98f9afc4bd93\", \"7c70c0ff6c70181d0612f95d1c1116a8adf0813aa0c69e02bf342907a1411647\", \"b1205436c12da312c150f865e3ca756552d8c70a11c702b1028a0a415ad3634f\", \"f725976467e168e62e30b93162ab37fc039393afb5e4e6c37bc3f1f4ccd8d04a\", \"1ed0021c2c977e80c862e7e84ea3c87b8e486be69b2d9dc655c3357ef47a36bd\", \"ea14ff6746fa51e3e9fcedcc3900e19f6972a2d3a10d3e76bec9d6b4c6361d9c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01482"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f5986b44-98eb-525b-b645-f5ee9a1023f1",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Russet Gimlet",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-01482",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "f5986b44-98eb-525b-b645-f5ee9a1023f1_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies scheduled tasks created with names that the Hazel Anvil botnet uses for persistence, as reported in campaign PTF-01827. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Hazel Anvil Botnet: Scheduled task created with known task name (PTF-01827)",
+        "note": "## Triage and analysis\n\n### Investigating Hazel Anvil Botnet: Scheduled task created with known task name\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hazel Anvil botnet in campaign PTF-01827.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where host.os.type == \"windows\" and event.type == \"start\" and process.name : \"schtasks.exe\" and process.args : (\"/create\", \"-create\") and process.args : (\"CacheHostTask\", \"CacheRuntimeTask\", \"CacheSyncTask\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01827"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "895653f8-a7f9-5c89-9ac1-7bfaf98a9716",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Persistence",
+            "Threat: Hazel Anvil",
+            "Threat Type: Botnet",
+            "Campaign: PTF-01827",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0003",
+                    "name": "Persistence",
+                    "reference": "https://attack.mitre.org/tactics/TA0003/"
+                },
+                "technique": [
+                    {
+                        "id": "T1053",
+                        "name": "Scheduled Task/Job",
+                        "reference": "https://attack.mitre.org/techniques/T1053/",
+                        "subtechnique": [
+                            {
+                                "id": "T1053.005",
+                                "name": "Scheduled Task",
+                                "reference": "https://attack.mitre.org/techniques/T1053/005/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "895653f8-a7f9-5c89-9ac1-7bfaf98a9716_1",
+    "type": "security-rule"
+}

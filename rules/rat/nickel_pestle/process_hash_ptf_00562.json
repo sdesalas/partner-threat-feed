@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Nickel Pestle remote access trojan sample, as reported in campaign PTF-00562. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Nickel Pestle Remote Access Trojan: Process started from known malicious binary (PTF-00562)",
+        "note": "## Triage and analysis\n\n### Investigating Nickel Pestle Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Nickel Pestle remote access trojan in campaign PTF-00562.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"f408c28d452cdbe895419b8852752071e19168d61d00c7c1d399cf2d87eaada3\", \"9303cfa698c67c86a4f3f82949b9b0d5497d526787d136df71fd877760f40098\", \"055b9850f0d0d11d20b35b702e545dc4d23216cf2dda5daf452f50fe428d2884\", \"f669f85ebbe96316d57b62c65be7ddb944535d3deeecbff34414e5356e1ab7ed\", \"b7d987d17d2129fa3b4c27a7d091b6296fcc450cab50de7aca987681c3e915ea\", \"4809103c00e6c22ce11e2ab49f0ba9fe9aee80cb3feefdd1a97abc7b45e01d6e\", \"05d28261bed3980a97a8cadb0c752c64665bf3bb91d6f99a178e97c110a6bba5\", \"cb456d7394e10b203b20f2fee12a771c8f9e9319e346f438247e87557d0ba239\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00562"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "84e01af5-7aeb-5eee-a7d6-682fbb8116ef",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Nickel Pestle",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-00562",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "84e01af5-7aeb-5eee-a7d6-682fbb8116ef_1",
+    "type": "security-rule"
+}

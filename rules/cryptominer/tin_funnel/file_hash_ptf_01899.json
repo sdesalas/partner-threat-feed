@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Tin Funnel cryptominer sample, as reported in campaign PTF-01899. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Tin Funnel Cryptominer: File with known malicious hash written (PTF-01899)",
+        "note": "## Triage and analysis\n\n### Investigating Tin Funnel Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tin Funnel cryptominer in campaign PTF-01899.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"1ee197ac5d9fa242f0c9b367123dd3c092326df2c2853942fc77ab585f0eec67\" or \"c7b34017d906be4ee468867e81821d342e99fec3f750d1ca22e0fe4a56ae9524\" or \"081d833c53efddea82793e8b5a6bb3da181f08dd1e3f5b652678f9115dad03e3\" or \"a6a3c7155bcb26beb3cd5a3ef2b568ae13b9fa2cf5a1b2e8d4b700b6993aa4ca\" or \"554c973bd2ecfc270c7be9e1263d2ad3bd28694f4fb973b9e0bfe9c32681fb61\" or \"23057f46cb09ade24dcad7b16c487254170c0a64e774089e23f957da47b7fe1c\" or \"053b254d446b18891fbd34a5974f4864559ab48db469f5e83dbe69c272231d73\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01899"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "aa6d8979-bcdb-5058-9768-b8dbeeff9275",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Tin Funnel",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-01899",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "aa6d8979-bcdb-5058-9768-b8dbeeff9275_1",
+    "type": "security-rule"
+}

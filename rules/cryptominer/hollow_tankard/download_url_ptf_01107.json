@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Hollow Tankard cryptominer payloads, as reported in campaign PTF-01107. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Hollow Tankard Cryptominer: Request to known payload URL (PTF-01107)",
+        "note": "## Triage and analysis\n\n### Investigating Hollow Tankard Cryptominer: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hollow Tankard cryptominer in campaign PTF-01107.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://auth-sync10.invalid/download/4905.zip\" or \"https://data-node20.invalid/gate/9366.msi\" or \"https://mail-sync48.example/install/4003.bin\" or \"https://secure-edge11.example/download/8986.zip\" or \"https://update-static31.test/update/3527.bin\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01107"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "cce94ac9-60b6-574c-9205-235b47c5d23b",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Hollow Tankard",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-01107",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "cce94ac9-60b6-574c-9205-235b47c5d23b_1",
+    "type": "security-rule"
+}

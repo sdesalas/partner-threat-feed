@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Umber Tankard ransomware sample, as reported in campaign PTF-01409. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Umber Tankard Ransomware: File with known malicious hash written (PTF-01409)",
+        "note": "## Triage and analysis\n\n### Investigating Umber Tankard Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Umber Tankard ransomware in campaign PTF-01409.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"75e6065d624352c88967e0aec1b0226218d6848defc2e8e5787273fb2da1468e\" or \"3ec68ee2b30d2ca6463d58448d3b3c924c0271107afe9ddae64fdc8a3f8dd769\" or \"2c04598dc692c684861c7d869747df81491ef7c14eb9d6c737ed95f4039114b2\" or \"219dc1f9a3a13eb9fc739893ef4048dc11967038b805ef6cf0cce055ea9a88b5\" or \"a2bf723c38166aac76570d3e677cf30c58f6833cbdb5a1f0814cd2f798efffb9\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01409"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "bfeaa839-426e-5d1e-b1a1-0cf15b180ec8",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Umber Tankard",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-01409",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "bfeaa839-426e-5d1e-b1a1-0cf15b180ec8_1",
+    "type": "security-rule"
+}

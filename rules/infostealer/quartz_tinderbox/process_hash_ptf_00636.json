@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Quartz Tinderbox infostealer sample, as reported in campaign PTF-00636. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Quartz Tinderbox Infostealer: Process started from known malicious binary (PTF-00636)",
+        "note": "## Triage and analysis\n\n### Investigating Quartz Tinderbox Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Quartz Tinderbox infostealer in campaign PTF-00636.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"1192f64d19ac738c97dfae03e6e98fc3daeffc0ab333bea976ef41ac37e04a6b\", \"b2cac270ac6dda8edbea4ba05d03400d68905d8e112e50e83f4de7035391110c\", \"8140fdfd08fe98cb45e6d577bc39c5a1acb309c429b0580ea3dba69e6e17b52a\", \"a3e38719f8d68755a446b56fedfe9dbf2ce2d5c53a0e9d897b2536086408ff76\", \"99b64541507c2e6f329b2c748dea31f0bf0771f29683c7b9c483640578afff99\", \"81f5eccc93ce33d492835ef00e76409e860f3c35d64417e3291b1a954e34f31d\", \"9aab9de5410c69d084a64245028546f3047eef57a368efdcf1d29b4611950ba3\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00636"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "919da76e-7755-5159-88b5-44d2cffe98d1",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Quartz Tinderbox",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-00636",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "919da76e-7755-5159-88b5-44d2cffe98d1_1",
+    "type": "security-rule"
+}

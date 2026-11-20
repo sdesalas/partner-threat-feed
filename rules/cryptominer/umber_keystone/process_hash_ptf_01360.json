@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Umber Keystone cryptominer sample, as reported in campaign PTF-01360. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Umber Keystone Cryptominer: Process started from known malicious binary (PTF-01360)",
+        "note": "## Triage and analysis\n\n### Investigating Umber Keystone Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Umber Keystone cryptominer in campaign PTF-01360.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"f5c69b7149f826aae246debd0d9848f17e5df32772cb42548b291bbcfe5c282a\", \"ea78c2897ed8f77da5772c73d209a80d1b99ae22c165554e00aaeb4503b3896f\", \"58180a736b5a899fab48e3fd470f59c7a04c35fe3064ba0b24c548f43071664f\", \"9068dc39b76c1864224c44c3a68eaa8e831ff712e772395c4c501740abe4803d\", \"03c6145c81661787a0979b9882a8b1486683cc211255564ede1a297e7db55ca0\", \"c24ec1d79df41d3ac55e16f8365c561daa60a6a181eaa824416b384b806f96a4\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01360"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "53e998fd-d1ae-5f23-86a3-b981d52f6125",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Umber Keystone",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-01360",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "53e998fd-d1ae-5f23-86a3-b981d52f6125_1",
+    "type": "security-rule"
+}

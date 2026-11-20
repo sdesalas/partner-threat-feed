@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Verdant Valise cryptominer sample, as reported in campaign PTF-01435. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Verdant Valise Cryptominer: File with known malicious hash written (PTF-01435)",
+        "note": "## Triage and analysis\n\n### Investigating Verdant Valise Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Verdant Valise cryptominer in campaign PTF-01435.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"098ee7359f79e2250e87e115bb2cee0e502ece9a73d3415e8dbcce3992d0b66d\" or \"c4715d566405c852017c48c47360607c14136e8e961572352b30e560ea945133\" or \"03e28c6d6154067ee7d5f2fa4cee43078532bb0b663e649b22b1d55ad39f3ba2\" or \"a74c2c648fad23d5ff3cfc8886f2d25422b4033c5d673fe40d2f51c42e999744\" or \"87b6566ffe3d1fd70a50428e7842eb9b6e2fb0f75bef3cf4bc492b3aa553439a\" or \"958e4344d592639abf7ab5a03db40137b965152f30f31b0a5d251525ada796d3\" or \"0166aeccd3f0bdf2fb8d8b39a0bc1907d5e17ad862fcd51c51c5e4f7acb21423\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01435"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "3e6090e5-d592-5bb7-bf4c-bc7738d85d1e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Verdant Valise",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-01435",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "3e6090e5-d592-5bb7-bf4c-bc7738d85d1e_1",
+    "type": "security-rule"
+}

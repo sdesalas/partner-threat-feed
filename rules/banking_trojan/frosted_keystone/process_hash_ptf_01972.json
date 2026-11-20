@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Frosted Keystone banking trojan sample, as reported in campaign PTF-01972. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Frosted Keystone Banking Trojan: Process started from known malicious binary (PTF-01972)",
+        "note": "## Triage and analysis\n\n### Investigating Frosted Keystone Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Frosted Keystone banking trojan in campaign PTF-01972.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"7b55c17cfa2510abdf7d0a436a7669d785c700bcc315b75ff0b0d6dbb58677b3\", \"706532791f330983397d27cd5415795f8fec3f6a37bcfeab8f6717f971012e5d\", \"80ce69be8f1f5ef150a553c7de604d957a75ad7aabac200e0d811bf7926c3ac8\", \"5eb5208b049cdfa918f06f875e9f25e210a533568111cf0f42ab54f0d827b291\", \"50f368a9305ab1fb1f420241b7eacfe23d1e333fc5c3d1d6a83dda43a3791a39\", \"2afd327f3873ccece601c2b2785a0569a6b5fd88f39fee88ead2e44a1c286170\", \"b5eb9b4f772b07dfd6ddba1f728345c4d25c4f941db0c71c620e6c2809ee3c2a\", \"895baa1d9c2382bcef661b9f8d4d855a803114e48486142e2d26ab18f7bd4dd1\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01972"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "772a52f0-505e-5e97-a838-1660b74c64db",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Frosted Keystone",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-01972",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "772a52f0-505e-5e97-a838-1660b74c64db_1",
+    "type": "security-rule"
+}

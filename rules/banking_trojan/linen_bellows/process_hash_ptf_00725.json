@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Linen Bellows banking trojan sample, as reported in campaign PTF-00725. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Linen Bellows Banking Trojan: Process started from known malicious binary (PTF-00725)",
+        "note": "## Triage and analysis\n\n### Investigating Linen Bellows Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Linen Bellows banking trojan in campaign PTF-00725.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"a31f1e0cf7f323a1661a01d8ed4553edc7eea3197b23a5e0ecf6c4d4d005121b\", \"f8bdb0b163b1764ab1865e21fe832b72a61b5302dee27342361cfbea236f7593\", \"8571220dabf181a1e2b902b23c4e33858d15c5fe0887bd1fc5fe4bb72c6b6e43\", \"7b01378de15d360b462f12e5a255d404f6e14f3afdad621c80987660a611fee3\", \"7c38f12562d76742720ba06003195a9cf60c742bcff5b03632fbea96298e0fd2\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00725"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "00709c2e-39cd-54f8-af83-080f9ba4e328",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Linen Bellows",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-00725",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "00709c2e-39cd-54f8-af83-080f9ba4e328_1",
+    "type": "security-rule"
+}

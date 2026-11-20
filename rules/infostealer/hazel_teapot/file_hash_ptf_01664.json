@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Hazel Teapot infostealer sample, as reported in campaign PTF-01664. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Hazel Teapot Infostealer: File with known malicious hash written (PTF-01664)",
+        "note": "## Triage and analysis\n\n### Investigating Hazel Teapot Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hazel Teapot infostealer in campaign PTF-01664.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"3105c1271f8ed356ffd462ec5604359fb0c2da5ffb63aac944179221bc8b83e5\" or \"1057c3fdb9a9162e3dcb2128e6c6cad984ae2417e2d6ac52008d24c1a3e198f8\" or \"0e28098ef19f5f49ea02fe710715adb9af9805b2789a8a481428fdacd2227cad\" or \"a07fb51f15db1230eff6a2e508f71597fbb17a74ff5160af05038ef794e36e1a\" or \"192ab6d371f8323beaae6352c6935f79a31dcdbce56d6872778e024531551257\" or \"5a4afac35aad02dce58dc93c6c23ce484ae019b1355d51ed35dce1e49d88e204\" or \"57ad76dd7eab6d28e8cbb5d31f72253afac6b767b69e9b763f25832464e393e1\" or \"f911e907d8479ecc790c136f14ff65311a645af24ce0a1cc407b155ad999af1a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01664"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "5e85b256-d7da-5239-80f4-efa9aa1be017",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Hazel Teapot",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-01664",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "5e85b256-d7da-5239-80f4-efa9aa1be017_1",
+    "type": "security-rule"
+}

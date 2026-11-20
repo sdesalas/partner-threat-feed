@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Juniper Anvil botnet sample, as reported in campaign PTF-01681. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Juniper Anvil Botnet: Process started from known malicious binary (PTF-01681)",
+        "note": "## Triage and analysis\n\n### Investigating Juniper Anvil Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Juniper Anvil botnet in campaign PTF-01681.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"33fdf2ed9ad0b9c7b14a29064c442929f420a6b962445de473d2085b22d6d9c3\", \"2e78e95796002d17bccbe588f9f0facc8279feac88ade0a64ca9cad4fa357759\", \"f81c0ecdc845b85ac702d1bbb4d52d9c92aeddce41082e47fbd831c34c4473e6\", \"0e70e0eefe88472169f9f48acf63908a7615d40a49aeb82aff13701c30070361\", \"b4ac15a5910a796e301f8a5c38523e7f4138a44b1c920e8e84924b65a9c8e65e\", \"8f3eba388750d53039a57cab0d91c9bb0c5289c450170e85413f27177045161f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01681"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "43d4013a-6ba8-5096-a52d-f7be6c5dfe13",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Juniper Anvil",
+            "Threat Type: Botnet",
+            "Campaign: PTF-01681",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "43d4013a-6ba8-5096-a52d-f7be6c5dfe13_1",
+    "type": "security-rule"
+}

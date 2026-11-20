@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Juniper Gimlet ransomware sample, as reported in campaign PTF-01741. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Juniper Gimlet Ransomware: File with known malicious hash written (PTF-01741)",
+        "note": "## Triage and analysis\n\n### Investigating Juniper Gimlet Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Juniper Gimlet ransomware in campaign PTF-01741.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"6cd774560f8c0099fcd42d69def5b4d74a68b31b6bd39b2534d7c11e58468a53\" or \"e5b6e4f954778d3e23088428f9e9106e364666831c9a5721aa386e8d82b480b6\" or \"6bac8b026ba5921d77d2a47397b656448d34ca0c89ee5213301b324378fff744\" or \"a81492988d3cb5c474933d9c09a1253cfc6a974512d318744b0d3fbb7d992a9c\" or \"6655eb039d5ddcf287e8378506528c12d1fe9e0fa5bdeee65d2a2efd8fd0cb66\" or \"e3193f494298c2d163f0d3f4e53352008a4c035e05fc858454e13e5aab0fb0ab\" or \"9619a87223d302d9c3a6f398ec0de5fc832842fbad8415a892a777f7764e44a2\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01741"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d5f2886c-7de1-5a25-ac14-651b173e87d3",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Juniper Gimlet",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-01741",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "d5f2886c-7de1-5a25-ac14-651b173e87d3_1",
+    "type": "security-rule"
+}

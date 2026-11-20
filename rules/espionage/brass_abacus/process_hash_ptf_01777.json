@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Brass Abacus espionage toolkit sample, as reported in campaign PTF-01777. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Brass Abacus Espionage Toolkit: Process started from known malicious binary (PTF-01777)",
+        "note": "## Triage and analysis\n\n### Investigating Brass Abacus Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Brass Abacus espionage toolkit in campaign PTF-01777.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"39af5644a338eeaf2943a36102a093418a6b16bf9082af293355a88e8266692c\", \"389c0bc71695322d2e7272eadcdc76033f518b42a0906eb04fb8355dd6490a18\", \"93ccab4b7fde9b98e7169b7621076fbd341ef3a3d1dfd4002a21f7cbd2bffd11\", \"ba640259f3188b2f61c14d50b130ed3074e6db11e3643cecf85c63dea0a861d5\", \"45fa388ebbba9b49dd2727d29d72a2093b1608e81353a2b02c4648d5a1d4e027\", \"dd5564129b04552a50dda2474ce29127361274d84c0bda3f9ff34b1a5ca82743\", \"37123b90bf5b33e6697cc3dea94799f495932f8696afa5ed759dc7ebdbb01d7f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01777"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "075c2d31-ea3e-5dd9-8070-ba77d68f945d",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Brass Abacus",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-01777",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "075c2d31-ea3e-5dd9-8070-ba77d68f945d_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Birch Satchel ransomware sample, as reported in campaign PTF-00668. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Birch Satchel Ransomware: File with known malicious hash written (PTF-00668)",
+        "note": "## Triage and analysis\n\n### Investigating Birch Satchel Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Birch Satchel ransomware in campaign PTF-00668.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"ba2488589ecdacaea98bb154131b5edceeb7c13b213302edb3540aeb18f1e90c\" or \"ce17cf84bffcf248063e29534284e0bd35e9e86ac297ab852bbfb5583f20b6fa\" or \"4b8e8404d8b3be423488318f9407b5c8f0d3fd328c166945b4e1c1b3945d2712\" or \"750eb02da223929093a6fded2f5483ff346ce481b7f6018166ce8bed1ee7b6d4\" or \"8f3b5b273e61a38c3e24a74ced7c6afe56cd0a4043ea46b498da2486d3462bfe\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00668"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f172820b-f9eb-5fe1-a66d-bce616f6b8a9",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Birch Satchel",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-00668",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "f172820b-f9eb-5fe1-a66d-bce616f6b8a9_1",
+    "type": "security-rule"
+}

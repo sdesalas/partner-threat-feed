@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Hazel Bellows banking trojan sample, as reported in campaign PTF-01207. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Hazel Bellows Banking Trojan: Process started from known malicious binary (PTF-01207)",
+        "note": "## Triage and analysis\n\n### Investigating Hazel Bellows Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hazel Bellows banking trojan in campaign PTF-01207.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"57d37c73f81812a7fe208e9ff1ec6eaa8f5bb1d464d1b9d675601cb4ad57e4fe\", \"7e6f85aa28a5b40e64007ddd894c04ce37549401e3fffdddf8063060eaaa4d33\", \"5a4559545aa9e9bc71394159b12d5f7bb904728c227e83b1dac1f85a34802efb\", \"e82401668c3d020ad0359c3e43aeb3a1746a965465ef42b859afc41315829d6b\", \"958c0db8ea1efab101030e39ae079f7e0ebbbb471e2d2b82a32d57f46fb38857\", \"c991dbb2823478914b66f38fa2a7d277151b064421353825db87bc3658421d25\", \"0e39677784458f7accd62741c2ca7b38524e84c6434e7383ab9ee8fa1282ccca\", \"64e42e6c4be981f42de1bf66bdfb8c689ebf7d747f61ee174df9339b6072a74e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01207"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "7dadcc2a-f2de-5d16-96f1-c57625c892b5",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Hazel Bellows",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-01207",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "7dadcc2a-f2de-5d16-96f1-c57625c892b5_1",
+    "type": "security-rule"
+}

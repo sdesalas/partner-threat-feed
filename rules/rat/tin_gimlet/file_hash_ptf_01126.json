@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Tin Gimlet remote access trojan sample, as reported in campaign PTF-01126. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Tin Gimlet Remote Access Trojan: File with known malicious hash written (PTF-01126)",
+        "note": "## Triage and analysis\n\n### Investigating Tin Gimlet Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tin Gimlet remote access trojan in campaign PTF-01126.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"f0adb1d4bba5230b8fb9822f5765abefaa32e490847f6f03dc93ca235a1f8fea\" or \"83dc306c88f22cfcf2aa80d885bfc1f68e046a2e55b9cd41935530e49a8d931d\" or \"82fb77380a52ae96a8393cb46acb5ceafa480fd6b24bf930adb6c584c2bddccf\" or \"bd76adec3f1acd0b5b8b19409dab598bfd966e85bad4bb82ee0bee5ec481d5e8\" or \"e38835c8bc86b24a7d963677749ba24b4f8ff16e6294ebcff4df882df86d3075\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01126"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e1aea9f5-e8f5-585c-90b3-b55c3269c66e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Tin Gimlet",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-01126",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "e1aea9f5-e8f5-585c-90b3-b55c3269c66e_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Clay Wicket remote access trojan sample, as reported in campaign PTF-00872. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Clay Wicket Remote Access Trojan: Process started from known malicious binary (PTF-00872)",
+        "note": "## Triage and analysis\n\n### Investigating Clay Wicket Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Clay Wicket remote access trojan in campaign PTF-00872.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"c2788be4fdff8bc2cd80979c31b4698562c71165b7eeb50ba30949cbff5cc7dc\", \"1cbde8acb8044f4151af69e49d8506c0059b4a3b2e08cb3d59b6a605492f41ad\", \"235b1936661a4b0389df3520f399ebecd9a9fbcc4ec22f8ed4dd0b1c951d517b\", \"bc507d2d11ddd67d3b04c0e69a1de106c929faec41861bc2bdf74d9b77bb9c38\", \"a41284fd95a486a32c059c6bf61f290f9ea8145492823f014509849652cf27df\", \"b669501add6ec2836f3168cbacaf45f1cbdff5cd9a7e58a2793a5accee73a0fc\", \"d2fa69671e2cb3ffd80b4da1b6e4aa542917bdb53d89b61305d65694c70e8fe1\", \"8b09a1bdc691005684702f6516b942f53acfa95c07dfa6df37809d07647a7c5d\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00872"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "77e5d675-ef9c-5811-8b23-2c67d22552ab",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Clay Wicket",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-00872",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "77e5d675-ef9c-5811-8b23-2c67d22552ab_1",
+    "type": "security-rule"
+}

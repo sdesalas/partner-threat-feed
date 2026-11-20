@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ember Ratchet infostealer sample, as reported in campaign PTF-00005. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ember Ratchet Infostealer: File with known malicious hash written (PTF-00005)",
+        "note": "## Triage and analysis\n\n### Investigating Ember Ratchet Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ember Ratchet infostealer in campaign PTF-00005.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"1fc9f75901fe3f25f126675a8eac397fca5580f6173c67cf19c62f26d0f2fcd6\" or \"9cffe9b568234cc30ce835a04c9d0d71afdbf65c52883cb43d717ad175a05725\" or \"fc2f7437ef0e92bb2c5bececc4de8013849968fa9c2c1bd4b776857fc03df361\" or \"435e4d7a26f64b30ce8733a72956ca2e7b32f5fbc77068666700b3cd0cd158c2\" or \"2b8586bf6fc4dfb281232da3655d842ef84befc1a2cb9b42663525a6a7979062\" or \"8cf14d447dbc4eff589a37af2429a31e587870d826af7b398d8d2c706702c759\" or \"6c92c6988ad74d6dee9b3be097faec40178c6e68a46d8fb355bd47cbb248188c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00005"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "94abbd99-d2ac-569f-b931-90542fb3f725",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ember Ratchet",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-00005",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "94abbd99-d2ac-569f-b931-90542fb3f725_1",
+    "type": "security-rule"
+}

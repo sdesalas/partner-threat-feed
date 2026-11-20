@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Mossy Keystone loader sample, as reported in campaign PTF-02374. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Mossy Keystone Loader: File with known malicious hash written (PTF-02374)",
+        "note": "## Triage and analysis\n\n### Investigating Mossy Keystone Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mossy Keystone loader in campaign PTF-02374.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"2a171216c09386ac8d9defba9aad5a74ad8486aa84cb76e3b394af5a5535ec19\" or \"c0dac9bf1e6af367931c03fc16bd4c68f285f78c156ca597a825e66278a71b66\" or \"afaf33f5527bbae109e87e71e994c4fa52810a754629582062262717225f9a9b\" or \"1ff0f2c8c8a73b8b9f154c121f292bca82e29dfabcc54838561c5d7084321942\" or \"8653d03bd540778532051b6d2b6dd3a59867dcccb757ff49c1158ea54cb5b5e1\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02374"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "62deba1c-aab4-5d9b-b2fd-d6df9edab8b9",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Mossy Keystone",
+            "Threat Type: Loader",
+            "Campaign: PTF-02374",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "62deba1c-aab4-5d9b-b2fd-d6df9edab8b9_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies email messages from sender addresses used to deliver the Ivory Trellis loader, as reported in campaign PTF-01314. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-email-*",
+            "filebeat-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ivory Trellis Loader: Email from known phishing sender (PTF-01314)",
+        "note": "## Triage and analysis\n\n### Investigating Ivory Trellis Loader: Email from known phishing sender\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ivory Trellis loader in campaign PTF-01314.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "email.from.address:(\"billing@api-relay74.test\" or \"it-helpdesk@track-cdn70.invalid\" or \"it-helpdesk@track-media21.invalid\" or \"noreply@static-sync25.invalid\" or \"noreply@static-track80.invalid\" or \"payroll@media-api38.invalid\" or \"shipping@update-connect58.example\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01314"
+        ],
+        "related_integrations": [],
+        "risk_score": 47,
+        "rule_id": "9778dd4f-24b0-5566-acb7-ce9bb7113781",
+        "severity": "medium",
+        "tags": [
+            "Domain: Email",
+            "Use Case: Threat Detection",
+            "Tactic: Initial Access",
+            "Threat: Ivory Trellis",
+            "Threat Type: Loader",
+            "Campaign: PTF-01314",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0001",
+                    "name": "Initial Access",
+                    "reference": "https://attack.mitre.org/tactics/TA0001/"
+                },
+                "technique": [
+                    {
+                        "id": "T1566",
+                        "name": "Phishing",
+                        "reference": "https://attack.mitre.org/techniques/T1566/",
+                        "subtechnique": [
+                            {
+                                "id": "T1566.001",
+                                "name": "Spearphishing Attachment",
+                                "reference": "https://attack.mitre.org/techniques/T1566/001/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "9778dd4f-24b0-5566-acb7-ce9bb7113781_1",
+    "type": "security-rule"
+}

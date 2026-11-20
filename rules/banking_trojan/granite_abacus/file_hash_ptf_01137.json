@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Granite Abacus banking trojan sample, as reported in campaign PTF-01137. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Granite Abacus Banking Trojan: File with known malicious hash written (PTF-01137)",
+        "note": "## Triage and analysis\n\n### Investigating Granite Abacus Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Granite Abacus banking trojan in campaign PTF-01137.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"03d8b5034906dd45e22045cd5ce2d56e7ebfe9ee1f48cb70703bdd662d0b62b1\" or \"680d7ad0fce8b5613333328cc9e401221e725e6552dddd97639aca58ee30a478\" or \"2c817c771b1bf785e37ff0a521385d32ece47e8b2884fa33d5961d279314618a\" or \"14e2041f88345a7b0286dc65e305f0f668ab844313f3dc5f84d05c03bb94653a\" or \"6f503773e66e16cbf2ce6c0fbd14e3c9d4d60befe5696ee4855bc38b9d8eba00\" or \"83a1edc746d8920eebb7b9cc6c17692db2d9656b52831220be56fe725d916ecb\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01137"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "82157127-2810-54fa-a0c9-d1f5ec30be0c",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Granite Abacus",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-01137",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "82157127-2810-54fa-a0c9-d1f5ec30be0c_1",
+    "type": "security-rule"
+}

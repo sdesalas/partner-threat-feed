@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Hollow Tankard cryptominer sample, as reported in campaign PTF-01108. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Hollow Tankard Cryptominer: Process started from known malicious binary (PTF-01108)",
+        "note": "## Triage and analysis\n\n### Investigating Hollow Tankard Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hollow Tankard cryptominer in campaign PTF-01108.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"e8221c7029e3f8646202e5600da42d597f7734c1210d95bcaa7832b1f2dc2410\", \"a7bb13d3713a62608a3e73f3927529f3a23c679fb6b95eb6528ed2ad8e1f2397\", \"61f73d73342a2d3dc5c15ae48f2b1b7c94c34f11074a2d11a4a550a3ea626c37\", \"daa3adddbbb4a664716a91af83c0dadb9e6ea8d2fd4a4d49f76393234bc19bdd\", \"fb7c02316388e36ee073c039a6c157d3efa8726f1772399c4eb72e78553d5c4c\", \"b7e8afe2a92744b4d4e73ff5ce414cfd6e3d5364b4296607d4785c5eef3c6b26\", \"5d8f3ffb5f0b30661bb311c4c886e59c4fa1b05d8aec12cb82a56d047ea26648\", \"c5eb1f1b2b2d6a40b005e133394484c42359b65012207ac6a91ffbcfb221980d\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01108"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ead8bd81-62df-56bd-8bf4-30c36adf2915",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Hollow Tankard",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-01108",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "ead8bd81-62df-56bd-8bf4-30c36adf2915_1",
+    "type": "security-rule"
+}

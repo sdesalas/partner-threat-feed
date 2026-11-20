@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Fennel Hourglass banking trojan sample, as reported in campaign PTF-02149. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Fennel Hourglass Banking Trojan: File with known malicious hash written (PTF-02149)",
+        "note": "## Triage and analysis\n\n### Investigating Fennel Hourglass Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Fennel Hourglass banking trojan in campaign PTF-02149.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"cd8160fd54371014f8ca06b6466ff2ec16a7cad712ab0c868be0e78ce7692245\" or \"7fb6a81e8d7794e510b838a0d5242a45a08c281c940da5841237f0c7f66b7559\" or \"0efd8e0f7578965fc50bde54dd7dee2dee7b8f528dcc2b447249d56b22285ea3\" or \"25cc21230f8322882b059695401821119f20713800c208644cc5d396c0425eba\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02149"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "92c55dc0-2651-53dc-9534-956a1e32ef4c",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Fennel Hourglass",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-02149",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "92c55dc0-2651-53dc-9534-956a1e32ef4c_1",
+    "type": "security-rule"
+}

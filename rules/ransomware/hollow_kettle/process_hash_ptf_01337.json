@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Hollow Kettle ransomware sample, as reported in campaign PTF-01337. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Hollow Kettle Ransomware: Process started from known malicious binary (PTF-01337)",
+        "note": "## Triage and analysis\n\n### Investigating Hollow Kettle Ransomware: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hollow Kettle ransomware in campaign PTF-01337.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"7690d9fc9b377799dadddbfe6ba0efe9338f355d70dec0f4f3937ebab3bc5b80\", \"9f0a0d8f911eeb3e0d1a310b976ece0d48ba725093e601199e779b4965e5ebcb\", \"bda1f55751ca0e34df1c1b0aaff1a31bb3dd5b335fd1dd769a2f945f6daef273\", \"3839b36d71f7131869fa401ca129c1edf0dcd13be49c4abd72273cb000595da4\", \"982d55e7e20bb59cbe4c558649d599b941a3cc57f467b68e0228f525b124a648\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01337"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 99,
+        "rule_id": "af7f632a-2fed-5a70-b08e-14fd08d09158",
+        "severity": "critical",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Hollow Kettle",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-01337",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "af7f632a-2fed-5a70-b08e-14fd08d09158_1",
+    "type": "security-rule"
+}

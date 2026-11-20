@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ember Satchel infostealer sample, as reported in campaign PTF-01783. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ember Satchel Infostealer: Process started from known malicious binary (PTF-01783)",
+        "note": "## Triage and analysis\n\n### Investigating Ember Satchel Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ember Satchel infostealer in campaign PTF-01783.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"73beb6a169d1617eff59e0a553e8b63e725f7517775550afb695fbdcf57ac018\", \"58715bad593baeb055e936a86b36434fea8c60c09e2d7cd6b6c842d366ba2e0d\", \"f536385204a515623c633a5c72f5c9bd23e6bd3d64a12d5cc3d5e13f9df8a0b0\", \"fa26aedd311f051fdb0f5b542eec053cb093b7dbeb040916bb974bf3fdc7829a\", \"e6ce9d011b935cf34c72d291fe3a60e27a94ec5673852b00eb72241423d1d073\", \"a8c3e5fb732fece7920672bfcd2ed0bae68e201f9d995cd7ddec27dd8eb085c5\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01783"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "0bcf1cd6-9e80-55d2-98ec-c114c7ff55fb",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ember Satchel",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-01783",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "0bcf1cd6-9e80-55d2-98ec-c114c7ff55fb_1",
+    "type": "security-rule"
+}

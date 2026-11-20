@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Mossy Pestle botnet sample, as reported in campaign PTF-01242. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Mossy Pestle Botnet: File with known malicious hash written (PTF-01242)",
+        "note": "## Triage and analysis\n\n### Investigating Mossy Pestle Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mossy Pestle botnet in campaign PTF-01242.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"3990a023ae8eb729f8d51c516d992bb65bf546aa9c14de5c93b7d50bd7e615e3\" or \"80b06bf53c61b4aa52f42c0435922f6b6fd5fa6c3198426550033ca82fd096df\" or \"51a66eaf2dc4b3766adf258ae8b14676e86e49b64cc29441946906c43fd66497\" or \"b948f3c0869e5f2898172a2b1079a98669d355a8b0d9aa9773a681558dc91af9\" or \"05be3893381dbc7233af9f6ca18769e13023767b4c7e87d047a03e5af3673fcc\" or \"cdc1a7e8bc53c376f62496efa0509a964eaafc272f1fbc356adec791104c07ec\" or \"b4e1a4ea933be281d73142ad6fc9a4ba6906de8d2805bb2e02d462349e8d0b2b\" or \"b2be5b9a003bfade561da198717c17ba5c57516575327bf4309ece2d6e09902a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01242"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "7d0ed922-afc4-5f76-969e-836aec77a79e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Mossy Pestle",
+            "Threat Type: Botnet",
+            "Campaign: PTF-01242",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "7d0ed922-afc4-5f76-969e-836aec77a79e_1",
+    "type": "security-rule"
+}

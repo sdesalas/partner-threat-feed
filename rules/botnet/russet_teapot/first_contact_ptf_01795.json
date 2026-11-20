@@ -1,0 +1,76 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies the first time a host connects to a command and control domain used by the Russet Teapot botnet, as reported in campaign PTF-01795. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "history_window_start": "now-14d",
+        "index": [
+            "logs-endpoint.events.network-*",
+            "logs-network_traffic.*",
+            "packetbeat-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Russet Teapot Botnet: First connection from host to command and control domain (PTF-01795)",
+        "new_terms_fields": [
+            "host.id"
+        ],
+        "note": "## Triage and analysis\n\n### Investigating Russet Teapot Botnet: First connection from host to command and control domain\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Russet Teapot botnet in campaign PTF-01795.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:network and destination.domain:(\"api-assets20.test\" or \"cdn-secure57.test\" or \"login-connect57.example\" or \"relay-auth42.invalid\" or \"relay-connect38.invalid\" or \"secure-assets98.test\" or \"update-sync36.test\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01795"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            },
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "955c81ba-c445-5c9b-a663-bbb82a63f183",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Russet Teapot",
+            "Threat Type: Botnet",
+            "Campaign: PTF-01795",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1071",
+                        "name": "Application Layer Protocol",
+                        "reference": "https://attack.mitre.org/techniques/T1071/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "new_terms",
+        "version": 1
+    },
+    "id": "955c81ba-c445-5c9b-a663-bbb82a63f183_1",
+    "type": "security-rule"
+}

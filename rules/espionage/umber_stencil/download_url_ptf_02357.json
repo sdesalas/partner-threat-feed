@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Umber Stencil espionage toolkit payloads, as reported in campaign PTF-02357. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Umber Stencil Espionage Toolkit: Request to known payload URL (PTF-02357)",
+        "note": "## Triage and analysis\n\n### Investigating Umber Stencil Espionage Toolkit: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Umber Stencil espionage toolkit in campaign PTF-02357.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://api-sync72.example/install/5046.bin\" or \"https://auth-data38.example/update/4630.php\" or \"https://cdn-connect88.example/payload/2093.msi\" or \"https://mail-secure69.example/download/2904.php\" or \"https://media-secure84.example/update/9921.bin\" or \"https://portal-assets49.invalid/install/3856.bin\" or \"https://portal-static19.test/install/8047.php\" or \"https://sync-connect4.invalid/gate/2124.php\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02357"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "20cb844a-570d-579f-9080-a6a23fe99fb4",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Umber Stencil",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-02357",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "20cb844a-570d-579f-9080-a6a23fe99fb4_1",
+    "type": "security-rule"
+}

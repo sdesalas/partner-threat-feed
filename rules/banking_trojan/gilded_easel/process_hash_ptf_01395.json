@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Gilded Easel banking trojan sample, as reported in campaign PTF-01395. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Gilded Easel Banking Trojan: Process started from known malicious binary (PTF-01395)",
+        "note": "## Triage and analysis\n\n### Investigating Gilded Easel Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Gilded Easel banking trojan in campaign PTF-01395.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"5347c56588e7ba1fd2a8841fe504228c5294733743df2cc020f373c3a1d8a20c\", \"11b29b65d4e6c66e187d26c70f420d4d4bd5d952a8d8df7d8f569ad5dd44885f\", \"182df6470df74c022b36065f23baee07e30dedc904ffcdc36de8cdc07b744622\", \"a69cd4cec32ff9b375f94d4ddb7d8203005ac44a97a1f5007bf4f8b5daf8a714\", \"8a6b1f213503485636be3e3b6654542816bb0a0b4c01eff8c6360d79b4cac1cf\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01395"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "fd07dd87-11cd-5ba4-9b32-074fb1a798ea",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Gilded Easel",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-01395",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "fd07dd87-11cd-5ba4-9b32-074fb1a798ea_1",
+    "type": "security-rule"
+}

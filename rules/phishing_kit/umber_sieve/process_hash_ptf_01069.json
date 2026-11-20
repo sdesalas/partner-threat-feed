@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Umber Sieve phishing kit sample, as reported in campaign PTF-01069. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Umber Sieve Phishing Kit: Process started from known malicious binary (PTF-01069)",
+        "note": "## Triage and analysis\n\n### Investigating Umber Sieve Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Umber Sieve phishing kit in campaign PTF-01069.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"f99f8367022d11b09478b10a8af413634d6dbb22efb1573c86680db2e24d549a\", \"77dbf494f8dbab43ac3deefd042907b8a3222f9adac9406d675862d19d7f558c\", \"bdb8a7fa9e09ab3c47d6ed8df94a3b27ea895490f9b062f0478d59c7709f63a2\", \"897c212d6d856e7375a5c0e209b1a841fcddb41a430487e8b2d2f1f621e57a9c\", \"21e6c7ee7de055f354e319356d4315be395bf11db102ee80f53bb001732b1dc9\", \"687b06547db0ec56343f24d40ee03a448a8931ab846dd87ded20a9d5b13e5d87\", \"d8d9542497c02fb395369cfe0b6c01af1a4fce6dce7db82d581a820d64c435da\", \"b301e5cbf9a9b19595c6397fc01eb25ffa52f2fd252a4b1de9f7ec69d2db16fd\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01069"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "788333e3-757f-552c-bd08-765faa20436d",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Umber Sieve",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-01069",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "788333e3-757f-552c-bd08-765faa20436d_1",
+    "type": "security-rule"
+}

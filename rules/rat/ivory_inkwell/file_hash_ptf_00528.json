@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ivory Inkwell remote access trojan sample, as reported in campaign PTF-00528. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ivory Inkwell Remote Access Trojan: File with known malicious hash written (PTF-00528)",
+        "note": "## Triage and analysis\n\n### Investigating Ivory Inkwell Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ivory Inkwell remote access trojan in campaign PTF-00528.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"3d24fb60046e5c64e34c793a17d7ea3ac4281496d525836e7210bd2835787a50\" or \"7f27f503ca65076445912c1c71fd4b01666f77a8c85beaf1b21e55d79122cec1\" or \"5dc8d5ab68189042d3ae2c08369b9bd73b18b4634b9b12ecbd4499278f6c0a65\" or \"3708e56ff36d048a6531c67dfa6fc699c1428f9be8b1b10397f79f61238e4ee3\" or \"32a7c4bb996e3a98eeb78378813ebb27ee10aee41e305feb229b0c3cb13db307\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00528"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "59dbbff0-4f6b-5f29-8389-eedacc694452",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ivory Inkwell",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-00528",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "59dbbff0-4f6b-5f29-8389-eedacc694452_1",
+    "type": "security-rule"
+}

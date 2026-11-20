@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Hazel Jigsaw espionage toolkit sample, as reported in campaign PTF-01151. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Hazel Jigsaw Espionage Toolkit: Process started from known malicious binary (PTF-01151)",
+        "note": "## Triage and analysis\n\n### Investigating Hazel Jigsaw Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hazel Jigsaw espionage toolkit in campaign PTF-01151.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"51c4359d86f78fe14342970d28cc06bf1ddf5b49db6c018cff0f3a8afdd2a98b\", \"89f8008aee771128c6908ad4997aa85025de92b0e83be31ad0e928169d610556\", \"b35603c68a4da9ee9676011062e6e524bc14855a4e07d7e5fdb79445f34649e9\", \"6baa1834eb6135c976217417379978b93feb16615fe7eb0abb26092b65fd82f0\", \"c0c3cb80ef5c5f7c7e871e418b73d5d50347c6df37d649803e4f782b4599855c\", \"11bc155355930ebf40da64fff33a1d734ed2772ac3397df2be3bfaa01545aa0a\", \"8377bd2c624ecf2a02adad35bdf38e2f2190386c5304d4b3ead0fcf27f54b7ce\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01151"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ef99215a-cbf1-5698-9131-a4a684f08937",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Hazel Jigsaw",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-01151",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "ef99215a-cbf1-5698-9131-a4a684f08937_1",
+    "type": "security-rule"
+}

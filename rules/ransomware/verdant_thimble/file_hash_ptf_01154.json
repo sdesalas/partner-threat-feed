@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Verdant Thimble ransomware sample, as reported in campaign PTF-01154. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Verdant Thimble Ransomware: File with known malicious hash written (PTF-01154)",
+        "note": "## Triage and analysis\n\n### Investigating Verdant Thimble Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Verdant Thimble ransomware in campaign PTF-01154.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"062e55b3426057990dd2cb7f98262e747fe177a0cc438e52dd5dbad1c6e5aae4\" or \"62c708410e39c93c6871f05f19399cf180f33db8b0067b9b5f6e57f0cea8fe4f\" or \"e905a992d500f8c614105b90394e01857e7126be036c717e30c845fd3ec40ab3\" or \"3e9d65b5e75ea62c1828a828226f33d3e542352896675208db15b40de976200b\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01154"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "c50bacfb-ade6-5816-a132-a9da0418f272",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Verdant Thimble",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-01154",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "c50bacfb-ade6-5816-a132-a9da0418f272_1",
+    "type": "security-rule"
+}

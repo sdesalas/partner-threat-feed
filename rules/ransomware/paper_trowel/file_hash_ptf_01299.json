@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Paper Trowel ransomware sample, as reported in campaign PTF-01299. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Paper Trowel Ransomware: File with known malicious hash written (PTF-01299)",
+        "note": "## Triage and analysis\n\n### Investigating Paper Trowel Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Paper Trowel ransomware in campaign PTF-01299.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"0a6992505e07065588dd94eff28b445ec8676edc30f5923452316743af4ba76d\" or \"3247dc993be7eac3ad0f7c3766e86d8e9833b5e7099e3f9e18143a5bf2184e7f\" or \"a500b0e5665dc7d7fc27c596b6785c8788a3d49ff5a72ef66fc756db65190b2a\" or \"ffe74b0e20c12414d56cd1d44458b8bea39d41d497de556e5fb6b80c22562bbc\" or \"36f4d4e9a9beb4e13ee6b87d10f519dfdc1c5602565b048f0c383094b9f2dc80\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01299"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "7ba3854b-1918-5f05-b583-0c84f8c5dc5b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Paper Trowel",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-01299",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "7ba3854b-1918-5f05-b583-0c84f8c5dc5b_1",
+    "type": "security-rule"
+}

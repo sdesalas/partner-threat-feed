@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Verdant Abacus loader sample, as reported in campaign PTF-01890. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Verdant Abacus Loader: Process started from known malicious binary (PTF-01890)",
+        "note": "## Triage and analysis\n\n### Investigating Verdant Abacus Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Verdant Abacus loader in campaign PTF-01890.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"4b0dda0317f655f90557787138878dee36a3f5640971a0e787473cb5325384c3\", \"e36538120c2184603111101dba68ebc5ec472b23f15b7cd33868d1fb9775e10d\", \"d4a2a65b55563be45522e241892bceff49439523e1319d1abeaa5c11abbcd862\", \"40da0cbecf33bb303d757d9e3ccce179074c8c86acd2b58e09591a283c907212\", \"d9753cf601112294b3c465a8db3357a4e745deaec847dee7627959cbead9aef5\", \"7ca855ddce3d24db4fb8fafd5d5157686dd9f5a4848fad1cc66fc920d6258ab0\", \"03d53401ef642bafbc388be373dd70035b6a7c37f1eda7922da3d258689ef415\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01890"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "2f446be5-c4a6-5839-a031-a2ea8d37e7a5",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Verdant Abacus",
+            "Threat Type: Loader",
+            "Campaign: PTF-01890",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "2f446be5-c4a6-5839-a031-a2ea8d37e7a5_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Granite Sieve ransomware sample, as reported in campaign PTF-01190. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Granite Sieve Ransomware: Process started from known malicious binary (PTF-01190)",
+        "note": "## Triage and analysis\n\n### Investigating Granite Sieve Ransomware: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Granite Sieve ransomware in campaign PTF-01190.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"82036ceea80129a6f287fecf8c3ea01459a1af09041a076bb47c0de377817887\", \"013fc5962ffde56e44556cbb855a7f784f01d3991738cc16ffc6a13ba240cefa\", \"fae8bc5b2b695c1907a2d00568fd3dfa1db67c0143b77b07f6dd368813da7f5b\", \"3166eaee49eb177d9dd869bdd6e7296af202f610faf87d829d2198836c03a654\", \"167060fe77a49b5d9cb401d8a601eb3dbe350a5b39d1f8082c0e1420ac7310e5\", \"d52bb82332b49c904f24ba9381d40a8ee4f42c517444cbd6e4a44e5e734862e4\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01190"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 99,
+        "rule_id": "3e30a4f1-2448-549f-b437-894055e04489",
+        "severity": "critical",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Granite Sieve",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-01190",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "3e30a4f1-2448-549f-b437-894055e04489_1",
+    "type": "security-rule"
+}

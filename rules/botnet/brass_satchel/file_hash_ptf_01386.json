@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Brass Satchel botnet sample, as reported in campaign PTF-01386. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Brass Satchel Botnet: File with known malicious hash written (PTF-01386)",
+        "note": "## Triage and analysis\n\n### Investigating Brass Satchel Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Brass Satchel botnet in campaign PTF-01386.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"dee116a2d61908691746257e9ed75735bc9347efcff2eac0286a488a7b916dd0\" or \"0279c8204670f47cadea85be32c82f0bca179ab6f57d42bb591dc6436697aec5\" or \"7d21c39de983cc2a09abbf6333dc09301340477e02b41fa8d8ed2c9525daaeb2\" or \"cf3504fb47aa599cb95797a4b3438ac523d919770b99ca05d2cd4f09b221f4cb\" or \"2b9aeb6e59cd0bbcf548dfc705ebb600296b4878c64dea3b497354e5d3de3d00\" or \"39e0b12df87b74d533f8c0d87b20748841bc14a860de64bc2da54ad9e9bdb148\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01386"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "4272aa70-0902-505c-86a4-ceb4fd173943",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Brass Satchel",
+            "Threat Type: Botnet",
+            "Campaign: PTF-01386",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "4272aa70-0902-505c-86a4-ceb4fd173943_1",
+    "type": "security-rule"
+}

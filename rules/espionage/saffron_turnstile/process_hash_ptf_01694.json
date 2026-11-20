@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Saffron Turnstile espionage toolkit sample, as reported in campaign PTF-01694. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Saffron Turnstile Espionage Toolkit: Process started from known malicious binary (PTF-01694)",
+        "note": "## Triage and analysis\n\n### Investigating Saffron Turnstile Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Saffron Turnstile espionage toolkit in campaign PTF-01694.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"7da4f6534185dea11623046771ec25eb63c151d1c38cc2a0324a2b01a8302666\", \"402c9ccbf8eb62f835342f89ee3678b6324827018002e754f885e4719a06e255\", \"0bf8a1032eff93f4820eecc051c64631957d346023a9864d514e5108fc19b4ab\", \"89990609865aa09e694feb6371daebb412649314cf35905b74b2199b0e45f142\", \"909002e12aed4865aa056fccf72ef0477d30f6de7fa53e01d9702c46e8c51f41\", \"23d91446f682e76822dfbf48d6d291b6335379893909813583b298016e1ed851\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01694"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "2982912a-4584-55a2-b0f4-68f5d5b4e24e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Saffron Turnstile",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-01694",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "2982912a-4584-55a2-b0f4-68f5d5b4e24e_1",
+    "type": "security-rule"
+}

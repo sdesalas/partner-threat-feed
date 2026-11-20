@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Pewter Lantern cryptominer sample, as reported in campaign PTF-00233. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Pewter Lantern Cryptominer: Process started from known malicious binary (PTF-00233)",
+        "note": "## Triage and analysis\n\n### Investigating Pewter Lantern Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Pewter Lantern cryptominer in campaign PTF-00233.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"0ec0df68df04d28489e209f197d9f7bd54c3db22248abf88eab43d9467e86514\", \"a2578f42caebc999a7e6cd7a6978bb941efdec509f68cf762a0a2b2efa5af124\", \"b0246b8ecb2db73d7571e35e2bea91318a3ec2173bf27d93bb88095462ea5822\", \"bb7b4351467acf4cc60491da111057cbdea90e8d9505f0f7438c6fdc2808e6b9\", \"9e1a965919004a1450f7ce88d6943e006669d6783c5d84a90e45c91d95cb7218\", \"8a17585e72d67c0a369835470100b96937eef1ab9752af63c364058966b5f2e5\", \"1fb35a43ed6588efbf94ac1dd1f2a473d079d4848df08d41586e4ab5317f61b9\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00233"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "00d9339e-aab8-5c7c-8deb-ecba66bd88ca",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Pewter Lantern",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-00233",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "00d9339e-aab8-5c7c-8deb-ecba66bd88ca_1",
+    "type": "security-rule"
+}

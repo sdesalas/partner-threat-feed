@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Juniper Spindle banking trojan sample, as reported in campaign PTF-01281. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Juniper Spindle Banking Trojan: File with known malicious hash written (PTF-01281)",
+        "note": "## Triage and analysis\n\n### Investigating Juniper Spindle Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Juniper Spindle banking trojan in campaign PTF-01281.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"6f17c6ac235f1c60359e1f4035ffae553a920b07197e3a076641b53990f3c752\" or \"61a6c08fe90f23b9253c131ad073fdeb4effeb044294e3061b1cfe4d93fa9c1a\" or \"89a85e85d80a623eb35420f5b96867dd9a0c3ee12f49a1ce5610f74725953ae9\" or \"b558aa6cd64a0281a21b4263c920b2a2f62af9bb5caae4a43fe70c85f8e1064c\" or \"5bc773c208a3350bc6552a8ecf3a17ffa4859a2bd30ba5b1a31984b71e774db6\" or \"7cff27400f3612f6519cdb8ed4cf84e91497b2deb2ccd2a164961f5f44622fee\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01281"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "c7c46da0-8724-5e78-bc68-3b5be891cf15",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Juniper Spindle",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-01281",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "c7c46da0-8724-5e78-bc68-3b5be891cf15_1",
+    "type": "security-rule"
+}

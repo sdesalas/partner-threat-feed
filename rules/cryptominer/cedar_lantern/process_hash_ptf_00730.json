@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Cedar Lantern cryptominer sample, as reported in campaign PTF-00730. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Cedar Lantern Cryptominer: Process started from known malicious binary (PTF-00730)",
+        "note": "## Triage and analysis\n\n### Investigating Cedar Lantern Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Cedar Lantern cryptominer in campaign PTF-00730.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"9ea638f07ca5d8275048bd77642be3c2906240dc5a87bcf555cb5a026c3865fd\", \"c726c595ef70c0fc0e7c05d2bd951b1ec6fced2fc50c53addd9eb7d5bfc2f96a\", \"37d569e19772a87e1a45cbb3ddaaa9081037537b4895f6b24e41f72c4847611d\", \"8c2d8e541d2dac8af7f49491bd8c46ac48a98bd4100dc5a7281d0b4a650b15dd\", \"a590b665d450cdd39dcb830b488a6e0c6bf32d11bb2907874d792d5eb0046ee6\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00730"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "19931f41-d12e-52ea-ba9d-da8fde36bc56",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Cedar Lantern",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-00730",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "19931f41-d12e-52ea-ba9d-da8fde36bc56_1",
+    "type": "security-rule"
+}

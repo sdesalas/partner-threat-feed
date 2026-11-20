@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Verdant Trowel infostealer sample, as reported in campaign PTF-01546. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Verdant Trowel Infostealer: File with known malicious hash written (PTF-01546)",
+        "note": "## Triage and analysis\n\n### Investigating Verdant Trowel Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Verdant Trowel infostealer in campaign PTF-01546.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"a9e7f188ff1598b3f034ef212959093d7bbff535195c92ecad82673779252276\" or \"31269f0e34d50e26a639c8e866ec83eb24719a50e7fefa9c46b5095a041961d5\" or \"6624a4d5661da065c23bcaad104547903e1ce42469e7b6e4a08b268223db4aa3\" or \"cb47bc49ee379ad2036c2bebf960557d1bbc0000a4b87320f688e17c958db194\" or \"48f091f2e76ffa53b6286f8e4211963c452797314c9cb0d0afd5a203a592359f\" or \"787eeac0fe88d1f6594af7960694a9539b5a074f9d5de64468ac9f94e487125f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-01546"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "c03b3096-d9eb-51f7-8b4e-87ac07cad283",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Verdant Trowel",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-01546",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "c03b3096-d9eb-51f7-8b4e-87ac07cad283_1",
+    "type": "security-rule"
+}

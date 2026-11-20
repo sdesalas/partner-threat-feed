@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Hazel Keystone ransomware sample, as reported in campaign PTF-00894. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Hazel Keystone Ransomware: File with known malicious hash written (PTF-00894)",
+        "note": "## Triage and analysis\n\n### Investigating Hazel Keystone Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hazel Keystone ransomware in campaign PTF-00894.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"c26680be46374b423ab81f7dbaf619eb8b64d07a41e2bee963db3a72fe892c89\" or \"00f26e5541e11c5e6a57ecbb270e7f75dd5a6f2b563655b40144bb572eb1484d\" or \"7a77ae7c52396bd022ceaac4a1460c1d6af7691661b43d926f58ac21a8c18113\" or \"f5f4407a1b80ad79e02380f40720c8a720a6fe1db27c4f7dca3626c1f7b2104a\" or \"0d4e794d89344a1c5fe167f41b0ddd6df7f318597500c75f85eceae35b1aef70\" or \"0cb8806ba97d8944d46bc3cae209bcb19f4ffa3bf49dd8769dd2ac3164c0a003\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-00894"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "8905971b-13bf-5c8b-83a7-e856ed7edf85",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Hazel Keystone",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-00894",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "8905971b-13bf-5c8b-83a7-e856ed7edf85_1",
+    "type": "security-rule"
+}
