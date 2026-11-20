@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Rosewood Abacus banking trojan sample, as reported in campaign PTF-02570. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Rosewood Abacus Banking Trojan: File with known malicious hash written (PTF-02570)",
+        "note": "## Triage and analysis\n\n### Investigating Rosewood Abacus Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Rosewood Abacus banking trojan in campaign PTF-02570.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"fe94c92d1cc6493771b326ecbd5a190aa5f0e46543428a8374fd6a3a6a75e6b6\" or \"36dd60f5acddfe8685622735843dc9a0f2a770ae4c5e6bdcab4361d68532d1fd\" or \"bac892c72ac962dc3cdd6cfa492fdc2b5f7ac79ca2574a8aa873e45e1588a027\" or \"f477a0a8f09051989d2c24aa4c26fb9ff9c2ce2f21e73d77a9f5467dbe9f4068\" or \"fb46d8f64cdb74316f0cc30a87194d97ed5d69cbbca091975442d67869f6a492\" or \"0fee83753372f615134be6dae70be3c99c36559007bf433f96a0541c1d882474\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02570"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f68ed6bd-26b6-54f6-a7da-41c3f55ce73b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Rosewood Abacus",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-02570",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "f68ed6bd-26b6-54f6-a7da-41c3f55ce73b_1",
+    "type": "security-rule"
+}

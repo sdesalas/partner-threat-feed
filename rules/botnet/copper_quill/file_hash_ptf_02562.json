@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Copper Quill botnet sample, as reported in campaign PTF-02562. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Copper Quill Botnet: File with known malicious hash written (PTF-02562)",
+        "note": "## Triage and analysis\n\n### Investigating Copper Quill Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Copper Quill botnet in campaign PTF-02562.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"63cd10a3af47edc973cbc4d14fc25c1350b76667c0886f170479f61db932b488\" or \"2ed9ae722e619d97df3e05c00bd6560764d4f5ba1e82b6282a212fa41031dae0\" or \"0708a3b24182b6ddc5c07d9db81aa416591d2bb9b333bc89d5a29a93f30b65ef\" or \"6bb938ed1ba4c5ba0c860b2bdcab87041a3b3243ccc6691073d7c0cdb450a2c8\" or \"b61fd9ff59db54159620424f5c7426a7c76d7039626feb8ac9979133b8819b6c\" or \"960bce4c52084d01c3b559899bc29cdc733894b75334ea2b26cfb86752d63c36\" or \"c300b42e67bfa7758c86e1a98a053766f20144352b0afabf62a7eb1c600002c2\" or \"199aa70f5a0ebc9631f2a2b201931a86757d7166fef6493eec1486052acd1b4c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02562"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "598339ea-2fb8-5058-ade3-59632e5de2b9",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Copper Quill",
+            "Threat Type: Botnet",
+            "Campaign: PTF-02562",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "598339ea-2fb8-5058-ade3-59632e5de2b9_1",
+    "type": "security-rule"
+}

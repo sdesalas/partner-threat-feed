@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Brass Keystone remote access trojan sample, as reported in campaign PTF-02556. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Brass Keystone Remote Access Trojan: File with known malicious hash written (PTF-02556)",
+        "note": "## Triage and analysis\n\n### Investigating Brass Keystone Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Brass Keystone remote access trojan in campaign PTF-02556.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"4766f71b8ad6e7a074a9832deab74a686e2f5461cba03509c1f5d8964731e0b2\" or \"f3d006c7bf0b03d95028e06b92dcf5e629ab24b2696b3fb52ceb8333dee6a5dc\" or \"137f8ac2d070d2eacf372171345d885c3c325a56dd558358fcbab03ce41ee69d\" or \"af2d7f7a44f131142fcd223abba5c116229111e65dc331853eee6e89597a87e4\" or \"613785db16ea072c4c1147ed0e9efbb28111fa7f6888c213b56117c43a61f88c\" or \"b3fa12c2f68af4d51938ecf66343a945cbb54b8525acd964767b7dcf7f0c1b31\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02556"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "bccc832f-df3c-5bd3-b014-fb1aeea73e46",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Brass Keystone",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-02556",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "bccc832f-df3c-5bd3-b014-fb1aeea73e46_1",
+    "type": "security-rule"
+}

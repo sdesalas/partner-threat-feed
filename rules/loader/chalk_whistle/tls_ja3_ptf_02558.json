@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies TLS connections whose JA3 client fingerprint matches the Chalk Whistle loader implant, as reported in campaign PTF-02558. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.tls-*",
+            "packetbeat-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Chalk Whistle Loader: TLS client fingerprint of implant (PTF-02558)",
+        "note": "## Triage and analysis\n\n### Investigating Chalk Whistle Loader: TLS client fingerprint of implant\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Chalk Whistle loader in campaign PTF-02558.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "tls.client.ja3:(\"9dd4d458ab7329e699f101576c916220\" or \"037e3301c6f0d588867394d212c56fc8\" or \"f13bb6387cf3da643c22c3c213ba7bec\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02558"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "b060d345-d149-515b-bab9-94d2e56f7485",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Chalk Whistle",
+            "Threat Type: Loader",
+            "Campaign: PTF-02558",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1573",
+                        "name": "Encrypted Channel",
+                        "reference": "https://attack.mitre.org/techniques/T1573/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "b060d345-d149-515b-bab9-94d2e56f7485_1",
+    "type": "security-rule"
+}

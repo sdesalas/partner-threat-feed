@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Copper Loom ransomware sample, as reported in campaign PTF-02583. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Copper Loom Ransomware: Process started from known malicious binary (PTF-02583)",
+        "note": "## Triage and analysis\n\n### Investigating Copper Loom Ransomware: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Copper Loom ransomware in campaign PTF-02583.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"c09c2b1b4cb1d03b1d7900daf61186f42ef0c810589ca013d8500ed49f7bfd03\", \"8b5254aadf3dba7a02f5b74429a38c8b47dc6ff0eddb5919a5d276c920c8641e\", \"87279e0fa9d64ca9e5963adb3210880ff26df706cdb54520a14b25f983a1a597\", \"364a063d855af0616e9afc6faed6254dd305ae0e904994c377ad7596d8af57ac\", \"ba18108513393df344c2ccd4b3a6bb25c89500a7ce092efc8321c9434236cbcf\", \"77f6c74e11cca568aa352f1e8c39c067cb649ab297d20173da4ca4d788f8b0ca\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02583"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 99,
+        "rule_id": "42b21c31-28ec-51b5-bd56-0531d17f1c47",
+        "severity": "critical",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Copper Loom",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-02583",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "42b21c31-28ec-51b5-bd56-0531d17f1c47_1",
+    "type": "security-rule"
+}

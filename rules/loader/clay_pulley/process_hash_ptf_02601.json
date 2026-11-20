@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Clay Pulley loader sample, as reported in campaign PTF-02601. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Clay Pulley Loader: Process started from known malicious binary (PTF-02601)",
+        "note": "## Triage and analysis\n\n### Investigating Clay Pulley Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Clay Pulley loader in campaign PTF-02601.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"e64a4a82cf3c61e216cd90a65484079fc897ffeeccf3b78b7290b9c9104aa409\", \"cb4fbb2dc907dcf09b2c14afe080ea345404c424b7e9f72d3d9a1ba47606310a\", \"f9d9feb9bc242ff6744298bec2c2084e44fce4acf0db93966113a38d65111222\", \"f44f4f5a5d6f3dca8949c6ab033309704b38b7d6ba9e204ebcb972f34a958994\", \"dea97cf9c14c11efbf395087cfb925720fd80a34ed3f3b9d8ba97b165bb9e391\", \"f81567db178d8a326711cbd3d2e4bd84937470d2c93f48b1a484d05c65e0598c\", \"b41bd772aec31807b8909a3b025fec0174988e1d15172917000259c7f693874e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02601"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f796c5d5-3d57-5282-94a0-b6b4bffd81c4",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Clay Pulley",
+            "Threat Type: Loader",
+            "Campaign: PTF-02601",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "f796c5d5-3d57-5282-94a0-b6b4bffd81c4_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Copper Loom ransomware sample, as reported in campaign PTF-02582. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Copper Loom Ransomware: File with known malicious hash written (PTF-02582)",
+        "note": "## Triage and analysis\n\n### Investigating Copper Loom Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Copper Loom ransomware in campaign PTF-02582.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"d10e4c870ed42a336486582c37c8c708f8d371d48da714146b164da322ba3c2c\" or \"1f17dcf5d9d4ee7e140cf315e34ecb9ff4c2a7c271828a1e9dca9e282c5738d7\" or \"1536e0207bd01299262c07789b49f27e2d497bbbc2705f6352a98494e7486a14\" or \"7806dc154c4c2d0975b3e9970e0a2c41509c0e88aff4a53628052ebd043f4e9e\" or \"81d0141d733e1e2de4a4e242ca876878fc8141980504adf52f510349638dc581\" or \"fb477679cb9e7e559a7d272aaab20f3cb75d09b5d4522e45b063fc5ff29c3993\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02582"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f3a790a4-d9db-51fe-b7c2-c12637acd36e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Copper Loom",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-02582",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "f3a790a4-d9db-51fe-b7c2-c12637acd36e_1",
+    "type": "security-rule"
+}

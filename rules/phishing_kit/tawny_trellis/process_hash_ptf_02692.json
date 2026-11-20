@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Tawny Trellis phishing kit sample, as reported in campaign PTF-02692. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Tawny Trellis Phishing Kit: Process started from known malicious binary (PTF-02692)",
+        "note": "## Triage and analysis\n\n### Investigating Tawny Trellis Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tawny Trellis phishing kit in campaign PTF-02692.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"20d2032b353ea65dfdf6e88fdc82196f8571ba5a5f62799febd07feaf6b03ce9\", \"855866241e3b121dcf967da82fc470c58864049a2f2396848b522185573fb89a\", \"86545c36a212745546e1450d0af272b08a03215e7ae3a6ec3c50d287facb93a6\", \"80df3d1ba67f51bbbc774e9f678d05d37592a53ae6c2134b861a5c5583378bae\", \"fffba53df144cbe760b06de217c7a4cc1bbb408ba82ac05ceb683885e3066afb\", \"2fc32c1048d71c8f544e9bbd1d703e0fd997ea9d14756f98b70ace74a342ff7a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02692"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "027cbb28-7e4d-5c73-afcf-1b552489743b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Tawny Trellis",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-02692",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "027cbb28-7e4d-5c73-afcf-1b552489743b_1",
+    "type": "security-rule"
+}

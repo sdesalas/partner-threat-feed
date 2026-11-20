@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Nickel Hourglass ransomware sample, as reported in campaign PTF-02627. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Nickel Hourglass Ransomware: File with known malicious hash written (PTF-02627)",
+        "note": "## Triage and analysis\n\n### Investigating Nickel Hourglass Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Nickel Hourglass ransomware in campaign PTF-02627.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"2fbc4ba022579300ad7d93394a72771dfd940ac14c0ea7af472afe01b2317f92\" or \"aff4bbcf0c3efbad9e8308952dbdbcdce5e18f2576174d0a989ddc45d024fe54\" or \"7df93eb57e02c78c6c3c74d788d1376763c1bfcb3427b7a96debac29baaa05d9\" or \"a48b8699a517434c2271b9e6d4c846dda0c493f7d094afbb750ff48c88bd5a4b\" or \"2d2bcb83dc95fb0e9e8ae4f26f0ff0768de5ceed966458de5a463cbfa371e019\" or \"ed55f24f8920267fbd694f45dac7fb1ff2319157d6c8861b4cc8a93c68e965d5\" or \"0a3fd2d15f4f1524a4beb5b0c610341aa9ba8c3cf7a979d427fd947895b15652\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02627"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b4cc6e98-7c94-5dcd-a255-65d4474487a2",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Nickel Hourglass",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-02627",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "b4cc6e98-7c94-5dcd-a255-65d4474487a2_1",
+    "type": "security-rule"
+}

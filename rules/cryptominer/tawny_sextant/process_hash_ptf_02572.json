@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Tawny Sextant cryptominer sample, as reported in campaign PTF-02572. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Tawny Sextant Cryptominer: Process started from known malicious binary (PTF-02572)",
+        "note": "## Triage and analysis\n\n### Investigating Tawny Sextant Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tawny Sextant cryptominer in campaign PTF-02572.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"440bb8123ffec22ece132550191d5695887a1555702da8a286bc44a5385ab199\", \"6d846bd215e9d6836bf6298d947b1482643a0667faee03d87bd7266b09aff628\", \"61bbd3cd72a09b41ba75832c68625cba65521b1a5ec331a6539ff89808fce290\", \"bb6e2ddb31f27dec0a2d0991a6c235a5147bd19ea777da58ebfc6c9fe4f4b162\", \"e830e20a612987698c6a48526a0fdfa306afb6163e863be2186b74f1d61a0f45\", \"9e9f88b41f4f56a403f0e69c999ba000d37a988195cc9f0f79ebb8d35160f376\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02572"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "2d218b62-9ea2-5554-9128-af5bc83f9e69",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Tawny Sextant",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-02572",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "2d218b62-9ea2-5554-9128-af5bc83f9e69_1",
+    "type": "security-rule"
+}

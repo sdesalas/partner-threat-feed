@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Saffron Mallet botnet sample, as reported in campaign PTF-02531. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Saffron Mallet Botnet: File with known malicious hash written (PTF-02531)",
+        "note": "## Triage and analysis\n\n### Investigating Saffron Mallet Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Saffron Mallet botnet in campaign PTF-02531.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"e8c6193f559e4c01e3eff0cd4f59a096906b874c5ec0a4301162d6701de29cc4\" or \"5aecfc6b6beac1382fc3dba8d1460dd760e2ab90f86f35f78fd06f6598703313\" or \"dc4909001e4d768addcf58a0e57bcc6bac12fc3fb71542feb2c859c5c0b2f695\" or \"f529a36440967736efb47008f1b9e53636f83c0e792350e1c92c2df1fb1cceb9\" or \"0a346272ffc17dda1d2c4bc425bb4b6b181bac1893a8e476cc7cebe3a4a96934\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02531"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b224800e-f547-5ecd-90df-ea3b77c035c0",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Saffron Mallet",
+            "Threat Type: Botnet",
+            "Campaign: PTF-02531",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "b224800e-f547-5ecd-90df-ea3b77c035c0_1",
+    "type": "security-rule"
+}

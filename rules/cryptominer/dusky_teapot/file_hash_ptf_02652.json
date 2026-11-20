@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Dusky Teapot cryptominer sample, as reported in campaign PTF-02652. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Dusky Teapot Cryptominer: File with known malicious hash written (PTF-02652)",
+        "note": "## Triage and analysis\n\n### Investigating Dusky Teapot Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Dusky Teapot cryptominer in campaign PTF-02652.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"7d000c2e721cbdeccc83c0fe8d5e4a40566e14dd44238373b5f62e079d82ec58\" or \"7c58e3a3aadfdb3be5edcb7a73dd4f21576d65fa5a72087385235fabe2bfddf0\" or \"2859793061d1aa4b76d7f738fa1691c7678377e9b4be9ef65fed9d614f9c9246\" or \"995169090a8c9db288d3bb1b5ed51b7032a8d45005c7fea65365158d51e8c38b\" or \"4adc36fcafb6c8192451697d75213442b489cec3ee155f95715db76268047168\" or \"47dcf8e90538971e124667c5db49025b7aa90589f4346a1e062abffa1ac6e8aa\" or \"36b8d249adaee1453a991fb6ff2d421fc1b739c4771ac8465d2ba9f7e3003e9e\" or \"e16fe6b6a13fe581ed49ddb39a9def9adccb0eb8f5047cb15db77d5edbb7a7ea\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02652"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "4cc54dc5-3525-5106-bceb-089ef5ec2eeb",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Dusky Teapot",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-02652",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "4cc54dc5-3525-5106-bceb-089ef5ec2eeb_1",
+    "type": "security-rule"
+}

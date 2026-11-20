@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Copper Loom ransomware payloads, as reported in campaign PTF-02582. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Copper Loom Ransomware: Request to known payload URL (PTF-02582)",
+        "note": "## Triage and analysis\n\n### Investigating Copper Loom Ransomware: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Copper Loom ransomware in campaign PTF-02582.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://cdn-track54.example/gate/7370.php\" or \"https://connect-auth9.example/gate/4949.php\" or \"https://media-node71.invalid/gate/8685.php\" or \"https://portal-media45.invalid/download/3550.bin\" or \"https://static-assets67.invalid/doc/2598.zip\" or \"https://sync-media40.invalid/download/6988.php\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02582"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "84725c27-bcc0-5064-bab1-8e3c3004e510",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Copper Loom",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-02582",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "84725c27-bcc0-5064-bab1-8e3c3004e510_1",
+    "type": "security-rule"
+}

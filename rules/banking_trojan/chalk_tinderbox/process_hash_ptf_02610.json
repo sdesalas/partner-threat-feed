@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Chalk Tinderbox banking trojan sample, as reported in campaign PTF-02610. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Chalk Tinderbox Banking Trojan: Process started from known malicious binary (PTF-02610)",
+        "note": "## Triage and analysis\n\n### Investigating Chalk Tinderbox Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Chalk Tinderbox banking trojan in campaign PTF-02610.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"8ceda8a05f886f80265737d17fa98c8ff55dbc46a3512aab6955186d7dbb90a7\", \"bfb3c44d84d521536d669d28351e8d81e503e1fbd8a5e76f7640f2f5d5ee54a9\", \"392f7c331142155c002c9ce4e1120a8ee72b3d359a9faddd7745785819181917\", \"dd0bec50471a6d348bfca579cbb705785ea4fbe02dc1fab08526aa3081a72e1b\", \"b920a56de11b9a6b2af99c2e565e5fb0c75f194666f55e2fcf2afb53d636beb6\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02610"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e760021e-c46c-57b7-af84-e68becb7dbb5",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Chalk Tinderbox",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-02610",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "e760021e-c46c-57b7-af84-e68becb7dbb5_1",
+    "type": "security-rule"
+}

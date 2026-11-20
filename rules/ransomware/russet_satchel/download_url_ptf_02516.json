@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Russet Satchel ransomware payloads, as reported in campaign PTF-02516. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Russet Satchel Ransomware: Request to known payload URL (PTF-02516)",
+        "note": "## Triage and analysis\n\n### Investigating Russet Satchel Ransomware: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Russet Satchel ransomware in campaign PTF-02516.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://assets-portal74.invalid/update/1772.msi\" or \"https://auth-track79.test/install/6368.zip\" or \"https://cloud-static27.test/invoice/8200.msi\" or \"https://cloud-track29.example/install/1120.zip\" or \"https://connect-assets42.test/gate/5393.bin\" or \"https://files-connect28.example/invoice/9215.zip\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02516"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "43cc0798-9e27-5f29-bffb-7add08a877bc",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Russet Satchel",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-02516",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "43cc0798-9e27-5f29-bffb-7add08a877bc_1",
+    "type": "security-rule"
+}

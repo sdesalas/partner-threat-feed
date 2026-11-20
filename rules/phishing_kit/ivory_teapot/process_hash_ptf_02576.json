@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ivory Teapot phishing kit sample, as reported in campaign PTF-02576. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ivory Teapot Phishing Kit: Process started from known malicious binary (PTF-02576)",
+        "note": "## Triage and analysis\n\n### Investigating Ivory Teapot Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ivory Teapot phishing kit in campaign PTF-02576.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"304b96ddb0e5dd3858b732b325f956d16301a25c823139e3738abcef0d46821a\", \"208fe7e527266387f0633ce35e0078efc3b46eadcf240cf732bd6b116cd8e051\", \"670b26d0552512d494474817566274a98cd37161f2ede53d9a189fddcd4dc743\", \"b25bbb792c02c4c57e1f268a22e2c979d95be94d377084228097c4ed1f125c40\", \"1c2d9000357160a0ad1ca7fab7ffb185562168a3671c473b9c29dd0610d43487\", \"a7f56865a6559ede13bbe9c95b1aab57ce1d1275035d298c5e6a48c9e892ebc0\", \"862394f4fcee8988daf53718bb1333f95baa91ce8ba4958a7de89accf65c68df\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02576"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "59917229-c8ae-5ed7-8165-26d49ab58569",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ivory Teapot",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-02576",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "59917229-c8ae-5ed7-8165-26d49ab58569_1",
+    "type": "security-rule"
+}

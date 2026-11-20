@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Cedar Needle espionage toolkit sample, as reported in campaign PTF-02581. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Cedar Needle Espionage Toolkit: Process started from known malicious binary (PTF-02581)",
+        "note": "## Triage and analysis\n\n### Investigating Cedar Needle Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Cedar Needle espionage toolkit in campaign PTF-02581.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"08bb5e25ba87d6fce96f95ea299bf826cd500b248ac29c8ad40f13893425a910\", \"5b3a03679c4302d1d309bbb6dba928661e668acb2d51576ecfc0a097017f207f\", \"43083aee50dc9134b7ef6b7e3d2238b7c644c1e3263689cfa09bd06063110ab1\", \"c48940c7ac1b5abf7f81c74b4cfb7af9fafd2d2b09fffec319d87c6cf3867a44\", \"faab2fb91c2d9ab51504a983b1ca0e44ec96827aab30e8863e6b37f5525243ab\", \"cb88f48c7115381b1b2636b8934e838d291f409fc22bae90c3a9cf570a080719\", \"78d7e92e25163fc0f25f9065d29adc24f7a6bb0d1a390be85e4122ecb17591b7\", \"c61081f06e4b7cff6d95e7bf1dfbb71c01d6135a079efa95ea40abc7ffd660ac\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02581"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f3fa6a37-1779-5218-94f4-4de98c54e996",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Cedar Needle",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-02581",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "f3fa6a37-1779-5218-94f4-4de98c54e996_1",
+    "type": "security-rule"
+}

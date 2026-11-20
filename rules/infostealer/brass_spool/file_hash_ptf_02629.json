@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Brass Spool infostealer sample, as reported in campaign PTF-02629. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Brass Spool Infostealer: File with known malicious hash written (PTF-02629)",
+        "note": "## Triage and analysis\n\n### Investigating Brass Spool Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Brass Spool infostealer in campaign PTF-02629.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"6b452c2fd686fa5b76db3d65a73ee7ab6eb2485daba432c87fea1a605a2eb488\" or \"8d899b48fcf0aa7d9fcc2ac13e2026a817bafa30fa3a9b0d07ed74634ec2114a\" or \"da7d4c7a6c2348d0f76ee27ede8b62d63f0b453e60b71b9dc58267bee7c6ece7\" or \"5b1201165ed726828782247ab272cd1dcf46c13c29c3c84f4e4050e9342eaace\" or \"dfea843bc8f256b8056b70b9a61dd7c94190bd9e3ed3cab5532e770e852af31d\" or \"16f3f7d1596360b01c65eb64286658783b68db39dc595b9379dcd299af7b2a7d\" or \"e1b9b54756cb88dc0169236c10d4e2ab0a095aa54cbc819a944474fbfcf4775c\" or \"4cccee9d4983ff06eb9dedb0e54484c665e9eab92325929d6f09055587355fc6\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02629"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "64ec1472-6110-5f6b-813b-a9bdd9dd1169",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Brass Spool",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-02629",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "64ec1472-6110-5f6b-813b-a9bdd9dd1169_1",
+    "type": "security-rule"
+}

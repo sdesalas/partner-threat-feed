@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Gilded Kettle espionage toolkit sample, as reported in campaign PTF-02542. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Gilded Kettle Espionage Toolkit: Process started from known malicious binary (PTF-02542)",
+        "note": "## Triage and analysis\n\n### Investigating Gilded Kettle Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Gilded Kettle espionage toolkit in campaign PTF-02542.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"a18377e37be3fed3d25ac76571a19883314afe78392d35fc1ec6e5ad4d2cdb8d\", \"94e1a59812971cd5b36a9b6db5a16a7084cdc8021562eab76fbc66aad812e778\", \"64f79705fc14693fdba9c85f997d39d25dd7434e3c0cb3a563d6f38bee1a23f6\", \"c25b808f39fdaa92bb1cf48b40aae18d3d07519397ba772961afa0e28ea1b543\", \"a8f07d5c54632bd5bfdd4c015f8fbe8898cc5698844990a0636ac80cdeddecdb\", \"8f8c74e8cc1518f77fd4072448d2b385b807301cc4277c1a0aeb4597fa4ee6de\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02542"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "4a2d2513-5d6c-549f-a216-40ced6d3de23",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Gilded Kettle",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-02542",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "4a2d2513-5d6c-549f-a216-40ced6d3de23_1",
+    "type": "security-rule"
+}

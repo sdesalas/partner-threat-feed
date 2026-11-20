@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Brass Quill infostealer sample, as reported in campaign PTF-02668. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Brass Quill Infostealer: File with known malicious hash written (PTF-02668)",
+        "note": "## Triage and analysis\n\n### Investigating Brass Quill Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Brass Quill infostealer in campaign PTF-02668.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"8d6fee877ddc555706042bed1f19c155812e2f2047214846bef43d6d11c1bce3\" or \"13a96a421c47becebb378710eab651b9f94de0cad62180a20eb0f48281a5fef8\" or \"ebd5c02a0475260bf3956d7e2c7ffdaa75c8b87280ebf6d08d731ee546adcfda\" or \"87970cee1bbb6b60d81bb1c1fb5d4abcca0d4a050931f36465556865c2bbb12a\" or \"586b9a2856502e595bf65055bbe718e21c48130d457cc355e4bce7454bb49d46\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02668"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "761d9ea6-bfa9-54ec-af29-57321aa06c48",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Brass Quill",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-02668",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "761d9ea6-bfa9-54ec-af29-57321aa06c48_1",
+    "type": "security-rule"
+}

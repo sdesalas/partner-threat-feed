@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Mulberry Pestle cryptominer sample, as reported in campaign PTF-02505. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Mulberry Pestle Cryptominer: Process started from known malicious binary (PTF-02505)",
+        "note": "## Triage and analysis\n\n### Investigating Mulberry Pestle Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mulberry Pestle cryptominer in campaign PTF-02505.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"23c601c4d56b734d96a4e1e9d440eaf0ef554f09997c0fba6fb3bcde3e752cc3\", \"a979215af9a390042524e744e6127df8a3ede8e0f58630f76f6a9187e9a24ced\", \"cb2c1ac1dd78514e17ae8b87b045f7d8286de8440143b9b3f0045833fd8b0035\", \"cd8e5ab3e031dcef80dfa26765dbd805dc8b333c95c5236b1fc755b249c3e8e2\", \"11feaa7c7e8a812d2584651298af7ef155218226be536ccdc4b141e25269abbf\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02505"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "0b2b4b2c-b3a9-5411-8ae6-78c1b52df4b2",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Mulberry Pestle",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-02505",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "0b2b4b2c-b3a9-5411-8ae6-78c1b52df4b2_1",
+    "type": "security-rule"
+}

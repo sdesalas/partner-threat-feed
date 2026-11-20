@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Gilded Kettle espionage toolkit sample, as reported in campaign PTF-02547. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Gilded Kettle Espionage Toolkit: Process started from known malicious binary (PTF-02547)",
+        "note": "## Triage and analysis\n\n### Investigating Gilded Kettle Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Gilded Kettle espionage toolkit in campaign PTF-02547.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"aa32d02d63d9d6e542fe03a43b40ff2592530df1ae676a4897356879295b07de\", \"7f195a394e78e6b31a8372e6f6f83b826e5a9dfe9f6a147987604bf261034788\", \"7ece8dcc806ccf196edebbd1cd41d67c845e0b69e8f664d26f8040a4183495eb\", \"40b4e89da6ab7d6778469b2ec4c5bb2cf55bcd41a3c3061c1d9570fbbd4672b3\", \"5c71d088fb7f31fe3b7f44f1f69351e1436e6316e72a977ec583f2bf6b550a4f\", \"6c80ad4a3772cbbb2fc7c65735863867d0855c96398f6b59a8bb0db45cfb8ebb\", \"dd690e83eda2d8494a9d3d8b87fa31a65be0510794e36c4d5a59f9a949fe8ed3\", \"175995835d5ee4baaa9b57555fd36eaf34f164354a65402e545d7f01366c9a80\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02547"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "8868fd0d-ae1b-56f1-b362-4e6d7757da4a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Gilded Kettle",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-02547",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "8868fd0d-ae1b-56f1-b362-4e6d7757da4a_1",
+    "type": "security-rule"
+}

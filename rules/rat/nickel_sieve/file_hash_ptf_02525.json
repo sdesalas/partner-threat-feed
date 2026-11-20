@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Nickel Sieve remote access trojan sample, as reported in campaign PTF-02525. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Nickel Sieve Remote Access Trojan: File with known malicious hash written (PTF-02525)",
+        "note": "## Triage and analysis\n\n### Investigating Nickel Sieve Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Nickel Sieve remote access trojan in campaign PTF-02525.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"075ea0096d17460ce84580c25784e5b0d6c1ec87be5c0d09d1076f988fadb0e9\" or \"52fc2c12d30e9f3e1978c0cbe844093ca3d726cb4217dfd9af577f45f1fb0df0\" or \"49c0cf700960c20af2f344d9a1811c13c4c2d03ee110b4d966004820d018adee\" or \"7f68a36502b1658f602c9f76beded56152ba0c4c6e33db7d6dc186afda917a51\" or \"ea2f40bc300be3bdf97351c4a5e37f325482f05562a531343f27791ac26c8db8\" or \"b428090bea20e7b2ba5130b8a29024e8eec9383bc19b6d016da5a7e1a1e8d49a\" or \"3a20de1ec8d8eac3e2752f724c7d4da241cdd989883f9c59a67d048ddb919ecb\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02525"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "fedf04e8-3bcd-5758-86e0-7206fee15927",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Nickel Sieve",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-02525",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "fedf04e8-3bcd-5758-86e0-7206fee15927_1",
+    "type": "security-rule"
+}

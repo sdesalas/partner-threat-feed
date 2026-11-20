@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Driftwood Bellows infostealer payloads, as reported in campaign PTF-02553. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Driftwood Bellows Infostealer: Request to known payload URL (PTF-02553)",
+        "note": "## Triage and analysis\n\n### Investigating Driftwood Bellows Infostealer: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Driftwood Bellows infostealer in campaign PTF-02553.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://connect-edge65.test/gate/2721.msi\" or \"https://edge-cloud27.test/gate/9063.bin\" or \"https://media-track88.test/update/6572.php\" or \"https://node-mail41.invalid/install/5821.msi\" or \"https://secure-cdn21.test/update/2063.msi\" or \"https://track-api39.example/update/1029.php\" or \"https://update-login59.example/download/5880.bin\" or \"https://update-portal12.example/update/8752.zip\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02553"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "28415004-bb7c-5fe0-a167-b6341d3f4307",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Driftwood Bellows",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-02553",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "28415004-bb7c-5fe0-a167-b6341d3f4307_1",
+    "type": "security-rule"
+}

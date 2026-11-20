@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Tin Jigsaw remote access trojan sample, as reported in campaign PTF-02676. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Tin Jigsaw Remote Access Trojan: Process started from known malicious binary (PTF-02676)",
+        "note": "## Triage and analysis\n\n### Investigating Tin Jigsaw Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tin Jigsaw remote access trojan in campaign PTF-02676.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"bfcdb484f7140215bdce9ee7894878b5e1332403cbc0115eeb1c689eeb065b8d\", \"f9601b5b4d0b74a05e1ffed26390ce577fdd552700d09ed32244a0b1bcaf5d34\", \"15551306679807c892bffb8cf662aedf0d6c36245e02658acec5fe77c6b456f0\", \"c1f6d5d62e0ee6874dd038f584177604a546327eb166d2da8c0a4a0725fe8257\", \"7b6d25d9d910ad61c7bf6255006ad72d7724fbea5ab1ffd9fe7de810930aa232\", \"b3a38b218cb6b08cb9d443299a9224b3fcec807731938aeadc9828b2d813f5cd\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02676"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "52c0510b-01f6-55d5-b5ff-c6ae896bb5c7",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Tin Jigsaw",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-02676",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "52c0510b-01f6-55d5-b5ff-c6ae896bb5c7_1",
+    "type": "security-rule"
+}

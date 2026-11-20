@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Russet Satchel ransomware sample, as reported in campaign PTF-02516. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Russet Satchel Ransomware: Process started from known malicious binary (PTF-02516)",
+        "note": "## Triage and analysis\n\n### Investigating Russet Satchel Ransomware: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Russet Satchel ransomware in campaign PTF-02516.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"abc3fdf000beb0683cc89adec578bc392238a942f7d9d7229b3a1deec8febe4d\", \"f9ac5d820f98027535093f526b6d53b36b6de4daecf759fa7667b0f3f2da7056\", \"102cc796cee52beba0e4f17141a4cb24eefcf740756cd3357f6705ff15f7610d\", \"14e948306d61a81e7b35cb943cbc60cc2ad5fd853300dd2efdf39d6cdf0c49f4\", \"d87e3fd4ed4d09accd709ba26388a7e7060cf3e31638cb371eef487ef11c0216\", \"f30ab630ff54e120928068e2bada35edd35e8bf2a5022222212b4393ae4b79ed\", \"7549fce5b00e07320c1ea4e3538e730080f82ecf12f8cedbdc12ba7939c0053c\", \"ef97ac03d4e61c255e6d429931f9969b4a49dacd2b29918e95b9d61a84f2b142\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02516"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 99,
+        "rule_id": "eeda55d6-c1a1-5e52-8ce0-c2c2fb663923",
+        "severity": "critical",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Russet Satchel",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-02516",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "eeda55d6-c1a1-5e52-8ce0-c2c2fb663923_1",
+    "type": "security-rule"
+}
