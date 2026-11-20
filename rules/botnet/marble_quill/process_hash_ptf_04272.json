@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Marble Quill botnet sample, as reported in campaign PTF-04272. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Marble Quill Botnet: Process started from known malicious binary (PTF-04272)",
+        "note": "## Triage and analysis\n\n### Investigating Marble Quill Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Marble Quill botnet in campaign PTF-04272.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"0f6351dd8662739ddef6afda4b63ddca385f6a396166da6bcb559123cc4f6e58\", \"f6b126962b40df138308d44c0b8d7894fce4c7675e431d35e9fb7e88bee0a0a2\", \"e4b867ac191b92e40d366408ce31f33d39197a54f53a341e5a24f5004dd6b270\", \"55d8cce80e5d5f5c2fbc44081047bd5aad7aa5eace5d6c131ddc873ebf819ffd\", \"9094d4ae7f0f2dd2c58b44bebf4aa3ea558ce78f4001a67117cf0ae90afd4944\", \"4401c5b11f00b29e6e5753be8962fb45c0fb2f66e7b8030989fbbc469b142695\", \"02db2e6ebc7f6e559024659b8a78acb4419b2567582ca7f5ee4487debfdb22c3\", \"124e96283b6281e9967b52ec866607d3bc86ac47d8e5af51238b11c64dc6e234\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04272"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "8c1a8901-7dc2-5c65-8ea5-51265e71fbf7",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Marble Quill",
+            "Threat Type: Botnet",
+            "Campaign: PTF-04272",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "8c1a8901-7dc2-5c65-8ea5-51265e71fbf7_1",
+    "type": "security-rule"
+}

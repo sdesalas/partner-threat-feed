@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Umber Loom botnet sample, as reported in campaign PTF-04230. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Umber Loom Botnet: Process started from known malicious binary (PTF-04230)",
+        "note": "## Triage and analysis\n\n### Investigating Umber Loom Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Umber Loom botnet in campaign PTF-04230.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"dff480c7eb6112d7c6a172a22bef40f9a4b21836dcafa751b0e7a39df8dfaa48\", \"3eae6bedaa474e3bc8cfffc2f33b29ec863ec98980fb49a9d607297000bb47c0\", \"b4c923f692dfdbe42f736bafa742a78f506a67edf12518faed0c1bc29ec2ab4b\", \"f7b4b21acef34602bbfbce72a5ebb540ff661808b1072a123d6d92707da01197\", \"6b51550cb670f63f5dfe090a93f4b6b2b4bf1909b1d3ff34a49507fc61295f3c\", \"7925aab5f7653dfa6039b0d4b049702a7fc046bb93f101a2b08a80a6f64e4e38\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04230"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "9b8ae733-4a43-5768-ae15-b701cfd0364b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Umber Loom",
+            "Threat Type: Botnet",
+            "Campaign: PTF-04230",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "9b8ae733-4a43-5768-ae15-b701cfd0364b_1",
+    "type": "security-rule"
+}

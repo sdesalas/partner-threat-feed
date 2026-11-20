@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Driftwood Teapot espionage toolkit sample, as reported in campaign PTF-04245. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Driftwood Teapot Espionage Toolkit: Process started from known malicious binary (PTF-04245)",
+        "note": "## Triage and analysis\n\n### Investigating Driftwood Teapot Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Driftwood Teapot espionage toolkit in campaign PTF-04245.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"a9615408ea77fc245bbcf3337d8c4f8cd8eb456131816e2b61f47b2efdb1894a\", \"53cebf6f1b1bf00e00e97a4e193ce1d9ac6d458c88b2e7c924251254f87efb76\", \"f3db8ac9ef8576a030d18401301da4de4ddebc4742e5ff22b2c6504cf13f4d1c\", \"64f58d332eed41f0c2e5de483e9926e11919ddcd393ad1785ec89ddba9fff907\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04245"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "8c5ed485-c0c7-5d46-b292-5bef5e54a41e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Driftwood Teapot",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-04245",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "8c5ed485-c0c7-5d46-b292-5bef5e54a41e_1",
+    "type": "security-rule"
+}

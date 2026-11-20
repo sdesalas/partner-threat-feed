@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Marble Sextant botnet sample, as reported in campaign PTF-04157. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Marble Sextant Botnet: Process started from known malicious binary (PTF-04157)",
+        "note": "## Triage and analysis\n\n### Investigating Marble Sextant Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Marble Sextant botnet in campaign PTF-04157.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"db928f39eb14f4791938966ceb81da51e7bc06104a7c0c97226697d25e9092e4\", \"560c5a75fbc228cc1ebae3bab2c49bf69f6d36f6a46ab387c62a09f89fc9769e\", \"e6524c53c813c4d4cc497ab0402004c0af7ec70703eb67a6a6c4d2a8d5ca61cb\", \"66efb412a4cb0bb00c278b6bb32fc79fcfacee0ab15116e2f54f074cc42a9e55\", \"78e7f52c0bf04ea20c4e91dde318ea8eb3f34cda157226d3604ac73b0b161bcd\", \"d21caf017410fd4895ad53037fae03a2abd02f6b48a5c92a66b84c653b2df3f5\", \"5b049085ee90f27c13caa372844fbe403ccfa340b4313a9cee0119110aeaafe8\", \"d64daa49cdfb65b0b0a00b8251bddea8b269ee16dd6abb02e22a6ef199d858c8\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04157"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "75f2bb85-382c-51b6-9a0d-9e3f7f21b9f9",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Marble Sextant",
+            "Threat Type: Botnet",
+            "Campaign: PTF-04157",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "75f2bb85-382c-51b6-9a0d-9e3f7f21b9f9_1",
+    "type": "security-rule"
+}

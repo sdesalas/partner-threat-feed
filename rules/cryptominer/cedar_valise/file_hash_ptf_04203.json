@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Cedar Valise cryptominer sample, as reported in campaign PTF-04203. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Cedar Valise Cryptominer: File with known malicious hash written (PTF-04203)",
+        "note": "## Triage and analysis\n\n### Investigating Cedar Valise Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Cedar Valise cryptominer in campaign PTF-04203.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"08f2588f018fa0827fdcf695f0b752d74a7f2b52fd1f7f029f399257908f796b\" or \"43fb05f676ee236be652d1e98ec74d02758d481a3cd51706ec0d2de71b67eefc\" or \"b7e15e6370fd313049e41b12d125fae1e5b3c347623226567d6a284bd9b47667\" or \"001db4f55f5df76641d4295f6e60c559a5d1c6bfc407289459da6f71b6737aed\" or \"d264b33548ccff038fce8995f2c65c024cf1c456eddedaea604dc5f28086b836\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04203"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f4a2a53c-96ef-5248-b248-a30702688109",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Cedar Valise",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-04203",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "f4a2a53c-96ef-5248-b248-a30702688109_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Mulberry Valise botnet sample, as reported in campaign PTF-04193. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Mulberry Valise Botnet: File with known malicious hash written (PTF-04193)",
+        "note": "## Triage and analysis\n\n### Investigating Mulberry Valise Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mulberry Valise botnet in campaign PTF-04193.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"2a6754275230c73cc750a6eda28bcb134e5ca3a23fa13bff0ebb772b85097b96\" or \"2ec84b82c3252c9372d9361a372d81b40a85bcedaad90945535c2d9c73ca1468\" or \"29363b85ef00f9b9fa9b9739458086c1eb621c640f5503e6deb140de1e0a392e\" or \"00e3bbeb7f41545685f7855777d8da0cfcd7f018f7e180ed29f98e1b188727f0\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04193"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "4f859d26-10c4-5283-9e7a-1cde44670582",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Mulberry Valise",
+            "Threat Type: Botnet",
+            "Campaign: PTF-04193",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "4f859d26-10c4-5283-9e7a-1cde44670582_1",
+    "type": "security-rule"
+}

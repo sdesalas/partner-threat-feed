@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Brass Sextant loader sample, as reported in campaign PTF-04266. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Brass Sextant Loader: Process started from known malicious binary (PTF-04266)",
+        "note": "## Triage and analysis\n\n### Investigating Brass Sextant Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Brass Sextant loader in campaign PTF-04266.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"c50b8a5e4086c68e33c8a7ff95d68cbb350813c0612dc5758c3e5656800a95d5\", \"30ebc423b9e1502bf4b8ded22503524a7778159182deb7b3ab0257a77f374a5b\", \"401ebb7f02602884ba79afb1382203156b3183845243c085f0009bc2f68c14e9\", \"9ebc737b1a47df61c2e77dc117c84768cfa383a3cd8febfcaab92d56f92ed5d6\", \"0f2dd5668e9aa063db75e9ca272e341ec8fe5edb52f7d9cf5fc36e8c683f7498\", \"6526938ce79c22e72fd8e979356eeec33b114e60c62af38d13540597b6cb605c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04266"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "40595560-6128-577e-a79a-ed3a0d292aed",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Brass Sextant",
+            "Threat Type: Loader",
+            "Campaign: PTF-04266",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "40595560-6128-577e-a79a-ed3a0d292aed_1",
+    "type": "security-rule"
+}

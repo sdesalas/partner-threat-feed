@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Oaken Pestle remote access trojan sample, as reported in campaign PTF-04303. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Oaken Pestle Remote Access Trojan: Process started from known malicious binary (PTF-04303)",
+        "note": "## Triage and analysis\n\n### Investigating Oaken Pestle Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Oaken Pestle remote access trojan in campaign PTF-04303.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"d17464fcc451c6f1d6feafa2c59f6903c4b1b0c8bcbfbe667a36eb8b3d61078a\", \"8494f43ce28f385c79a6ea2f529b7a7c6a9236ced71a376accf59c0e72fef4fb\", \"16d159970546e04bd936bb6d2609af4b5e4531e2ffc8e3d4a6398c7b9435e0ef\", \"6f1c9f219d05c4d1d6bd7d11eed5df94a0fd7f5a420a17acc6d432d13f16235d\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04303"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "148071ed-500b-5cb5-88e6-5329e7920575",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Oaken Pestle",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-04303",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "148071ed-500b-5cb5-88e6-5329e7920575_1",
+    "type": "security-rule"
+}

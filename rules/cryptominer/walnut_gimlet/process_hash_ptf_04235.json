@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Walnut Gimlet cryptominer sample, as reported in campaign PTF-04235. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Walnut Gimlet Cryptominer: Process started from known malicious binary (PTF-04235)",
+        "note": "## Triage and analysis\n\n### Investigating Walnut Gimlet Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Walnut Gimlet cryptominer in campaign PTF-04235.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"249b7ecb9f7fa999dbd02374d9269dbff1420e7dca4b8a32b11f425907da9daa\", \"870bdf97fc04339c36ab229129c7e187eb67962ee2fedbd5eca2c74af9ca6785\", \"4011e0993db77f8616ae137c95b988aab48135fe276304e12b67792a01873c32\", \"524bbd5e939c0c3ef152fd7edac03657859cb9fd34b21ca328c82c9b4ba1c497\", \"b45cb5955ad918f9691231292841bc4d14e0336a83d7841834bbf3912376ed2f\", \"2f7c5d210d427c6476261d81bb180a919d1ea8fcd06def50d777b307459d56a3\", \"c4a102e0130acdcd0e9bb0b369bd60c82fb3e732b7000a0572a9acc3bdb7bb94\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04235"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "4954a5ed-c883-505f-9476-001cb2d52a06",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Walnut Gimlet",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-04235",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "4954a5ed-c883-505f-9476-001cb2d52a06_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Hazel Pestle cryptominer sample, as reported in campaign PTF-04281. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Hazel Pestle Cryptominer: File with known malicious hash written (PTF-04281)",
+        "note": "## Triage and analysis\n\n### Investigating Hazel Pestle Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hazel Pestle cryptominer in campaign PTF-04281.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"71f4a2c9b8387107f65c333842a024373dae070e4db170def737fd1f2a03bf4b\" or \"42a70c2f6dc8879e2593e0a47bbb82c021e64eb913d6ed636ec71a1c3b82f607\" or \"4d2c94e012d33df2777e16e5dc7252a5f3ff05edbdae446354e30486b1ffe7d2\" or \"e56bb6fe74d4aae6f0ab3bcb5e5842fe5cee8ddd6dbce5dc4e44c31106b2c964\" or \"6410c4e54562b83deab14cad99b687ce545e48bb67cc1177e77ed45e0dde9814\" or \"614d068b13ddc01f85aaf80c0cbbd44cb3a3e1b645a2fc4d949ff1e8e67b9b1d\" or \"55d818e9db5c0857316ce5e8c4b03600f8c42f3c47f67b60e00922af2b584bb0\" or \"94f8b4e0f078b00b579f891598763348d47007578b193a1ed14897f4008bbcc5\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04281"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "96e84688-1df1-5df7-bd26-54db069565dc",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Hazel Pestle",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-04281",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "96e84688-1df1-5df7-bd26-54db069565dc_1",
+    "type": "security-rule"
+}

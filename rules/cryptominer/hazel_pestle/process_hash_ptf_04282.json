@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Hazel Pestle cryptominer sample, as reported in campaign PTF-04282. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Hazel Pestle Cryptominer: Process started from known malicious binary (PTF-04282)",
+        "note": "## Triage and analysis\n\n### Investigating Hazel Pestle Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hazel Pestle cryptominer in campaign PTF-04282.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"2a1651932ccfc85d1ffc1fed902c55bf9067ff33ebe36a41fa25510151bcea1e\", \"86492a60713f9f89661f099c0e60dfa2def5905df45ce30f7eb97e1d60b1dc99\", \"c05e1ec03ef615d66b744bee8c2ab8f8d61137286c5cf9661bd96aeb3964b0ca\", \"80989cd97ce71beb5f0a0f4f52058caac8a091a79ca2702128f208bc4e585252\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04282"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "43826d78-8ca2-5d74-9d45-deabe54284ec",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Hazel Pestle",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-04282",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "43826d78-8ca2-5d74-9d45-deabe54284ec_1",
+    "type": "security-rule"
+}

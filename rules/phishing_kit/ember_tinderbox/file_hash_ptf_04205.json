@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ember Tinderbox phishing kit sample, as reported in campaign PTF-04205. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ember Tinderbox Phishing Kit: File with known malicious hash written (PTF-04205)",
+        "note": "## Triage and analysis\n\n### Investigating Ember Tinderbox Phishing Kit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ember Tinderbox phishing kit in campaign PTF-04205.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"ef943051413063bc7ae0a26b39998e0286f67c25edf1bd2a87163400f2c62943\" or \"2a27241aa5dd434e7c006a17d9f8f19b35e4299a987d5c2d1547eaaf160940f8\" or \"18482f6b27f265de9a74cd77b7afc6d62a3ed7620bea256fe482459ec9710cea\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04205"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "abd849fe-9696-5e9f-8189-819f8eddacb9",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ember Tinderbox",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-04205",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "abd849fe-9696-5e9f-8189-819f8eddacb9_1",
+    "type": "security-rule"
+}

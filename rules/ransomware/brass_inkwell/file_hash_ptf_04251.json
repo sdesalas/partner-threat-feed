@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Brass Inkwell ransomware sample, as reported in campaign PTF-04251. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Brass Inkwell Ransomware: File with known malicious hash written (PTF-04251)",
+        "note": "## Triage and analysis\n\n### Investigating Brass Inkwell Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Brass Inkwell ransomware in campaign PTF-04251.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"d8158714447363d5e735e1b910ce8ad3a72f412fe0482ec31136c416a1025ff6\" or \"f8c3896d77e4d5093d2f7277fb88d16cb52e99f0c725008239193ccc94e2d976\" or \"35bfc64cce99fb5583b502dcb31ac937c4296fc4056792d4db54410a2728469a\" or \"1821a11a3965a3b81e1646497943f6ea70cf0dc782be1720cf07a26144cd4a71\" or \"fdd75b64d2cae3f1348f7864fe4a0c46f63f3c873d8ef8ffdd81bdccc7e107fa\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04251"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "70c0cfab-f704-5bce-bcc2-77e34297d44d",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Brass Inkwell",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-04251",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "70c0cfab-f704-5bce-bcc2-77e34297d44d_1",
+    "type": "security-rule"
+}

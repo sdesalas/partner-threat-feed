@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Clay Pestle espionage toolkit sample, as reported in campaign PTF-04326. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Clay Pestle Espionage Toolkit: Process started from known malicious binary (PTF-04326)",
+        "note": "## Triage and analysis\n\n### Investigating Clay Pestle Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Clay Pestle espionage toolkit in campaign PTF-04326.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"e3f9a6a31bf86210b9b38181aabf93a77d9231573a6406686d1dc3a22e1721c1\", \"e32638dd70eb2d2355371209108e6d9f4fa2f73125a369e558c8655c0840913a\", \"d37dfed25d7dc4f58b17888935b1ab9d181eba2b89d048c8c3c18085573859d8\", \"bded6276c3e9f69070547fbb886c24eba100dc6f6f4ba64ef6c1c5308459b885\", \"877cfb216df9dafcdad288b1de7905138b6037aa5801d5f01f45949f69741415\", \"a11a6764ef4d4e9290cf446b22fa311078a0b0b5e4f3f5e17fb49d500cb9888a\", \"381613adf6bf80906bf42ec26ad099d5f5c50aebde69fe02774daa1fd98c8cd7\", \"89ebb9a9c0999648ceaf11a7692c144f88a997164ae0b08bddf768293ef6712b\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04326"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "9dca9240-8caa-57f7-b822-c3345246d3e1",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Clay Pestle",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-04326",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "9dca9240-8caa-57f7-b822-c3345246d3e1_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Saffron Pestle ransomware sample, as reported in campaign PTF-04296. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Saffron Pestle Ransomware: Process started from known malicious binary (PTF-04296)",
+        "note": "## Triage and analysis\n\n### Investigating Saffron Pestle Ransomware: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Saffron Pestle ransomware in campaign PTF-04296.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"391071406ec94311caaeee2ea33b934d0656ddd80954514e1cdeeb28af854e16\", \"cb0f1efb1fd542324082bb2e3fcff4845c3c8d15ad0749462c6f92996a499402\", \"7af7e2074d2f57dd47a7ff768625c89de881c7b53783fc41ad5f76b0a4a41a01\", \"59ea0c4ffdb1251a0f0340621126eda4a900b191ef4dfdc1a3512e2da8eaa35a\", \"7cd78bec993b9849fac2ad7df478f89841d89066a6c00df9f1f078544df46e74\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04296"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 99,
+        "rule_id": "98ef1ff4-cfe8-509e-9a2f-1da1583fb506",
+        "severity": "critical",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Saffron Pestle",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-04296",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "98ef1ff4-cfe8-509e-9a2f-1da1583fb506_1",
+    "type": "security-rule"
+}

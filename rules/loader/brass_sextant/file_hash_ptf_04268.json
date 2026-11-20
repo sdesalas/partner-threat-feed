@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Brass Sextant loader sample, as reported in campaign PTF-04268. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Brass Sextant Loader: File with known malicious hash written (PTF-04268)",
+        "note": "## Triage and analysis\n\n### Investigating Brass Sextant Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Brass Sextant loader in campaign PTF-04268.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"a64e71860390fbb996cea96b2e3624f0396c238d9b5333f0aba3d24884775037\" or \"40d83a057df462896b30a85515855fdb68bc4a252243c6eac6d2d6a2ae7318e8\" or \"131033f47747725a876f6915a5639b4cb7b76c5ef8da3eb221199040ed1ca0b4\" or \"e26f20b67414b322ca685b095d4d14de770715523dd52072ad2c2c4841b06b58\" or \"569e3e7ef7c0ccad39b21c1095ac2bf72d7089356891e5fab85b31d7a92b3ccf\" or \"1d061a29a9cbc6be59e44ea2dafdf8330b3f4ffb78999ee97798a38a74866c19\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04268"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "be85fa02-eae9-5fce-8fa0-df42f4537005",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Brass Sextant",
+            "Threat Type: Loader",
+            "Campaign: PTF-04268",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "be85fa02-eae9-5fce-8fa0-df42f4537005_1",
+    "type": "security-rule"
+}

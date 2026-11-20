@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Clay Mortar botnet sample, as reported in campaign PTF-04347. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Clay Mortar Botnet: Process started from known malicious binary (PTF-04347)",
+        "note": "## Triage and analysis\n\n### Investigating Clay Mortar Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Clay Mortar botnet in campaign PTF-04347.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"cc41a416090877bd06a7e3dd169ae241b813c67d8f565e26b1b1ce346e638168\", \"fcf49e5034ae13f889e25886d77ae57e125bf91b4d31d5235da2b937efcf8e58\", \"1d6804f9a9170ce3625f510796855603d24ada6ed57c5c015b20b7628b0f04e3\", \"9685530f48df7432951ff1449fa7ca7b1ab0333bea425689bca6d5f121e8ed1b\", \"8f7c396afb4f39914ef54f462dc0cf0b52e2f0665fafefb9fe9fc8777838301a\", \"7a52a6766eab5316df76de541531930694e900b6f9296eaeecfa89714d4f574b\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04347"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "9eb1b17a-3506-55af-9716-1faa2b4fc390",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Clay Mortar",
+            "Threat Type: Botnet",
+            "Campaign: PTF-04347",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "9eb1b17a-3506-55af-9716-1faa2b4fc390_1",
+    "type": "security-rule"
+}

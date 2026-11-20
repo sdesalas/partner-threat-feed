@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Fennel Inkwell cryptominer sample, as reported in campaign PTF-04320. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Fennel Inkwell Cryptominer: File with known malicious hash written (PTF-04320)",
+        "note": "## Triage and analysis\n\n### Investigating Fennel Inkwell Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Fennel Inkwell cryptominer in campaign PTF-04320.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"f773472d27ed4f2772004d56638a207ff54a6e4acc4ca84593099b8ce16f8a1e\" or \"380fc4f67bece7911adf90c7435c02706713c57cced3e46166e9cfa626d3d31f\" or \"6512ac2b81498bcc025c6567716f67217fd9f562047b0a0b6dbdd25acf9716b6\" or \"9c11897cc9a7bf944b4d9b79ba03221d9cf34f8d7ef566578b7b8cb435d290f9\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04320"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "8c6b53f8-1443-5b84-b838-0c2b1c6a5363",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Fennel Inkwell",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-04320",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "8c6b53f8-1443-5b84-b838-0c2b1c6a5363_1",
+    "type": "security-rule"
+}

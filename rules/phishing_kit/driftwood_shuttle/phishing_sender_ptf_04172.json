@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies email messages from sender addresses used to deliver the Driftwood Shuttle phishing kit, as reported in campaign PTF-04172. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-email-*",
+            "filebeat-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Driftwood Shuttle Phishing Kit: Email from known phishing sender (PTF-04172)",
+        "note": "## Triage and analysis\n\n### Investigating Driftwood Shuttle Phishing Kit: Email from known phishing sender\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Driftwood Shuttle phishing kit in campaign PTF-04172.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "email.from.address:(\"accounts@data-assets80.example\" or \"hr@auth-data28.example\" or \"hr@data-static50.invalid\" or \"payroll@relay-secure13.example\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04172"
+        ],
+        "related_integrations": [],
+        "risk_score": 47,
+        "rule_id": "9be1fef8-6083-52a9-9cab-ac3a06120960",
+        "severity": "medium",
+        "tags": [
+            "Domain: Email",
+            "Use Case: Threat Detection",
+            "Tactic: Initial Access",
+            "Threat: Driftwood Shuttle",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-04172",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0001",
+                    "name": "Initial Access",
+                    "reference": "https://attack.mitre.org/tactics/TA0001/"
+                },
+                "technique": [
+                    {
+                        "id": "T1566",
+                        "name": "Phishing",
+                        "reference": "https://attack.mitre.org/techniques/T1566/",
+                        "subtechnique": [
+                            {
+                                "id": "T1566.001",
+                                "name": "Spearphishing Attachment",
+                                "reference": "https://attack.mitre.org/techniques/T1566/001/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "9be1fef8-6083-52a9-9cab-ac3a06120960_1",
+    "type": "security-rule"
+}

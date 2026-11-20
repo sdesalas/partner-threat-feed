@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Paper Spindle loader sample, as reported in campaign PTF-04308. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Paper Spindle Loader: Process started from known malicious binary (PTF-04308)",
+        "note": "## Triage and analysis\n\n### Investigating Paper Spindle Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Paper Spindle loader in campaign PTF-04308.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"036bf2d018006b372493eb5dbd28928d19da308ebfea7c7e5fadf58d570fd67b\", \"8d603b42c4e087a2847d69b6381b1e67e33a025701f5563ce8e16fdd4504824e\", \"4ef0fce0fb2f1c815f8d079b2780d0aaf57c21f82ca2dc8ebf1b82c3be5c8ccd\", \"7312e5a94f8fc4e4f446f239347dc4e53f59ed563d2b2f70ef7d6b6cbbb746ac\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04308"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "6ac5e71c-2748-59a6-aec0-2d83109f7772",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Paper Spindle",
+            "Threat Type: Loader",
+            "Campaign: PTF-04308",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "6ac5e71c-2748-59a6-aec0-2d83109f7772_1",
+    "type": "security-rule"
+}

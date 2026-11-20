@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Birch Wicket banking trojan sample, as reported in campaign PTF-04231. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Birch Wicket Banking Trojan: File with known malicious hash written (PTF-04231)",
+        "note": "## Triage and analysis\n\n### Investigating Birch Wicket Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Birch Wicket banking trojan in campaign PTF-04231.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"9d7bb99ef43edc8acc2e64cab203e0d10a1e29aade9d019f6cb3a6bc8b44971b\" or \"fb417f2f71861a12d9e895d6831f119cf3fd0a724b1dd4383ad2f031843f8535\" or \"48c1f285f259fb61a522dc3c2ecc5319bc75f8c2e4613bef2c39485746f94a4e\" or \"4aabe90e79e1a3cd5a1ac318f0eaf2fa95e9f6ad2d9569fde9b9ffda55e3f57e\" or \"9e26002d69735f10cc5019d2cba8c849faaf74875eb2361204d61762309227ee\" or \"6baea2d55c757660cc2e046b5e493c6bed6e873c352038f9e131bdac114ced0b\" or \"0e42dc1d777a034bad17d834082eca88cfb329a72f19fd9df09f61202835fd16\" or \"af86d4b3d184d4dee2641849c17845fe1a7480fa7e6c3dc2099eef5ce915ef65\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04231"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "4c29c716-3bca-5584-a105-258608b774d6",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Birch Wicket",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-04231",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "4c29c716-3bca-5584-a105-258608b774d6_1",
+    "type": "security-rule"
+}

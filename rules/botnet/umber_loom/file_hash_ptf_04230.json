@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Umber Loom botnet sample, as reported in campaign PTF-04230. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Umber Loom Botnet: File with known malicious hash written (PTF-04230)",
+        "note": "## Triage and analysis\n\n### Investigating Umber Loom Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Umber Loom botnet in campaign PTF-04230.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"f2406c1e5f282766fea21aa956524b2c9d55c3444b55891ede51ac74a3f9c9f7\" or \"ec50f4ec4eb653b2693200c205f31cf2273a06e6fb10ca181ca3f0b0c11eef25\" or \"20a6a09989b74a867134bfd61c470c6923ce72782bb9a1112542a204e6f4cee4\" or \"045486f97d491575ea685b51a788582840c70aca5c11c36107edad63977b3cc1\" or \"356b45388302ff24d46a23baf4499bffabbf341a460efbd71fcc35e8498f0dcd\" or \"06d6addd47865c9a659d06e4b227ee38afa26a23cccb944076d57a7043e916cb\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04230"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "c02c6294-350b-5c1f-8374-7b22002c4a93",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Umber Loom",
+            "Threat Type: Botnet",
+            "Campaign: PTF-04230",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "c02c6294-350b-5c1f-8374-7b22002c4a93_1",
+    "type": "security-rule"
+}

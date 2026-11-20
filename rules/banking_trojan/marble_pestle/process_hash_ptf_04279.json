@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Marble Pestle banking trojan sample, as reported in campaign PTF-04279. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Marble Pestle Banking Trojan: Process started from known malicious binary (PTF-04279)",
+        "note": "## Triage and analysis\n\n### Investigating Marble Pestle Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Marble Pestle banking trojan in campaign PTF-04279.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"f7f9354218cee88bd89bdb870259a5ecf1c9894350bc250b84abd49aee84ebfb\", \"d5dac2815d2f58f62d4dfd2be19e1d0364ec7fc8925d57f7956acf514aff15e4\", \"b3396bbcb06c729cc1d6e1ed674aa3013fadc678d0ce8deb397af89cd98736f8\", \"c8deda9343f97ad3d1a710fa4d78d25731cd550bf9393f946ab038dee5007cac\", \"15bbcce4187e2c29e76ef54335b783a8c0603473f0216eb9b015834e1e6b8716\", \"8ffb5bdee64ef166f225352945c41f1339aba37cfe7f6aa2f0adb1c025476905\", \"c1c6bf2f7a39b8ce833e9c3be42ab64b9ededb9503e466dccc8658454358952e\", \"c30e360215f4f9c5dcd96e0831648690ac5d56bd9c00d2681725ab4bf23438e6\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04279"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "87df46ac-d382-501b-8030-227c233e8794",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Marble Pestle",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-04279",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "87df46ac-d382-501b-8030-227c233e8794_1",
+    "type": "security-rule"
+}

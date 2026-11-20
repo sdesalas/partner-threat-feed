@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Chalk Jigsaw banking trojan sample, as reported in campaign PTF-04160. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Chalk Jigsaw Banking Trojan: File with known malicious hash written (PTF-04160)",
+        "note": "## Triage and analysis\n\n### Investigating Chalk Jigsaw Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Chalk Jigsaw banking trojan in campaign PTF-04160.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"3b48d48d9fa1570617e7a0dcbdf99d704c4d62c71a6ddeb2a891c7fd8b963913\" or \"dbe181904770a042a96104ae32a43d7fd7311f5f79df0a2540dd5e3552674104\" or \"d5ae2271ffe955aa422e3dd7506189689560eacb06a71ad502c47164caca3b24\" or \"3fe8ead108bc50c9be5b7a40c7a008a5092667bed275dd1039376e932d2c9273\" or \"0df619641aacc04fe9aa79e9f6c9d2b0f511fa4fcb31d99341d8c25618c53428\" or \"a19a6394fe42b665975b17d66547adb219966fada94fa42eb11691d9d37b78ce\" or \"ce7a5a38e7087add29bef84580bdb3a56a7264e159e255cff15591adca10e573\" or \"8519e6296ac74449b8512f1be40f8d09222e4c9f9aa06d2fc119ece00b032fad\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04160"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "5e46d3a3-f5ad-5c5e-9ac2-867ae1c58239",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Chalk Jigsaw",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-04160",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "5e46d3a3-f5ad-5c5e-9ac2-867ae1c58239_1",
+    "type": "security-rule"
+}

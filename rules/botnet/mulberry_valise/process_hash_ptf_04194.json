@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Mulberry Valise botnet sample, as reported in campaign PTF-04194. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Mulberry Valise Botnet: Process started from known malicious binary (PTF-04194)",
+        "note": "## Triage and analysis\n\n### Investigating Mulberry Valise Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mulberry Valise botnet in campaign PTF-04194.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"7dc070c431e06cde07bc6b7d00c9b812c183568ce2106502178d63089bcff2ef\", \"ffa6458810ac20a567f5e1e2a5ce2fa62534fd2cc57ddce509738e8d7689a382\", \"d7832594b68518c8cdb49e887aee8054a18aff4679fa9fdd33d87dc228289711\", \"14d6c3cf00f4d8a7125b96d2ae6da16f2a63507c337fbd1a8ef83c391246f4bd\", \"55c251b71f1885d80c0cba8ebbd41f1b87e4610bf10bdfd8b3f176c0335cb37c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04194"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "dd82c7a6-c0cc-5568-a506-8778068bbb6a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Mulberry Valise",
+            "Threat Type: Botnet",
+            "Campaign: PTF-04194",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "dd82c7a6-c0cc-5568-a506-8778068bbb6a_1",
+    "type": "security-rule"
+}

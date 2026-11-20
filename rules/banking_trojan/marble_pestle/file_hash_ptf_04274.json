@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Marble Pestle banking trojan sample, as reported in campaign PTF-04274. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Marble Pestle Banking Trojan: File with known malicious hash written (PTF-04274)",
+        "note": "## Triage and analysis\n\n### Investigating Marble Pestle Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Marble Pestle banking trojan in campaign PTF-04274.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"f90bbd1bc1b538fc55bfd810ea47dab86fec8eb110527b22365565cdec0d0b6e\" or \"c3368bdee2df481a6850158d08734b807730d1034de7fc372dfdba481191193b\" or \"e7bbcfdc2ac2cd48b1a34a923e81f8f7ab17b0053777c8ea514e242abfcbe30e\" or \"7908aabf45472aeb1a0031ae6c464b58fae82337dc46f4a9cb41e7fb2efe20da\" or \"da4e6b91144f8b04d8e30bee584807dd22b6e4da9ae9878f8c63687d5b6ce257\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04274"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "0a7f6fb3-49b5-5d65-a6bf-13f62f39fe2d",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Marble Pestle",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-04274",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "0a7f6fb3-49b5-5d65-a6bf-13f62f39fe2d_1",
+    "type": "security-rule"
+}

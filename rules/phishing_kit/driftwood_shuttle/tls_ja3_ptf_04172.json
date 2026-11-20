@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies TLS connections whose JA3 client fingerprint matches the Driftwood Shuttle phishing kit implant, as reported in campaign PTF-04172. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.tls-*",
+            "packetbeat-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Driftwood Shuttle Phishing Kit: TLS client fingerprint of implant (PTF-04172)",
+        "note": "## Triage and analysis\n\n### Investigating Driftwood Shuttle Phishing Kit: TLS client fingerprint of implant\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Driftwood Shuttle phishing kit in campaign PTF-04172.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "tls.client.ja3:(\"bd4e862d8010872f8122b20f2e820e40\" or \"ed498e222905a9d129b285e4abcbdbae\" or \"7bb80475a124d7d9834798cb7cb02530\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04172"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "4e811fbb-6b93-55fa-a4a5-b721a6511fa4",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Driftwood Shuttle",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-04172",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1573",
+                        "name": "Encrypted Channel",
+                        "reference": "https://attack.mitre.org/techniques/T1573/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "4e811fbb-6b93-55fa-a4a5-b721a6511fa4_1",
+    "type": "security-rule"
+}

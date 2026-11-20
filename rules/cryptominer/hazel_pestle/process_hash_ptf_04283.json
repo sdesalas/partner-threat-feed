@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Hazel Pestle cryptominer sample, as reported in campaign PTF-04283. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Hazel Pestle Cryptominer: Process started from known malicious binary (PTF-04283)",
+        "note": "## Triage and analysis\n\n### Investigating Hazel Pestle Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hazel Pestle cryptominer in campaign PTF-04283.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"4e2257f59ea2940ca3cb9815249bdc8e87350af9d22ec8ae191bfaaa226f12a1\", \"0ee2583f4ffa51a6f79fe5ad6de7b7ccdc964db32805797bafc377d159f1bb16\", \"a4b397bdd3ba092ef02469cb10632a5fb45b538aaa16a6f66f8c58546b77d035\", \"10ac48ae0a3f429abf0a08fbb87b5f3a2014d6de2bfd5aec65a484a90979a56d\", \"5360a8b9f82903da038a587edb466bbb8c2eaeaa5bcbae2a5d5ba3e7cd80af6c\", \"a7bd00f3485079aef416cd050ec02f6281a765327882b210082b4198133af4dd\", \"b3281651f07dd544fa7028b5726ba4259c65b45928f6773a21da46cfed57242e\", \"11cc68de2d959f22b73c145542d0d37540bc7d62a72b8424e6684cd26f00add7\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04283"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "186da2b0-1531-5648-8768-95dbfa6b0168",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Hazel Pestle",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-04283",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "186da2b0-1531-5648-8768-95dbfa6b0168_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ivory Sextant phishing kit sample, as reported in campaign PTF-04240. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ivory Sextant Phishing Kit: File with known malicious hash written (PTF-04240)",
+        "note": "## Triage and analysis\n\n### Investigating Ivory Sextant Phishing Kit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ivory Sextant phishing kit in campaign PTF-04240.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"577bd1e49715f1664f896922e34cedaa8ebcdd42f53312c2f964151fb1d41d61\" or \"925de75a47bdf827ff9ae17985249afb4941f958d25bbc89487939b9454fb1d4\" or \"b54a0f0b14863afebccce42e000d91a20e78a8b6baafee7b8e1a00b86158d1b3\" or \"b5da7edc51eb32bf1d77ad9a33d43384d1869790659e43d0c62b8b477481b98f\" or \"1f09bcd9a1f70672b6f55961b1c4446b9a9a50d24ff6e69f631d43548c023c38\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04240"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ce01085a-520f-554b-938e-636c568c9ad0",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ivory Sextant",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-04240",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "ce01085a-520f-554b-938e-636c568c9ad0_1",
+    "type": "security-rule"
+}

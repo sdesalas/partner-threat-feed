@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Rosewood Sextant infostealer sample, as reported in campaign PTF-04331. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Rosewood Sextant Infostealer: File with known malicious hash written (PTF-04331)",
+        "note": "## Triage and analysis\n\n### Investigating Rosewood Sextant Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Rosewood Sextant infostealer in campaign PTF-04331.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"8ba50b3d0b2c5434a35ee5f41ab947dd97b6c008beafc5f4ce8b4f6a01e95672\" or \"834403c07f3b7d3c14c6b0bc535e2fb98e296e19359db2b03c32601c398d75b6\" or \"013e6811de13b0d8be3a1d41f81cd0269114ef0335682f019bd36fae40c69e53\" or \"da55a31f1a8ffacd57a35996c1afd61e688a3b4f13cfe62fa4de06ec19fcdacb\" or \"ca49d63f4909def994b6c824eb74d38e28640b574da85c91fce92d7103f5cf6e\" or \"96846319bc1f1ab7c68046b0673f51d6af180a9e56aaebc430e0aededff140a0\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04331"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "018c833f-6c53-5955-8f38-ace8b3cac758",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Rosewood Sextant",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-04331",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "018c833f-6c53-5955-8f38-ace8b3cac758_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Paper Spindle loader sample, as reported in campaign PTF-04306. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Paper Spindle Loader: File with known malicious hash written (PTF-04306)",
+        "note": "## Triage and analysis\n\n### Investigating Paper Spindle Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Paper Spindle loader in campaign PTF-04306.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"4403600e4e1bf4e9a9a385a23f2d0bf07414be3cd09c518a2a10a39ae51ffbc1\" or \"a35b1e47d7d79f99056f91546a2a4a1c15ca9054155bb1713913ad39198bcc37\" or \"90e3bd173a5b11286014893270e994380f47e1ca55ee5fc38fe1a5666ebeb9c1\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04306"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "39550820-fd65-506e-b0ae-6fcf747749f5",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Paper Spindle",
+            "Threat Type: Loader",
+            "Campaign: PTF-04306",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "39550820-fd65-506e-b0ae-6fcf747749f5_1",
+    "type": "security-rule"
+}
