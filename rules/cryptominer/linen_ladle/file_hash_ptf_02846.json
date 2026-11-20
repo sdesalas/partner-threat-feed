@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Linen Ladle cryptominer sample, as reported in campaign PTF-02846. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Linen Ladle Cryptominer: File with known malicious hash written (PTF-02846)",
+        "note": "## Triage and analysis\n\n### Investigating Linen Ladle Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Linen Ladle cryptominer in campaign PTF-02846.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"235e2d7749c5276a70b4d0c5d99e7eba56530c809506f9b69b70f3baa6e722bf\" or \"b48ec25980a6028a4d18f26efbdc00c8c0fb8a8d55aa86b67c7f263584b02064\" or \"ae2dbeb66a605f20e40092d79287d7456f2c78d026a5d4dad97478de405951d4\" or \"db8adcca94c599996304113e40b38832066a40215ed6ef943a8f7150e5b1df06\" or \"34bbff8fbd31ccfe1093e0a3db107a68e946cb0dff4db34bef136c6e6c202a8d\" or \"360da6be0a18e5ccb51ebfede8d643e59a78c26bac075e678800378f3cbc06d7\" or \"a95989b7bd110673bb6c39ecadb43cc1d9c29b5824bcfc508033b145198dc07b\" or \"04374aecac30bda39869c119251a612056c31a3d908a1b5ce61c852156a2d636\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02846"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "1a3fd836-9e53-5a53-a6af-2b74cdc252d0",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Linen Ladle",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-02846",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "1a3fd836-9e53-5a53-a6af-2b74cdc252d0_1",
+    "type": "security-rule"
+}

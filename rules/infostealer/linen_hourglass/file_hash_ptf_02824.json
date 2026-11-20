@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Linen Hourglass infostealer sample, as reported in campaign PTF-02824. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Linen Hourglass Infostealer: File with known malicious hash written (PTF-02824)",
+        "note": "## Triage and analysis\n\n### Investigating Linen Hourglass Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Linen Hourglass infostealer in campaign PTF-02824.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"a5ea4399d0c4a75cfac1a9ded42aa9de7c90973b28d2dc2b127948741e68e1d0\" or \"40bc6255a4db92ccf7d8751d62fb399dc1370850d316a76932433948f7b3393b\" or \"732d1bdb2dc56e8b0793785dff895fbdd334bca550d94e134cea272487bf4020\" or \"d69ed3badae0d5e5d9e5272841ab3a07b8a3753f4355049655dc2a14432e7f7e\" or \"94b0872f7a45b52a587e19ab45f6dd47e09d8548ccc159108bae8148a212f88b\" or \"08257371cfe6ff41a7f679c642546df134efc3f2c8576b4439901567fd62d47b\" or \"582c7533fee28efcd186da365d8dadf076a6e5c4e00e47901ccdb895a509e614\" or \"6054b38032bc493821fde943cb2475a5372115df7ff171f6042ecbbe3d495a03\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02824"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "eab95854-abac-5351-a5ce-66ed7c1a8b9a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Linen Hourglass",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-02824",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "eab95854-abac-5351-a5ce-66ed7c1a8b9a_1",
+    "type": "security-rule"
+}

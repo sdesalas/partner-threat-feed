@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Cedar Loom remote access trojan sample, as reported in campaign PTF-02904. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Cedar Loom Remote Access Trojan: File with known malicious hash written (PTF-02904)",
+        "note": "## Triage and analysis\n\n### Investigating Cedar Loom Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Cedar Loom remote access trojan in campaign PTF-02904.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"ced18789a3c6aa840f0f3d7657315702580e40f9729766a24752343c294d2845\" or \"b1f85d9930008e597a6f4f7c7c893a2cb761f5d383bb1896d73bd344651f9545\" or \"6e4d55f97eff9c23fcd9b022649749a4cb65522eda60dbaebb77047e1ef30d4f\" or \"dd919ee2252e4514ed0c57bdc80743e91b7dc6806bfe648cbbf62d8d315a0fb7\" or \"6c48b4f5bca3c2c23beab64054d523a1f5709b1b57bca2419ea2e2136d1c20d1\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02904"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "4524903a-1798-5296-b537-3e0c01647d62",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Cedar Loom",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-02904",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "4524903a-1798-5296-b537-3e0c01647d62_1",
+    "type": "security-rule"
+}

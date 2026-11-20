@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Oaken Bobbin infostealer sample, as reported in campaign PTF-02741. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Oaken Bobbin Infostealer: Process started from known malicious binary (PTF-02741)",
+        "note": "## Triage and analysis\n\n### Investigating Oaken Bobbin Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Oaken Bobbin infostealer in campaign PTF-02741.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"9e38436ee19228568878477eab6b665646c0a62f0c5aad4ea2061ab8e9caffd7\", \"b6f509c19158b26ded72b5106075fc6a88c951d06e2b2a40f16f96a682bc2972\", \"32f94e5bc027750acd556741fc609fcd70187a8068bbff56efc8c178d606b679\", \"ac75ed8e0eb0fb5739f7f57701a3ceaba2c7c8598d6dc78b892d27423caa62eb\", \"b5235f813acc2e29f778171c9d8d893e4db4997da71c0d2be256cf0d139eb323\", \"c646892177df536db08a80f5f8ba49cfa805192decdc792433ba12c99e877940\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02741"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "5f5daf3c-f181-55f6-8271-8004fcf1d97f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Oaken Bobbin",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-02741",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "5f5daf3c-f181-55f6-8271-8004fcf1d97f_1",
+    "type": "security-rule"
+}

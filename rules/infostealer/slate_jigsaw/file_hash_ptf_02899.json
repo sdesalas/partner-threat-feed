@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Slate Jigsaw infostealer sample, as reported in campaign PTF-02899. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Slate Jigsaw Infostealer: File with known malicious hash written (PTF-02899)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Jigsaw Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Jigsaw infostealer in campaign PTF-02899.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"9ca4e596e9087517ce063de48c65ebda70b002ab781850093d30885e65b0de9b\" or \"338b6ac607318c07e0b434899c5fea28d1388b5d48c4bad2823d66ccbfb2af89\" or \"2760f566457f0dfecd74c7dde6eb66253e435d5bb3523e26cc7f0addd4c5e067\" or \"75eba1927be7061601a189bd8791970fc1f729082bfd06028391be9cdde03bdf\" or \"149be9b88f149bb2076548749513bc07eacaebcd6d1c9e48e26b4b35912af365\" or \"6ff38edc7e6d2787a5cd664b66789573aa0f1dd1c0b362ca93f212f62148ddc6\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02899"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "be8ba855-18a2-5ba3-9356-659b045108e3",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Slate Jigsaw",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-02899",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "be8ba855-18a2-5ba3-9356-659b045108e3_1",
+    "type": "security-rule"
+}

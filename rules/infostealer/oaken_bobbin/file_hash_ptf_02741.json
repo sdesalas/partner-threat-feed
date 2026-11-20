@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Oaken Bobbin infostealer sample, as reported in campaign PTF-02741. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Oaken Bobbin Infostealer: File with known malicious hash written (PTF-02741)",
+        "note": "## Triage and analysis\n\n### Investigating Oaken Bobbin Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Oaken Bobbin infostealer in campaign PTF-02741.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"4481e1d1c2d31eb83857a66d81fb648d7e299ea23396d16431324d794dadaa26\" or \"a46e0e989d5a428f5b77cc3639b673d00bb8d0576fa6d0235912d14a5d645205\" or \"dca660d129da358b252f17864642f5f57915c0ce0f47af280b142becb7f087d1\" or \"153efb58c4b0c4aa1900447f87d31158d40b55b560e56af5d37ba6367318cfea\" or \"647782cd95876696aa4a4466fd1d2e5626554f54218cca255bc692481ca92c4c\" or \"8d2deb10c9296dcebeb4a752b48be64dcf29a15ee501098e7dabc2a3435a549a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02741"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "0e850668-8621-59bb-a7bc-21636de2d24c",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Oaken Bobbin",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-02741",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "0e850668-8621-59bb-a7bc-21636de2d24c_1",
+    "type": "security-rule"
+}

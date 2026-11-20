@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Linen Turnstile cryptominer sample, as reported in campaign PTF-02723. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Linen Turnstile Cryptominer: Process started from known malicious binary (PTF-02723)",
+        "note": "## Triage and analysis\n\n### Investigating Linen Turnstile Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Linen Turnstile cryptominer in campaign PTF-02723.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"404e2cb2e21c308c882ec83a7a70120aae45c53a3d356fa199a831e2dda8d274\", \"cce662cf610a850750b66817b98e46545a556d6c03779a7bf6e459a02792971f\", \"724b01188a7355303df9adc7bf569903f406d22c16500a18cd21518036fd5d07\", \"2f07d16055c5a7bfe787b0632047861e6e61f1ea41012a686d7d43cc32b2607e\", \"e9933fd587f93b91191f315a122629cb980a215b0d63c9cca3624a2b43244267\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02723"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "3d6c434d-1630-55e4-841c-4466269c3786",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Linen Turnstile",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-02723",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "3d6c434d-1630-55e4-841c-4466269c3786_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Driftwood Keystone ransomware sample, as reported in campaign PTF-02821. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Driftwood Keystone Ransomware: File with known malicious hash written (PTF-02821)",
+        "note": "## Triage and analysis\n\n### Investigating Driftwood Keystone Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Driftwood Keystone ransomware in campaign PTF-02821.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"09afe74bff79463933b20aad088a1b4bfebe3f2653f2a885229c9a1352371a37\" or \"6c5aaf3a6b5d03ed777ca7bf856f988e7ffb3a771ed8d66ff119403e4159ba79\" or \"f5a286794d2948d5a928d432c88442ce68f519d52398851772b923bd07364f4f\" or \"9e826549e153066f68a2ecff6c4f24cfbb1c8e9502d96da563bb68f18cb13cd1\" or \"c8774bb8dbd9da87a9939275521329e5c0362f36634db269285d8ebce65d053e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02821"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "9aec43fa-e59e-52b4-8462-7ad909c7270c",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Driftwood Keystone",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-02821",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "9aec43fa-e59e-52b4-8462-7ad909c7270c_1",
+    "type": "security-rule"
+}

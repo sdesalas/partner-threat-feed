@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ochre Ratchet phishing kit sample, as reported in campaign PTF-02849. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ochre Ratchet Phishing Kit: Process started from known malicious binary (PTF-02849)",
+        "note": "## Triage and analysis\n\n### Investigating Ochre Ratchet Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ochre Ratchet phishing kit in campaign PTF-02849.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"9f7461e54396c240f58fef5a1282f43c991d395308a46d8733d5f33ab9ee9c1b\", \"c49b2dccf99ec2f734465b2321e37041e8596b40afaeaef8f109a1a9d59d4eb7\", \"eec1830dabaf88541c287c792a73d920a85f28bec29cf520d180e1f8c7bd781b\", \"67acdbaab063a6c39450294c979c71210797c608162b2e4a8e38bb6820c479b3\", \"c9686854ba674edaada860dcd88689d11de056777e246bc2291d0c91e510672c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02849"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b6e30479-4656-5444-ad43-dc435e8c87ba",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ochre Ratchet",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-02849",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "b6e30479-4656-5444-ad43-dc435e8c87ba_1",
+    "type": "security-rule"
+}

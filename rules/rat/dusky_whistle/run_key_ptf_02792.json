@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies registry run key values that the Dusky Whistle remote access trojan creates to start at logon, as reported in campaign PTF-02792. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.registry-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Dusky Whistle Remote Access Trojan: Registry run key persistence (PTF-02792)",
+        "note": "## Triage and analysis\n\n### Investigating Dusky Whistle Remote Access Trojan: Registry run key persistence\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Dusky Whistle remote access trojan in campaign PTF-02792.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "registry where host.os.type == \"windows\" and event.type == \"change\" and registry.value : (\"CacheHelper\", \"RuntimeBroker\") and registry.path : \"*\\\\Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run\\\\*\"",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02792"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "76f849c5-079e-587e-9435-408b0db0d59b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Persistence",
+            "Threat: Dusky Whistle",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-02792",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0003",
+                    "name": "Persistence",
+                    "reference": "https://attack.mitre.org/tactics/TA0003/"
+                },
+                "technique": [
+                    {
+                        "id": "T1547",
+                        "name": "Boot or Logon Autostart Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1547/",
+                        "subtechnique": [
+                            {
+                                "id": "T1547.001",
+                                "name": "Registry Run Keys / Startup Folder",
+                                "reference": "https://attack.mitre.org/techniques/T1547/001/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "76f849c5-079e-587e-9435-408b0db0d59b_1",
+    "type": "security-rule"
+}

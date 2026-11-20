@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Russet Tankard espionage toolkit sample, as reported in campaign PTF-02773. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Russet Tankard Espionage Toolkit: Process started from known malicious binary (PTF-02773)",
+        "note": "## Triage and analysis\n\n### Investigating Russet Tankard Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Russet Tankard espionage toolkit in campaign PTF-02773.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"a2af81044cbd91983168ca1dc9be1c414b7ad1cabd6a166326fcb7b6dbb8076e\", \"6a720a70861a92dbbae938d7d0e7c8ea771f190bb544b7d5ddd0791b7b88768f\", \"46563b42e095ad8ed6845b03699363c1d545f36f14efe6c8d54f0f6a408281fb\", \"44b283dcd7bd2bb1ceca1282e64cdd5b333a3d2d264582817aeb1d3888e07322\", \"a9f966a0e5d0f3eac2b1f076747ef0e433aed2e37f48b8bf57212181a055a98f\", \"44d28551271fabdc915aa5c00ce770810ec3e0e91ec553f981c003014491eef1\", \"3cd155d7bb8eb46b1197794cf98da22462d5922131d2b66b67dce4fc94bf2348\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02773"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "906e14fe-cabf-517e-a582-1e1483ab3d77",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Russet Tankard",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-02773",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "906e14fe-cabf-517e-a582-1e1483ab3d77_1",
+    "type": "security-rule"
+}

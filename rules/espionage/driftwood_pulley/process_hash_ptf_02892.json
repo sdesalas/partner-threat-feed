@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Driftwood Pulley espionage toolkit sample, as reported in campaign PTF-02892. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Driftwood Pulley Espionage Toolkit: Process started from known malicious binary (PTF-02892)",
+        "note": "## Triage and analysis\n\n### Investigating Driftwood Pulley Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Driftwood Pulley espionage toolkit in campaign PTF-02892.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"e57bcefc7fe45c8097b51f28c9344db632ca010a508871854a0de6e0551b1ad6\", \"c8f497c7083a9d7c32517cfa8d24b1dfb6547a0a779198ae1e357abf51f9846c\", \"15e9af190b69dda105a60c9b69d7f29171965132413e64af007c991e7fdb29ba\", \"52c2b9a43b30fdc4e2d06e8b33d5be239e7421cb9c1f54f313f6f3990844ab8d\", \"9842b4aeac2846bce4585100c69b9db0a8a8d2cfe139bf3665ae1c706b69f111\", \"a626004462aceb16ced19a3c73dda8b7ff514eb349a62f565687931ffaf19eb7\", \"63fbac687dd2efcaa7897911eb911eaac67ed5d1cded76a020978ccf96b27af8\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02892"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "7b7bdfd9-f256-5444-b9f1-c5c7963d384a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Driftwood Pulley",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-02892",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "7b7bdfd9-f256-5444-b9f1-c5c7963d384a_1",
+    "type": "security-rule"
+}

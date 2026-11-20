@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Gilded Bobbin remote access trojan sample, as reported in campaign PTF-02825. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Gilded Bobbin Remote Access Trojan: Process started from known malicious binary (PTF-02825)",
+        "note": "## Triage and analysis\n\n### Investigating Gilded Bobbin Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Gilded Bobbin remote access trojan in campaign PTF-02825.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"8a64ede2dad689ae3443339af31b1457cf7159f0b44afeec05fb2e1e03317b84\", \"edbda44fab3dbadb7101748299edabaf325c75ab0647624e8f2675e048d3c72d\", \"0656f8c2285209950438f21be468511405dd1c4f0e3d0d11d1e9ccb6516e7805\", \"c5ece30abfac570c1e47ae86a24e67444dfa03b51172600862e04340f2364ef9\", \"8ac5d3ceafc7377a8bf43e5c1c8ef02d2a699bd3bc0f429083c1b38da293623e\", \"8c9656dadd8eb9d1ce42a95c3077014ed599c3be3a3e30e30b4ea243f9dc3da7\", \"a54017170245fe624507f0d50cb1a1f6d179226a6c6b3278f43e13c88ada74cd\", \"8c2fed89c0f645cf150bc7cfbedd394101856a635b4666788aa89cd6df5547bb\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02825"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "7393e471-892c-5f02-8b13-f9ef1d7d6263",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Gilded Bobbin",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-02825",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "7393e471-892c-5f02-8b13-f9ef1d7d6263_1",
+    "type": "security-rule"
+}

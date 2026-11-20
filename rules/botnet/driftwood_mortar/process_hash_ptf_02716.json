@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Driftwood Mortar botnet sample, as reported in campaign PTF-02716. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Driftwood Mortar Botnet: Process started from known malicious binary (PTF-02716)",
+        "note": "## Triage and analysis\n\n### Investigating Driftwood Mortar Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Driftwood Mortar botnet in campaign PTF-02716.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"d15cec3ecebef02a877c1d1be9344629bd956ab319323980fa4a6652659ac0fb\", \"ef4cbfb24a6087c5813e9c5c5018ea78a418a6ba38d4fdbf341e095424546851\", \"6cda83e46084f5d9eb937177576ba6e2a3063d7d78b07c290b3f53bcd538d604\", \"09318e2d8859fb0031bd3d26a9a74c4bff18848a44146cf3fb09d87e21afbc95\", \"71e37b4586a2e18e36850e9948eaf4021e5c790441410f0ebb6e56bdff0a9702\", \"f7d521daa0eaf2753298c9add1cd846fb0951b7dce7059c4490e6298c615245a\", \"fa491533784020578e83679fea523322579562ba1583e24151c483983549fce8\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02716"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "c00edf61-b04d-52b6-bbd5-b49d49e1a03f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Driftwood Mortar",
+            "Threat Type: Botnet",
+            "Campaign: PTF-02716",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "c00edf61-b04d-52b6-bbd5-b49d49e1a03f_1",
+    "type": "security-rule"
+}

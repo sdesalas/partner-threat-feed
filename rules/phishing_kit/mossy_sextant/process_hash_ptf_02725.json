@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Mossy Sextant phishing kit sample, as reported in campaign PTF-02725. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Mossy Sextant Phishing Kit: Process started from known malicious binary (PTF-02725)",
+        "note": "## Triage and analysis\n\n### Investigating Mossy Sextant Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mossy Sextant phishing kit in campaign PTF-02725.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"2f7a14504075cadf4ff2764e86d948027f64357c84312986a4913100bb793787\", \"aa91f012c0a055344649d8cbe57d929a8f1f50c9c6a0e6dbf5a317b1125c176f\", \"1a539871a9540ca0fce1655f7e24d7d0df6232462792be5e683590f28d3ca0a1\", \"597157e5450c4bfc64ed9f47ef7ec56a4d53835ec43ce61ebf94b3f0f953192b\", \"31c58c4943bc15972b9f04fae2ac00f365b51254e46a01ad64809a22b12dd90b\", \"8309e90daed46c8b2c65b39a22d154b2a738057bbeccd0eaab7bca362b04db8c\", \"2a7cee7a54b4d76305a07c0782ad3636a66c52cbf4b4ec41f0e119fec46135f5\", \"57c467275e016ea71a625c7bef76a697ff8d9d25cae8e16acf84a2ac8fe354e6\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02725"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "0a1be321-9990-534b-baea-e9fb04f16804",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Mossy Sextant",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-02725",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "0a1be321-9990-534b-baea-e9fb04f16804_1",
+    "type": "security-rule"
+}

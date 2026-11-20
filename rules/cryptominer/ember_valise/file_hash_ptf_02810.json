@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ember Valise cryptominer sample, as reported in campaign PTF-02810. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ember Valise Cryptominer: File with known malicious hash written (PTF-02810)",
+        "note": "## Triage and analysis\n\n### Investigating Ember Valise Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ember Valise cryptominer in campaign PTF-02810.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"be0777dbcbe32e3c6977bea66aa1ad3ad46aba37da6df5e6a14d1b9a6a716199\" or \"0b332cc2e0ef1b989748d2e30561c119a45c74d52cd984213936730663403fd8\" or \"5f69c44057dd219b064509ac331ba6d470be95e59db256f949f3a6815b02ff75\" or \"51cc657f127b3a9684ef3061e08553222a27babcbf1ecaaec07eea3de27302d1\" or \"3ab962f3506449b1319c6bbcdebc50a5fd2c0f3446dfda2b68a330f05f5f1517\" or \"fc3992be54ec489aad37cff854c3c3791dcdd6bad7ef1f31b9612634da605729\" or \"2093bbbabab9718f01cb31adad4af23f122056baaee90217af85e3c15124d21f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02810"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "9ed7737e-75ae-5d23-b005-18e96e1fbb2a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ember Valise",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-02810",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "9ed7737e-75ae-5d23-b005-18e96e1fbb2a_1",
+    "type": "security-rule"
+}

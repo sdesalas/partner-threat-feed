@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ochre Kettle banking trojan sample, as reported in campaign PTF-02764. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ochre Kettle Banking Trojan: Process started from known malicious binary (PTF-02764)",
+        "note": "## Triage and analysis\n\n### Investigating Ochre Kettle Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ochre Kettle banking trojan in campaign PTF-02764.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"7eee310d4c98f0e83cda04484f891297a06d37c112004ff10a20dca326c83aa9\", \"dc8a7ffdc9a9d32b618c6a914f5345bbba65376ee2a1cced2df617f8b7c41708\", \"bee4a0830e4a3384b48a110a3d0d2ebfc9873c90d86709efbb98cb7d8cc3f78c\", \"9c6d60126ff73e7047378fb79be60be0d9acf552dd753701b89c9cc55031395c\", \"cee7f12f2257f50377153945c92f19ffc83dde2068cf572d48c79e6ae5e595cb\", \"f674d957a4ac7da38cc977ec72a3e7659a0b65050d5dabcd439b8471167cef28\", \"172b79d64319e05d79d9cc2cef8d1003eb93a355aba7f31c85d70621a024680d\", \"31d79a5637690c9437d22267a21507e4e47b83684056b39703fee2bcd19405aa\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02764"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d52f96f5-56df-5c49-b1c8-d54c94510e9a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ochre Kettle",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-02764",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "d52f96f5-56df-5c49-b1c8-d54c94510e9a_1",
+    "type": "security-rule"
+}

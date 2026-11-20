@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Gilded Anvil infostealer sample, as reported in campaign PTF-02862. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Gilded Anvil Infostealer: Process started from known malicious binary (PTF-02862)",
+        "note": "## Triage and analysis\n\n### Investigating Gilded Anvil Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Gilded Anvil infostealer in campaign PTF-02862.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"dea2603895894866d39836dd7d6cfd0d6bae5e2949085dd767e6e75186cf27ce\", \"91f31327fd83fa83f194f65d54837966b5c5a48f6c09d3cfffa7dbcb254d49e7\", \"5eaa7e1b0ed3e64554a77ae66a406c418d15b78d6775467587c1f77cce5a05d2\", \"2de6ddc1b16794e1d44be24ba0eda2214fb8dd6ec7b83f4b4aa260ac7d2bd7f6\", \"f372dc6177a98dfe9a4fbce92480eac5c0243715f81b9eee30448e4132fa9026\", \"6dcae7e761a931b3b2ff7486571143c3c5d2b098a6eac30d06c085ed0fe4ba29\", \"bd427b465afae82b92e2158b2bc17f05563a3aa2f2029dee4843e34359fb7c54\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02862"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e83c14a6-a057-570c-8c58-2a7e6b2c252a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Gilded Anvil",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-02862",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "e83c14a6-a057-570c-8c58-2a7e6b2c252a_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Willow Jigsaw loader sample, as reported in campaign PTF-02873. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Willow Jigsaw Loader: Process started from known malicious binary (PTF-02873)",
+        "note": "## Triage and analysis\n\n### Investigating Willow Jigsaw Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Willow Jigsaw loader in campaign PTF-02873.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"66c0711098093e60fd94c7291ef035a33b332f58e61cdc8068c262df8c599ea2\", \"c26e0fef3ab52392fd37a079e001ba1e696781775747ab5d25ab15c50143c6a8\", \"0982967ce6a4f4a51ba249f635707fdaf1dd296a963bbf6af37aead71fb34030\", \"40395fb187c45d215b66f916527f01a139aec46a917e1370903524e419bb4007\", \"47b1bcb982f4335597916dc300baf86f9d68d71cc1d067ce641df096843591a4\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02873"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "a21128ec-7c04-5b47-b3e5-b9403c2da3b3",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Willow Jigsaw",
+            "Threat Type: Loader",
+            "Campaign: PTF-02873",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "a21128ec-7c04-5b47-b3e5-b9403c2da3b3_1",
+    "type": "security-rule"
+}

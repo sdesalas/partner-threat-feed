@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Willow Jigsaw loader sample, as reported in campaign PTF-02873. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Willow Jigsaw Loader: File with known malicious hash written (PTF-02873)",
+        "note": "## Triage and analysis\n\n### Investigating Willow Jigsaw Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Willow Jigsaw loader in campaign PTF-02873.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"31d0d24a90ead47f89c7a661f9dd9787e921e41831657ba733b021fc2aaf8910\" or \"3be31959239a33338e8070868901a49aaab120ec7e1b503e0fff84fe8ff18ed5\" or \"845a523bb9f5f976a333fa9f0aa1c7445698130124e17366e77ba6f83913958d\" or \"6266cdd62f10ad68d16791dc4ac45e005fd795f1127bb102ecb9a1b8f20bff40\" or \"e063b3f46a4ebe645be81b8dda5a477b79e3603571c11fb527ce13493561f5a9\" or \"3e26e06404d77aa98e43752e569655d26d7c4b536d10223548b60b1ab09b653b\" or \"1736f421076647717be897a6c6c4af22cafa97938e2072ba71740cbce3b955aa\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02873"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "2fbc64a3-a06a-5250-9c95-dbaf0cb9c286",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Willow Jigsaw",
+            "Threat Type: Loader",
+            "Campaign: PTF-02873",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "2fbc64a3-a06a-5250-9c95-dbaf0cb9c286_1",
+    "type": "security-rule"
+}

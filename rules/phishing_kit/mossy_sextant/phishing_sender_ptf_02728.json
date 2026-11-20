@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies email messages from sender addresses used to deliver the Mossy Sextant phishing kit, as reported in campaign PTF-02728. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-email-*",
+            "filebeat-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Mossy Sextant Phishing Kit: Email from known phishing sender (PTF-02728)",
+        "note": "## Triage and analysis\n\n### Investigating Mossy Sextant Phishing Kit: Email from known phishing sender\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mossy Sextant phishing kit in campaign PTF-02728.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "email.from.address:(\"billing@cdn-auth88.invalid\" or \"it-helpdesk@cloud-update18.test\" or \"noreply@secure-cloud25.test\" or \"payroll@cloud-relay22.invalid\" or \"shipping@edge-relay51.test\" or \"support@auth-mail83.example\" or \"support@media-portal31.test\" or \"support@update-node98.example\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02728"
+        ],
+        "related_integrations": [],
+        "risk_score": 47,
+        "rule_id": "0f32a351-6746-56c2-b42c-8e917a5e6cbc",
+        "severity": "medium",
+        "tags": [
+            "Domain: Email",
+            "Use Case: Threat Detection",
+            "Tactic: Initial Access",
+            "Threat: Mossy Sextant",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-02728",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0001",
+                    "name": "Initial Access",
+                    "reference": "https://attack.mitre.org/tactics/TA0001/"
+                },
+                "technique": [
+                    {
+                        "id": "T1566",
+                        "name": "Phishing",
+                        "reference": "https://attack.mitre.org/techniques/T1566/",
+                        "subtechnique": [
+                            {
+                                "id": "T1566.001",
+                                "name": "Spearphishing Attachment",
+                                "reference": "https://attack.mitre.org/techniques/T1566/001/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "0f32a351-6746-56c2-b42c-8e917a5e6cbc_1",
+    "type": "security-rule"
+}

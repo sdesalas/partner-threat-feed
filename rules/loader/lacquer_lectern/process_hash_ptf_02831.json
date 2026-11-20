@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Lacquer Lectern loader sample, as reported in campaign PTF-02831. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Lacquer Lectern Loader: Process started from known malicious binary (PTF-02831)",
+        "note": "## Triage and analysis\n\n### Investigating Lacquer Lectern Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Lacquer Lectern loader in campaign PTF-02831.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"61ddf5db95e9f8aabb47faeaaef404cd7625c58d21d0f274dbdf4f465701eebd\", \"31b7054d106a925442fccd3352b9df2b3b3857553d059335635bfe7cf3a9f470\", \"e7ce223ed386f34ee2191f5bd78752b572b9054d11df756d64459dcd9c8ed44f\", \"111d2bc67a289014177b3d5c66cb723ba30c16f028d670a632687952f3a08d57\", \"7f8000fbf8e49f3b19fde20f44f88ca60f0a8adf5dfc7f3a91c1bf38eeda9df8\", \"54b456237295f76182d96c5b3ae935e534459b31b7811a76339bf499d1f10cf0\", \"4baf7e23d652295cc98fe9be32c08c865f94aa67d900b5071658ac5e7d685f52\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02831"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f3f74ae1-de30-58c2-a810-3a34c5354352",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Lacquer Lectern",
+            "Threat Type: Loader",
+            "Campaign: PTF-02831",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "f3f74ae1-de30-58c2-a810-3a34c5354352_1",
+    "type": "security-rule"
+}

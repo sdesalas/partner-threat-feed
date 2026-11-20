@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Slate Jigsaw infostealer sample, as reported in campaign PTF-02897. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Slate Jigsaw Infostealer: Process started from known malicious binary (PTF-02897)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Jigsaw Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Jigsaw infostealer in campaign PTF-02897.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"115f0878cfc611720f83197b9f6bb2a53ad8504c96c217e8dcd43921d6488675\", \"6a0f91f603ed73a4968fda94a69cf8ab746f5cfdccec51e06eca493858d09bc6\", \"a74f334f2c528a3875d5bd17680e04fcca76a764d3acad83ba7b27c7f39210e2\", \"1d17479ce8a3d9044572bb5a95ffa0573c71a75c68287a4350e468529e0c5560\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02897"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "da45bdfc-35ec-5d4b-a966-fd675df6dce3",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Slate Jigsaw",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-02897",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "da45bdfc-35ec-5d4b-a966-fd675df6dce3_1",
+    "type": "security-rule"
+}

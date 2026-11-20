@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Hollow Tinderbox remote access trojan sample, as reported in campaign PTF-02868. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Hollow Tinderbox Remote Access Trojan: Process started from known malicious binary (PTF-02868)",
+        "note": "## Triage and analysis\n\n### Investigating Hollow Tinderbox Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hollow Tinderbox remote access trojan in campaign PTF-02868.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"d9df3a9ede9ab54da307e30e0a77643c22746d2e08a8596cf5d3137d05e59799\", \"c4a7e1bb27e6b8e6e8004571dfbf19985cece8800439d4f053a1764838299ce3\", \"f452136e57b098555ea39a5acdbce29392bd27699e9b0c119a98aaac796ad179\", \"b1a8c741f0692417e30420b9a5ac7d3d1b7bc991f26a969b8ebe042abddeef37\", \"5e4e78eda2fcc172b40c3a54735242a602e8f4c2da4180d37fea180a1682280b\", \"d80c5e9a26dfd0606d9799ffeaad9abd4f447dd9a17ef79406ff62fb26678064\", \"571a484162baedfe6ff051ca8ec88ddbe09b9e6e389778e846c516e177579fba\", \"16c5baffa16396cf053550142160a498b3af9a0f8fbec3f38c9ca2a7388e8bde\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02868"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "3b335a7b-43df-5bd0-8a72-4a9c13d9315e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Hollow Tinderbox",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-02868",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "3b335a7b-43df-5bd0-8a72-4a9c13d9315e_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Hazel Lantern ransomware sample, as reported in campaign PTF-02895. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Hazel Lantern Ransomware: File with known malicious hash written (PTF-02895)",
+        "note": "## Triage and analysis\n\n### Investigating Hazel Lantern Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hazel Lantern ransomware in campaign PTF-02895.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"28a0731583411d0af03b4aad7261100c19f206f3333788c8ffbe460d5556b737\" or \"3324b92186b8f39042e25951980b1db092eff704626a1b428eb6149380ac1774\" or \"e15e3391cebfda92c12956fb2b0426606a8c79cb7e62d685a4eae4f26c823e6f\" or \"2ef2e31c10a56d3d15bb33a17bc244142be661ccfaf7f93e4561e909c9b26112\" or \"a5700167fbb054b0748fdf663e2d66bbe47a91387cd3af0d128ad96ac6ca2da9\" or \"3153d8ea2475b8117ed64499fceb61d0eec1ac45d278bd800470115a40d7e5b2\" or \"0bfb6f944eb0d3f922505c0d4c7750fe974fe6699064cdf781c0ccf7ef5c7778\" or \"a23d715f142864ffb42d1bbe045db821c4cb78907f823ed3268fa5eb8bbb5a79\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02895"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b7966f2c-9ac9-5d7e-b9c1-d4dcccd38e6d",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Hazel Lantern",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-02895",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "b7966f2c-9ac9-5d7e-b9c1-d4dcccd38e6d_1",
+    "type": "security-rule"
+}

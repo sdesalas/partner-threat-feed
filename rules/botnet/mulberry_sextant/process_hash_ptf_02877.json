@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Mulberry Sextant botnet sample, as reported in campaign PTF-02877. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Mulberry Sextant Botnet: Process started from known malicious binary (PTF-02877)",
+        "note": "## Triage and analysis\n\n### Investigating Mulberry Sextant Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mulberry Sextant botnet in campaign PTF-02877.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"d62d133dd89523c95add6445d044158fda93bababaebf539f2b39abb21ad1dd7\", \"a2faf3f49cd4326a7ab312a54aee019a4a0fc50de9b251d2fbc9faf3c425947c\", \"f59568811be24f92247db49c3f36e2966c82e31d0a019aae643b7b5c3d941598\", \"929283d87830c8a8ecd44d67f3b1b138d51e0050aea23c9bcdbb15391b78ccc6\", \"4ce1ba24f7877744015a7f8698c24f3688b8e94eb0e25a0865977e9c4a602d67\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02877"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e3bd531f-a26c-5e2c-9ffc-bf7e74cd75d2",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Mulberry Sextant",
+            "Threat Type: Botnet",
+            "Campaign: PTF-02877",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "e3bd531f-a26c-5e2c-9ffc-bf7e74cd75d2_1",
+    "type": "security-rule"
+}

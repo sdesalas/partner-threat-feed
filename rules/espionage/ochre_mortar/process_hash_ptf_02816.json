@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ochre Mortar espionage toolkit sample, as reported in campaign PTF-02816. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ochre Mortar Espionage Toolkit: Process started from known malicious binary (PTF-02816)",
+        "note": "## Triage and analysis\n\n### Investigating Ochre Mortar Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ochre Mortar espionage toolkit in campaign PTF-02816.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"57be131e4a39a93aa40ba06c16803b696aa245f4451ae724e8f83bc24e0eb0db\", \"06ef30ca81b361eba5c3c00df93616aa9cf7f7b589b9b6065a1d4d197fc234f4\", \"991656927d22ddc32ce386de55fbc451472a97cc01441ebc26639af65cc73c8f\", \"f7301294518679247d8f18a5e7900a3a5dd431b0522f97c464bdacf2908280dd\", \"06685baf622544b89cfda25e6e2a5486be3ebd56136735b9b159e72341bfb45d\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02816"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "a11f0fed-a5dc-5db8-b64b-c0dd330e39ad",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ochre Mortar",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-02816",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "a11f0fed-a5dc-5db8-b64b-c0dd330e39ad_1",
+    "type": "security-rule"
+}
