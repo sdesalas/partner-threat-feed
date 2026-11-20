@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Oaken Funnel botnet sample, as reported in campaign PTF-04513. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Oaken Funnel Botnet: File with known malicious hash written (PTF-04513)",
+        "note": "## Triage and analysis\n\n### Investigating Oaken Funnel Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Oaken Funnel botnet in campaign PTF-04513.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"cb32564db2f6fb1ddc924b22ffe0deadab00b8c1b6877aa797730bcf47063532\" or \"d3e5fd3bca4df48d27c3fda856fabd133239472c010c56b012182adbb43c4679\" or \"e266208ed8b56d9061cd8de3469aef1590652ec7ed8953d2be424a023e8f2554\" or \"3f08368d6ac7b3962db5a4f2b9a3e920c2ddb3f2e0f28e74a39e7db74cd2f826\" or \"a4166ed7f1b5e528294209fd97b9e4ee99073fc953c780bf1ee57489fb63ba49\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04513"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "495882f5-4f88-5bb9-b5b9-8b903c3287ef",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Oaken Funnel",
+            "Threat Type: Botnet",
+            "Campaign: PTF-04513",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "495882f5-4f88-5bb9-b5b9-8b903c3287ef_1",
+    "type": "security-rule"
+}

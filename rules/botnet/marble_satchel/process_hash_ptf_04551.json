@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Marble Satchel botnet sample, as reported in campaign PTF-04551. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Marble Satchel Botnet: Process started from known malicious binary (PTF-04551)",
+        "note": "## Triage and analysis\n\n### Investigating Marble Satchel Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Marble Satchel botnet in campaign PTF-04551.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"0cb5e20afbb88d97bfbb7c7ac38ec33a01e0a3f9b22d510032c2998f2ed1be05\", \"92cdf677d09f188af09636b7b3da25822e49c732e71e78436a037ba9d34b4303\", \"937004688630d3dc5747c3cc244dbed86b0ca355739a9ce44d4f90f917a3c091\", \"2311f72cab378342893b270d65eb8d4bdaf49fc05b015725b1601baf98fdbeb5\", \"0c442d3989fa5bf5e62f3b5d9601a9d891e384404c453dea6cc17c05ab3d00d8\", \"e7bc5265bbb8b8df1434430c710a865146ad2172f43fbd7ac3f874de6b86f073\", \"a7ed6c5bb68485b0969525e885e9ffd70f26ebf8f5a77f952f8633284199fb9d\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04551"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "1fa72224-4602-525b-b96d-390f7892ac07",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Marble Satchel",
+            "Threat Type: Botnet",
+            "Campaign: PTF-04551",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "1fa72224-4602-525b-b96d-390f7892ac07_1",
+    "type": "security-rule"
+}

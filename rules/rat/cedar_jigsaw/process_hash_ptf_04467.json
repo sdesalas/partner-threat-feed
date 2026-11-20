@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Cedar Jigsaw remote access trojan sample, as reported in campaign PTF-04467. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Cedar Jigsaw Remote Access Trojan: Process started from known malicious binary (PTF-04467)",
+        "note": "## Triage and analysis\n\n### Investigating Cedar Jigsaw Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Cedar Jigsaw remote access trojan in campaign PTF-04467.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"f2f4983b6962b2065f6f819a1ac96ffe2e3b07db80a5e729ebd8339207085a03\", \"1fcd5596574eae2dbff28f1d5640a7b1fc586f17963ce2353d0455fb060fc6ee\", \"7a21a5deb9a7a009c85d75db1aea66f5158cab15d9454a63fa3b20bbad8721aa\", \"bcd80265ada56a68f9a73990cef9c4a0e108094cc8fb158acaa66765c76ebebb\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04467"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "555cf450-cc57-5ab2-8eac-537c8ed89808",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Cedar Jigsaw",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-04467",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "555cf450-cc57-5ab2-8eac-537c8ed89808_1",
+    "type": "security-rule"
+}

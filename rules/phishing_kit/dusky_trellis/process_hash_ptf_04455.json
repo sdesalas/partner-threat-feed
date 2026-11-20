@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Dusky Trellis phishing kit sample, as reported in campaign PTF-04455. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Dusky Trellis Phishing Kit: Process started from known malicious binary (PTF-04455)",
+        "note": "## Triage and analysis\n\n### Investigating Dusky Trellis Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Dusky Trellis phishing kit in campaign PTF-04455.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"b958119013756165d0e5538b7244c824ea9ba0b43a82356bd1bf0bd0aafc9634\", \"9c4ff908308f650ac57a88b931b1e5da84d2050a83fe7eec54efd9dfa4d380e0\", \"a1987c0353e891d5ade63ff57ec194047318ce6a89a5835e7422d2d90e170b65\", \"d8ae079d67c8b10435862a807a3c7ce96877ac7b5e5741025b79cf45afafe717\", \"7d4f00b875770e9c610cafd425c3263bff401ee9a73181be3ce768b420969ddb\", \"cc4157181af69323583df3aa3fea57b622d1ab8745ee3fa2a4cb67d8ead5af4e\", \"075b3aec7b2bec9213774fac15d54cdd8dd74315edbc5d3db675aa494d0e7cfc\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04455"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "c0329033-fb58-54a7-b5fb-06317ed969c8",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Dusky Trellis",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-04455",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "c0329033-fb58-54a7-b5fb-06317ed969c8_1",
+    "type": "security-rule"
+}

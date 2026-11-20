@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Clay Jigsaw phishing kit sample, as reported in campaign PTF-04491. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Clay Jigsaw Phishing Kit: File with known malicious hash written (PTF-04491)",
+        "note": "## Triage and analysis\n\n### Investigating Clay Jigsaw Phishing Kit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Clay Jigsaw phishing kit in campaign PTF-04491.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"74ceb6b8a9ed20853de7bcc9aeb2ab74c1eb03fe62662cd3b1a8425ce57fa950\" or \"cdb48e3c9f1fe6947e6c1b4b98bb096f4b6671be08a61614f5044c76d22ef36b\" or \"334c28423b5cedb092748ab4d8720c2ad4581c2394dabaf6551217721c5d9fb3\" or \"bee0ce9d91ed9ac6b3e46d22c7d1e219faf23feeb9566058faf1c99f8eaf14ea\" or \"61a20c344ac634681d5b82afee9a6269cdbce4a89a7787e75fdac6b99d9d1fe7\" or \"4b4d511ffca94b7f7fbd635dac56c8140052ee7202b01efa6b80daef06a5c5c6\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04491"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "5559aeb8-826d-51e1-94aa-26cd128e4420",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Clay Jigsaw",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-04491",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "5559aeb8-826d-51e1-94aa-26cd128e4420_1",
+    "type": "security-rule"
+}

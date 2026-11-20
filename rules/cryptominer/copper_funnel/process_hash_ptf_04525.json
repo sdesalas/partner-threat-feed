@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Copper Funnel cryptominer sample, as reported in campaign PTF-04525. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Copper Funnel Cryptominer: Process started from known malicious binary (PTF-04525)",
+        "note": "## Triage and analysis\n\n### Investigating Copper Funnel Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Copper Funnel cryptominer in campaign PTF-04525.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"a1224856e228c107e0e7655916794671dfe5c6daaf534c88983d5b7b314ae3a0\", \"20aa4fea1f0f503caf8b6ab6a4625973d77ec025e285db97336c1fddc03ef41c\", \"c170498427ede6d2c2d39f593d1433e11c9d38e04f047e66e165e43ec0d7060c\", \"b320fae73534ce34b41b6585896123b2886f90b913a8729e1ef0b9252f3e2fec\", \"57cfabd62c13d6066af3bfb114978be59dd6d9912085027e460735313fc6cdd4\", \"67d46e3d7baa165502b34e08dd3324ca7006b536a775b0beb52857851c7616b3\", \"ad78810921915f7d1044506a6c6896fa3de0bc682e0b51ee41372204804cfec8\", \"5f50c63167defd32ca393886c49b8b5eed83e4a37f085efb842735b5bb183bac\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04525"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e20489f7-dc3f-5a44-b25e-825745bf606b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Copper Funnel",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-04525",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "e20489f7-dc3f-5a44-b25e-825745bf606b_1",
+    "type": "security-rule"
+}

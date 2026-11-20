@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Rosewood Sieve banking trojan sample, as reported in campaign PTF-04450. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Rosewood Sieve Banking Trojan: File with known malicious hash written (PTF-04450)",
+        "note": "## Triage and analysis\n\n### Investigating Rosewood Sieve Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Rosewood Sieve banking trojan in campaign PTF-04450.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"890af0d49b48df223c3a4a4f0892e4532c5717a702d95d6f162a8a636aa26b35\" or \"40cc9baf4be79fe6073b35d5153fe9854dc63c5fd09bde8286f77f289653ebc4\" or \"61e95575d46f48c47e22f868b43b966305222e5ded41319c3872fd1f9ed6b49d\" or \"b0beddad1b889e2e6047fc10dcebd56da2ec6ea4685f9fe033b0d26f4e278577\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04450"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "3d080901-004d-55ca-874a-96954b147a0f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Rosewood Sieve",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-04450",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "3d080901-004d-55ca-874a-96954b147a0f_1",
+    "type": "security-rule"
+}

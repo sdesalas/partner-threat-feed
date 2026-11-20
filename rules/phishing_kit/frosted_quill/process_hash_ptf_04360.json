@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Frosted Quill phishing kit sample, as reported in campaign PTF-04360. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Frosted Quill Phishing Kit: Process started from known malicious binary (PTF-04360)",
+        "note": "## Triage and analysis\n\n### Investigating Frosted Quill Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Frosted Quill phishing kit in campaign PTF-04360.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"84a08c0479a120abaeda5096736e432fae1823f7708dc2818b1f5b0ebace8497\", \"b42456ebcda7f2b34278bf0a51620107249de236e2e3fd4f5cef776ed5bae4e9\", \"1995948e1f65cfd0910d48094df8a91219aa8b1b1ffedee6b18b621527d29e8a\", \"43458b22bffde43fc94de2e25c0a75859c1e4f3bd1f93089a50a079735b13c45\", \"97fdfd1089516b15aae96980e1883a2cfa5b156259f152e19813d6f315f8fc2a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04360"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "0a6dbba9-31c2-5720-931c-2d0849453f9f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Frosted Quill",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-04360",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "0a6dbba9-31c2-5720-931c-2d0849453f9f_1",
+    "type": "security-rule"
+}

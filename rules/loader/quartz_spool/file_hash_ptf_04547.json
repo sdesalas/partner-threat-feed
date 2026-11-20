@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Quartz Spool loader sample, as reported in campaign PTF-04547. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Quartz Spool Loader: File with known malicious hash written (PTF-04547)",
+        "note": "## Triage and analysis\n\n### Investigating Quartz Spool Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Quartz Spool loader in campaign PTF-04547.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"6a529beba004fce4afafbe3bc8cc7e1fbd001786c53fecb155f2329aea63223b\" or \"57b9da2c916905758f988a8022d32adffa12259cac61be0ba3908b4ffae399c2\" or \"29e7387d07998e3f8050a250b1c1390762d0f96ede4d221cdd02f2fcb98c68d1\" or \"77696789f2fb07c28d77eba29384e5ed45c7412f8ee7e1b873a0bc433cd35c5c\" or \"f1d5ac1e3a7f85ead368fe8b7b8d20ab4d1e8b6df01006844a903dc83ecf0c82\" or \"14d3464fbb8ff8df06195fde7fd313a898d10d9924916d81035eb0288e38e9b0\" or \"497c993a3368f943a87e5f128374d03ba161273e03f04ee11866cc3a169aa1b9\" or \"d4df36b359409b934c91a6ddf52dc68b5049ce8c95b54485e27b8c1bdb9f5cdd\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04547"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "48a6e7f1-4f5e-5429-87e5-f2ac7a6a9873",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Quartz Spool",
+            "Threat Type: Loader",
+            "Campaign: PTF-04547",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "48a6e7f1-4f5e-5429-87e5-f2ac7a6a9873_1",
+    "type": "security-rule"
+}

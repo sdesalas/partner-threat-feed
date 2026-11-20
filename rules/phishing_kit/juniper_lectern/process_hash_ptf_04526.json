@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Juniper Lectern phishing kit sample, as reported in campaign PTF-04526. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Juniper Lectern Phishing Kit: Process started from known malicious binary (PTF-04526)",
+        "note": "## Triage and analysis\n\n### Investigating Juniper Lectern Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Juniper Lectern phishing kit in campaign PTF-04526.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"0797329a392ca78cf88384388d2880a8113194d7443b08f82fc6f21945fb5155\", \"09ec0449864cfa04c42ba4bdd5a3f0dbb3986a2a9de9022ae9978a0203dd131e\", \"46b4fb96a596cdf0368d9a4b5f0a0e454dee17a3af61ea8d3275c3644374490f\", \"500f455c12f7a8709b5aaf4a7356790c6281316dd726d2c7f24da18212403462\", \"7e64044d1ca027026d875154bd6ac25fc636e548bfbe6a5e236bef776cc226c1\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04526"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b86ea2fd-09b5-5816-babc-05015e479cdb",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Juniper Lectern",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-04526",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "b86ea2fd-09b5-5816-babc-05015e479cdb_1",
+    "type": "security-rule"
+}

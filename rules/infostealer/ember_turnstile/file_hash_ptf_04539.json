@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ember Turnstile infostealer sample, as reported in campaign PTF-04539. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ember Turnstile Infostealer: File with known malicious hash written (PTF-04539)",
+        "note": "## Triage and analysis\n\n### Investigating Ember Turnstile Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ember Turnstile infostealer in campaign PTF-04539.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"c57753c1af820476604c4b8693f54f7c24117ec1dcce7649a15877ed0ff37327\" or \"b931b6ea9fea74c2543883622aaf4511cc6431a1b8e34cbdc00e14039a4cb55f\" or \"524d9251d8e86c0f6d6b988b2216cbc674b4a42c059efcc965a4bfa3961fb8d3\" or \"da7c534e50e58eed4ba68c68e763c3f5d83247f72d4432e5f110275d42732cd3\" or \"3159d50d124f508ffae9afcd4a5eb6ca14c008b67045d39eb05b9a817890f23b\" or \"6ac520c298274c1795bd79e2a5cdbaf3e7f5612cb2ddf7bef70cbaadfcc1d47b\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04539"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "307764be-a2d3-50cb-84ad-4262611f2f5e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ember Turnstile",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-04539",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "307764be-a2d3-50cb-84ad-4262611f2f5e_1",
+    "type": "security-rule"
+}

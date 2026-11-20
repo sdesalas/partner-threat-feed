@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Copper Funnel cryptominer sample, as reported in campaign PTF-04521. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Copper Funnel Cryptominer: File with known malicious hash written (PTF-04521)",
+        "note": "## Triage and analysis\n\n### Investigating Copper Funnel Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Copper Funnel cryptominer in campaign PTF-04521.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"d46924733384c77a8b485e4bcb17c241c2919832a454b25d659654fe50d1ec12\" or \"51d550c25a6891fbe9e8e84b97ccfa0280b7761e271c9d1841fbd20aacffb93c\" or \"2500c4403e01437cbdbf2e763a23b4e28bff17b5d46a05ae82528301c8d05595\" or \"8baca3e7b52c12fb5716b345f6db1772d04fc6458261c91abaf224cb2db1d5b4\" or \"25890c17a6a385e52c48a58f6743bf723979213e1b69f42d5d080a8662dddd70\" or \"6149fc67b4a17b6d0450d20bcaf632db9bca67e897f545fe23d2351d38d5a065\" or \"e5e7fc76abb59981dd3b3f73f6956c7d2580ab7ca7e8f7291fb334358d9c58e8\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04521"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "6be09d2e-96b1-56ae-80b5-dd5ba5e4d037",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Copper Funnel",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-04521",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "6be09d2e-96b1-56ae-80b5-dd5ba5e4d037_1",
+    "type": "security-rule"
+}

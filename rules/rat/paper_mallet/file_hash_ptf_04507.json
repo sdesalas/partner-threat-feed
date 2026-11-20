@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Paper Mallet remote access trojan sample, as reported in campaign PTF-04507. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Paper Mallet Remote Access Trojan: File with known malicious hash written (PTF-04507)",
+        "note": "## Triage and analysis\n\n### Investigating Paper Mallet Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Paper Mallet remote access trojan in campaign PTF-04507.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"76d2138fe469b350dd6a29bc10fbfcc0d3f0477c5c21db63e3bc35a014d57dcb\" or \"d9364dbcbc6b32f4563b702fa458f748caf47649b00d10067cbcf3ca1f627ce3\" or \"2bc1de6c5856c8f04cbc70913c5365025d1cfda47c8d45de053300e3c9000ce1\" or \"018c4af575dd5cbc3e16c115de230bf49dca78e65527754d298dd17c7b704af7\" or \"3f78bedabe7460106ff00414b438684aa992ef4d9fabfd4e75f830ac16938af6\" or \"341196e1ff97d7e6eac1d6d229fec6e69e413d5e753a7ff9c6483362589f71ee\" or \"39311724b58019f2c363ebb7894793f68e06fdc9624b2e0c1f5fc21b09ec2873\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04507"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "eddd96b3-f187-5f04-890e-bf33ab6dc30b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Paper Mallet",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-04507",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "eddd96b3-f187-5f04-890e-bf33ab6dc30b_1",
+    "type": "security-rule"
+}

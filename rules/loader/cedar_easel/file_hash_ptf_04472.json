@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Cedar Easel loader sample, as reported in campaign PTF-04472. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Cedar Easel Loader: File with known malicious hash written (PTF-04472)",
+        "note": "## Triage and analysis\n\n### Investigating Cedar Easel Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Cedar Easel loader in campaign PTF-04472.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"726ec68f0571b152e99ed467ed7c3e512e368b1daa5ab759a517ebc240a133f8\" or \"a54d92aff3d9f1126175dc397597594a3aa3073c44ed232028da93cc42f89ad2\" or \"9bb2ed1534b47f7aa9d8689184424c2a36f027212137d60b5f7d69bfe4b2c268\" or \"c6073687406e3c7119d23a5646efc8b10ace6233553f3dac8ac6c3098451f339\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04472"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "4569540f-cdca-5c1c-882c-cf9ace768c5e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Cedar Easel",
+            "Threat Type: Loader",
+            "Campaign: PTF-04472",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "4569540f-cdca-5c1c-882c-cf9ace768c5e_1",
+    "type": "security-rule"
+}

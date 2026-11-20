@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Dusky Trellis phishing kit sample, as reported in campaign PTF-04457. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Dusky Trellis Phishing Kit: File with known malicious hash written (PTF-04457)",
+        "note": "## Triage and analysis\n\n### Investigating Dusky Trellis Phishing Kit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Dusky Trellis phishing kit in campaign PTF-04457.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"78ec757184efd04e6080d04efc3f6f70e596dcdc8039dc7264256ef7270d9e9d\" or \"3729f375721e86b690a772aeefce7d1c83ffe4e18bde3da93e0575e46504e21c\" or \"b1d11461208eeeffc9b66f0b3968c11c0d940dfac869e583ebb5ed85cb5a908b\" or \"8578945e91827d9536303f96f11a16504a7c1d26f6cac7cf14f7f61b92031aff\" or \"6c690e32664534c924c1c0469f1cb461fcb93cc70b435d76fd346691deeb6eec\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04457"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "2fc0d985-8edc-5541-919a-990e7abcced4",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Dusky Trellis",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-04457",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "2fc0d985-8edc-5541-919a-990e7abcced4_1",
+    "type": "security-rule"
+}

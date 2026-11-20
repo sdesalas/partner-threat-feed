@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Brass Lectern infostealer sample, as reported in campaign PTF-04397. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Brass Lectern Infostealer: Process started from known malicious binary (PTF-04397)",
+        "note": "## Triage and analysis\n\n### Investigating Brass Lectern Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Brass Lectern infostealer in campaign PTF-04397.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"769fd9505251817c2388b40c8f63dbfcfea689337ef21ce5d7cdbb9ae786ea42\", \"d6fd797a2be8701ee99cd3cadeff866dbc81443e754eab23effc7e5039707446\", \"d8f9318b755214e5d440fff7078b2ab45303289bd6d74c09e5c66e699889fbc1\", \"471812935e4334a3023718cc306f19550c4dcf8c353afeea7cf31e1fd4ed723c\", \"ba42cdeff4ed0e200d58a4b947fa1423138961a3cead4c176acae2cb7d25e267\", \"9f2e4090aab54270acd2a4be8a1e9e5a3b96df4e168f37d8620e967dff48afe1\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04397"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "6a6dc699-bb36-5459-89af-b095dc84fa68",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Brass Lectern",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-04397",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "6a6dc699-bb36-5459-89af-b095dc84fa68_1",
+    "type": "security-rule"
+}

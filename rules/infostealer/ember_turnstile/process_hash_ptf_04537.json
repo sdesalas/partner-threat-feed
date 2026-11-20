@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ember Turnstile infostealer sample, as reported in campaign PTF-04537. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ember Turnstile Infostealer: Process started from known malicious binary (PTF-04537)",
+        "note": "## Triage and analysis\n\n### Investigating Ember Turnstile Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ember Turnstile infostealer in campaign PTF-04537.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"e03b433af90b94f28d803fa53a5a4fc469c657c5935edfba32c9cf2b5d103b7f\", \"1285125f9480fd35bfc4692eb667632e83cceef007bb8104dfd45099911f8846\", \"4e6b45e182d434432e575515d357e2352ea92188530d163b296ee2ddf945168e\", \"69c3bbeefb55252c8313c160fb841747b257fb5e7f6a2ce2cd035ab9fcc55823\", \"a87cd6264c1ce48652e1ebef0e9e3ae6e56933559db332c8922ef4c37aea2fe1\", \"4aa6027cfdb1c22ac4f4d385dfc3a7eb559b187326b49ec429d8b1fbe4569289\", \"3e2aa296bbcfb0f421e5e675d1995355b75dc259f99bf9ca29e655cb5fe82bf6\", \"f9c7b946372957a8db0cd8e807c6de3de499d6d3202bae17049e30bd755cdcdd\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04537"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "99b2f987-290b-5c4a-90bb-337255ed1373",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ember Turnstile",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-04537",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "99b2f987-290b-5c4a-90bb-337255ed1373_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Paper Whistle loader sample, as reported in campaign PTF-04372. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Paper Whistle Loader: File with known malicious hash written (PTF-04372)",
+        "note": "## Triage and analysis\n\n### Investigating Paper Whistle Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Paper Whistle loader in campaign PTF-04372.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"872fa6fe48977aa5681909e69901cd4e6f4297f0b4473cf77c0009a2e7b13546\" or \"3de2e8a885be10c0b49ebe7ec828c4fd4f556197d0cc1a75aab8d9035ec829f6\" or \"8c90133f986ee688589abf779951abd7d8cc4394cc323e8ff95442c5bffdb474\" or \"d2ae5fac31c74ac169b4122d68b5f2bcbdd991394b9ab7239aa8e7d20a4aeab6\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04372"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "559923ba-bbdb-5f18-a8f8-0c1955b6917f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Paper Whistle",
+            "Threat Type: Loader",
+            "Campaign: PTF-04372",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "559923ba-bbdb-5f18-a8f8-0c1955b6917f_1",
+    "type": "security-rule"
+}

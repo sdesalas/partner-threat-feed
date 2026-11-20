@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Linen Sextant ransomware sample, as reported in campaign PTF-04463. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Linen Sextant Ransomware: File with known malicious hash written (PTF-04463)",
+        "note": "## Triage and analysis\n\n### Investigating Linen Sextant Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Linen Sextant ransomware in campaign PTF-04463.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"52d5b40486277c3d9b12232f4555c0d0c7e8b88dc47c6a631ee46c230b004e43\" or \"1ddae430db04b1df30daeaf5960590b0a720171543c02071fa745e3cb8060304\" or \"5da07615b9c7a42fb3ef9c932f5648c8c1d372e8778a97b9df586e1c664a9445\" or \"daeb1688a901c6365084bd121636bf06235be74f167f62630b4c870ee1e85c4c\" or \"5dde2f9fd586678198cd0ceba186ae35e0e017f1ab9c4fc0fd94966fb1b75940\" or \"ddd6413faba82688e0eafc7f6a4b43c0b06f682664dee993e462af2fbf24352d\" or \"331b226a67e0afc904a453d6b599aed5579e7fd6e029324d74faf58a81a8b199\" or \"5b966cc7482549eb096e48291bf31183e70e6a428641c83aba4e61cdbea739f5\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04463"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ab6ee98c-02c6-5882-8653-acaf6601d9ca",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Linen Sextant",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-04463",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "ab6ee98c-02c6-5882-8653-acaf6601d9ca_1",
+    "type": "security-rule"
+}

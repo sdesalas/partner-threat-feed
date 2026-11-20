@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Russet Jigsaw espionage toolkit sample, as reported in campaign PTF-04391. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Russet Jigsaw Espionage Toolkit: File with known malicious hash written (PTF-04391)",
+        "note": "## Triage and analysis\n\n### Investigating Russet Jigsaw Espionage Toolkit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Russet Jigsaw espionage toolkit in campaign PTF-04391.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"98de62262e5df9b96ea7448001a336bc341504eaf50b7079ee93c124449311d6\" or \"f0eaad318bbcd3cc8bd37e8a981344b181569ba73fdd4100431bdd2f19882fd9\" or \"1bb8019eaac8586d669cc2d2083f04814e35988c9c4cf8c9dd41307831d6080e\" or \"46f8c1167404176202d642e6526d3d0bf6bed62f25a43242232545c042563600\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04391"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "111c2fb7-ebdf-5822-b8a3-9ebfa99dfd30",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Russet Jigsaw",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-04391",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "111c2fb7-ebdf-5822-b8a3-9ebfa99dfd30_1",
+    "type": "security-rule"
+}
