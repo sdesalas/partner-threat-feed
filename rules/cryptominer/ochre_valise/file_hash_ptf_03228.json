@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ochre Valise cryptominer sample, as reported in campaign PTF-03228. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ochre Valise Cryptominer: File with known malicious hash written (PTF-03228)",
+        "note": "## Triage and analysis\n\n### Investigating Ochre Valise Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ochre Valise cryptominer in campaign PTF-03228.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"73614a91fc2b91d86abef84e2625b536b53cf46d479cf4bb3ff6e974bfa91777\" or \"6007d62964c3065d0eddc3dcd4b8ae7abef06966c6550f820c97b0051794829d\" or \"5b49bbe5810dab3f35b0d7145d575197998f4ff6f3788912e232c4c0798c94e1\" or \"3c9ceab0551addbfb1693d2e4838b7685915e2d2dc102d65339e5ba71527ae6a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03228"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d3ecde5e-8757-59cc-ad4e-2dda435d2b70",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ochre Valise",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03228",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "d3ecde5e-8757-59cc-ad4e-2dda435d2b70_1",
+    "type": "security-rule"
+}

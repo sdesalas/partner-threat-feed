@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Linen Needle banking trojan sample, as reported in campaign PTF-03219. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Linen Needle Banking Trojan: Process started from known malicious binary (PTF-03219)",
+        "note": "## Triage and analysis\n\n### Investigating Linen Needle Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Linen Needle banking trojan in campaign PTF-03219.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"4d4677d96891db6344e4bdd903c0b91171c39cd6a7c9477d27eab1bea4fd6e65\", \"00ceb36351fc849acc6efd4a840795fcf14875d8448009d41da0ac2ceef69068\", \"a26326e79f12f30862bd4695317e288dec16dd10dcae18082b25d93f21c76f12\", \"b970532ab5edc389bfe6d83b5ce6ef4d52558a4e74229f84d40ffb8ef2aad79e\", \"624c4b795815d15da60da2f7c4117890481f8222d550c8b0242e2a9fbbd756a8\", \"071e3886286b165b5b1b9461653d718e9e07a2e0bc35b844044cce4ca18e4cf8\", \"7c3950d8c0af53749b696f69c37f991beb6e3809b6f0d1bf338437000389d541\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03219"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "64977be5-8b84-5eac-b265-1bf94ed43808",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Linen Needle",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-03219",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "64977be5-8b84-5eac-b265-1bf94ed43808_1",
+    "type": "security-rule"
+}

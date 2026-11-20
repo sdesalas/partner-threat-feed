@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Tin Loom cryptominer sample, as reported in campaign PTF-03287. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Tin Loom Cryptominer: File with known malicious hash written (PTF-03287)",
+        "note": "## Triage and analysis\n\n### Investigating Tin Loom Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tin Loom cryptominer in campaign PTF-03287.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"fde07e82c85fc7aeb40ab3a1275bfaf392c44717dda830f307310e9aaf15985b\" or \"ec114a63ce50550d6e50e17c73f038077a6610a77d44f3d19295b8b06e55e43b\" or \"99a54fe1b354bfaa9ba75da17669fe597e7bb24c36380a8c132155bbea538060\" or \"8bd7900a3338651eb2dc423ae2c46bcdf72c5c6f5ba4328b212e45c501405c5a\" or \"8c155ef7d31fbfaca51a87e4c060bca879b56fe1c97660df35ee586ca35a2f20\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03287"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "4ac94265-537a-5da1-b0c0-499dc913b4bc",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Tin Loom",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03287",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "4ac94265-537a-5da1-b0c0-499dc913b4bc_1",
+    "type": "security-rule"
+}

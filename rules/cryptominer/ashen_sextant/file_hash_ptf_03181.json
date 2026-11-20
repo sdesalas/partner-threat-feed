@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ashen Sextant cryptominer sample, as reported in campaign PTF-03181. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ashen Sextant Cryptominer: File with known malicious hash written (PTF-03181)",
+        "note": "## Triage and analysis\n\n### Investigating Ashen Sextant Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ashen Sextant cryptominer in campaign PTF-03181.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"8db778a81a2134c7503385af146dcc32a91f2bd65d01768bb2aae8ecd485f168\" or \"4c246c9ed4bfc999589b818f5bcd00853385a355d347438b0b58d5869ed2191e\" or \"1ed2baf5c90c1c9c1082b71251c4e7acf1d10577c8151d2063d93a4910514e50\" or \"5de4ab39680cc98859bc06b7ece85caac303407566b3a421140e011417a293b3\" or \"3e5671b126ffc5955b85f201d9db9c0a52a0035a1e5cfaaa08b109ee12537330\" or \"f6cb53a1fbf4c485ede2b6ab2270d0433b8674fcf8769e9b011cc5d80b26993e\" or \"5fd3a6affd9002de670ec559ffd0aa9e00e79424d693821527f64bab8ec3828c\" or \"57921273b52d5de53cfb29833e7142b1ea215113ba0ff168e40cce171b47e2f3\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03181"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "716d08a5-f7c8-5cbc-9835-a61ef078e11f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ashen Sextant",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03181",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "716d08a5-f7c8-5cbc-9835-a61ef078e11f_1",
+    "type": "security-rule"
+}

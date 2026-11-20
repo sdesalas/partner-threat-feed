@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Nickel Lectern ransomware sample, as reported in campaign PTF-03149. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Nickel Lectern Ransomware: File with known malicious hash written (PTF-03149)",
+        "note": "## Triage and analysis\n\n### Investigating Nickel Lectern Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Nickel Lectern ransomware in campaign PTF-03149.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"9073ec093033cf46c6358cab43b8a589e543a464f5641c76fe84ca86d5c97d7d\" or \"74472db085f104bc31ce8852ea57045976e7f8fb3cd18e7d84e49947d3c253f8\" or \"b45a7c99deae7ef9113d2fda2ff8103e40979bb8cdc58291b74a3121d832b6ff\" or \"e7bb6c5e2c3d558dfa00f9af782273704ad3b05888fd46770900b9a15c2e9ebd\" or \"13eed4a58317a24912714d82457b1ecfb6b5ee6dbe91e18d60dc10348ff1a370\" or \"ab6b6732ecdbbecc772491ff6c55ec0f4fbd06928308ee2125991fac7ed11764\" or \"5a816f0a58f9280cf8a2ad5cc2aec026008908ded4a2c7f537677d7a8f48f7a6\" or \"764a9f593e526db0654b39f8bb4fb6aa06b22435134dca67d3ade39360d07403\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03149"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b5193553-ffaf-5490-952b-451f4ce32d7d",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Nickel Lectern",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-03149",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "b5193553-ffaf-5490-952b-451f4ce32d7d_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Slate Stencil infostealer sample, as reported in campaign PTF-03272. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Slate Stencil Infostealer: Process started from known malicious binary (PTF-03272)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Stencil Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Stencil infostealer in campaign PTF-03272.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"19fe00f47459d36f9ec8638042aa6d59a16138e94bf32d015c219e7e0738a93d\", \"f89e82e4733f100f7597b4b8d76593c5cd0f97e78d5527612811a4164e05e697\", \"e6379971b80ec8fc7514a6fc00a11270d245e136cdd33bf7e5f4fd7d35642688\", \"793e3200cdc8ee9122d1f1526f0ea4e58030e42fd72b9ad8e70260f225bbeb11\", \"a89328f696a2f9fb9030b4e272561e4a4e08add3eb319c0b8ca098f48b7909e6\", \"783c8759a70257b97999b68eaa940e80981daa9e1d1c2c7e9e5092b5bac8a56b\", \"b2920a2e5d24b5c52b396c304cae5aa64c41ba17f1adb4c7f735989a912be0ad\", \"4c364c83fb663dd911cd3797595a5cf74e34585b289f38d3fa60e84b774fa8ce\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03272"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f2b81cae-1b87-5855-8eb9-a21b9d2ee395",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Slate Stencil",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-03272",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "f2b81cae-1b87-5855-8eb9-a21b9d2ee395_1",
+    "type": "security-rule"
+}

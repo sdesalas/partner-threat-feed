@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Tin Hourglass botnet sample, as reported in campaign PTF-03245. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Tin Hourglass Botnet: File with known malicious hash written (PTF-03245)",
+        "note": "## Triage and analysis\n\n### Investigating Tin Hourglass Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tin Hourglass botnet in campaign PTF-03245.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"f844debe272d4d57e40d3c07d149e3b2b5e3e9e00ccdafe91dd4cac7483a2426\" or \"3e218b024ad03e4329e3980c6895c458eb3c1a4a5472b5d6fe9d5b4d20ae74dc\" or \"203988df848be58cc9fbcd54cd3160e8632b4ef84c39b60251d489136577abda\" or \"89489affc2ab9b4bc1d27c6598fdc2c79468c18b8becc904e7e1a05597753043\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03245"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "2e31ee69-7d2e-53ca-8c6a-6495b7811c6e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Tin Hourglass",
+            "Threat Type: Botnet",
+            "Campaign: PTF-03245",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "2e31ee69-7d2e-53ca-8c6a-6495b7811c6e_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Juniper Funnel banking trojan sample, as reported in campaign PTF-03173. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Juniper Funnel Banking Trojan: File with known malicious hash written (PTF-03173)",
+        "note": "## Triage and analysis\n\n### Investigating Juniper Funnel Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Juniper Funnel banking trojan in campaign PTF-03173.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"460a09afc1b519411cc0355017733939e04998085d1e3ae1f4302e4dc2b55783\" or \"4baf4e831a0d172b71b6e2c90fc3c88e55e2b2ea1d4ab065930bc10ee7c28fc0\" or \"7e54c9926177c08bad5d7eab2118b332178033f552c0e4188901a36a4e8850a7\" or \"0be2cb5f63321561723d6a91e9424de144110cfdf49d1f7c505ecaddb0c7a167\" or \"de1ff7d3c446283445760af80f7a6b51767f1627c690461ac862cc8ff28cae00\" or \"1bf6c4239ce3f34270dc2a2394b52d426a21f96e734f9a165416a0f59b0f8ff0\" or \"39da813bb910ffea0786fb3c05aaa4d8f2c6b6a56f338914dd2d3b152cfb7aaa\" or \"ebd21589e12235a57ad74b1a964d6105ff9cc8da9c955949a74615757b5cf419\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03173"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "a88cb50d-6bb4-5b69-a9d4-2d855f406c07",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Juniper Funnel",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-03173",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "a88cb50d-6bb4-5b69-a9d4-2d855f406c07_1",
+    "type": "security-rule"
+}

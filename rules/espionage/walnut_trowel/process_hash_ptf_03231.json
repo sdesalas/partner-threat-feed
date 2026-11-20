@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Walnut Trowel espionage toolkit sample, as reported in campaign PTF-03231. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Walnut Trowel Espionage Toolkit: Process started from known malicious binary (PTF-03231)",
+        "note": "## Triage and analysis\n\n### Investigating Walnut Trowel Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Walnut Trowel espionage toolkit in campaign PTF-03231.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"e7ee94aa84a834cce2006ef5eeb1cedc3280e42abc9bf60778bbc79e903a6de2\", \"3d2c37dacd3f3baf19679de47b819c5e5f0895ba25b6934834948b4ac9f0f6e2\", \"36e4915305c365e6304eed7d9ecdb5f28168fcdb022f853ea3b50f0b93f4a0ff\", \"8cd553d633b1187b6f97099c1f0b1a9b7170191ca3bc6121b52e665b04f45938\", \"eca9472b39ae1d1628396347dd75b00b1d885f2a8a6b5d006f7b546b183e59cf\", \"2086c4f38ed36331b4204deacf98d701df6f999436c35fd0fb5a3068e6fc8332\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03231"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "89c27224-7b2e-5a33-9039-b41e700a8cb5",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Walnut Trowel",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-03231",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "89c27224-7b2e-5a33-9039-b41e700a8cb5_1",
+    "type": "security-rule"
+}

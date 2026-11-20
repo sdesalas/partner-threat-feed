@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Fennel Tinderbox botnet sample, as reported in campaign PTF-03170. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Fennel Tinderbox Botnet: File with known malicious hash written (PTF-03170)",
+        "note": "## Triage and analysis\n\n### Investigating Fennel Tinderbox Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Fennel Tinderbox botnet in campaign PTF-03170.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"8ba44276f9b5a738a8751cd0cdef2f4ede677fb659467a1a2edd091b157325ac\" or \"0c703f5c96b9e84195ce591dc948730e184f0aa78e455dbf60ba80908cdb5cf6\" or \"392e7b21c42c5b9015c2085425f3d59c1e0cf50649e6949e59186db83e68ba13\" or \"6e3b16d44f554269b1c0dec5dd5d8f2ff4734b4364d0747cf94e13d7c8bad746\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03170"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "9f1e80ee-1e97-5361-90e8-796f4ec04ec4",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Fennel Tinderbox",
+            "Threat Type: Botnet",
+            "Campaign: PTF-03170",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "9f1e80ee-1e97-5361-90e8-796f4ec04ec4_1",
+    "type": "security-rule"
+}

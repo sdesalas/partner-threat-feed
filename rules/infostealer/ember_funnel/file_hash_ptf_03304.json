@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ember Funnel infostealer sample, as reported in campaign PTF-03304. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ember Funnel Infostealer: File with known malicious hash written (PTF-03304)",
+        "note": "## Triage and analysis\n\n### Investigating Ember Funnel Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ember Funnel infostealer in campaign PTF-03304.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"d8c2961b601e7ce288285ea3e71368b96450897a8b7c06738ff3cf5fc6f90c60\" or \"2ae7bb70dfdf27a898dcbbde4dd8b622aa6e7df70cad94a2d22fe6f9bbc8abd5\" or \"19a3aa5f2962f6dbfe322b6123f3271f3c87840964a57d938e0922ca6705f2ed\" or \"060701bb529fc8a4604b0982c7e52c8668b9d215169d0ca0e821a61d5925ef02\" or \"5414ec440de17f9797274816d5961ae75ca68c3ac07abbd17df9eb3d869ad6d1\" or \"63bb6b630e615bcb1d956c116f925ac9604a4829b0a4f546b3eafde8221fe8d0\" or \"eb56cbb6166242508b0461447f19b2b72487d457c2bce40f418495f733f416a7\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03304"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "9495f9ad-60e2-5c74-b8d4-163eb41f5ba7",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ember Funnel",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-03304",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "9495f9ad-60e2-5c74-b8d4-163eb41f5ba7_1",
+    "type": "security-rule"
+}

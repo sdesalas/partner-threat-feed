@@ -1,0 +1,76 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies the first time a host connects to a command and control domain used by the Walnut Shuttle banking trojan, as reported in campaign PTF-03130. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "history_window_start": "now-14d",
+        "index": [
+            "logs-endpoint.events.network-*",
+            "logs-network_traffic.*",
+            "packetbeat-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Walnut Shuttle Banking Trojan: First connection from host to command and control domain (PTF-03130)",
+        "new_terms_fields": [
+            "host.id"
+        ],
+        "note": "## Triage and analysis\n\n### Investigating Walnut Shuttle Banking Trojan: First connection from host to command and control domain\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Walnut Shuttle banking trojan in campaign PTF-03130.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:network and destination.domain:(\"cloud-login64.example\" or \"edge-cdn53.invalid\" or \"node-login7.invalid\" or \"node-static32.test\" or \"portal-node37.invalid\" or \"relay-mail33.invalid\" or \"relay-sync88.example\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03130"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            },
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "32c06a58-1273-5528-a7f1-e8acfb146e65",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Walnut Shuttle",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-03130",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1071",
+                        "name": "Application Layer Protocol",
+                        "reference": "https://attack.mitre.org/techniques/T1071/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "new_terms",
+        "version": 1
+    },
+    "id": "32c06a58-1273-5528-a7f1-e8acfb146e65_1",
+    "type": "security-rule"
+}

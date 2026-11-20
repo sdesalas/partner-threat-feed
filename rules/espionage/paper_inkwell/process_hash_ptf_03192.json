@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Paper Inkwell espionage toolkit sample, as reported in campaign PTF-03192. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Paper Inkwell Espionage Toolkit: Process started from known malicious binary (PTF-03192)",
+        "note": "## Triage and analysis\n\n### Investigating Paper Inkwell Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Paper Inkwell espionage toolkit in campaign PTF-03192.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"7e3ce88c25284d9f0fe12cfce0bc89ec02ebb06d060579ed1f56b07440e85c6f\", \"7e286bd4289bc39adca1d373656ad19572b069074a9f34a86646e53a6bd35a26\", \"8750701dbb031312e346919f832353a500dc2c1db6d6e152c0e3e1c8c71221d4\", \"c4c2a6f0f02aca2c879479273a7e6dd83c844ad069dbe47a9a0603e15b3a295b\", \"49f3cd97b3f5a6aee519a5a7a8f5db656e618b25817c5f631dc5dfa19a96a2af\", \"8ecc9de581ea7593a56661cb6f024dc93d9253cdc616ff6b4a49e4cb2bf91c0b\", \"2ee0f6c6025b21e12c1902b3672ae6794649408158220ab790ae594a1e5d8b8d\", \"7c9ceb1e5f079011a28ac7eaa8da2515cb4ec7bcbe317221c68f8093bdfca4bc\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03192"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "46acb05f-66f3-584b-a174-fd712befef7e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Paper Inkwell",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-03192",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "46acb05f-66f3-584b-a174-fd712befef7e_1",
+    "type": "security-rule"
+}

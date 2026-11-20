@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Mossy Spindle remote access trojan sample, as reported in campaign PTF-03277. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Mossy Spindle Remote Access Trojan: Process started from known malicious binary (PTF-03277)",
+        "note": "## Triage and analysis\n\n### Investigating Mossy Spindle Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mossy Spindle remote access trojan in campaign PTF-03277.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"f7e80d156da57bb13c08991fc0c359a740b2cc4e8939721cd48bbd5ba33da0a6\", \"9b3464ad99b0a4dc85b3b5a8472f83894afdfea5ea90ecc6db74993f91148d10\", \"956bb4fdd23aef4555a7128bb6b6fc1bdf37648481fc8ce3647dc18efa0dbf5b\", \"c8e8fdb51df72b1bebc30b94cc4a783e6a341f6511b9eda3306e4f753ac6542a\", \"a389921046bbd2fa4a1c265dd5e528d411ed7db2b5ae9eb4594d10249c004af4\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03277"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ee1b4e50-75a4-5346-92f1-273d765a3bef",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Mossy Spindle",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-03277",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "ee1b4e50-75a4-5346-92f1-273d765a3bef_1",
+    "type": "security-rule"
+}

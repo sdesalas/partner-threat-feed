@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Umber Wicket botnet sample, as reported in campaign PTF-03215. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Umber Wicket Botnet: Process started from known malicious binary (PTF-03215)",
+        "note": "## Triage and analysis\n\n### Investigating Umber Wicket Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Umber Wicket botnet in campaign PTF-03215.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"053875e1e7ec25af07936be6f0626175f4bfacb78cb3a776ecc036efd218d2b7\", \"98551eec7d13745df0e22e4224a3ffe175bcda5357d569c982fa2f9cd8252748\", \"280815dcd686709c988a17ca35df87e04e0d4ed3f3b6ffb65ca4d919e7fa9ed9\", \"10516fcf6dbaafad979c0ce661661c3424d24e19c9a02993cd597a874b0e2554\", \"62edc9f4fd160996e84a04b98c4b24b642650f86bfc612ef614a0d05871d1b45\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03215"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b6cae4a5-6ada-5d59-9bd9-af49e9eb5b75",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Umber Wicket",
+            "Threat Type: Botnet",
+            "Campaign: PTF-03215",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "b6cae4a5-6ada-5d59-9bd9-af49e9eb5b75_1",
+    "type": "security-rule"
+}

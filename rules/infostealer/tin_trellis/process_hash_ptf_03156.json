@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Tin Trellis infostealer sample, as reported in campaign PTF-03156. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Tin Trellis Infostealer: Process started from known malicious binary (PTF-03156)",
+        "note": "## Triage and analysis\n\n### Investigating Tin Trellis Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tin Trellis infostealer in campaign PTF-03156.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"533183b04e2a9ed84560f79017f0001d9d218f18c5923ca912fecf52e43365df\", \"4c990c55d65d4ba10dfcd46523ead9854acd663a650f34024480873aeca7e820\", \"a56f58343ab6dd99617d32d61012a3c4791e9d2bb12666fac6a9a01785c94c2b\", \"775cd1fa2d0846f28eb9edf3bf2b46557064945f600c31f23729b38d0639b2e1\", \"4ef91f192eeba23c912a1536b3c43c1effab8920c4876613861115e6da65b7f2\", \"896b5a06a0f65e4f20bb6cd1433ad83a63f9f88c970d0bf9a3819eea4e6a50f7\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03156"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ddb53e35-036e-5a53-99a2-dfdf9bd6bad0",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Tin Trellis",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-03156",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "ddb53e35-036e-5a53-99a2-dfdf9bd6bad0_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Brass Trellis loader sample, as reported in campaign PTF-03240. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Brass Trellis Loader: Process started from known malicious binary (PTF-03240)",
+        "note": "## Triage and analysis\n\n### Investigating Brass Trellis Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Brass Trellis loader in campaign PTF-03240.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"964eb6b7a84c38e9c0bcefc44fca98c5bc4bc809715f7f0c9f0ef021418b02f3\", \"0785392327c99f071e58a6afcf524ce06ca487f7e986de15c80fd3011747c7cd\", \"4069084911f7a89184495648805206e9b36cbb4885e037157b2e0b995f1b5f0e\", \"bdcf1b35ac700ce9f47128e696ec15006b0f707ff108a46f4342bef75dfe6572\", \"d1bf6680824d3dcd050f9423330481e52e3486c99a39edc0a8e9c3e539e561ed\", \"9228aead69c87c4fc7e009fd118da76eb530da87dc85bb3ec168a708d1c6a3ad\", \"2d95d546471816d55a1714548f980d56c80bd68004c5f6f26f5a9d613d59f046\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03240"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "6a49f6f0-62b8-534a-b4cb-9e8bffce66d2",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Brass Trellis",
+            "Threat Type: Loader",
+            "Campaign: PTF-03240",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "6a49f6f0-62b8-534a-b4cb-9e8bffce66d2_1",
+    "type": "security-rule"
+}

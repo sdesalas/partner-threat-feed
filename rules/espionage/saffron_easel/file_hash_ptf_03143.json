@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Saffron Easel espionage toolkit sample, as reported in campaign PTF-03143. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Saffron Easel Espionage Toolkit: File with known malicious hash written (PTF-03143)",
+        "note": "## Triage and analysis\n\n### Investigating Saffron Easel Espionage Toolkit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Saffron Easel espionage toolkit in campaign PTF-03143.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"933b6f06bbdc3a561cd42239891a9104d6b178868fbeb0726761f0d92b5602e7\" or \"8611ab06801ffb13d80b6e8c885977cd132a08ed4e66c332b72f6b85fa5bcda1\" or \"3d4c6f1b6e0e953eb9085fc4ed46e39e7d52b4b6c5f97258be49b6dbf9e720f6\" or \"d81daaeeb7f93b166970fdebdc3857ae9f27eb43a17268031e3f1b8e01917b35\" or \"2f2a674c290a06fae4016972783193e8855a1ffa12c575d451a1a3dfabaa606d\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03143"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "77bb753e-78e5-57cf-a56e-eaaed4052d02",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Saffron Easel",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-03143",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "77bb753e-78e5-57cf-a56e-eaaed4052d02_1",
+    "type": "security-rule"
+}

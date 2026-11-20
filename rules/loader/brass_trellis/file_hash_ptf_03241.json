@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Brass Trellis loader sample, as reported in campaign PTF-03241. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Brass Trellis Loader: File with known malicious hash written (PTF-03241)",
+        "note": "## Triage and analysis\n\n### Investigating Brass Trellis Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Brass Trellis loader in campaign PTF-03241.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"fb2c2ce42b0f4a2bff5bdb1081253db989a1cfbb622fc6c09f671f16bd1841c2\" or \"6157649816475bdbeec23b75c41fdf96ef4697196e8acd0dc4f9e20f7a938a2b\" or \"a97b0002dedc360add3698618650c32937840a372fcd0e7485b60952aa69b957\" or \"c366acb13142801333f44a68d207481674d4639cafe667f990d4bfd6d580a106\" or \"4d258d38a89e3a9618003d08de61174d6b71d6595bd1b9dfef564bef5b35a720\" or \"6b976ee23dbd8180dab05c79bde5e8504bf14571c1db217ea00b5c3cd0d2b1f0\" or \"8cbf9a6259555fb8a14b41413db6188d6b5b42f2c3d8f8300d7c78834e8c2c4b\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03241"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "9863b7d3-08de-5ab2-b2e6-31bf3b84c670",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Brass Trellis",
+            "Threat Type: Loader",
+            "Campaign: PTF-03241",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "9863b7d3-08de-5ab2-b2e6-31bf3b84c670_1",
+    "type": "security-rule"
+}

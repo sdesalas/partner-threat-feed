@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Juniper Keystone botnet sample, as reported in campaign PTF-03318. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Juniper Keystone Botnet: Process started from known malicious binary (PTF-03318)",
+        "note": "## Triage and analysis\n\n### Investigating Juniper Keystone Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Juniper Keystone botnet in campaign PTF-03318.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"a3baf8e9ca60dd25a1e3ddb68fab20f1d740b27a7f47ae5146e3157cd5068b68\", \"71c38d4b0058f73c29ff83975f385354a3f8793e4884345832e71e09b3b1dc94\", \"58c62e0431c94865b1ffbeb1427f24768fd505fbd9a8c3df662127839a6fdc10\", \"4feb072e289d125d51c7a563612b3769db1b5706ff881fc1535f7dc504d0da3e\", \"a403e572554958c7d0883af33f9dd1d3de3380204a3d4219682206e0146b0bc7\", \"15488ffa78feea527a9c41cd6d4dfbf386b37b2cfe0669b4f88760049831f65d\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03318"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "da805b4c-cca3-56b3-b562-ec9fced80da9",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Juniper Keystone",
+            "Threat Type: Botnet",
+            "Campaign: PTF-03318",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "da805b4c-cca3-56b3-b562-ec9fced80da9_1",
+    "type": "security-rule"
+}

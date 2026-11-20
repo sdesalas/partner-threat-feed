@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Saffron Easel espionage toolkit sample, as reported in campaign PTF-03144. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Saffron Easel Espionage Toolkit: Process started from known malicious binary (PTF-03144)",
+        "note": "## Triage and analysis\n\n### Investigating Saffron Easel Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Saffron Easel espionage toolkit in campaign PTF-03144.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"5db62592ab9e956073d41dc5b0901dc58c53efa66242739c5116188547d491ce\", \"af9130b2ec6537060c8ed3656819464b8dc9c0b4355b69100bd225e33c5addd4\", \"9f92b47d7c53b3596f69de56a3b619915aec429786a15e64e989a670ba05d0b6\", \"bbd2c8ddf40e7124204f4f95037fa0bf13a293143cd5de1e80af2f9bc158fc10\", \"9fa8ab0e0830059391475e1f1008be7cea38ee5d518971ae4dca8b4cdcf9444e\", \"734b019b2ac24954fa381f042a99923a7da7e136567e755f8ac3bfab827d1983\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03144"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "84dcfa53-cd42-58f7-b662-340ea9bf0332",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Saffron Easel",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-03144",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "84dcfa53-cd42-58f7-b662-340ea9bf0332_1",
+    "type": "security-rule"
+}

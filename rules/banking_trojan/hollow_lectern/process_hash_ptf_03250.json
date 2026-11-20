@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Hollow Lectern banking trojan sample, as reported in campaign PTF-03250. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Hollow Lectern Banking Trojan: Process started from known malicious binary (PTF-03250)",
+        "note": "## Triage and analysis\n\n### Investigating Hollow Lectern Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hollow Lectern banking trojan in campaign PTF-03250.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"a5bbc58c97c402e3b9520e38887ccd6ccecac8ea635894152f8758488969d207\", \"ec796a2fac79421eed0662e893572293129e14beb1ddb372856bb32056771d69\", \"0a960b6b0c54b3cb9ae7f95a24725def366096e5d3daaedbf926c0a631d1ea8f\", \"b4ff4e914ff0857f6e7a0e2be6be039a68e3045cd2c6a215ead97c7b00e393f5\", \"e6a2a2aa209927a10fb64e7ff6a4b57b3c2b3a06554486d18904fd9680e16f5c\", \"34c823949f9f8121374bfcb6a2284532e77e1524ce10f739bc5878b02a913875\", \"80c7423fc0656b087051a80ef580de3d9d45a25027c77ba00aa2eaeca98b492c\", \"8a5974d4c190a1d7f7ee9152b68dd569ee910b3e1bdb0ac862a7bb636e18f86b\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03250"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "471264d1-3c5a-554c-b0a2-cde1e9f9a172",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Hollow Lectern",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-03250",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "471264d1-3c5a-554c-b0a2-cde1e9f9a172_1",
+    "type": "security-rule"
+}

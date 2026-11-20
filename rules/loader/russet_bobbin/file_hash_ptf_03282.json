@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Russet Bobbin loader sample, as reported in campaign PTF-03282. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Russet Bobbin Loader: File with known malicious hash written (PTF-03282)",
+        "note": "## Triage and analysis\n\n### Investigating Russet Bobbin Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Russet Bobbin loader in campaign PTF-03282.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"8c718b39f25e128470d262b2cf5bb0ae6d81a8a9e0c7de9fae0aaa947b52bfef\" or \"b5c4defeb6db49388fe53701243b9156a5cf8a23878861c60e20c078f5b67f93\" or \"b2040f1100f79815b23f54d604246590c12420fbfc92b923caf262877fb62590\" or \"772945b7cc0e4bfa8b636fbae265a5a01f846081bb6fd79722a66fa7175020b5\" or \"f1777cab7571d99dec05001b4743870659b6be4953d8ebf7acbe6d18806891ef\" or \"4dd11570e86431f28c02c4ddf586723552b2c2ab500646ebccf0b705c2182a31\" or \"217049d9ef559968f2c279c56b0e89e206eaffe2b433827de62b1745085c3d61\" or \"bc1c81ebb68ec6424247150032d03fb2f3e13194ec2f29425766fb6d6a880404\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03282"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b4c4654a-5d31-53cf-a6df-9893450469b5",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Russet Bobbin",
+            "Threat Type: Loader",
+            "Campaign: PTF-03282",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "b4c4654a-5d31-53cf-a6df-9893450469b5_1",
+    "type": "security-rule"
+}

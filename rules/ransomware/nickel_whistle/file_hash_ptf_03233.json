@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Nickel Whistle ransomware sample, as reported in campaign PTF-03233. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Nickel Whistle Ransomware: File with known malicious hash written (PTF-03233)",
+        "note": "## Triage and analysis\n\n### Investigating Nickel Whistle Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Nickel Whistle ransomware in campaign PTF-03233.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"69b2402976d3be227a3e57cd794bb30fb8afecac581d879f82aad1edaf61bd24\" or \"81a0473a18948164e4e871448aec174e0a47154591710457fc933923ff806c4c\" or \"5dcb0e4125e09700d29652d108351a05deeef5238c71d4cac977dac5c02c1a4c\" or \"e2afdcb4dfdfc84a413df32be43acead28ff68be70a1c89b8ca95f831496e1e1\" or \"08d24a8770ba14792580e2caedaa60cc71b84a965d8670e6e6ec1c29c6bb03ab\" or \"cb74b46a373b40be3262449ed0f1f78999887df224856aecfae441473df8eed2\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03233"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ddbe750a-073c-5519-b25a-014497216cbc",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Nickel Whistle",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-03233",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "ddbe750a-073c-5519-b25a-014497216cbc_1",
+    "type": "security-rule"
+}

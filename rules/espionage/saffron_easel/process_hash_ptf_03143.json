@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Saffron Easel espionage toolkit sample, as reported in campaign PTF-03143. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Saffron Easel Espionage Toolkit: Process started from known malicious binary (PTF-03143)",
+        "note": "## Triage and analysis\n\n### Investigating Saffron Easel Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Saffron Easel espionage toolkit in campaign PTF-03143.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"3f6da6cb0d0cac05d53f863cb560d1a4056b39e8bd4678621791a7f7090751cd\", \"fa292be07d9b7581f40397cc2c9ff41dcb0523a7cf20a7f8268d9cca80c73b40\", \"52930bb4cb621c4a20eb882082bbb79fe8b4c395fb86b9260a941a10b1767f12\", \"fbc0c045db06bc998c52fded19c3f1828b239f560c9d66a2da5b84ded5a38d92\", \"0ebdcf70b61ae248e129c3a105d51c1d5a21ab43b9a69b14ae8ac657e710d12f\", \"8de7e17e344679b6b365484e3d163f55a74a0c2d846f5fc5d03fda627c4214d8\", \"d3e5a34b02ba56da20fbfb9f844d03a2f8a870960ae064a08d472df674b20e51\", \"4ce32cb0b3f7048302fc34bad11488fc5f1b87484a18f2ae146e8985edf3e87e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03143"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "fb906e5c-4f9e-5a9c-ab6e-2d77f72d1688",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Saffron Easel",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-03143",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "fb906e5c-4f9e-5a9c-ab6e-2d77f72d1688_1",
+    "type": "security-rule"
+}

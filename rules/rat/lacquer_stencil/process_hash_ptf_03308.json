@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Lacquer Stencil remote access trojan sample, as reported in campaign PTF-03308. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Lacquer Stencil Remote Access Trojan: Process started from known malicious binary (PTF-03308)",
+        "note": "## Triage and analysis\n\n### Investigating Lacquer Stencil Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Lacquer Stencil remote access trojan in campaign PTF-03308.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"dc6340627a601dd13aa5b5b6e181324b40e8d5eafb363b66121c1eeaaa766a9c\", \"ff7334a5b9ba5bcb86b4637ff4ebb6a59dd2bc5afe25e1afc1ad547d8435e63f\", \"71ae3401dd59517a924fc4d1fe54a98f55f1239cf69f25bfb56bf96008215ff2\", \"ffe67ead3ef8f475176813257119cae124d6164b0801e43ca3993798704c9f8c\", \"ba1e71aad0a65665de38bc990ea9c95539cffd40d80cdf13c34415766bab9925\", \"4459bab7410a18f9078b4e9d48f8c882223a943337e45e3974a090ba78a5d5ee\", \"7c43d629b2f394b4cfa79527344181bc1e9d4ab347c681d026da7f166b0145ec\", \"c98be3b953afcf32a5834c2354933b019f0fadcac910a537e31f4d45098d0d67\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03308"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "74ecf0a5-5176-5085-ab7f-405b952c2a6d",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Lacquer Stencil",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-03308",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "74ecf0a5-5176-5085-ab7f-405b952c2a6d_1",
+    "type": "security-rule"
+}

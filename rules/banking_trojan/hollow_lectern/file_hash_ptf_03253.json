@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Hollow Lectern banking trojan sample, as reported in campaign PTF-03253. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Hollow Lectern Banking Trojan: File with known malicious hash written (PTF-03253)",
+        "note": "## Triage and analysis\n\n### Investigating Hollow Lectern Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hollow Lectern banking trojan in campaign PTF-03253.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"41de2c3716e8030277d4d74b5ae8a03c3df1777b531fcc90a48e6578d6b05832\" or \"b372d7a0fad4f7e6038a1852b87033cce1d2876bbf3678cac6d91dfd8e8f1f23\" or \"17e8f21054339c36e21788304c3f2cd7301e68b2222130a7ba2072d96104d08d\" or \"6000dae5cfe69914d274147c5a2c3087047c2046a497fdea5dc74ccdfc097767\" or \"00ab8175f09b9d924235fad7b2a0715f46749bff1592eb1c0f6037d9e05426f0\" or \"41f9527ef046e89876cea93b860559f7fae36a7e812b36cf89bc7d123c9b9d24\" or \"46c8f229e897a1d3824fe143c9c0dac73795e829251b466d536fed00d371c6a3\" or \"004345ef234ffad507b0905a7ad5f3bc61fc613eeee5bc08aee00cfabe64a15b\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03253"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ca01f5f9-4cc0-5628-b7c0-e783a2603f0b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Hollow Lectern",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-03253",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "ca01f5f9-4cc0-5628-b7c0-e783a2603f0b_1",
+    "type": "security-rule"
+}

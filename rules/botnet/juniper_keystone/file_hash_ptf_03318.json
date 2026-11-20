@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Juniper Keystone botnet sample, as reported in campaign PTF-03318. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Juniper Keystone Botnet: File with known malicious hash written (PTF-03318)",
+        "note": "## Triage and analysis\n\n### Investigating Juniper Keystone Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Juniper Keystone botnet in campaign PTF-03318.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"e30a5a5925134f03228cf0f83813fcfc4796639d4e31aebcbd3f644b6a00fb9f\" or \"e2d84472bf64a516b3b57908ada438ed565fe1ebbc4ccb1073f0cf64e1535687\" or \"f2af37646784329a7327f2b0efe0294461284ead53bf7e57fb19d75daf7daa4e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03318"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "812b4879-7d26-57e1-93a6-73b55dffba52",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Juniper Keystone",
+            "Threat Type: Botnet",
+            "Campaign: PTF-03318",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "812b4879-7d26-57e1-93a6-73b55dffba52_1",
+    "type": "security-rule"
+}

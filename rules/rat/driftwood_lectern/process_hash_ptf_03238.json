@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Driftwood Lectern remote access trojan sample, as reported in campaign PTF-03238. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Driftwood Lectern Remote Access Trojan: Process started from known malicious binary (PTF-03238)",
+        "note": "## Triage and analysis\n\n### Investigating Driftwood Lectern Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Driftwood Lectern remote access trojan in campaign PTF-03238.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"337c862b7d3a63b2f563e14dc5d6c13517e9661ef28b48684b53a1ea370281fe\", \"17e9fd91401312e81c41ad0d6e34255156e457e10f376b66b40f1cfcb5712251\", \"6f64fc243f636a0d283175459e06abd004d09914b8a9b82b7e5f12521cbed506\", \"b72349f6a59b761110a86dfdc14005a573c31357dca02f4ae211873f78b03254\", \"96b7892214a69f945273f02228d980cd9d712f9a9ffc2cd45e2a78f06ab3cc2c\", \"98fbb61abde5485553b6ecf04e977026555d2f6253c07d6aaa5cb4eab1216a3e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03238"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "65bd5722-fdeb-5fee-87ca-2275f8408e1c",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Driftwood Lectern",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-03238",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "65bd5722-fdeb-5fee-87ca-2275f8408e1c_1",
+    "type": "security-rule"
+}

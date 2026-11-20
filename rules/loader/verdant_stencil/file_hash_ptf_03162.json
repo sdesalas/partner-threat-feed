@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Verdant Stencil loader sample, as reported in campaign PTF-03162. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Verdant Stencil Loader: File with known malicious hash written (PTF-03162)",
+        "note": "## Triage and analysis\n\n### Investigating Verdant Stencil Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Verdant Stencil loader in campaign PTF-03162.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"b7cbc275f8722902e801729729a1169a4a015ea6fa193c71495fab21fe747463\" or \"de270db8c0b6cb1794a9bb34485c8a31ec2e6dd1d80f53098d96fc9f393e11b7\" or \"273f14881aef9d30802c9fdebe7baf4814fbfa69f1af6db68434e87f33b39f02\" or \"711810d832ffbdfeba0c5d5b77b7e9983e686558354900cf17fb69363a5d50ce\" or \"2f6e010d631a128969c2232e69b70af889342c973b461ccd83bccf9871f2aa6f\" or \"4616e302576c8893b4a5cf6a74efd954d7aa2c1189fa5e2cacca9c807a49c835\" or \"4418af85de70834f3f3676a1a84293a7e96ffe68c8b1d84374a29294624d1ff4\" or \"02114b30c5e8b849f69173f91ab225c6daef2237dfc6b3f8c3172e9cddc3afbc\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03162"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "bea587a5-4c3b-5395-898d-6a10e3c7f9c2",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Verdant Stencil",
+            "Threat Type: Loader",
+            "Campaign: PTF-03162",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "bea587a5-4c3b-5395-898d-6a10e3c7f9c2_1",
+    "type": "security-rule"
+}

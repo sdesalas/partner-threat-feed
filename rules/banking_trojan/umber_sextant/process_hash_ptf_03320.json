@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Umber Sextant banking trojan sample, as reported in campaign PTF-03320. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Umber Sextant Banking Trojan: Process started from known malicious binary (PTF-03320)",
+        "note": "## Triage and analysis\n\n### Investigating Umber Sextant Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Umber Sextant banking trojan in campaign PTF-03320.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"715da2d1f05e1fc1f99c459dbc141264870486253df495e736560b010832293f\", \"9e095e53c44826cc88f6ebf79e76f075718cda323cd66c90c9dd9e03637ab204\", \"80890220861918ef1dadb4481898e08b4fbfbf327de04a80636a4e8f1039ebd4\", \"3048c5213c680700b482bf59855fdfd678e5f0328be7fe35d2c3063be84a0ae3\", \"f90a90c303de3ea244ce58b0f291c63dc0149cb37d5dabfe5cdc4c4f87c25974\", \"f0b58b6c92dbf402dbb81dc3deef47565011534324de23aac23bf3e5a13adc02\", \"6bb2876df04876be013adc977803678eef756d5d74f9de4858c001df9c0d042c\", \"76cbb3b4e79ad30fe74d7fd2ebe3bc51c61cea382ae0070fe5e53464a2b9c566\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03320"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "be8ffadc-a106-5645-b50b-547b6fd61c33",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Umber Sextant",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-03320",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "be8ffadc-a106-5645-b50b-547b6fd61c33_1",
+    "type": "security-rule"
+}

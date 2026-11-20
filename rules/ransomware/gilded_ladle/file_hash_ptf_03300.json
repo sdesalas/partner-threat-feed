@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Gilded Ladle ransomware sample, as reported in campaign PTF-03300. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Gilded Ladle Ransomware: File with known malicious hash written (PTF-03300)",
+        "note": "## Triage and analysis\n\n### Investigating Gilded Ladle Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Gilded Ladle ransomware in campaign PTF-03300.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"58dca66340bd5860db90a36eed1cf7c53f221c18a8bffd3a8bd17d9b7fbe5835\" or \"ff45d8d1b0fe3019072a4c21d4093189d4094d63690429c59feff7e717391ad6\" or \"36e42ccb0caf5c0a6eedcb8db121a7ace32fe2a4a9850b891120f830e5775b90\" or \"134f4e6dca59b502fe6da178c66a88b4706141a77c06d4cf98265e8a27c54cea\" or \"c0a6ec9458a722bb5fb01749323b42a001e6b4f979a2053daed190dd5925190b\" or \"3a78ad58c3d0132813b716aaa57d9307c2c42fe959642fdf6686c679334c90db\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03300"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "4f70fa36-69ec-5151-8f3d-89d5af859e29",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Gilded Ladle",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-03300",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "4f70fa36-69ec-5151-8f3d-89d5af859e29_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Mossy Mortar infostealer sample, as reported in campaign PTF-03199. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Mossy Mortar Infostealer: Process started from known malicious binary (PTF-03199)",
+        "note": "## Triage and analysis\n\n### Investigating Mossy Mortar Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mossy Mortar infostealer in campaign PTF-03199.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"4cd65c660838540b14725ddb55d02e3efa485029027a636cc7df7dd4a11d4d34\", \"e0dca0929ff47abd23e8b798dc299675cde94a79d0448a2b175acecec1b05e57\", \"6c69e61380c2efc443cbe3a1bf8a31a1568fdba7076918643eb1da5991f78588\", \"a021ee1207ef51fcb0e53ce20ddce417c1ee0f0ce3d2d78d45ced27f58b8c1b4\", \"e3cd3304b5aadbce18312c295c0eead42e039b2a7e4a76d3bf261a1791a69301\", \"4cc0e599b0cbc4134a17e11ba66bc21a75c733e170e5652102a8cd11cd0dec7b\", \"51fa9b333cf93c65ef63a6424b51f3eb090c81fe86eb9d06fc2e39fa1a21e294\", \"eacb50f9e8cb59932f12f9a10296f5b107215ec3b8ff9de9b2901f4fd59630f9\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03199"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d78d4080-a848-51bf-a974-358fdaa1c061",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Mossy Mortar",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-03199",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "d78d4080-a848-51bf-a974-358fdaa1c061_1",
+    "type": "security-rule"
+}

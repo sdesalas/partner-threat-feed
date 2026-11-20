@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Driftwood Funnel loader sample, as reported in campaign PTF-03209. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Driftwood Funnel Loader: Process started from known malicious binary (PTF-03209)",
+        "note": "## Triage and analysis\n\n### Investigating Driftwood Funnel Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Driftwood Funnel loader in campaign PTF-03209.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"ad03436da824c3b51711ca5f4b5a7c7711f02560a3507465f1836bc9df1304bf\", \"7dd7f2b5a167e96c2a531abda0e8c828f5a32a57c69c6fafcb87f6cd05167fed\", \"858ad563e84eb0ebc29f5678cc2b9bb275854782d6a5267ccf2d36c1290f2c85\", \"e2e105e98da556f5dc6a4a153a80a28b41ebccb277e0b5992ea25e3490c10b80\", \"c2f5ddaf9c41ce33c02033c15b13959d2543c10dcc589f65d6eb4845294ab6ff\", \"f5b7a5806cdfead70aa116ca51113dfcb465f7c6d3e4df79994152a28c9888d1\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03209"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "7c48f640-0ea6-5494-82f8-3197e16cd561",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Driftwood Funnel",
+            "Threat Type: Loader",
+            "Campaign: PTF-03209",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "7c48f640-0ea6-5494-82f8-3197e16cd561_1",
+    "type": "security-rule"
+}

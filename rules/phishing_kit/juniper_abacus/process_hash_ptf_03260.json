@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Juniper Abacus phishing kit sample, as reported in campaign PTF-03260. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Juniper Abacus Phishing Kit: Process started from known malicious binary (PTF-03260)",
+        "note": "## Triage and analysis\n\n### Investigating Juniper Abacus Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Juniper Abacus phishing kit in campaign PTF-03260.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"4ce29421778b68f4b6c40bcd24c7e42757a7fed7bb66e822120c12b525498273\", \"67ce172257c9d060dedc870c0818eb7a678a8c221f1a3364bce9b43589f97139\", \"e182f3627f783d6d8fd994236181ae871b3b919e74a5a521eb58210f9b8ac93f\", \"4d785ef36b4d0d025451fd9fd79daf91c0ffc95b8dda77b5bdb6bade6235f557\", \"ff0c940d27bd2112bdbaa0e60429f79f03a196ea46069e02e99cb3ae2fd77f8e\", \"e67437002e7c7c6eb23a0da88f7c69809c09fc0329d4a2686cb3c0b5bd794547\", \"f2d7846dda96767d7ad14c726123d3237f8e1789c8ad3de1b1a9022bb29810d6\", \"6f773904b2521424402fcd390181e01172cca2c53a4ef17d650af0e556391578\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03260"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "46972e02-ab41-5f28-afb6-7d017eb053b9",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Juniper Abacus",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-03260",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "46972e02-ab41-5f28-afb6-7d017eb053b9_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Willow Tankard remote access trojan sample, as reported in campaign PTF-03120. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Willow Tankard Remote Access Trojan: File with known malicious hash written (PTF-03120)",
+        "note": "## Triage and analysis\n\n### Investigating Willow Tankard Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Willow Tankard remote access trojan in campaign PTF-03120.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"7fdb049af2f0e3dec349e7dc0708dd4a86d03ba86aade9969b4dd1d38d735029\" or \"e1a4f6ed9b72435b7de583578b02d16ec35cfa50fc1c0e287ffe1bb39e841464\" or \"6a50e10a1ceec71266cd6b021ef9a409e2f9030800c28f1f564d0db8ad4c8ed7\" or \"d2239efad6dd6e6ab244be74db3dc6c09bbc63f0d23ee351690d426c4c5accdb\" or \"889116106c81975a052c2e7d07b2923983f0bd8529e09a30d92e644e9ed5e725\" or \"ab16cfc9aa9e18c19404b0ebb59134af94bdad679f5f321dd5ace1d059ca3aa3\" or \"90cb1473e77bc20b2d01776bde1722a7eed08effc45cdc06b6beaf91bfb3ca01\" or \"769e4c2d7184086624fd4801a564508699005ff79aa29118685a224639f5ad97\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03120"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "96d60eff-b0ad-5503-9735-2675ae1c860d",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Willow Tankard",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-03120",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "96d60eff-b0ad-5503-9735-2675ae1c860d_1",
+    "type": "security-rule"
+}

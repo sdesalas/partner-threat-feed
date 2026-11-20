@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Driftwood Funnel loader sample, as reported in campaign PTF-03213. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Driftwood Funnel Loader: File with known malicious hash written (PTF-03213)",
+        "note": "## Triage and analysis\n\n### Investigating Driftwood Funnel Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Driftwood Funnel loader in campaign PTF-03213.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"c2a1d5136334598ce02758fcafda7ac4a7b5b348cfd168585a1f5b868d48532d\" or \"c9bed9a87273ade0016638d9fcb643091f327a5ef6e892412be473131dc2a628\" or \"30bfb31112da208c021723ad067feac612b38b9f2eee3f17e4ae51b5e8ec3fc5\" or \"acfb29aeec36aa65b681feb5037bb84f50ca235f644798c4d376657ee1af6555\" or \"4fe6096e169da4f6a38d2788e4bdd22261e5bb6215d6218c902dbd3433bf0b1f\" or \"a0cbeeb27e5770d4522b4ec36a4e31c562177a3a77f16549939f7e6f0dc8ee63\" or \"97cabf319da79532b207015e6b7042a9b804561df27cec6ccf85b4e2deee4714\" or \"6a8f1d5eaad19de85fcc62116f739d6e634604bf8ec2f3162dd9b1e3e7baa11c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03213"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "6913bf04-9521-57bf-96b2-1bf1236fae1d",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Driftwood Funnel",
+            "Threat Type: Loader",
+            "Campaign: PTF-03213",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "6913bf04-9521-57bf-96b2-1bf1236fae1d_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Walnut Quill phishing kit sample, as reported in campaign PTF-03289. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Walnut Quill Phishing Kit: File with known malicious hash written (PTF-03289)",
+        "note": "## Triage and analysis\n\n### Investigating Walnut Quill Phishing Kit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Walnut Quill phishing kit in campaign PTF-03289.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"7b18c5ea72bb36bf65c773d8be5c3623630530827632a5eeb3fd560d2a14b1f8\" or \"2189979b63c268ddf441159ff23ab897406da7d2cf58903e15a26e9395989dd7\" or \"230847311132a92a6a6903ca9aee9453e9f5efb39fe845dccef68110ac5ac47d\" or \"74013bd584e9a4df96e1cc8b9f078ca2172ef3900a9a08ccd8d328257d50306c\" or \"8062fafc58f82babfffc16968d7b9afff53a8ed0d26da6a658ffca9ed8c7b1ac\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03289"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "3265c3cc-a50a-55ed-8597-ddb08f4e3c47",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Walnut Quill",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-03289",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "3265c3cc-a50a-55ed-8597-ddb08f4e3c47_1",
+    "type": "security-rule"
+}

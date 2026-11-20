@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Tawny Kettle botnet sample, as reported in campaign PTF-03127. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Tawny Kettle Botnet: File with known malicious hash written (PTF-03127)",
+        "note": "## Triage and analysis\n\n### Investigating Tawny Kettle Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tawny Kettle botnet in campaign PTF-03127.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"b5e0dd53127f78a2327559d5d11b03a6869130681560f76f1c8b340502a4ef70\" or \"cedcb3ef1817a3266c343b5fb6960859949094fc5f1e57ff743b579f76b28660\" or \"d399aaa130a171bebda9cdd1052c7afd7bfe8260601ae814395be34defb74e0b\" or \"ac9c0b1aa3501a5798df29be7c4e0d4df00269e4e6d9705f4d963ae058cfeb03\" or \"46b73c1f4d76d1f790397ef326bb6cfa0b40d75c1864046761c2825b9919f6f2\" or \"00f37b68557dc85ae46f538161627cc5aaed085035c39c4c51f5418379d80372\" or \"46676a664c6fe1d5e28933aadcba3ab38eb132a51fc9d43dbfd80c28596fb742\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03127"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "61cf1e86-e195-56e3-a037-8a06f638ef71",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Tawny Kettle",
+            "Threat Type: Botnet",
+            "Campaign: PTF-03127",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "61cf1e86-e195-56e3-a037-8a06f638ef71_1",
+    "type": "security-rule"
+}

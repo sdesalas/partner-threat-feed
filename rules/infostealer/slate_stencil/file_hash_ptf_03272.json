@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Slate Stencil infostealer sample, as reported in campaign PTF-03272. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Slate Stencil Infostealer: File with known malicious hash written (PTF-03272)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Stencil Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Stencil infostealer in campaign PTF-03272.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"ca842a256701459396b43d6ba2ecd1b63a9a0ee81a2dd89c4c3d51138a51a54a\" or \"73e8219e2e27b991004f58faf163f7c452b5ec1386cdc7ed9006c82ae1063090\" or \"8d2fbcaf9bedb0df9218e36cfd2322a9d7fc055b0ace9752784d4544ec088397\" or \"124e614cdb6011cc2423d90935814b85adf51e3b3b5bd16892ae376ae2546947\" or \"9a0c0614bbb0ffdc7a6ca1c3752a75e950983f356fea02a6d1a34d82e302fb1e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03272"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "2eac77ab-a06d-5543-959b-40e9295c900f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Slate Stencil",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-03272",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "2eac77ab-a06d-5543-959b-40e9295c900f_1",
+    "type": "security-rule"
+}

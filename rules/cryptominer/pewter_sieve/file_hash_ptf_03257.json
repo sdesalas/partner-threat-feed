@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Pewter Sieve cryptominer sample, as reported in campaign PTF-03257. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Pewter Sieve Cryptominer: File with known malicious hash written (PTF-03257)",
+        "note": "## Triage and analysis\n\n### Investigating Pewter Sieve Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Pewter Sieve cryptominer in campaign PTF-03257.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"8d1c0c260be3a18fe146079eb4a525edeed3ea1bfa92ac8e5b077828aed16e86\" or \"ccf3d4f607e92e1c64fbe48476da366ea8785817b9c4bc95be88a1bc2f5836d6\" or \"16d56e839db8d1f707aa01706aa6abb6ae2fdfe42895fe24f8810bb981af62d2\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03257"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b5e08542-e1fa-539e-bbe5-54a1e243ccda",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Pewter Sieve",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03257",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "b5e08542-e1fa-539e-bbe5-54a1e243ccda_1",
+    "type": "security-rule"
+}
