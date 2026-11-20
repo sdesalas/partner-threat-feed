@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Frosted Quill phishing kit sample, as reported in campaign PTF-04359. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Frosted Quill Phishing Kit: Process started from known malicious binary (PTF-04359)",
+        "note": "## Triage and analysis\n\n### Investigating Frosted Quill Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Frosted Quill phishing kit in campaign PTF-04359.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"8c2d9ea6d80cc80c03750affef72c19b74fce21f96e607c0ed28af3a6440cfee\", \"f95d8434bfccb6c0954be6af00ff9c77de8f8a65b214d41777a308b582525aa8\", \"0cefb6c534173bbd825a10e3d617493eddf13b6a75d7bb0a84a3ce9444239edd\", \"114a699276d7ccd58e6421672d7240199ad009991d4dc056e902522ef9e61c2d\", \"98358bbf39b115aa73359224290b341b2ad1a1cf39b54c9a3743059a9bf20cb1\", \"9ea78c5aed1e4a1322fc343203fb2f8368176851dcbffe793a21e31cc65ce152\", \"f01f6cdd75b60dbaa7bd4ffbea7e8ad34b751f9793b221c4d634bc1fc22127e5\", \"739269e5daf1a4e57567381a570c379cc828eeef653c2ea81135f1168ae6e867\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04359"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "3717266f-101b-5f6b-96f6-c670a468b4c0",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Frosted Quill",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-04359",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "3717266f-101b-5f6b-96f6-c670a468b4c0_1",
+    "type": "security-rule"
+}

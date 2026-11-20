@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Verdant Sextant infostealer sample, as reported in campaign PTF-04504. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Verdant Sextant Infostealer: File with known malicious hash written (PTF-04504)",
+        "note": "## Triage and analysis\n\n### Investigating Verdant Sextant Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Verdant Sextant infostealer in campaign PTF-04504.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"9e21db1614c321283609b83ca4d3144efd738d3fcf7634dc0688507f05691878\" or \"2a090967ffa8f6cbd3df9e38ccc6afc5f1b5e3950aa17d9d4c25a8cb459e1872\" or \"9adecf288810f4b53eb5e499e51c644db376f5712019996bfe15a1dd11d65626\" or \"15b1a8e0ad86458573234e9543c0debd2a8593ae5e0b1c13885fbbf67f3803e7\" or \"e3c069704d430f1f76ad00d5c2de96b8fff4c688be8af91b7bb0f144f5981a59\" or \"a4d8c9a1f6654d26ac3e7c9e8ae92fc7a181ada32e63f2907d72598f0e0e17a4\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04504"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "a65bd6b7-b5a9-5087-80b2-1cbb9ee72b84",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Verdant Sextant",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-04504",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "a65bd6b7-b5a9-5087-80b2-1cbb9ee72b84_1",
+    "type": "security-rule"
+}

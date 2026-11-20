@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Saffron Sextant remote access trojan sample, as reported in campaign PTF-04369. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Saffron Sextant Remote Access Trojan: Process started from known malicious binary (PTF-04369)",
+        "note": "## Triage and analysis\n\n### Investigating Saffron Sextant Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Saffron Sextant remote access trojan in campaign PTF-04369.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"e89d2ee434583ce022f64a3d5d91881715860040df1f473b8b3ae3eff598d0ce\", \"17f7692d44fca0841126c4a82a505cdf308c14a0a7d3e52d89cf4bb74385725c\", \"37bc8b7e52a1da9ffebd7fa4999193eac0863655038269151f739adbe0992ff0\", \"0a5b2fa51f204caba1d6c8696a3da2ee0b633f9edcba292e996356e3cd642a4f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04369"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "820235fc-dc96-5dad-a69b-fa936b6aa6f4",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Saffron Sextant",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-04369",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "820235fc-dc96-5dad-a69b-fa936b6aa6f4_1",
+    "type": "security-rule"
+}

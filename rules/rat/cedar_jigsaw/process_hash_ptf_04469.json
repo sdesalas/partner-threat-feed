@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Cedar Jigsaw remote access trojan sample, as reported in campaign PTF-04469. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Cedar Jigsaw Remote Access Trojan: Process started from known malicious binary (PTF-04469)",
+        "note": "## Triage and analysis\n\n### Investigating Cedar Jigsaw Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Cedar Jigsaw remote access trojan in campaign PTF-04469.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"e453a894ed026afc7b5d3d0896255fa007b687d7a3af903c689cfb73f64035dd\", \"c478af3a53b2f015b23aeacce8b685d9c3a71f6f25bfeb2d7521b465edc13974\", \"c42bf5b775cc24a0b7faadb4a54250448c1566d55be49f0f8f9fd4f14ecfe307\", \"fcfe5eaafca946f344265ca884669bb292d5bfcd6e87709b495e2414799631d2\", \"5493910f5f5f53b6f073ba76fd9ceb91a6c57a3b6407e45d66d732d70216bf14\", \"81b4cf72da61f18e60dbc4e4441ed82c7c562eed8cdaa3335c707b1a7b3b6fdf\", \"f993c6d0b5806f4977c8676cc0b2c95ed4cc22da869bf7786518dce9e89ea027\", \"b11041985702980e7315852cc9be4c139e51909c5fda406a754028e40c93c83c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04469"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "1e127db9-1036-5e60-bcce-d9b140004ea3",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Cedar Jigsaw",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-04469",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "1e127db9-1036-5e60-bcce-d9b140004ea3_1",
+    "type": "security-rule"
+}

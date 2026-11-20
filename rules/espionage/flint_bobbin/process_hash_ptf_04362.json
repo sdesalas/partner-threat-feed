@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Flint Bobbin espionage toolkit sample, as reported in campaign PTF-04362. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Flint Bobbin Espionage Toolkit: Process started from known malicious binary (PTF-04362)",
+        "note": "## Triage and analysis\n\n### Investigating Flint Bobbin Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Flint Bobbin espionage toolkit in campaign PTF-04362.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"5b81d9c17c3379563f302f366819bbc06f16f5d7fe170f671bf29a51a5052f62\", \"96d26eaecc274025ee3414a264e5e435a9848d6fc6e8762583a695f191e1e358\", \"c2f31a0c54495d9e9ddd0dc6c86d10524b1709bf9c2fad6c06974800a6e386b8\", \"d06db75a2f30977e1735d8ab8932e6cd84c1a0cefb3d404b3791db53b8d96491\", \"acf052639d2adb04791459b22eb37fa6be611dd9dc2a8f55ebfa082e503343fc\", \"40bc809b8a8b87abba709fb27810959f76f9c5ad62ab5e4e81197d7bfb78ebda\", \"ec084fa0a16dd305b3fc601f7f7626bcbe25c2ed19c77f5d6a893c5c6831d032\", \"0acc8767372b955d5100b3275e32b7fd2874972618c1f4f742c182bdd3c95eef\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04362"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "3359e024-a2d4-5616-96b8-dc0ac95e6651",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Flint Bobbin",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-04362",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "3359e024-a2d4-5616-96b8-dc0ac95e6651_1",
+    "type": "security-rule"
+}

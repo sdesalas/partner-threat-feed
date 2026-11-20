@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Quartz Spool loader sample, as reported in campaign PTF-04544. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Quartz Spool Loader: Process started from known malicious binary (PTF-04544)",
+        "note": "## Triage and analysis\n\n### Investigating Quartz Spool Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Quartz Spool loader in campaign PTF-04544.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"d06a9052ceb581cdd748a096680effb5657b10b057291c3d24b984bf6e6605b1\", \"79a5b555df0d0f174686b4bc21b0ee017bb2b5707315be133eb7594fdcf6a045\", \"daaa0ee27b76f716eb0b3a274e2918fb84615c0b0e79e577d0f8b6b6d39a0471\", \"96f0c7071bfde9256681f4f2580f1b7377a70fd5151a7686b79af42abfe455f1\", \"6f0c7d8a86991beee2a568df1675c4c14f3390ff862641a3044f1d4632ab5531\", \"66910d75815cec21c7e0ac90e8a590f9914fc1900e90badc84a28216cfbe7139\", \"a42646ba96b4f215debaf0ea9d757b027f34eb7aa2a72bc23278ef22b60d9b0e\", \"28c407851f97cdb8dec7dbab59f3587203ddd97be8d72f486fd12f5e7fcdcced\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04544"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ff8baba9-9b7b-5dd0-b2c5-a839badd1a8b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Quartz Spool",
+            "Threat Type: Loader",
+            "Campaign: PTF-04544",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "ff8baba9-9b7b-5dd0-b2c5-a839badd1a8b_1",
+    "type": "security-rule"
+}

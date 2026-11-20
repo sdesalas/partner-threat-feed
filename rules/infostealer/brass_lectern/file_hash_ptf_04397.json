@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Brass Lectern infostealer sample, as reported in campaign PTF-04397. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Brass Lectern Infostealer: File with known malicious hash written (PTF-04397)",
+        "note": "## Triage and analysis\n\n### Investigating Brass Lectern Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Brass Lectern infostealer in campaign PTF-04397.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"82d0afea167c0c1eab75eeaa9b0d5ed3c8c38230292efb1d55a9bbe976b9f290\" or \"98974ee3d95df95e3b60876cb23179ca129bafcffa5ed27b98c58f4f77b355ef\" or \"158f1cac9005773f307009ea50bdb1097a137f8559e1d5f76d14a3ea163be844\" or \"239d344332f230f91553a66f8708ef2e64c3824698732478d3b6e9ab60d86c0b\" or \"9a9e58a425008a457bfdee19aa8425afd332b87d0c5054e3882d309c444570c0\" or \"0a7a292e8d2935bb202d3a13b79413181f8875d680678fa63e1a4b8a871712b8\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04397"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "eebb3bf0-6583-51c9-b2da-9bc7efa185ac",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Brass Lectern",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-04397",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "eebb3bf0-6583-51c9-b2da-9bc7efa185ac_1",
+    "type": "security-rule"
+}

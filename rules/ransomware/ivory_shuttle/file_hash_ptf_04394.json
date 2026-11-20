@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ivory Shuttle ransomware sample, as reported in campaign PTF-04394. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ivory Shuttle Ransomware: File with known malicious hash written (PTF-04394)",
+        "note": "## Triage and analysis\n\n### Investigating Ivory Shuttle Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ivory Shuttle ransomware in campaign PTF-04394.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"e9b9428de9784147371c8188daa5584bc10dd392d9e71a6c88014936e618d5b0\" or \"0daa2d4107cb86a34c5415e755a570bd01361a06072fc97c5e7ad098f05dac90\" or \"750286aa42b75b82359a55c7fc05ef689ac1ff680e1c6fe6c4c6476f595a84e6\" or \"89c2a76a0338916f73d73fde7c1da0e06c5e9532e5fb53a1b1b7ffb3e51373a4\" or \"df7451451f506a841351f74ba234f5925b42c0e073649915c034cf4e0bf0a32e\" or \"e79a76728bdb49ca6764d7934cde82c928a567ab2170378864feabec6dbf5b53\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04394"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d494c6f0-b6c4-5ae8-b5eb-1f672d85b8b0",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ivory Shuttle",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-04394",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "d494c6f0-b6c4-5ae8-b5eb-1f672d85b8b0_1",
+    "type": "security-rule"
+}

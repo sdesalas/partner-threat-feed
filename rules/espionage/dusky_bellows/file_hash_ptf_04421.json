@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Dusky Bellows espionage toolkit sample, as reported in campaign PTF-04421. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Dusky Bellows Espionage Toolkit: File with known malicious hash written (PTF-04421)",
+        "note": "## Triage and analysis\n\n### Investigating Dusky Bellows Espionage Toolkit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Dusky Bellows espionage toolkit in campaign PTF-04421.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"452172945fac251ae4385a9dd1cc5f7743636669a253c405bc8028e645dcd3e9\" or \"2e084b32a4dbfc7e10fe67af001141c77907bf685cf7422c98a3f2c69a292e19\" or \"9f75bcd582faf73d0d88af86d5c706ddca9cf01a41bdf50c7e2be0221671cc39\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04421"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "aea894d9-f770-51e1-89d4-e35b976eee5f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Dusky Bellows",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-04421",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "aea894d9-f770-51e1-89d4-e35b976eee5f_1",
+    "type": "security-rule"
+}

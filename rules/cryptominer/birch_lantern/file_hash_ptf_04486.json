@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Birch Lantern cryptominer sample, as reported in campaign PTF-04486. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Birch Lantern Cryptominer: File with known malicious hash written (PTF-04486)",
+        "note": "## Triage and analysis\n\n### Investigating Birch Lantern Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Birch Lantern cryptominer in campaign PTF-04486.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"052da541152ff6cefbe77e49aa0cebae3f47bb20f49f588479a01871ae16c703\" or \"685142998a2adf6f35bbfbcfac3047c33077493b77286bfd90b07d0eb441a0fd\" or \"c503787a2caa51c74dbe0da847f27fc10fd8ffe0a4ace9c9103c7e68ef283561\" or \"23b72da953e9a20c4ddd286dd10ff7d3316a4975cb49461e474141ec40aa8e10\" or \"5ed76e842093419b8d0f69c733010fbf2fee6392820a2d164d260fc7f6e74824\" or \"91c032e2572c8093e89577b23f0081882835339d364c7bffe55f1f81c4b884e4\" or \"e6a4494ebd17d4687154dba668713f498e4fed44c78372d05f8e5f429b62a707\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04486"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "2cafe84d-c48e-5964-93d7-119be540b621",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Birch Lantern",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-04486",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "2cafe84d-c48e-5964-93d7-119be540b621_1",
+    "type": "security-rule"
+}

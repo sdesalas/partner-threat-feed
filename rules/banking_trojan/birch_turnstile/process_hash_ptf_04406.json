@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Birch Turnstile banking trojan sample, as reported in campaign PTF-04406. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Birch Turnstile Banking Trojan: Process started from known malicious binary (PTF-04406)",
+        "note": "## Triage and analysis\n\n### Investigating Birch Turnstile Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Birch Turnstile banking trojan in campaign PTF-04406.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"0672f83420b0f2d877b84ef10f4033d4311779498731a99f5c4dace29037e969\", \"c0031bb1abb8673823c2fa6c8128f0ec8c80b44c34806a7c5e81e8b7e694a34a\", \"6d39617eec93b56988f7cb7b04b055b8a2735ea140a77fe2aaa7041c42d60174\", \"96ba3b11c37f7c5afa9b2f5a79709d58c57a0bfa8c6ae8c58ce1a28d607b1937\", \"4bf22a0a6d0ceb396ee57a0daaa62f3e0c7358276e61f88a5d2fef01666641f9\", \"f88b140b9fcea363c4b2326455345a760560d83d2be5ee73015807a4d7e5f378\", \"449578b42bd40a1b2c32af4255330779ad8b39be25655b0e2ed592c1e832e2e3\", \"12af8dcee7ae034bab38e684e7c2df0ece364ed9b61c6866e7dc0894fde8daa9\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04406"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "bac26ae1-fe03-5263-88c4-4332ec6fcd47",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Birch Turnstile",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-04406",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "bac26ae1-fe03-5263-88c4-4332ec6fcd47_1",
+    "type": "security-rule"
+}

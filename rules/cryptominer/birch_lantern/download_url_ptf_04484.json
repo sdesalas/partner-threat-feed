@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Birch Lantern cryptominer payloads, as reported in campaign PTF-04484. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Birch Lantern Cryptominer: Request to known payload URL (PTF-04484)",
+        "note": "## Triage and analysis\n\n### Investigating Birch Lantern Cryptominer: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Birch Lantern cryptominer in campaign PTF-04484.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://data-relay11.test/invoice/9239.zip\" or \"https://edge-cdn23.example/download/1912.zip\" or \"https://edge-login53.invalid/doc/4639.zip\" or \"https://edge-track94.example/download/1792.php\" or \"https://mail-update54.test/install/6305.bin\" or \"https://static-data57.example/update/6272.bin\" or \"https://static-secure81.example/doc/9557.php\" or \"https://static-update13.test/invoice/8380.msi\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04484"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "3952f42a-7d46-5aea-8aec-f7dfb358992f",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Birch Lantern",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-04484",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "3952f42a-7d46-5aea-8aec-f7dfb358992f_1",
+    "type": "security-rule"
+}

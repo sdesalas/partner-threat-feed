@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Russet Keystone banking trojan sample, as reported in campaign PTF-04517. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Russet Keystone Banking Trojan: File with known malicious hash written (PTF-04517)",
+        "note": "## Triage and analysis\n\n### Investigating Russet Keystone Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Russet Keystone banking trojan in campaign PTF-04517.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"ba9185c0a7a51dfdeea7af07126003f84623af3892fec81b7368f9520cec22cc\" or \"1b4e2a12777b1a5faf259911f9c7d7cd7cc1884c24c5d20a1eb383d4fd52f9eb\" or \"1e545119b502162b9b382e979466aa8dac85478635fbcd7a91b2c813ff404e5b\" or \"10c185e222396a8ac355e47dc6c4e859213f02609d8e39e48dfb49b854f5e9f9\" or \"89ab9ffa19630716a12f98f42b14356074e3c8c0080708ebc05578d16ddf6317\" or \"2a2086ae97b733c3b2a0bb2621d527497307258a2fe8072cbb91676b60e55173\" or \"972d7a74adc1997cb91fcae777f757b7df7dd318917da9098ae61a5e8aeb6348\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04517"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "a7c1c343-8369-59c6-8198-27c1d3fde713",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Russet Keystone",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-04517",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "a7c1c343-8369-59c6-8198-27c1d3fde713_1",
+    "type": "security-rule"
+}

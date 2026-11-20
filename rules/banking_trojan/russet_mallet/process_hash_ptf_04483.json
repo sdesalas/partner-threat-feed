@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Russet Mallet banking trojan sample, as reported in campaign PTF-04483. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Russet Mallet Banking Trojan: Process started from known malicious binary (PTF-04483)",
+        "note": "## Triage and analysis\n\n### Investigating Russet Mallet Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Russet Mallet banking trojan in campaign PTF-04483.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"28665451529a79c9f9f98fb8a441c26a917c4cd1656d48de281bc0ff007579c2\", \"04a5fff1ab33d43fae32e7993ae4c1a280c46a553f3ef0b1e0182cfed9bf0b5c\", \"184cb7f2274ccaccca29c917dd2188419fb608b9eb0cb64135d874803dda6367\", \"0701db4ef24a2b2550239c37e5fcb0d1c185968c5b798afd275bb24e9c84dee9\", \"241dbffa431a2ab1f0de8b6eb507fed6c2ac550ff6405b17a053133321fe5dff\", \"6b5969bfb6d0fa2e11c8e86aa68a1657810d45f8917e15d4675a109c8804873a\", \"0091192da72f3f33b3f4d6c04541653f7bcce40716857f39097c99739450a500\", \"015c529d4492fdf23a45703de6a24a98b336943f4952e2caca4ba9c41b0ea937\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04483"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "cc39915d-cda0-5c0b-b4c2-8e37f11e631b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Russet Mallet",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-04483",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "cc39915d-cda0-5c0b-b4c2-8e37f11e631b_1",
+    "type": "security-rule"
+}

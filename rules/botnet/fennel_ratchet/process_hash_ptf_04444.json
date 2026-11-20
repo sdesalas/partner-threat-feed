@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Fennel Ratchet botnet sample, as reported in campaign PTF-04444. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Fennel Ratchet Botnet: Process started from known malicious binary (PTF-04444)",
+        "note": "## Triage and analysis\n\n### Investigating Fennel Ratchet Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Fennel Ratchet botnet in campaign PTF-04444.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"7bac732126528c5eb1f27a128e789611af92c9269400e4809fb4200ed370cc59\", \"679848e669135772aaf6e8a026bf1371df8292efb42c2c6a444d5c0c3166713f\", \"9a592018e41bc59cf8644739d36ee3e23ea46776b6b69da6e75bcd714484c45e\", \"b19b28aa7d15c1897b451eff6ec0e00aa2e75fcd8df869e3cbdc3b8e9948f2fb\", \"7b48fb637bcf33778b1f73156144377be38868cd1658b506fae698354f32c804\", \"960db0557f240cc78b0993ce52ff56bcc4f901aa47d9cdfe24b031f2c105ef0a\", \"4bb18ddb1e4ba827503a656bd201c4e85df9a000dda4bf4a4d22ec2b9ff62114\", \"1e4a7df108a2fbac847d64f76e9f32bc16de67a82e2c5f3376c888faf79ffaf8\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04444"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "be1501b9-80f3-59ff-862a-468617c9cabd",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Fennel Ratchet",
+            "Threat Type: Botnet",
+            "Campaign: PTF-04444",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "be1501b9-80f3-59ff-862a-468617c9cabd_1",
+    "type": "security-rule"
+}

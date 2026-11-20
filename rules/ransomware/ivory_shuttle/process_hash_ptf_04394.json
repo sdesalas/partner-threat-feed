@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ivory Shuttle ransomware sample, as reported in campaign PTF-04394. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ivory Shuttle Ransomware: Process started from known malicious binary (PTF-04394)",
+        "note": "## Triage and analysis\n\n### Investigating Ivory Shuttle Ransomware: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ivory Shuttle ransomware in campaign PTF-04394.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"d3c3873a8d8b3351529b57ddad6e1544c7b0abe340bb0cf6daa3e6d3f465edaf\", \"6d7ee1c32137f492c24bb6d354e054bfcdc3d5868a7c9f10ed32280789bcee21\", \"05efd569b553a4477ae551ddec02ae0fe27d5274f57b567314c4bdafe248593a\", \"7b2869cb0be039bc621d72db22a7f5f328994ef41093c0f40ab17f9fbe0e5c7d\", \"e31a297783187cf7b193c0cce8ac9ccca794f2b1a192be90f60a5add7895721a\", \"c01a854dc88f1a586efe63e44c6b49820679840804b2441c05c4f772cc410444\", \"1fd42a25ad7d73f037dbb2be36f83bce428cc808d21e462c8e9a32665c8ae6f7\", \"93698b7513c77e733bb94ba372d4055e3008969e77c153f0f184749598b95c14\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04394"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 99,
+        "rule_id": "bbd376c5-ad22-56d1-b307-1df39cb916ed",
+        "severity": "critical",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ivory Shuttle",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-04394",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "bbd376c5-ad22-56d1-b307-1df39cb916ed_1",
+    "type": "security-rule"
+}

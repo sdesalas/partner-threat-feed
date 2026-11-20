@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Oaken Sextant botnet sample, as reported in campaign PTF-04477. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Oaken Sextant Botnet: Process started from known malicious binary (PTF-04477)",
+        "note": "## Triage and analysis\n\n### Investigating Oaken Sextant Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Oaken Sextant botnet in campaign PTF-04477.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"244b8d37031294af15528e81052f206c84dd520e9ab9a5244473f163217d9f11\", \"9019f7455ba090c9a227aad3fc3648f2f33c54ea0ff3fd3cba924e5a9925164c\", \"8cbd1e2bad1e593702e8da8d9d4f667f7be8c70b85aa69b32bfa7d7a5dcedbbd\", \"d676455ef4a21b6bc848cf8fe1c044a4d79a59ae19eef4a0e9b3f570d93d2927\", \"b16d1b3e2ab03c29c903a2018f319879413af70c33c7c6f06ac484fc096a1f3a\", \"b3f6e2211c4327d8f93d877c0c5a1fa540657f464907fb0a072ede918265c1ac\", \"f46bd1e06fbace286f5ef82a65b6c927fab8fd9e85cc79451c30da810c8bc101\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04477"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "53d1b73f-d65f-539d-8d6e-ae568c22a8da",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Oaken Sextant",
+            "Threat Type: Botnet",
+            "Campaign: PTF-04477",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "53d1b73f-d65f-539d-8d6e-ae568c22a8da_1",
+    "type": "security-rule"
+}

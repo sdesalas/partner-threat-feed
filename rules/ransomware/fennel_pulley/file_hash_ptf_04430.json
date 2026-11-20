@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Fennel Pulley ransomware sample, as reported in campaign PTF-04430. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Fennel Pulley Ransomware: File with known malicious hash written (PTF-04430)",
+        "note": "## Triage and analysis\n\n### Investigating Fennel Pulley Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Fennel Pulley ransomware in campaign PTF-04430.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"8797d8b2c6f9e40513ee6ad3b734327f791b02c33370fa4193d2a778ca624a59\" or \"7dabeface8adb2643495296338187b3fe6a7aa336a95a496805315a1c2a421a3\" or \"bfff5d2a0b93dd17ad5175afbd920708451241c9db552c7a8849825866fe16d3\" or \"5cb8907c4dbbcee48841fefec245ba289860bf9c95eca4e178c44d59424bc229\" or \"e14d9c631517a4902fb582806e7702722667c7cfeda26b7cc240fffb6c8ddae0\" or \"2400979a00698c6bdb1d1f811798519c6d0b0257cf3e659a8851c08e30c03506\" or \"106575ba4b53e0406f5debed026b5e6f1867047cbe386d5310f465f063a143fd\" or \"84878fbfe041f47fb52e9b8127026975fb15236158ec05226881875fc66b23ee\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04430"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "1fa07657-b9fd-5bbb-8207-94c7d121fb2b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Fennel Pulley",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-04430",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "1fa07657-b9fd-5bbb-8207-94c7d121fb2b_1",
+    "type": "security-rule"
+}

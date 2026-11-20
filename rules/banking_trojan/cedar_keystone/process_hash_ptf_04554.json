@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Cedar Keystone banking trojan sample, as reported in campaign PTF-04554. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Cedar Keystone Banking Trojan: Process started from known malicious binary (PTF-04554)",
+        "note": "## Triage and analysis\n\n### Investigating Cedar Keystone Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Cedar Keystone banking trojan in campaign PTF-04554.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"cc5412d26fb39b98e55de05de60ef6e8c769a4e7a9150bc0de51bffab67d2cde\", \"254efc59179575665d9e29afacc01eaf5c59c628c4e6fcc9e7cadf5e888f7592\", \"bf4f12f7efd481e2c8313fd3711f5d56b1b4f961e466102b96d9f48f7f59f58a\", \"a2f692f2b21dad3964b78b1d20a1f8d1d66508cb142f4641f47f4c7f131b9829\", \"3654ce40c993cbf93202d30bc0d6f22c62cc39619103eb84775f5680cbf7f5de\", \"710f39a0615da5a48cdc17718ad88877065028f420ed11f696578733d31b12e2\", \"7c26326c64b9eb92cb7b3f8f20d3be330c40b6dc5499744037b631eb34929f1e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04554"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ae1b4943-6208-5ba4-b26f-c920ffc3d067",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Cedar Keystone",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-04554",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "ae1b4943-6208-5ba4-b26f-c920ffc3d067_1",
+    "type": "security-rule"
+}

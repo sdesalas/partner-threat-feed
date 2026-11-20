@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Lacquer Loom espionage toolkit payloads, as reported in campaign PTF-04497. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Lacquer Loom Espionage Toolkit: Request to known payload URL (PTF-04497)",
+        "note": "## Triage and analysis\n\n### Investigating Lacquer Loom Espionage Toolkit: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Lacquer Loom espionage toolkit in campaign PTF-04497.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://connect-static1.invalid/install/7096.php\" or \"https://files-files82.example/payload/2461.bin\" or \"https://mail-mail58.test/update/3277.zip\" or \"https://static-login23.example/invoice/1262.bin\" or \"https://static-mail21.example/update/7051.php\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04497"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "852b9391-9c06-583d-b020-4e5ec6f85d00",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Lacquer Loom",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-04497",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "852b9391-9c06-583d-b020-4e5ec6f85d00_1",
+    "type": "security-rule"
+}

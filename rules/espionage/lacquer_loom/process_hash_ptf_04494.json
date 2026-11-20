@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Lacquer Loom espionage toolkit sample, as reported in campaign PTF-04494. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Lacquer Loom Espionage Toolkit: Process started from known malicious binary (PTF-04494)",
+        "note": "## Triage and analysis\n\n### Investigating Lacquer Loom Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Lacquer Loom espionage toolkit in campaign PTF-04494.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"748416bff8eebdbfb4cab639a6617414ab8fc9740cc767e5887009ab7478c514\", \"69834ed17bffec509bdd5877a9b97c97e585421817d68209433bee007e8da503\", \"ceccae630145a636d2befd0bf99bf6126638338b9c1537cbb194c63f047e3082\", \"4b47553fe18ccbf2fef6b97221ebc53c328d159b24db939255ed2d0e38772e72\", \"d828e633272bbb0c680260375fdb2fd73de3b79e2f6c166a6a3be893f1145c75\", \"02ea16011e0b27233ce8d747b9bc45ff0bb209eb514b53dc31729b5938c26463\", \"d141f15f4712ac502eb596faff5348f6fc5dc7a17641a1c5a7f19bef647c00da\", \"fac76e58ac2e6ef85458247bddfee1d74ec6d713d2876ebf96728946b5eda246\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04494"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "1c7bc399-26e5-5e3a-9b54-b9a2528117f0",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Lacquer Loom",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-04494",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "1c7bc399-26e5-5e3a-9b54-b9a2528117f0_1",
+    "type": "security-rule"
+}

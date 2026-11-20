@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Paper Teapot remote access trojan sample, as reported in campaign PTF-04437. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Paper Teapot Remote Access Trojan: File with known malicious hash written (PTF-04437)",
+        "note": "## Triage and analysis\n\n### Investigating Paper Teapot Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Paper Teapot remote access trojan in campaign PTF-04437.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"b56fefce082c93ec9b0f26454a39baeeeaaed369ca15b866add6f087742220d0\" or \"7a21ffb210143d1f5fdcedda9f9d499e43fe7e4f6b20c8d7bc1c549dfd7c1945\" or \"855320324eec6590c96dc6d94facaab2fe13c9d0d02816ae74921ca4434e76fa\" or \"f9b50ffdae9f61b6e0209663810b121cbc701c9c41b073abdf32922a33ce2784\" or \"13b24d4cd069b278a0d53322402d8a9f599be56da58bc6a72ac95c13dde43df5\" or \"d65c7be7e86963b065c5a8d0df2a69d49508a7bfa7fb1089e6cfbc856a085dea\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04437"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "56cd2a1c-116d-5cfc-83bf-e7edadaefaea",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Paper Teapot",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-04437",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "56cd2a1c-116d-5cfc-83bf-e7edadaefaea_1",
+    "type": "security-rule"
+}
