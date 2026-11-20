@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Birch Teapot cryptominer sample, as reported in campaign PTF-04120. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Birch Teapot Cryptominer: File with known malicious hash written (PTF-04120)",
+        "note": "## Triage and analysis\n\n### Investigating Birch Teapot Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Birch Teapot cryptominer in campaign PTF-04120.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"a485a5ec86a6b49fd43e7cfbf4af085082baddc0d92e721879ede4870339df95\" or \"9733698c1df9542213e84e6a42ef546c83316bfd5ad6a57dd0a91e68b8d5d068\" or \"acdfb8482133a8c8215d6be5cf44151e71a64d5a69eed70069c2ad78644de4b2\" or \"4469f3728ac85c74322b4630eb18e9b3d4b2e6ad1bdc9ea4a77b9603324caed4\" or \"6a1636a4ad1d57b0de3bfeb55849495a5be4629fd1462740f09fe625ea9b57ab\" or \"7b9839492f84a83d7b9f5bc28e7c1f23af16774b94b6e2fd13af4ba111699e65\" or \"7df9667b73bc66857b7e140ca1b18fffb05e0f9bbd3e2d851b93216afe8570d9\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04120"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "642e5c92-3235-5b82-bf27-8244a9cac1b4",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Birch Teapot",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-04120",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "642e5c92-3235-5b82-bf27-8244a9cac1b4_1",
+    "type": "security-rule"
+}

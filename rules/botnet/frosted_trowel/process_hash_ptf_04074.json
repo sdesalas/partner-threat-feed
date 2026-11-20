@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Frosted Trowel botnet sample, as reported in campaign PTF-04074. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Frosted Trowel Botnet: Process started from known malicious binary (PTF-04074)",
+        "note": "## Triage and analysis\n\n### Investigating Frosted Trowel Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Frosted Trowel botnet in campaign PTF-04074.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"d41b95574d28429c956cb008bbf51d762566345e1967ecdf1f2d4d0f79cd3635\", \"ae26a758c81c4a81323cf9454a62e53085c1951b0205dc77bd77a409ea4c5e9e\", \"59f1dcecbb3271d5903d567b44bb3193f6582a513af0abbedd3bb419706ac84e\", \"0ae4324886dbf13b79b057b0383f0ec6d84f3946bef770ba586c7cd98944152b\", \"71d839d481b65c26e36c4e3b63b4938c20b400f8a73cdec9acdf6eb15a68ae06\", \"e253dfb570eaf5b000121dbd8164731e89513c70c92b969338578fd1ebdaed91\", \"5eb781d09a2e5ec6cfa7deaace4f48741635680aca1b97a96bafc4c67e05682e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04074"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "50f0028a-a076-51fb-b9ee-e399d4d72153",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Frosted Trowel",
+            "Threat Type: Botnet",
+            "Campaign: PTF-04074",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "50f0028a-a076-51fb-b9ee-e399d4d72153_1",
+    "type": "security-rule"
+}

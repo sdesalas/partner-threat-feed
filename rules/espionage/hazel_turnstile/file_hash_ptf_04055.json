@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Hazel Turnstile espionage toolkit sample, as reported in campaign PTF-04055. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Hazel Turnstile Espionage Toolkit: File with known malicious hash written (PTF-04055)",
+        "note": "## Triage and analysis\n\n### Investigating Hazel Turnstile Espionage Toolkit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hazel Turnstile espionage toolkit in campaign PTF-04055.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"aa5e8d0edd53acea310d4933b40788a09e932e75bbb4ea41472e233f05a5f269\" or \"934806027615e2c091303c1c065697f91ab18f36e4aeb2e18f9222bc248e62e0\" or \"1308cc7c2e6dd63e89d9f4f15bc98710179f446a4a92a925012841000599faf6\" or \"66587097d08cd4c7a669ba34e8d44a6210ddf7bf665ea55dcca2f2c4a7693a71\" or \"5639b4246e6fd51bff2f3d07565fee5043f142c6aa82a6b6eccab5083c180cbd\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04055"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "8fd278b4-355a-5609-8992-932f43072df0",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Hazel Turnstile",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-04055",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "8fd278b4-355a-5609-8992-932f43072df0_1",
+    "type": "security-rule"
+}

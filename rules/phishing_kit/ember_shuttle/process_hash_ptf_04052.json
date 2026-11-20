@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ember Shuttle phishing kit sample, as reported in campaign PTF-04052. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ember Shuttle Phishing Kit: Process started from known malicious binary (PTF-04052)",
+        "note": "## Triage and analysis\n\n### Investigating Ember Shuttle Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ember Shuttle phishing kit in campaign PTF-04052.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"e54ce1c507c92e4a7642a6e4ff7f6acf184bc5163c502ed0dbbf8705a5e03662\", \"266dd6fe57446bf903013cf4d402c0622af12af2b681ffcc88b33b8113882d72\", \"665ed767912fe1a456f02aae2992c58caeeee28269f3ce489e614a71e9a6cb38\", \"946eabe1fd0f50c6b46e0140a9b38d0380ed95b9c8114a2dd824e75f90e0a210\", \"da583e4ecbc62ec1ea72de870c3938c0a3a42113794298af9ef20161d2453120\", \"987a64cbc57b75f849637162cc847cb3ccf48efaaf1532f8fd24cc8f13398f10\", \"4a57ae97e4ba91489089b38b225d256a945ab64b0345c6837933cec3df2f2fc0\", \"379519eca394e1828058bdae7337a8573a381503f212c3dfe172027afee3499e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04052"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "46ed21c3-2ff2-57e7-8dcc-46c5e436c5c3",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ember Shuttle",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-04052",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "46ed21c3-2ff2-57e7-8dcc-46c5e436c5c3_1",
+    "type": "security-rule"
+}

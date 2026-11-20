@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Driftwood Tinderbox infostealer sample, as reported in campaign PTF-03966. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Driftwood Tinderbox Infostealer: Process started from known malicious binary (PTF-03966)",
+        "note": "## Triage and analysis\n\n### Investigating Driftwood Tinderbox Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Driftwood Tinderbox infostealer in campaign PTF-03966.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"ad956f55e225537126f1a610f992736db338c76af6794a59fbb33692e20eb5e3\", \"dbb0a40cd989e2657e87bc451b8d1fffda29d14921829dc9f8066d2644cbe3c1\", \"0a82449ec0c9cbf10e6e9727b302876af58669ab4f552e07501dcbe648827029\", \"b9ac113f74b7f6111e59c3807aa6c3a9bd635aeb227dd9f573db9d3698a2560c\", \"93bd0a36051f8a03494f395f4a4cf75e42dc1643563d0c95f8eea82da369e299\", \"44ddc017ac05015e8c2fba2b088c21e9e6ef9c1019e834d361d06b21d157a4ac\", \"630eb49fb094c9a97cb2d58e41226c28ced9f920e9beb5d6993d28d480154489\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03966"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f98bf996-c6bf-5503-9437-b29c001f5deb",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Driftwood Tinderbox",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-03966",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "f98bf996-c6bf-5503-9437-b29c001f5deb_1",
+    "type": "security-rule"
+}

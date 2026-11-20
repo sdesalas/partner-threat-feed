@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Marble Bobbin botnet sample, as reported in campaign PTF-04044. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Marble Bobbin Botnet: Process started from known malicious binary (PTF-04044)",
+        "note": "## Triage and analysis\n\n### Investigating Marble Bobbin Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Marble Bobbin botnet in campaign PTF-04044.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"7581becdf1644d724544e83d880493948061413783b3978d6ea23db478833cd3\", \"a87f88acec5266d9718cd0da3dcfc19b74bb68402c0be573aed719eaeba26e1a\", \"b871b8bac79f31ae511743c46f1fd12433602352eef64a55529508e94c6a0152\", \"78d299ed1b7ad3d6deb9b3769d61cfedce645dff65af80fc2b3f03a01c7487e3\", \"373b156597054ea184987109c66fb28ccb0fe55217bbc422b89f8f0e891d6f8a\", \"96d081d3bace297a1e7a7a9587623c8d3426bac3fd28a147d7eaf13e25467e27\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04044"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b30ffb6e-49d7-5e4e-a0d9-b15c4d50c1d1",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Marble Bobbin",
+            "Threat Type: Botnet",
+            "Campaign: PTF-04044",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "b30ffb6e-49d7-5e4e-a0d9-b15c4d50c1d1_1",
+    "type": "security-rule"
+}

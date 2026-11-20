@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Slate Bellows espionage toolkit sample, as reported in campaign PTF-04130. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Slate Bellows Espionage Toolkit: File with known malicious hash written (PTF-04130)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Bellows Espionage Toolkit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Bellows espionage toolkit in campaign PTF-04130.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"3b013dca1c51f9921ea455abf91a1ee6ca205f0be4b249a1c9de614e1fbf972f\" or \"c669aac501eb6213c062f9e4ff25f1dbed5e9a4a12afa3b45ae202d6397926cf\" or \"e1b334408a844a8e0f663941d7987596447a3f144848dc6e393e1333430c2f22\" or \"5916ff9c4943a33e807449a11ef24f5df10896985c7c31194401ca12aa431df2\" or \"a3ad97621178efdff179b78a05ee4b3584f68937e4f26b34f19c4a8a638dc402\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04130"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "c70d86d4-e8ea-5d32-8115-fe8c476a59d5",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Slate Bellows",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-04130",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "c70d86d4-e8ea-5d32-8115-fe8c476a59d5_1",
+    "type": "security-rule"
+}

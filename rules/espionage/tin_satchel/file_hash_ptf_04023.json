@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Tin Satchel espionage toolkit sample, as reported in campaign PTF-04023. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Tin Satchel Espionage Toolkit: File with known malicious hash written (PTF-04023)",
+        "note": "## Triage and analysis\n\n### Investigating Tin Satchel Espionage Toolkit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tin Satchel espionage toolkit in campaign PTF-04023.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"fd249123d561957d4ee1837fd465c1b913a3b8ed668505b17542d198fa9849ef\" or \"d803e7c8fd9c38e01e3e2c32c4db9034eb10c2848ec988f18b22905cb587e3d6\" or \"2a1d673ae1289a11a92906fa5b2a8ee5632ec8e59a281bb7ada151032e8a7d61\" or \"7afb18ebe6b09d02d0ef07ce70836302e46b9eb8f475c166d8bfae63650b589e\" or \"495c8054c2c9a35a1a68661404db9e52e9bbbe63e5df310c0b3405da958e9a40\" or \"684913fb6b59c4de7ea83d5f79df2db3c11bb35759d1c8dd444af12ebc5d4b62\" or \"dd209ffeb906ad2881f256416fc0e4b2855ef701d059831e520b4bc9b57c6e70\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04023"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "5ec0f2da-8149-51bc-8a3a-350c3b8af402",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Tin Satchel",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-04023",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "5ec0f2da-8149-51bc-8a3a-350c3b8af402_1",
+    "type": "security-rule"
+}

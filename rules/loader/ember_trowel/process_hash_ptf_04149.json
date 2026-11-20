@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ember Trowel loader sample, as reported in campaign PTF-04149. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ember Trowel Loader: Process started from known malicious binary (PTF-04149)",
+        "note": "## Triage and analysis\n\n### Investigating Ember Trowel Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ember Trowel loader in campaign PTF-04149.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"0a7d220460368452ea24f934aa3fc40cf97f9ecbfe24373a0bf73a2c6ae54b2a\", \"c196d4c95b3f1f61ecec5af2d8eecba7d99143e2d54fe5ace07f8c1b6d71f93c\", \"49b43f2d984cb8a586d2120741512185fcec8f3ba2c891b66f9fb0f796bde550\", \"e4af4b48d372059af9a2aaae3d4ac0ab0b22e6a793cacc0f6243d2a2022bb896\", \"3cb7f2830d8024b55a802fa8d1d7ea7337481f0f58fbaf4e9a77cb6d7e38a5eb\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04149"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "2119be9c-1025-5261-b1d9-46f19e11306b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ember Trowel",
+            "Threat Type: Loader",
+            "Campaign: PTF-04149",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "2119be9c-1025-5261-b1d9-46f19e11306b_1",
+    "type": "security-rule"
+}

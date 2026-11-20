@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ochre Lantern loader sample, as reported in campaign PTF-03970. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ochre Lantern Loader: Process started from known malicious binary (PTF-03970)",
+        "note": "## Triage and analysis\n\n### Investigating Ochre Lantern Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ochre Lantern loader in campaign PTF-03970.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"74dcb4d4c750a892e061870b7c6920e4ae513d384ad2686e677cb1e9907500dd\", \"8f1f10a6003b70a4ae276288ec6d1d5449dfe14a4e444dea5db52060528c1ae3\", \"1b2578e66fddad335a142a35123e2cdaa7b8f44f8d0c4c2ce80f94ac27db92c7\", \"122a014d368d84aab7d980df174a69d631c2f80dca4f5bddddd2478e43ac54c3\", \"a0f29bf9599753111eda2b0d03fb8d73e4ef92070dc01894f9a6fc054cd4742a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03970"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "1be47f0a-5397-5e14-bdc4-255b3b5b6ec8",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ochre Lantern",
+            "Threat Type: Loader",
+            "Campaign: PTF-03970",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "1be47f0a-5397-5e14-bdc4-255b3b5b6ec8_1",
+    "type": "security-rule"
+}

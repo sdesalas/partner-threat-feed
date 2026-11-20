@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ashen Hourglass remote access trojan sample, as reported in campaign PTF-04067. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ashen Hourglass Remote Access Trojan: Process started from known malicious binary (PTF-04067)",
+        "note": "## Triage and analysis\n\n### Investigating Ashen Hourglass Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ashen Hourglass remote access trojan in campaign PTF-04067.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"3906a981a9213adc41511e386d4b89e844ebef275f4c96c9ad8570817b18e673\", \"8c8c8646ad1c5ed27c8a509b4fd7d7b196b6571eba4cd047f261f1e44df8ba07\", \"709af0f2d175ad37a98120c97279bed9a21bcaf8ebbcd120f646b0c19d58c765\", \"551631a9e96abd387d11bcc4fceafcb4f9655f600e40f22f4d58109e003ccfdf\", \"b8e6e08b915d1f357297b99922252f3a497745d51fd8cfb44d27e95de3ad39b9\", \"12a9a56b3b9486d9ab7ed19aca682abb9f46617019f2164434af0b728df21a2e\", \"c2c35eea765fe82f34d74b485769e2b904df0eaa0fc86fdb9f3e34883a675186\", \"6335617c0da61342e705767c1cda438d2b42a1941eac039be6163a874f45c44e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04067"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "65822d66-911a-515f-9e3c-0c0312df0554",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ashen Hourglass",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-04067",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "65822d66-911a-515f-9e3c-0c0312df0554_1",
+    "type": "security-rule"
+}

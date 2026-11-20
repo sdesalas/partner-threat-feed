@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies email messages from sender addresses used to deliver the Ember Trowel loader, as reported in campaign PTF-04148. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-email-*",
+            "filebeat-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ember Trowel Loader: Email from known phishing sender (PTF-04148)",
+        "note": "## Triage and analysis\n\n### Investigating Ember Trowel Loader: Email from known phishing sender\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ember Trowel loader in campaign PTF-04148.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "email.from.address:(\"hr@track-node83.example\" or \"it-helpdesk@relay-static75.invalid\" or \"noreply@portal-edge79.example\" or \"shipping@media-auth9.invalid\" or \"support@track-portal26.invalid\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04148"
+        ],
+        "related_integrations": [],
+        "risk_score": 47,
+        "rule_id": "7c4dcd4f-daca-57c3-a6bf-7180bfa06f9d",
+        "severity": "medium",
+        "tags": [
+            "Domain: Email",
+            "Use Case: Threat Detection",
+            "Tactic: Initial Access",
+            "Threat: Ember Trowel",
+            "Threat Type: Loader",
+            "Campaign: PTF-04148",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0001",
+                    "name": "Initial Access",
+                    "reference": "https://attack.mitre.org/tactics/TA0001/"
+                },
+                "technique": [
+                    {
+                        "id": "T1566",
+                        "name": "Phishing",
+                        "reference": "https://attack.mitre.org/techniques/T1566/",
+                        "subtechnique": [
+                            {
+                                "id": "T1566.001",
+                                "name": "Spearphishing Attachment",
+                                "reference": "https://attack.mitre.org/techniques/T1566/001/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "7c4dcd4f-daca-57c3-a6bf-7180bfa06f9d_1",
+    "type": "security-rule"
+}

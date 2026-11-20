@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Driftwood Sieve loader sample, as reported in campaign PTF-04039. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Driftwood Sieve Loader: Process started from known malicious binary (PTF-04039)",
+        "note": "## Triage and analysis\n\n### Investigating Driftwood Sieve Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Driftwood Sieve loader in campaign PTF-04039.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"1b792d66af66ae3838090f99ebb90bf47d2a63ec40a5f234578c6e10f6d4bb37\", \"496128896d20c977a7031cbbfd9ca9a8dc3317a401ff3dd64f707e28140e022f\", \"4a4eebe25a91dd146841b4a7b5fe737f309034f1fe74dcc8fc043f5fa5ad22f3\", \"fce75adbd31f7d94a9cbcb3d87496ff3387b6bc5bec3e3996333b3faae0b472b\", \"34237017861f0c67fc60a47103d5e6a7c0dc7f088e05263d3c9137bc27f954d4\", \"efcc9fe2f685d5a30d9d76e02a4b596d6365bcc2d3cb518819a489e21e8d3b2d\", \"0826049aeb9149ed66ab6a0fc3a8702f2c81f5dc7c0a0aa98e7d42df084cac60\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04039"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d2a61473-c86c-58b8-801e-967171b7c9de",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Driftwood Sieve",
+            "Threat Type: Loader",
+            "Campaign: PTF-04039",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "d2a61473-c86c-58b8-801e-967171b7c9de_1",
+    "type": "security-rule"
+}

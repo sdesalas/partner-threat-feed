@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ivory Jigsaw loader sample, as reported in campaign PTF-04069. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ivory Jigsaw Loader: Process started from known malicious binary (PTF-04069)",
+        "note": "## Triage and analysis\n\n### Investigating Ivory Jigsaw Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ivory Jigsaw loader in campaign PTF-04069.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"1fa84da2baddf4571cb3e47db8521596dbe7056a4425c89ed60cdd10ab18c6d4\", \"7265e349bdfca7b4800885a973738741b1d1d264b610878aea0b7bcda77135f2\", \"f03aeb6f68748132413caeac23a909936bb2dd17b9e80d16e09feaa3b20a7b42\", \"73aa70583f3f8645a8d939b0b7554e37dcf811e31512eb8a9529ce336ec74959\", \"cfb4e101fe18816ab0ffc15a76d7aaba8a403ad5963d293ce662d64de2c942a6\", \"f4377885bb565aa97455ffd65e770d65f40d69564d202eefcced6eebabfd47ee\", \"f109b5748176ebf4c53ff109978a506cc0d3c582242eaf838374b07619629e3d\", \"7f871700997a136f9db0fe3d1f42a58a575c0bb9337f94a770cd03e7eecc1b47\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04069"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "3fa550f7-a005-50d0-86da-956ebd0ebfaa",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ivory Jigsaw",
+            "Threat Type: Loader",
+            "Campaign: PTF-04069",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "3fa550f7-a005-50d0-86da-956ebd0ebfaa_1",
+    "type": "security-rule"
+}

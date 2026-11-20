@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Tin Satchel espionage toolkit sample, as reported in campaign PTF-04025. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Tin Satchel Espionage Toolkit: Process started from known malicious binary (PTF-04025)",
+        "note": "## Triage and analysis\n\n### Investigating Tin Satchel Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tin Satchel espionage toolkit in campaign PTF-04025.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"72ad33c51a27bf14a98a25282005ea49ed4626957d81c57ccfb06638e4bc9537\", \"cbf417f888e113d41ca58d26ddd1caf105026afc266947b43df32eb2674b5ce5\", \"20d41b657c0313c5bd547fdb41665b7d67bcdc354fdc11839b3fc64ee6dad29a\", \"0413bbc8abb2417b9dbd71411299ab1375d11459d230af30dcf3fdeabebf4206\", \"602838d9ac7ed24337409c13006a4c18d304cfabe7f06d205af08eac5b9d59ec\", \"935851d17af0a263904fc4fe467557930b380943eb3dcf01e1eafb9e11aca478\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04025"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b48fcbbd-f724-5248-82dc-c54e83cda2a3",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Tin Satchel",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-04025",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "b48fcbbd-f724-5248-82dc-c54e83cda2a3_1",
+    "type": "security-rule"
+}

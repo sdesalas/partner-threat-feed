@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Slate Tinderbox banking trojan sample, as reported in campaign PTF-04118. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Slate Tinderbox Banking Trojan: File with known malicious hash written (PTF-04118)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Tinderbox Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Tinderbox banking trojan in campaign PTF-04118.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"a274952ab9d40fe7dbab84f42309fc2c2551273fd37aed52484b6c9c23c4a235\" or \"71c501a9d61eec23f9c36a2e1620ff7c7689bd397937847a41039c0463b44e6b\" or \"bce028f9c0b185defbd970a641f88e39fe5e2d43bb94b4c1abad7f3783476dd6\" or \"3a36cd6cc4cd55a31784899fd6afc64b2e71d3b75dbd12285c46c750a97f9698\" or \"f1ce02b4bcd6a4434b4a8372a0c018017b595f7d0c1ace87ecdf7ae04c068c40\" or \"9365711ef5ea421777cdebc04e5be0eada692b3e8fe6992fe1f04b33dde25b3a\" or \"51bfe67d40c35266a2ae94b02ad36b31a9e35c0e88a0a9a070df9cea522408de\" or \"b46773e1ee0632681c42f8b111a379db5ef6c0131612c0b965b91b6d3b59dca9\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04118"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "01d73ee6-5eb2-554d-b060-c4da82079729",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Slate Tinderbox",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-04118",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "01d73ee6-5eb2-554d-b060-c4da82079729_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Granite Mallet ransomware payloads, as reported in campaign PTF-03963. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Granite Mallet Ransomware: Request to known payload URL (PTF-03963)",
+        "note": "## Triage and analysis\n\n### Investigating Granite Mallet Ransomware: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Granite Mallet ransomware in campaign PTF-03963.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://assets-connect53.test/install/4613.bin\" or \"https://data-portal95.invalid/gate/9067.msi\" or \"https://login-media34.test/doc/6638.zip\" or \"https://sync-portal3.example/install/9319.zip\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03963"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "d5603af4-4d55-51b7-bf1c-42518114a833",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Granite Mallet",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-03963",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "d5603af4-4d55-51b7-bf1c-42518114a833_1",
+    "type": "security-rule"
+}

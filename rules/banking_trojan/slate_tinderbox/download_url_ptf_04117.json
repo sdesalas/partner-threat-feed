@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Slate Tinderbox banking trojan payloads, as reported in campaign PTF-04117. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Slate Tinderbox Banking Trojan: Request to known payload URL (PTF-04117)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Tinderbox Banking Trojan: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Tinderbox banking trojan in campaign PTF-04117.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://assets-track48.test/install/6859.bin\" or \"https://cloud-auth84.test/invoice/8508.bin\" or \"https://cloud-sync72.invalid/gate/2040.php\" or \"https://data-files69.example/gate/1738.msi\" or \"https://login-cloud57.example/update/2477.bin\" or \"https://node-connect39.test/doc/3454.php\" or \"https://node-edge12.test/gate/7148.php\" or \"https://node-node69.invalid/update/6912.bin\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04117"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "ba067bce-3e7b-599a-8237-07b196a480ee",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Slate Tinderbox",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-04117",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "ba067bce-3e7b-599a-8237-07b196a480ee_1",
+    "type": "security-rule"
+}

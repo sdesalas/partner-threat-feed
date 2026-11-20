@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Slate Valise loader sample, as reported in campaign PTF-03948. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Slate Valise Loader: Process started from known malicious binary (PTF-03948)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Valise Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Valise loader in campaign PTF-03948.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"f37624d4ca2244be31a926a8ce806935f59f9eb9ea7e6860815f048dbcecba25\", \"6ce7056d430b0536cccbf664b1a4f6bf7ec3837bbfcc1c6f66b00bdad045d1e5\", \"197145c0eb862e19c5ae2033a80bfec7f52caceb54d7a1475ba49e4c26a7e82a\", \"51fa2f97362941e6e21351c401ac6b10a52f86a49f2ae0f6bdbe76cc22c7d905\", \"76e135ec658f19b3ae0b1a5b9bea6f740353d63724f8be6b46b26c7cd6baf399\", \"2fbf6f574dad65654e199fea75462e6bf471f28690cc714646e388ad1cd0fd6c\", \"f076b02e1f609c25b2ec3bd3b263c8b811e09580198c70e15a50c2d4e1d5f68b\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03948"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "94f8074e-0aa6-5d45-b699-022c13ef3a86",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Slate Valise",
+            "Threat Type: Loader",
+            "Campaign: PTF-03948",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "94f8074e-0aa6-5d45-b699-022c13ef3a86_1",
+    "type": "security-rule"
+}

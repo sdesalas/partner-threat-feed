@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Paper Thimble botnet sample, as reported in campaign PTF-04004. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Paper Thimble Botnet: Process started from known malicious binary (PTF-04004)",
+        "note": "## Triage and analysis\n\n### Investigating Paper Thimble Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Paper Thimble botnet in campaign PTF-04004.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"454b0aab277016eeb87caa4f39828449809c8450c5f993a9ae6df08742fbb75d\", \"a59baad433b70a716f9d81c45b34f430f0783d402ffd8e12bc1d273193979edf\", \"54329d097265a0474519e83c8591498980066a40c98f66b34e3050f60eaba38e\", \"a944691f46a9f47ca6ffd408cb1390aa6ec881c8a2c73f751b43369744ab867f\", \"8a8bd694d76de96758b6285e0dfe99f2e823a6d2763b8b4c533c6ca7ca2d3e22\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04004"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "fe31f9b9-702a-5b37-90f4-32ad53dbd58c",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Paper Thimble",
+            "Threat Type: Botnet",
+            "Campaign: PTF-04004",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "fe31f9b9-702a-5b37-90f4-32ad53dbd58c_1",
+    "type": "security-rule"
+}

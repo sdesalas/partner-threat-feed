@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Tin Mallet infostealer sample, as reported in campaign PTF-04138. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Tin Mallet Infostealer: Process started from known malicious binary (PTF-04138)",
+        "note": "## Triage and analysis\n\n### Investigating Tin Mallet Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tin Mallet infostealer in campaign PTF-04138.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"ae9a4c11c23adfd6fe07ef2b58ae3bbae434c6797f408d5a944a3f9571608b4a\", \"72c0575f7ac54dbd1ef7f93b7e8e4670a0427b28513fc05154ecfc63e9a40357\", \"29392b2922dc82d1de6c3cca8675e8b205f111afb8b01610230ebf7e12050d13\", \"6ad4217a7a19f4fed670cc9c38bc3d0382b4e0f8e5f8270f0d28d2984cf8f16e\", \"b4f7c21013d8715c5b9a83e337ddc53c68b3ac5ab7eef3fb6f6ae6293e507c84\", \"19272b5a5e46f98b75bd02183606c87fdc5875dcd59c2a776963240f84c929d8\", \"38e92822645c0e7dedb668c6353ea250ef05421972c0fdd85f02b21cf5a5a79c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04138"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "180f4f5c-9f9b-5729-bcce-8f9c37c27f74",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Tin Mallet",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-04138",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "180f4f5c-9f9b-5729-bcce-8f9c37c27f74_1",
+    "type": "security-rule"
+}

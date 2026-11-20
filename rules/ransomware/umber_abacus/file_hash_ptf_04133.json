@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Umber Abacus ransomware sample, as reported in campaign PTF-04133. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Umber Abacus Ransomware: File with known malicious hash written (PTF-04133)",
+        "note": "## Triage and analysis\n\n### Investigating Umber Abacus Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Umber Abacus ransomware in campaign PTF-04133.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"6a79fd821eb77a42e7d431cd4ccb47cfdcc3a213ab3c3a9b97f7908b2edb5fff\" or \"12d6d4e44a696a0d37c0a6a69bd3aa0e995649bdf526ab379f008f30dae8fb93\" or \"604e84debec12f65cf6a1f6e5392dbb46b1e59dd21255770ca59748ed50c5c82\" or \"71fa81595adea629c199658948371bd71800b30adf74ed6bee045f9b69bd03c0\" or \"6bd73df29bcf7057ffccabb0d2c1639d8569fefe611d633d94ec3959dd8904b9\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04133"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "7c8dbc8a-3621-5d96-93df-1743993accb4",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Umber Abacus",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-04133",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "7c8dbc8a-3621-5d96-93df-1743993accb4_1",
+    "type": "security-rule"
+}

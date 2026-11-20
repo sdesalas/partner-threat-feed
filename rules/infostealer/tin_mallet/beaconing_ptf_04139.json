@@ -1,0 +1,78 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies a host making 20 or more connections to command and control IP addresses used by the Tin Mallet infostealer, as reported in campaign PTF-04139. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.network-*",
+            "logs-network_traffic.*",
+            "packetbeat-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Tin Mallet Infostealer: Repeated connections to command and control IP addresses (PTF-04139)",
+        "note": "## Triage and analysis\n\n### Investigating Tin Mallet Infostealer: Repeated connections to command and control IP addresses\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tin Mallet infostealer in campaign PTF-04139.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:network and destination.ip:(\"198.19.182.79\" or \"198.19.166.29\" or \"198.19.195.180\" or \"198.18.163.24\" or \"198.18.70.25\" or \"198.18.17.85\" or \"198.19.59.171\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04139"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            },
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "286e1120-4fd0-54bd-b0b3-4a6068438c19",
+        "severity": "high",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Tin Mallet",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-04139",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1071",
+                        "name": "Application Layer Protocol",
+                        "reference": "https://attack.mitre.org/techniques/T1071/"
+                    }
+                ]
+            }
+        ],
+        "threshold": {
+            "field": [
+                "host.id"
+            ],
+            "value": 20
+        },
+        "timestamp_override": "event.ingested",
+        "type": "threshold",
+        "version": 1
+    },
+    "id": "286e1120-4fd0-54bd-b0b3-4a6068438c19_1",
+    "type": "security-rule"
+}

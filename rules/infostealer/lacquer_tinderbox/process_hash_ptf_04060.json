@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Lacquer Tinderbox infostealer sample, as reported in campaign PTF-04060. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Lacquer Tinderbox Infostealer: Process started from known malicious binary (PTF-04060)",
+        "note": "## Triage and analysis\n\n### Investigating Lacquer Tinderbox Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Lacquer Tinderbox infostealer in campaign PTF-04060.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"802ed3226c0bc6eeef23076645eb4cb6814fb665b011a501ef58bddab21e9b31\", \"4517d427f6808c7e62eb4f0695a20adfe5711f3b0c1ba494fdc8aaf69e611447\", \"a28701bd5e20585888c7feb1c257a8e77205e4582bc6982088c53f2ab9d4e973\", \"59b5cc5a35eb8f9c30b95fd3aaaefcd87acd51480359a2101bf3c830da72e8dd\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04060"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "0ecf8807-ff78-51e4-b89e-f06d6fac153e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Lacquer Tinderbox",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-04060",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "0ecf8807-ff78-51e4-b89e-f06d6fac153e_1",
+    "type": "security-rule"
+}

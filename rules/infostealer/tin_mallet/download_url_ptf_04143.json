@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Tin Mallet infostealer payloads, as reported in campaign PTF-04143. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Tin Mallet Infostealer: Request to known payload URL (PTF-04143)",
+        "note": "## Triage and analysis\n\n### Investigating Tin Mallet Infostealer: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tin Mallet infostealer in campaign PTF-04143.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://api-secure80.invalid/update/2450.msi\" or \"https://connect-cloud17.example/download/8926.msi\" or \"https://edge-update49.invalid/update/4845.zip\" or \"https://files-portal77.example/invoice/3705.bin\" or \"https://portal-login47.invalid/install/1956.msi\" or \"https://sync-connect77.example/update/2025.bin\" or \"https://track-track87.invalid/payload/7842.zip\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04143"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "e91ffffa-da88-52a2-b425-88da858f620c",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Tin Mallet",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-04143",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "e91ffffa-da88-52a2-b425-88da858f620c_1",
+    "type": "security-rule"
+}

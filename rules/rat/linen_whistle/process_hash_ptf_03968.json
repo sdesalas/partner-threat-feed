@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Linen Whistle remote access trojan sample, as reported in campaign PTF-03968. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Linen Whistle Remote Access Trojan: Process started from known malicious binary (PTF-03968)",
+        "note": "## Triage and analysis\n\n### Investigating Linen Whistle Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Linen Whistle remote access trojan in campaign PTF-03968.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"c65776797993800ec9658658f04411fa5291f017ff38fb130946dc0a265f5181\", \"2af28bd2fb302f7bf2c9ef1d326aac12b0f991ba251d255c1bd5dcdff618c2b8\", \"2a17e2a65b38feadb362c0ec599afad5222d1a860c5d302d68f72bfd412a78a3\", \"c68aec53514695bb95eef06b3a855af730fc4b09f4da5c27c278f2e54f1310da\", \"5901a8d0d5dced0a5014745bdf04fc039b46f8a265bfb265479b16ca7683a49d\", \"06180414d747d7e69867befb499fb8f4a19f8fb9699dcf9532758c22d2221aeb\", \"2c2f511e85908331c89a012b02d77ae696e19b884e93156a566c1dea57068c46\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03968"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d203ac1d-18d1-5c45-b5a5-8f5426a599d9",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Linen Whistle",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-03968",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "d203ac1d-18d1-5c45-b5a5-8f5426a599d9_1",
+    "type": "security-rule"
+}

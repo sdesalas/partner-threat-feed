@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Slate Lantern cryptominer sample, as reported in campaign PTF-04087. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Slate Lantern Cryptominer: File with known malicious hash written (PTF-04087)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Lantern Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Lantern cryptominer in campaign PTF-04087.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"f5ce846f60f613286db74f7db48dc1be18a315d96de402ba42d2c3a190845f86\" or \"c63d78dfa6b65a7c3214b876a6e0be4339a7956b315868a817d4f44e8744b822\" or \"d7de2e188b58208e635a8ddbe79a71128d8350c75a4852992c697f969d8bf0c1\" or \"690d3eb855b39ae722cb68cb2045e15e9558f5ad4f557cd7fc0d16cc03a7d7d3\" or \"b2c5b2ee9f96145ba7b062ff80a1b563949a5e59d2f1fc7c2a4f323eceb7010f\" or \"22da6e1f21006c9b955699fb2802b0063a894e4a5c25c6f753eb5eb1e8b817fe\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04087"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "908df051-76d5-50a2-ae20-aa8c8d3d7082",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Slate Lantern",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-04087",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "908df051-76d5-50a2-ae20-aa8c8d3d7082_1",
+    "type": "security-rule"
+}
