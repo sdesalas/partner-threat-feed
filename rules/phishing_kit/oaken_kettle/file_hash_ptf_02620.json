@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Oaken Kettle phishing kit sample, as reported in campaign PTF-02620. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Oaken Kettle Phishing Kit: File with known malicious hash written (PTF-02620)",
+        "note": "## Triage and analysis\n\n### Investigating Oaken Kettle Phishing Kit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Oaken Kettle phishing kit in campaign PTF-02620.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"5b1a0c94454405ca808f1164e0258cbe4fb61fbb3e039ad096f9c1e4eee9c71b\" or \"fd2a48a5f94242a5b9ca847dd312e0e9e2db301a484bbd16af660b5b43bb00c6\" or \"34233a475b84d165c0f601a24e6a645c98e7d70cc715676edeac4bd15cdc3f37\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02620"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "0c0a8d40-18fa-5674-9422-4ba303587ce1",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Oaken Kettle",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-02620",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "0c0a8d40-18fa-5674-9422-4ba303587ce1_1",
+    "type": "security-rule"
+}

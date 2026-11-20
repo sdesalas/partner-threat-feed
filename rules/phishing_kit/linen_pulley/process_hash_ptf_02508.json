@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Linen Pulley phishing kit sample, as reported in campaign PTF-02508. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Linen Pulley Phishing Kit: Process started from known malicious binary (PTF-02508)",
+        "note": "## Triage and analysis\n\n### Investigating Linen Pulley Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Linen Pulley phishing kit in campaign PTF-02508.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"30a252c1de48eb29d6cce3bb78f3d5db98e98741c783c5d0b28aaba470bd5c05\", \"6e5677815d18bd5b61cb2b278b8bd325bd698fd67dd7f442fb5fb6d3236c74f6\", \"2f3fbf71b268d104568283f4eb193b824f3bf0757c2e56b51baccbf2aa7d48d5\", \"587eede34685bb05fdff16dd1df8737ff81f43740ea2cba0c4eea1c0d915cdb9\", \"4a430a0eaf65775278c72659764afefae954212f4e20bb2801e80083526c03f2\", \"44e0c9ddc43cbc535cf8dbfd9444a487fa33da75d024d4be17e0074e00c80f61\", \"17ad6e0b1d28bf01ad16a6b542b710f7e2b5f65b2082f4d8e91f802e032bb26a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02508"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d8c604ef-9cf5-55b1-b154-af2c5fc6b8b0",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Linen Pulley",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-02508",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "d8c604ef-9cf5-55b1-b154-af2c5fc6b8b0_1",
+    "type": "security-rule"
+}

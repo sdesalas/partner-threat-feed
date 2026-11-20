@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Granite Gimlet banking trojan sample, as reported in campaign PTF-02536. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Granite Gimlet Banking Trojan: Process started from known malicious binary (PTF-02536)",
+        "note": "## Triage and analysis\n\n### Investigating Granite Gimlet Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Granite Gimlet banking trojan in campaign PTF-02536.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"fd6a9ec48cfe38460755f1f0b4aeb6a0bd87272c002957087078a6aab0c4e5ac\", \"a97dfa52f3dbe45dfcfba0668c5b52e4d51213fba88c481a3826eb8f99cdc2ad\", \"ae03f7d5bb3da052d9c9029551f7398eeec73017a4efc30b97ff5a479743c137\", \"e615e7060a202d600fd5a0d5082fc7815e3f9684b2ead6b7b2f730ff83d6f634\", \"37a5b090fba8021c40fad48df0679573c1fab5cd1812e535dccf90846de876a0\", \"5874fed307811d0f42ed26745bc2508baf89a0266b2e931e6ae01ac1ab01fcde\", \"3c7a88d4056788eceb1848ed656bf7313986dbcc463087f9b3320bb2dc43e0d0\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02536"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "3c7a1e05-a0a9-50b0-aa59-851bb2681af3",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Granite Gimlet",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-02536",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "3c7a1e05-a0a9-50b0-aa59-851bb2681af3_1",
+    "type": "security-rule"
+}

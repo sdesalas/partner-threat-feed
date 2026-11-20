@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Cedar Anvil banking trojan payloads, as reported in campaign PTF-02645. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Cedar Anvil Banking Trojan: Request to known payload URL (PTF-02645)",
+        "note": "## Triage and analysis\n\n### Investigating Cedar Anvil Banking Trojan: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Cedar Anvil banking trojan in campaign PTF-02645.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://data-files81.invalid/invoice/7384.zip\" or \"https://data-login25.test/update/4959.msi\" or \"https://edge-cloud33.invalid/gate/1078.zip\" or \"https://login-assets91.invalid/payload/7928.msi\" or \"https://relay-assets21.test/invoice/6230.zip\" or \"https://secure-sync10.example/payload/5722.zip\" or \"https://track-sync20.invalid/payload/4608.zip\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02645"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "c6d84a2e-9c0a-51c4-9a0a-6882e95b30e2",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Cedar Anvil",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-02645",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "c6d84a2e-9c0a-51c4-9a0a-6882e95b30e2_1",
+    "type": "security-rule"
+}

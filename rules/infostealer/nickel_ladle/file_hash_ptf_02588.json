@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Nickel Ladle infostealer sample, as reported in campaign PTF-02588. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Nickel Ladle Infostealer: File with known malicious hash written (PTF-02588)",
+        "note": "## Triage and analysis\n\n### Investigating Nickel Ladle Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Nickel Ladle infostealer in campaign PTF-02588.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"411735737f29a02d700ea8fac70dc3c89d359a02c88cc25e1a310fd071538ccd\" or \"27d39bed746139db278ec62bde714069ee9ad501bee15426b175fac5568255e9\" or \"804616feb4344985d52e0789b3bafda058c63a9176355fdb2bdf0caa46efc096\" or \"2a87230acc73d1aefdd2119790a2615c3c4696dbacee31bc73477aab7962ea8a\" or \"4ba9dce31f1ade0c5f15cdf7e658e825fe1055a172aa206935c0568366e9bff7\" or \"86f7eb38bcf230c36d3ecc702f3034546ae7442c443c5d131dedcbafa9c1845d\" or \"c3baa4382eec7c27d491cb47683abb0ff2fc6f9502bb5379787e4b5ec0243565\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02588"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "8c19d57f-12b8-53da-90fb-119c1aee3262",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Nickel Ladle",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-02588",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "8c19d57f-12b8-53da-90fb-119c1aee3262_1",
+    "type": "security-rule"
+}

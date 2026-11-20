@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Hazel Ladle botnet sample, as reported in campaign PTF-02679. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Hazel Ladle Botnet: Process started from known malicious binary (PTF-02679)",
+        "note": "## Triage and analysis\n\n### Investigating Hazel Ladle Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hazel Ladle botnet in campaign PTF-02679.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"f0dd98fbcf9fc017573a55e7d3bb5a2c00f94f4a4a3003c134b967e9a9797863\", \"56c2a672b0258f09f29d6caee5602d22e10cbef3650cbad3ec873675a7c990bf\", \"387169d49f5203669a597279c293812f73cb3320c1afffc7b5f8caf31c282407\", \"5620837857a9d3e1669c21ef91190c6fac137d48668582ab92216efe37f55735\", \"1964147761939b8bb5717b08f740ea63cf946e6eca5f183b10680a208e00926a\", \"56fb0049697535d6803cef50127b0f3e01076a48275639d4fd569c144703ac55\", \"41e3f45fa12a747ef55751f73ca80cd6114adf5443cee6cb4b437e785349c41b\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02679"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "9dff6734-6360-59ca-80be-6a1c8b123bd6",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Hazel Ladle",
+            "Threat Type: Botnet",
+            "Campaign: PTF-02679",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "9dff6734-6360-59ca-80be-6a1c8b123bd6_1",
+    "type": "security-rule"
+}

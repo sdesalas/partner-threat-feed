@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Saffron Mallet botnet sample, as reported in campaign PTF-02534. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Saffron Mallet Botnet: Process started from known malicious binary (PTF-02534)",
+        "note": "## Triage and analysis\n\n### Investigating Saffron Mallet Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Saffron Mallet botnet in campaign PTF-02534.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"8367e72486ff5eac535473c976eb39eacbd91d399288dda12334bed837af8799\", \"bdbd0bd4dd6a1b94ac8daf0c21b30846d254a7dece01681607d0b2874e161d33\", \"000d79aa87bfb4d7f7f188dc229bb01de595d2f61febd365a8b42117720db089\", \"bb39c7fb374a5383a00c16a9c3bb8aad78b153abfa8152cbda25eca00ac7434b\", \"d9dd53ec9584c481dc74a1bcf4ec0018f4c33c9522d86019795b9bb7f383cb44\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02534"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "9a1031b9-ea72-5f33-9012-d6b2d53ba6fe",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Saffron Mallet",
+            "Threat Type: Botnet",
+            "Campaign: PTF-02534",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "9a1031b9-ea72-5f33-9012-d6b2d53ba6fe_1",
+    "type": "security-rule"
+}

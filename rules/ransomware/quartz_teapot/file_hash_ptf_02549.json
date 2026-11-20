@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Quartz Teapot ransomware sample, as reported in campaign PTF-02549. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Quartz Teapot Ransomware: File with known malicious hash written (PTF-02549)",
+        "note": "## Triage and analysis\n\n### Investigating Quartz Teapot Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Quartz Teapot ransomware in campaign PTF-02549.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"67ba6ec369574cd8e658c684f51acb41906ec9663c844cbc16a4e7d1779ce77d\" or \"01c4b40bb24df83fde73ea714790c5e8cbaddb4819dedf378581fd198a081cfa\" or \"fdcbdd89f434550afa76b0a79c01ff5e68b750f5e714047fc92d954ec533439a\" or \"c7fc9c6089fa5f94068fbe1d1d45bf1f1e9ec3494e9552cc5ed41bc40773e77e\" or \"9b8c3d48af33fd8dc24192990bb2a62eec5797ab7548e1bf7945a32479f51f9f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02549"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "2b465fa8-1ed1-5f4e-b2e4-eec23e0381ec",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Quartz Teapot",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-02549",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "2b465fa8-1ed1-5f4e-b2e4-eec23e0381ec_1",
+    "type": "security-rule"
+}

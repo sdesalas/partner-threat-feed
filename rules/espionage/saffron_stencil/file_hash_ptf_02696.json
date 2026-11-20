@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Saffron Stencil espionage toolkit sample, as reported in campaign PTF-02696. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Saffron Stencil Espionage Toolkit: File with known malicious hash written (PTF-02696)",
+        "note": "## Triage and analysis\n\n### Investigating Saffron Stencil Espionage Toolkit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Saffron Stencil espionage toolkit in campaign PTF-02696.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"28c7b5c20cb19342fef2b9db485636acb8bb97dfaa304c9cd1f7508d8d0cd621\" or \"eb24e4381beef325d9912ccc0e78d043c50f5b56cde6e8e8034501166a3f1258\" or \"c8022f1c5fbb60786a5bda56c2a49cb481ed1cd5308045075c0c900e56ce83c9\" or \"08c449a4cb039719fd8815939fa782b07cae162dd808101df06e5e9d816c183e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02696"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "4eef58be-7fcf-527f-95ea-d6d9fc383e12",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Saffron Stencil",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-02696",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "4eef58be-7fcf-527f-95ea-d6d9fc383e12_1",
+    "type": "security-rule"
+}

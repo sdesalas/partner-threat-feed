@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Chalk Pulley banking trojan sample, as reported in campaign PTF-02685. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Chalk Pulley Banking Trojan: Process started from known malicious binary (PTF-02685)",
+        "note": "## Triage and analysis\n\n### Investigating Chalk Pulley Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Chalk Pulley banking trojan in campaign PTF-02685.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"bbe9cac9d3513f4bffdced3e893aa62bd2def1efa2bb2b1d64766e2cf75d4bd2\", \"4eadc114c1665f03c68e2f82f3b4ad7464c4400f7b33ae94ebb6b91ee9e9caff\", \"c19e578716538e8f8521069bbae88a1fccc1b9184c78ecb3bd880e35531b45aa\", \"eefb0a64e18bb82478ba279cb7ba8b931abde96c4136de8cceadf485cdc2d925\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02685"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "50f07612-3703-5a10-b0d4-fedd3dfafa27",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Chalk Pulley",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-02685",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "50f07612-3703-5a10-b0d4-fedd3dfafa27_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Cedar Anvil banking trojan sample, as reported in campaign PTF-02645. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Cedar Anvil Banking Trojan: File with known malicious hash written (PTF-02645)",
+        "note": "## Triage and analysis\n\n### Investigating Cedar Anvil Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Cedar Anvil banking trojan in campaign PTF-02645.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"198d93c08e2f36312c6feecc5de25bc9457dc33296ab572f3db9062cb155968f\" or \"bda9ab17e7ce14e3f18faaeb9b27cd57ca329b364edc3864d744a555848c0e41\" or \"a52159ca2c56bc1960289010f51815d4e469fdc02ed1fc6900385186b2f20208\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02645"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "a1cb68f9-10c8-50ca-b8a2-536f347e6169",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Cedar Anvil",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-02645",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "a1cb68f9-10c8-50ca-b8a2-536f347e6169_1",
+    "type": "security-rule"
+}

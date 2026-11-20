@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Rosewood Abacus banking trojan sample, as reported in campaign PTF-02568. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Rosewood Abacus Banking Trojan: Process started from known malicious binary (PTF-02568)",
+        "note": "## Triage and analysis\n\n### Investigating Rosewood Abacus Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Rosewood Abacus banking trojan in campaign PTF-02568.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"caaa94d1bd2f4809098e736d495b060e96f66b96a82f480218e82c425f3c7d65\", \"3a1e1e3b67300e62fd4cf66dcace81bd5cb8f2526f4fda47209e5607709f8cef\", \"ce6ecb40e665233cf0e369ac66cdb766970f44948e1329524c865cebdb7ee7f7\", \"bb507fac47cd5cc9d11c41fc464ce53ee896335803e1df80a179c5a004bb49bf\", \"9dd474d5d69fc6e579dfce368423c09e9356e723b4a13ffdcda291e5331e0be9\", \"773e83aee1e39c06aff5b9dcf991c0d091f72eddb4d5b0bce6245ee5238932da\", \"f0b7286eaec0e7600026021fa9aa140b1e620f16758b79a97debbf7c18a03c84\", \"9f7f2ae99158af82b9555239dc85495be8cff01a53c028d063726b42dcd4db53\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02568"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "fb2bc352-7971-5aa1-859f-3967f8ab2ca9",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Rosewood Abacus",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-02568",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "fb2bc352-7971-5aa1-859f-3967f8ab2ca9_1",
+    "type": "security-rule"
+}

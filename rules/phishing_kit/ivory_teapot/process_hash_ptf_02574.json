@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ivory Teapot phishing kit sample, as reported in campaign PTF-02574. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ivory Teapot Phishing Kit: Process started from known malicious binary (PTF-02574)",
+        "note": "## Triage and analysis\n\n### Investigating Ivory Teapot Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ivory Teapot phishing kit in campaign PTF-02574.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"15d4044f7543199709bee60caa2de4bb5b7454ab6600030f721946eefb444073\", \"42d4eb0d82a8b7314ff645b6d26469e0f9e6227f70d1be202582abfe74094dd1\", \"1bded93eee5ec797321f09dfe623b856714b90d2758cc06f473b47d2ac739289\", \"72e56a4dff347c8624d81c3e07777eaa6b46f7fd560d102c7ac2e08db40bdd1f\", \"b340963c4e9f4b815c852d7985eec7da1db9f6136b4cf51615bc6c586e0c1cc5\", \"d2c2f010be58f6bc45644fdf0f1cabc0b0656a78cb6adcad336571d1127a9379\", \"4fa741997014977ab7337cea1dcb76846fd1ed55eb0007eb1124d3c0af0e3852\", \"d5ef12a11cc7e8568e90e235dd775bd9d1f5564115d3b1acb6be4bf4835bcc4a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02574"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "4f840a1b-470e-5163-b332-10ea9111cf13",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ivory Teapot",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-02574",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "4f840a1b-470e-5163-b332-10ea9111cf13_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Granite Gimlet banking trojan sample, as reported in campaign PTF-02535. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Granite Gimlet Banking Trojan: File with known malicious hash written (PTF-02535)",
+        "note": "## Triage and analysis\n\n### Investigating Granite Gimlet Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Granite Gimlet banking trojan in campaign PTF-02535.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"3bf4a146fa77cebdbc1618c0cf9379c133db97e94bea7ee2d4ede392240c06a7\" or \"0c5f5f0056373ad824dd660484ca4c3bb6f7aac9c92ee9a7ab586090fcb0b57a\" or \"be41d4993f5eb9e74406a962568ee4bfe947afa38969c5a252439e397cbab838\" or \"69a9a680c937dd8160e1d0cb0a41715d52be89310d86e2d64da681266f40d2ff\" or \"17db93df951f451d59626eedebbdc2b2f76d40f6772b852218bfe9d4f737b2c0\" or \"5ae682147dc33620895f85204c09307dfcd29dd2f28c90a12b5f4483bd5816be\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02535"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e81c93ae-6a98-5ddd-9767-f19c67f3c92a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Granite Gimlet",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-02535",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "e81c93ae-6a98-5ddd-9767-f19c67f3c92a_1",
+    "type": "security-rule"
+}

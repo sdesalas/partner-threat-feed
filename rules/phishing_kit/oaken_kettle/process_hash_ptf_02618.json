@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Oaken Kettle phishing kit sample, as reported in campaign PTF-02618. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Oaken Kettle Phishing Kit: Process started from known malicious binary (PTF-02618)",
+        "note": "## Triage and analysis\n\n### Investigating Oaken Kettle Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Oaken Kettle phishing kit in campaign PTF-02618.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"0a2355501e9bdd97059755837fb29b2fdd999ea9f0b802da6e9c3961e36801d3\", \"7b5194a13aaa8f9c5ab9eeebe3c9051ba4c9b1ebdb1e18c4937fe396f58f6dc0\", \"e3e7b407c4b13f58745064671861b75d11bfb2d63799b0e3e7db226e48f61548\", \"ba1be8bd9b6369c526bf3174e85b1b78aee0c4cd2e9ca53732f03db5d79a985c\", \"d43991d3f0e24b568530167c0e5f8a3d11f3fd4c6380e0d67331f1a0e0050892\", \"14d6a5533486637b5549f6965c4100c8a11c2043ce36dba5abf6dbfd642989bc\", \"62d4218871675d305be7460130b73f979808cb40a326a61edcc6fecd2582e39a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02618"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "7a86aaa5-4706-5840-9f5a-cfd6ff5668c1",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Oaken Kettle",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-02618",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "7a86aaa5-4706-5840-9f5a-cfd6ff5668c1_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ivory Whistle botnet sample, as reported in campaign PTF-02496. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ivory Whistle Botnet: File with known malicious hash written (PTF-02496)",
+        "note": "## Triage and analysis\n\n### Investigating Ivory Whistle Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ivory Whistle botnet in campaign PTF-02496.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"de7c44be1ada40091f889a24add68888d296ba33593e5110d75d918b1c450116\" or \"f8385256b9119079a08b4550210460f30ef9a0fc118e5852158771aa299f9e30\" or \"67c43c044e4c5cf43c7ce0f57e8e6e3a9d6819e6214a932fead80240d61fa776\" or \"b21fdcb738dde97718c39329690a6effc43e8f9b9125e770cddafecd54fbaf0e\" or \"e3b0b047000412dd1fb53c2879c2e8e9b819ece7e91ead0894e3cca6e8747fe3\" or \"07cb261ae2b9f7cb9dd480a620de324b9110c513ac11ab0b4f1d9c2fd34a3fa3\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02496"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "c8925579-85df-5308-b003-2f32565331ee",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ivory Whistle",
+            "Threat Type: Botnet",
+            "Campaign: PTF-02496",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "c8925579-85df-5308-b003-2f32565331ee_1",
+    "type": "security-rule"
+}

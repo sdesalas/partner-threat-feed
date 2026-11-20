@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Fennel Mortar banking trojan sample, as reported in campaign PTF-02501. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Fennel Mortar Banking Trojan: File with known malicious hash written (PTF-02501)",
+        "note": "## Triage and analysis\n\n### Investigating Fennel Mortar Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Fennel Mortar banking trojan in campaign PTF-02501.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"0ff99c7bb204e24591abad6120f7933a14330a2edc98adbfd877079a07eb0d61\" or \"6f150bc4aafd16335544c2dad98076ecc2c0858a9069a4349e528deadabfb766\" or \"941243b7b44383186435b78f103b649aeee3cdbbb0d09b5bf765fe1f0fb0671b\" or \"a48fad8380e9cc27b0823465b31525d70e70a26ad1f20661b27dd23a364599aa\" or \"1375e3e50409b29d7f08f4a63a4d871fa4856bfd7fc7d4401eb6b2355c3a7888\" or \"4a6786c25da3e624b439ff31f50731d2d2de825d6e1ada71a6a8afe96e882c81\" or \"5335931da6d92327f0f11aea7fad5d20620352db8c28327af82dfae8aab3403f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02501"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "3b68acaa-b39c-53fe-bfb2-7776b426422f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Fennel Mortar",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-02501",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "3b68acaa-b39c-53fe-bfb2-7776b426422f_1",
+    "type": "security-rule"
+}

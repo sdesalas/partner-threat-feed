@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Copper Needle ransomware payloads, as reported in campaign PTF-02661. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Copper Needle Ransomware: Request to known payload URL (PTF-02661)",
+        "note": "## Triage and analysis\n\n### Investigating Copper Needle Ransomware: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Copper Needle ransomware in campaign PTF-02661.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://api-node5.example/install/3662.msi\" or \"https://cdn-data80.example/doc/5883.php\" or \"https://login-login47.example/invoice/7194.msi\" or \"https://node-media46.test/download/8306.zip\" or \"https://portal-update73.example/invoice/6631.zip\" or \"https://track-cdn59.test/invoice/9454.php\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02661"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "5a852b48-f638-5fc6-875a-2517784300cf",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Copper Needle",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-02661",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "5a852b48-f638-5fc6-875a-2517784300cf_1",
+    "type": "security-rule"
+}

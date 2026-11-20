@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies TLS connections whose JA3 client fingerprint matches the Ember Pestle loader implant, as reported in campaign PTF-02494. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.tls-*",
+            "packetbeat-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ember Pestle Loader: TLS client fingerprint of implant (PTF-02494)",
+        "note": "## Triage and analysis\n\n### Investigating Ember Pestle Loader: TLS client fingerprint of implant\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ember Pestle loader in campaign PTF-02494.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "tls.client.ja3:(\"6b6ae6dae19021cb0bce20793c3591a9\" or \"c756863fce51599af3aa554a2cf6e738\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02494"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "cf4f47f1-a552-5a21-bd5c-243811e2e27f",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ember Pestle",
+            "Threat Type: Loader",
+            "Campaign: PTF-02494",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1573",
+                        "name": "Encrypted Channel",
+                        "reference": "https://attack.mitre.org/techniques/T1573/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "cf4f47f1-a552-5a21-bd5c-243811e2e27f_1",
+    "type": "security-rule"
+}

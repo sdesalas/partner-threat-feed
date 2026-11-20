@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Fennel Mortar banking trojan sample, as reported in campaign PTF-02500. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Fennel Mortar Banking Trojan: Process started from known malicious binary (PTF-02500)",
+        "note": "## Triage and analysis\n\n### Investigating Fennel Mortar Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Fennel Mortar banking trojan in campaign PTF-02500.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"1d5fd0f75bda3e583e2baa99b2ff7b7505ff6260ddfcf2ff552ddc0dadc89547\", \"6ed52b26f7e0e37824b53239a7d44ff954bf789ac3ef8cb0bcea1f5ba1d32145\", \"83f654d30376c3d42dbfbb68545841d6a3c079864d0dc2c19e5d99493f5e96ad\", \"0b8e31860fa285d1f9b50d4ef38a397c8d23d71cb17d0a0c6c647ac53b8c2188\", \"33dcb3014ded6c85c8f74c008caca7a252ced1eaccf450abfc39e24cc6bf9d19\", \"158f523287a74deb05dc570a1d17fa1b6b8b469f51e8bc0fc7dc45d441eb935b\", \"52206110ac6e9381a584ee4956fa0f34f42b723fe9eb1ac4e9f43eac26f03b13\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02500"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "76e491d4-7aa7-5fbf-a865-f0ee6773002c",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Fennel Mortar",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-02500",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "76e491d4-7aa7-5fbf-a865-f0ee6773002c_1",
+    "type": "security-rule"
+}

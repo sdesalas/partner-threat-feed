@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Linen Kettle botnet sample, as reported in campaign PTF-02604. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Linen Kettle Botnet: Process started from known malicious binary (PTF-02604)",
+        "note": "## Triage and analysis\n\n### Investigating Linen Kettle Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Linen Kettle botnet in campaign PTF-02604.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"7094567617628e2e959f59284010f38a266efe451180c2680d853d0c6133701c\", \"7dcf616b20274eaabb7e36be74ca9d4adcd29145eac32cdddb30ef412e678951\", \"73ffcc11dc4b45b9cc0fbb1e32526748ef1bdcc522e27d92e5a93a8294ec80c5\", \"8fa33ab6f872489a3a096c14f3676f88cbddb897a17f7d2bdceab8325a144456\", \"adf3de2cbdc0207660a9a043214d380a31a72e2f5ab25555e505571e59306e71\", \"7a7b4da656296099a1bca201a186dee5d1117ce90966266ff76517bb75669948\", \"30e93ddc7648b80d1df201e7cce312328e481457345a94b4bcb738ccb673292e\", \"4e5e9b02d9e9a4e0dc1b88e9526a9a0cd513cdce3c37c655f491be00b5c377d1\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02604"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "87dd5531-ce03-5770-b272-d4e4843e1c1e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Linen Kettle",
+            "Threat Type: Botnet",
+            "Campaign: PTF-02604",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "87dd5531-ce03-5770-b272-d4e4843e1c1e_1",
+    "type": "security-rule"
+}

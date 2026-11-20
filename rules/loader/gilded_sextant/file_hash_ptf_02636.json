@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Gilded Sextant loader sample, as reported in campaign PTF-02636. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Gilded Sextant Loader: File with known malicious hash written (PTF-02636)",
+        "note": "## Triage and analysis\n\n### Investigating Gilded Sextant Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Gilded Sextant loader in campaign PTF-02636.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"a4c49309de3884598e05db31e6fa55ac9e73993ff26983482f108b1b855c4958\" or \"730bb6708b93c4db0281cc8993ffc50d1276f72c61eaf0d53d9e7e4663d68b69\" or \"d92817ec1dbfe04bf4af354e05227d76334e9bb36079ff346990d4756b3f72cc\" or \"cba6fa738efa088548f7a082a08f6c6f768338db909a3bf7bdb15636002949da\" or \"ffe1278049d8c0c16379acc700f2a0afb4a58850a5d272e15de4824c992ff113\" or \"dcf1fbf09f48c488a0cf2d72749131ef1b8a478657c9ae644fc30f5a1ad2bc37\" or \"29e6dc3b9360c3298f697419f334c7ecdde67ca8b32c76a2f40b4faee9eff623\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02636"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f3808989-f290-5ad5-9e0a-b9fa389d138c",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Gilded Sextant",
+            "Threat Type: Loader",
+            "Campaign: PTF-02636",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "f3808989-f290-5ad5-9e0a-b9fa389d138c_1",
+    "type": "security-rule"
+}

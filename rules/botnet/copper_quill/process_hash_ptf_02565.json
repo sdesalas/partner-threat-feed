@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Copper Quill botnet sample, as reported in campaign PTF-02565. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Copper Quill Botnet: Process started from known malicious binary (PTF-02565)",
+        "note": "## Triage and analysis\n\n### Investigating Copper Quill Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Copper Quill botnet in campaign PTF-02565.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"9a3911109363dc0e50b40109c1128fd4a5c5a481318bfbbdaa173b272811a26f\", \"5cc22ea05cd8f10599fbd1e50bf0bc7cc02957d591def5d91585bfbd8a64f052\", \"a53d46a7d52c857e8765bff3e5e4bf70a3a564ecf9df1e7c1ba7589a03839079\", \"e87fcc17df3c4e15740a0f0b1bcd4158566d778ec75624f56d5348510004023f\", \"cdbbacfb9a69ab8d658113026bfa93b8b29c0b97abac0add8b3c83faf6c6ad28\", \"8fcdaa826f84ae5f1d186ad885437b26d6027eda21d39659c649cce0d48421ea\", \"39370324c0fc00e7008d843c013deb9663edc40683d112415af2f30322c752e4\", \"afc5842b5a28f3e5e0139b5b603cd40846b3fc105b5ca3ff0cbb6f257c0b247d\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02565"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e9f446db-578c-5a10-9067-d2ebc6caf853",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Copper Quill",
+            "Threat Type: Botnet",
+            "Campaign: PTF-02565",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "e9f446db-578c-5a10-9067-d2ebc6caf853_1",
+    "type": "security-rule"
+}

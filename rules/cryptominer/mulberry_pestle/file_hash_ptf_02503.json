@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Mulberry Pestle cryptominer sample, as reported in campaign PTF-02503. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Mulberry Pestle Cryptominer: File with known malicious hash written (PTF-02503)",
+        "note": "## Triage and analysis\n\n### Investigating Mulberry Pestle Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mulberry Pestle cryptominer in campaign PTF-02503.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"74f7ef3d959ed365e14ea22e9b1446e5c2a1e5db87c46fbba0041e74b37013ad\" or \"8f3566da90db913c70070b6de70a31bc38385a64e407e85be05b753be4d96199\" or \"638577a6ba49cdfca6408a04710c191e07725fde6ce1141dd8251108e5ed868c\" or \"7172a40783a01f854f618510581bd35074cf7e215f3d3922415f0b6153a1ff2e\" or \"93a14b0183883d47f09fbf484fff7934348e42efff53aee0bff377c5d850b52c\" or \"d6c623e715a97c0786502c28a526405282114dd537455917da825500fdafb74a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02503"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "871cccb3-6f86-5a40-ad63-598d45c21676",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Mulberry Pestle",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-02503",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "871cccb3-6f86-5a40-ad63-598d45c21676_1",
+    "type": "security-rule"
+}

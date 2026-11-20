@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Marble Ladle phishing kit sample, as reported in campaign PTF-02540. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Marble Ladle Phishing Kit: Process started from known malicious binary (PTF-02540)",
+        "note": "## Triage and analysis\n\n### Investigating Marble Ladle Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Marble Ladle phishing kit in campaign PTF-02540.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"c86adb7ed57fc22f1dd73dfebe29b607ba8bb419c65a9aa9c0b608d6e0a75ac3\", \"e455e12011e5ed3e0dd87c58682d643d9ce484e9d4b816427a599a0dbe497f2a\", \"49165f1c0bced1f181e35edd515522f50c45e52b83e18cb340930487b3a38c81\", \"29b2746c0f28e3bff25ba14a4610fb68f307d5fdb1c1bcfc5ec7d2438ef0c852\", \"38063e42f3a9e7c67341b4e9e2ad014d026116bc728d1995ad4c52569586b416\", \"4174f627917b1bc9d7acdbd78e3c0e9af0f2f3dd431767521ba0cd0e426a6707\", \"9bb7d65dd387f8473ea8a8bc0dc81fc13ebff8b00b2400ec5587e15ade5411eb\", \"a965b35f71e42011fd1e4a5e445cf622836f81917765552a61d202fb510d13fe\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02540"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "56e76bd8-0b3f-536a-9204-6b1e9f5b7e50",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Marble Ladle",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-02540",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "56e76bd8-0b3f-536a-9204-6b1e9f5b7e50_1",
+    "type": "security-rule"
+}

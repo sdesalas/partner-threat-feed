@@ -1,0 +1,69 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies three or more hosts resolving command and control domains used by the Russet Satchel ransomware, as reported in campaign PTF-02515. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "language": "esql",
+        "license": "Elastic License v2",
+        "name": "Russet Satchel Ransomware: Several hosts resolving command and control domains (PTF-02515)",
+        "note": "## Triage and analysis\n\n### Investigating Russet Satchel Ransomware: Several hosts resolving command and control domains\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Russet Satchel ransomware in campaign PTF-02515.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "FROM logs-endpoint.events.network-*\n| WHERE dns.question.name IN (\"assets-track1.invalid\", \"cloud-media87.invalid\", \"login-secure90.invalid\", \"media-mail79.example\", \"relay-login1.test\", \"secure-files19.invalid\", \"track-files68.invalid\")\n| STATS host_count = COUNT_DISTINCT(host.id), hosts = VALUES(host.name) BY dns.question.name\n| WHERE host_count >= 3",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02515"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 99,
+        "rule_id": "42f4ea43-9d94-5663-9467-46c52418c85e",
+        "severity": "critical",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Russet Satchel",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-02515",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1071",
+                        "name": "Application Layer Protocol",
+                        "reference": "https://attack.mitre.org/techniques/T1071/",
+                        "subtechnique": [
+                            {
+                                "id": "T1071.004",
+                                "name": "DNS",
+                                "reference": "https://attack.mitre.org/techniques/T1071/004/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "type": "esql",
+        "version": 1
+    },
+    "id": "42f4ea43-9d94-5663-9467-46c52418c85e_1",
+    "type": "security-rule"
+}

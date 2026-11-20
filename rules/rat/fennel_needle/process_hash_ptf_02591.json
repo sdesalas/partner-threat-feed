@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Fennel Needle remote access trojan sample, as reported in campaign PTF-02591. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Fennel Needle Remote Access Trojan: Process started from known malicious binary (PTF-02591)",
+        "note": "## Triage and analysis\n\n### Investigating Fennel Needle Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Fennel Needle remote access trojan in campaign PTF-02591.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"68bbf2076eac3d3f4d4b3d576f03f48a156928ff58ef33a592e10b2c5bb4a0a9\", \"17cfb74e0a6d12bb57343f7675970276600eff719d48f23fce2cee5df21767d0\", \"620fd385adceec2fc8cd56880c72289fd2429d9044b1d42a1e6b1370ffd2c0f7\", \"5dfcba1a1181a1a3756367231fc95373da0f1188fe37423bfcac95c42fdd07d3\", \"45b38f610cf716dc2a3212465dcfa2bc5e26688f116ad804445849c769850cdb\", \"8766c7a1700eee3e7610a44768c5a75ebd6554a9cf6647a7d6ca41f5872f62c2\", \"362bb9ee55261328cb6051a186ba057c3701a45d032c969bd9f251ec5de3b692\", \"0761e79defd8ba5ac20b1ebd1235452bc21b35a5e49aa02fdec21f3914e1d787\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02591"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f4e4041c-4ded-50f1-97d6-fa2e448c804b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Fennel Needle",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-02591",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "f4e4041c-4ded-50f1-97d6-fa2e448c804b_1",
+    "type": "security-rule"
+}

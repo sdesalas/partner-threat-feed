@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Fennel Whistle espionage toolkit sample, as reported in campaign PTF-02624. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Fennel Whistle Espionage Toolkit: Process started from known malicious binary (PTF-02624)",
+        "note": "## Triage and analysis\n\n### Investigating Fennel Whistle Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Fennel Whistle espionage toolkit in campaign PTF-02624.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"6875b4fb45ae0ea006eed7dbf8339ab5b65b41fecf834df043844756efec9e21\", \"94a3871a9c88e9ccf93613cdf675173e0eeee2ea9aba7a6059711e3a0ef09f46\", \"2057cba2a41462df5f4c0b7d7802de159b043ac3ff4dbe1ce179fadcb31ef937\", \"468aedac9a9fc53e30bb4ab82907b02ee34eeff6f890c81c8d1531ddd1bb5ca5\", \"1e4412d0c463aefed1dd4a9c097e62cf1212642a17c5d6a03fce5875f3e85695\", \"de58b1c769a54f97ea0b02b5491d884d3abcee09cf5540edf55edee1b081f56e\", \"3a24380fdce61c4646cc306d980ad2e9aeb17ce57d9547db14c7f07f6ce73364\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02624"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "eb8fedc2-f3ba-5bed-a28e-d99530f63b10",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Fennel Whistle",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-02624",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "eb8fedc2-f3ba-5bed-a28e-d99530f63b10_1",
+    "type": "security-rule"
+}

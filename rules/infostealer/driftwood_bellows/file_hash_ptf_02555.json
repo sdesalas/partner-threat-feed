@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Driftwood Bellows infostealer sample, as reported in campaign PTF-02555. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Driftwood Bellows Infostealer: File with known malicious hash written (PTF-02555)",
+        "note": "## Triage and analysis\n\n### Investigating Driftwood Bellows Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Driftwood Bellows infostealer in campaign PTF-02555.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"19389073009e7cc5a50e49049cd9fb36b6d8fcdd0bbb0bb9fab0db42047df556\" or \"477b3fb816ad536c5fd0c3dff5ebff5697021c700c6739404bcf2804c07d0814\" or \"3d0df5055c52d81f36b800768a983c5a96ff990187730066daf22ac79445c058\" or \"3f9a877496878270c32849bcbd11f9cb81dd394725032edfba1954aee5ab25a5\" or \"47ccc67e48dfd0b9241c1299fba1ffbd4d681be831a8f40aafacd0546f9632c0\" or \"b8d0bcf51ca530ddea15fa137d18f4b16424da52f54e275cce1e27c6606e1f08\" or \"c2bf21906982f2b4de760936e3fb5dce542b875134a06969a475272bacbb9b9a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02555"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "a9f88794-94f4-56b7-959f-e38becb10f00",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Driftwood Bellows",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-02555",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "a9f88794-94f4-56b7-959f-e38becb10f00_1",
+    "type": "security-rule"
+}

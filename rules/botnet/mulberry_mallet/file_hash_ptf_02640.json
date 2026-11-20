@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Mulberry Mallet botnet sample, as reported in campaign PTF-02640. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Mulberry Mallet Botnet: File with known malicious hash written (PTF-02640)",
+        "note": "## Triage and analysis\n\n### Investigating Mulberry Mallet Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mulberry Mallet botnet in campaign PTF-02640.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"e46ce78630be964d29a298cf3b9c516877af07c9fd0dbde6ab2d7d0431743461\" or \"035dbc040019907138cff306eefe38869c510ee2a688ade79e2132be7bfeffe4\" or \"890f336ae981038a0df01e88dd182d5b1d74f75e694c91a0c2def41887608e71\" or \"6439902407fc112a35d37abe79b165b6174d905d2cbc141bd01089f2d99f4c17\" or \"51f8eaf490e8c0abd57441d3cdd2b9e19779cd9a598bc844330a4c913d0c6e4b\" or \"a1b1065689f1dc2eb2cc3989a5254425467445a716f374da70b3ebb963067767\" or \"48226d74f8e24bb01a824cf1dc2dad0e8e730b478e9486af09fca6bf697b597c\" or \"411277c738648b9d2ecb3cb2ea3450b256e4b89d4b3e6a7e56459dbb949aaead\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02640"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "1e9cbe74-384d-5fd0-a9a8-76c5d8737a27",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Mulberry Mallet",
+            "Threat Type: Botnet",
+            "Campaign: PTF-02640",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "1e9cbe74-384d-5fd0-a9a8-76c5d8737a27_1",
+    "type": "security-rule"
+}

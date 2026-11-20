@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Mulberry Pestle cryptominer sample, as reported in campaign PTF-02504. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Mulberry Pestle Cryptominer: Process started from known malicious binary (PTF-02504)",
+        "note": "## Triage and analysis\n\n### Investigating Mulberry Pestle Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mulberry Pestle cryptominer in campaign PTF-02504.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"76baae6ce0f5c39ce98ce0ce3f7f65a68324691f5fa4b2b435b06822fb360ff9\", \"bed077692a6657e9b4103924639b103399799ea4914be8608cca1ce21003eee6\", \"6a0f3278d6c6e30431939dddcfebd20b4ee20e36305e6b0416008f9068ab7b02\", \"0259b6c6905a6293110b48c725da224580684d17ff6f6a66d2faf7876a95acfd\", \"9bbc821f1142ba9a1c8a868aa24895e4f5364995f5210bc2a9fc06c59f5f3da9\", \"46ef79f3b15acb73ce6909a6cecc7515ae78e17ef352efa1b07494f19a297c83\", \"5a4b6fde320a304adb8912cb52f6f9aa8078d62eae21067860d6e73654a32fff\", \"d8ebce7bae765d882114ec359fa12bd9f289836205467093b0af2e34cc804f03\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02504"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ed9b278a-ce0c-570e-b35c-5cef4d570403",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Mulberry Pestle",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-02504",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "ed9b278a-ce0c-570e-b35c-5cef4d570403_1",
+    "type": "security-rule"
+}

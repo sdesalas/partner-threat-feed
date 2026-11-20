@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Dusky Teapot cryptominer sample, as reported in campaign PTF-02648. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Dusky Teapot Cryptominer: Process started from known malicious binary (PTF-02648)",
+        "note": "## Triage and analysis\n\n### Investigating Dusky Teapot Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Dusky Teapot cryptominer in campaign PTF-02648.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"7a3f356caf8b1dd6aec7cca0639b2d1f583b6086ac0cc7da48fa216d10e74a71\", \"c38d5c489693e15edcd20f0335610e920ddfc5c390d1434e48aa7bcc7fb5a229\", \"354e534cb2b9ea6cd4ce39933359b4decdefdcadc1ae84b9007a210db356381a\", \"09813ae71321439c326b29c11c17ab298eb840deb9d1e745a6e866ce6d20a12a\", \"00eecd3ce22aa341c5c6255965ae1ad49888ef95fbfd564bb30929ef4c4e7146\", \"7373da8707fce13170e2f11371ed5d9ad4d0b4646b232bffdb08d1b5d45d698a\", \"565e33d74f25be7178a1e899c6521b002a202a61c1e33d21ea6ebe414c8542d4\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02648"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "afbd0a6b-f986-52f6-a2aa-5bf3776c876f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Dusky Teapot",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-02648",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "afbd0a6b-f986-52f6-a2aa-5bf3776c876f_1",
+    "type": "security-rule"
+}

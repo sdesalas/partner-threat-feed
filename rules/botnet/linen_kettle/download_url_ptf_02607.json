@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Linen Kettle botnet payloads, as reported in campaign PTF-02607. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Linen Kettle Botnet: Request to known payload URL (PTF-02607)",
+        "note": "## Triage and analysis\n\n### Investigating Linen Kettle Botnet: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Linen Kettle botnet in campaign PTF-02607.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://assets-assets84.invalid/update/3856.zip\" or \"https://login-relay32.example/gate/2017.zip\" or \"https://login-secure42.test/payload/2493.php\" or \"https://media-relay79.example/gate/2176.zip\" or \"https://node-login49.test/download/1485.bin\" or \"https://sync-api33.invalid/payload/5468.zip\" or \"https://track-edge69.example/gate/2140.zip\" or \"https://update-media8.test/payload/7565.zip\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02607"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "b748963a-1abb-5946-a7ec-1fc5984b6fec",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Linen Kettle",
+            "Threat Type: Botnet",
+            "Campaign: PTF-02607",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "b748963a-1abb-5946-a7ec-1fc5984b6fec_1",
+    "type": "security-rule"
+}

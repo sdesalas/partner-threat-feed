@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Fennel Needle remote access trojan sample, as reported in campaign PTF-02593. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Fennel Needle Remote Access Trojan: File with known malicious hash written (PTF-02593)",
+        "note": "## Triage and analysis\n\n### Investigating Fennel Needle Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Fennel Needle remote access trojan in campaign PTF-02593.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"2448301c64520bb500cf9e523cee90f3188fe15feb082ffe0803e620726bfc32\" or \"6ac8e2afac30f5a4f897257b8077a20d6324704801072c421afebd964bbeffd1\" or \"05bdd35ba6ff0b75044fcedf3e9fba0670a60e77bb763647bae9339bc1a63c97\" or \"a7760b10987f7465f8acc1c3bc9b4358dde83cff2f9b4c5618dbb619aad33e42\" or \"1012e058cf979eb82711dcc370187dce7ab807fd692b5d077acee408d19c846b\" or \"8078bd05f68057695e93fdfd47af31e700614fc1dc28eeb1b73b4acd4c56a2bb\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02593"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "9e3bb3f6-8e0c-59cd-b675-a6f47cfd6c7a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Fennel Needle",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-02593",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "9e3bb3f6-8e0c-59cd-b675-a6f47cfd6c7a_1",
+    "type": "security-rule"
+}

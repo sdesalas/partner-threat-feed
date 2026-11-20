@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ivory Whistle botnet sample, as reported in campaign PTF-02498. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ivory Whistle Botnet: Process started from known malicious binary (PTF-02498)",
+        "note": "## Triage and analysis\n\n### Investigating Ivory Whistle Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ivory Whistle botnet in campaign PTF-02498.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"529e8b4695fb76c4e6e941d09af19f97da597bf5fbec6b60e614caf8f48d4f43\", \"e851ea7596c5d465e9df79ddce5cf79e0e314f3ffd9c15e2da82f9f4d1ad59d8\", \"7e33b26f9dd95e0b2ab08033f71455f587f994cb93b189188dde00356b72fb23\", \"14b4d9ab3f5593565ca36e3bf6f185013a3dd9deae55dded82268a242dc12ae9\", \"69342fb54e8149e8a3c2e19e3aeb393e81e2843d5e2cce787574d6fc0e527ad0\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02498"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "fa453978-6649-54e4-ad70-cc2b31deaa5f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ivory Whistle",
+            "Threat Type: Botnet",
+            "Campaign: PTF-02498",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "fa453978-6649-54e4-ad70-cc2b31deaa5f_1",
+    "type": "security-rule"
+}

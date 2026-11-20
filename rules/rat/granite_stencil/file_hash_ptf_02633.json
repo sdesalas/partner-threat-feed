@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Granite Stencil remote access trojan sample, as reported in campaign PTF-02633. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Granite Stencil Remote Access Trojan: File with known malicious hash written (PTF-02633)",
+        "note": "## Triage and analysis\n\n### Investigating Granite Stencil Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Granite Stencil remote access trojan in campaign PTF-02633.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"bba942b5c07e4699ef8553674014ecceff7fe422c8261f719a09874ab4244299\" or \"52f5572a19037c91b1227cc8e413f71febb77e5c0be79982172c6f8d537795cb\" or \"a3da1b94bf90041065e8739ac0548bd1fa53495544a907984a7e8620f48d4e5a\" or \"f33cedcfd3b0a05183693c067cd443b97e72818da669d13fd825942e1ed2656f\" or \"fdcc18e56cbbc2bfe9721466d7c2be3b21d37df8b6a67084897ba08e97812e73\" or \"f0e436b5830e7cff199522e41727723e68fa61c5572838f04ce29383445e9c21\" or \"49043c14e5e6b2550311bcbcfbc6306099459b5312940cede7757c182c97dfb7\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02633"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "da0114fd-ea7a-5399-b360-12bd47bc7769",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Granite Stencil",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-02633",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "da0114fd-ea7a-5399-b360-12bd47bc7769_1",
+    "type": "security-rule"
+}
