@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Frosted Pulley ransomware sample, as reported in campaign PTF-03193. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Frosted Pulley Ransomware: File with known malicious hash written (PTF-03193)",
+        "note": "## Triage and analysis\n\n### Investigating Frosted Pulley Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Frosted Pulley ransomware in campaign PTF-03193.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"6958ad5f129d7a3909ba6a50525945676697e0b7bc522570018b187977116955\" or \"e93cb910a7d747b5642b01b76861c39252744bd6cfc4cf54fa0bf522830da04c\" or \"2347763b960c01bf0d0a94c86f7bf7d2e3b488254cd781b50d35927ee650cd27\" or \"299858eda721cdc03a931ec3b584aba9bbfd4f9e60c8ecc2bc16faef04ac973a\" or \"f81eb57d4056100f268ac84b429fbf21afec04bf237b6a6db09805696b422fc7\" or \"7077ce3b8f390215763929872c91e1dccbd5759ed7f54d1cc92144fdce6eebcb\" or \"82bea8e5441a59354d00b8aceb65dfee35fff03b21517bbff231419d40a02d56\" or \"2fcee121183a285379804d0512bf071c15a2eee8085bf5ed1c9e6b127c17eb7a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03193"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "80cb0aa5-dfb2-51bb-a3ba-28dbc50e28ed",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Frosted Pulley",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-03193",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "80cb0aa5-dfb2-51bb-a3ba-28dbc50e28ed_1",
+    "type": "security-rule"
+}

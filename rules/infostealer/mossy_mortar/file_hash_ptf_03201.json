@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Mossy Mortar infostealer sample, as reported in campaign PTF-03201. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Mossy Mortar Infostealer: File with known malicious hash written (PTF-03201)",
+        "note": "## Triage and analysis\n\n### Investigating Mossy Mortar Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mossy Mortar infostealer in campaign PTF-03201.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"7fa2b15704197b5365e33c7dafe089e070fa94d69c47aa639fc4be53599c0664\" or \"eecf12bb84aec66ac05abb42d71553dd79b74d9526e2c3d8474bdde5e37c5c69\" or \"ca35bd7fc7663ca1b87a41c8c4ca84be26714eeb2ccf0abe99a7a9d7875c7352\" or \"54e4a371a8a18101a14c79a301a658b1e65f6b053f867a34da5aec926bfd6a91\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03201"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "1aaee68a-519f-586f-a12b-669605900c84",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Mossy Mortar",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-03201",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "1aaee68a-519f-586f-a12b-669605900c84_1",
+    "type": "security-rule"
+}

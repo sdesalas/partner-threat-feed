@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Walnut Trowel espionage toolkit sample, as reported in campaign PTF-03232. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Walnut Trowel Espionage Toolkit: Process started from known malicious binary (PTF-03232)",
+        "note": "## Triage and analysis\n\n### Investigating Walnut Trowel Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Walnut Trowel espionage toolkit in campaign PTF-03232.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"044a66a990f9405823c614354843a677874fd032b2013f831cc102b7f80a8173\", \"2096768ac3acc53cdd2d1da221d86d7bd776d39c7c105ddd84d9768e265b719d\", \"a36899d0d65072ba85003f9836947e9a94a5c76ead8e2eff9e396880957d4514\", \"5bf2255f4201f209241905ff0f42574821a6ccd063bdacca93dabb5e5e751a7e\", \"b8af6f9a52f0cee236b37784ad8a9fed386bf6908957dd3077dea611ebb507c7\", \"ba7d111dd26464bdbd973ea5f79b01467e840c9d26eff19af2cd69bba2fab1e0\", \"7e06eee47e4d1b9dfa9571746e6dcce1bb94587d49e5830f5067ebf2e73b520a\", \"fd5108df2ba1db5e342582dba05c65688c0380d45fe2ef7a36e26ed82abc77dd\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03232"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "dfc2dd77-2660-581f-b5c7-61311b1d9918",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Walnut Trowel",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-03232",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "dfc2dd77-2660-581f-b5c7-61311b1d9918_1",
+    "type": "security-rule"
+}

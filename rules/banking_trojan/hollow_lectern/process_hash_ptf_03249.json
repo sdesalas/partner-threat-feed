@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Hollow Lectern banking trojan sample, as reported in campaign PTF-03249. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Hollow Lectern Banking Trojan: Process started from known malicious binary (PTF-03249)",
+        "note": "## Triage and analysis\n\n### Investigating Hollow Lectern Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hollow Lectern banking trojan in campaign PTF-03249.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"e6d51c103dbe92fd1ef9e303c4c1a186ed54cd2703d8f8af81a4448bffd41968\", \"6b72472209765cb06f461de8527817993238cd9efaaf25b38fd21ffa4bfb8837\", \"caaa1dccb63afd7dd5d047edde229f981bc6aadc32d63e9ff7f008dd55628c2e\", \"1661db44d88630706241037bbc521b690cc03ef2d4f431c81a82c5e2d541f858\", \"907d2017ae40e3b1e37313b78ba9ee246c5b7ba367da69b78e7cb29cae5b130c\", \"730ee4a27b8fcd1f58dea39327a70ab93f45ed3bc29757baf36e0ebb43a92c01\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03249"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "7d473cd8-7dbd-5995-ab59-be4f8a938d8c",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Hollow Lectern",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-03249",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "7d473cd8-7dbd-5995-ab59-be4f8a938d8c_1",
+    "type": "security-rule"
+}

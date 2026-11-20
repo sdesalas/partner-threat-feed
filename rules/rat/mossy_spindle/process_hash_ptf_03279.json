@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Mossy Spindle remote access trojan sample, as reported in campaign PTF-03279. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Mossy Spindle Remote Access Trojan: Process started from known malicious binary (PTF-03279)",
+        "note": "## Triage and analysis\n\n### Investigating Mossy Spindle Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mossy Spindle remote access trojan in campaign PTF-03279.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"b5c6400fa0cf23f74e8c8fb77844f7bf7f920c50ee9b0de62709f95cff8c0736\", \"1db66b0452c4c184fbee297f7948f20de65b52c730cfdfcb91da77cbe40d23dd\", \"495aead333489e50bc7aeede25e404ad80b7589c2f93cc28f51b55e3a97d6390\", \"2e27707556fae255fa69ee7f4d51a8f5a6a19706fdfe53881e5fddfb20f75da6\", \"dceee22a920904fc1de95f925c61d0e77e75176b3539b3a618f797fce6b589ed\", \"6c182d001a22f94af533f70b080b06b94dcc922f2e6a9be290217a8413c47f7f\", \"7007373c889946b443867bc7d4fd1c43f9aa78d7e0e9f68710f7a9b418cb8d37\", \"b5cc1265a7a89328de06766e7cd4f8c645013ccfe7540e5e26bb674a55d6c210\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03279"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "564145a8-db96-5e2b-ab6e-52056915cb26",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Mossy Spindle",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-03279",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "564145a8-db96-5e2b-ab6e-52056915cb26_1",
+    "type": "security-rule"
+}

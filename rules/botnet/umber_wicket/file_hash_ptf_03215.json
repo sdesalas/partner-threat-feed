@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Umber Wicket botnet sample, as reported in campaign PTF-03215. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Umber Wicket Botnet: File with known malicious hash written (PTF-03215)",
+        "note": "## Triage and analysis\n\n### Investigating Umber Wicket Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Umber Wicket botnet in campaign PTF-03215.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"392f2b20bf3a192be1c57efabf16623db61c344338172ada6065fb7a865d91cf\" or \"0a5cd895c81a2726cde6a7fd7f48fabfd58ced56f5359d616bd34024f8bb989b\" or \"cb93f3c0112435f60de7e734bb5ddc093a4cd3e0222907c1a6d36c59af299aec\" or \"52f3f5ec0f288f45bc94c323ba38ab661464873b4909c654df797ae010333f6a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03215"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "2378a3e8-efdb-5162-8b0d-4757e65d36da",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Umber Wicket",
+            "Threat Type: Botnet",
+            "Campaign: PTF-03215",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "2378a3e8-efdb-5162-8b0d-4757e65d36da_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Tin Anvil phishing kit sample, as reported in campaign PTF-03183. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Tin Anvil Phishing Kit: Process started from known malicious binary (PTF-03183)",
+        "note": "## Triage and analysis\n\n### Investigating Tin Anvil Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tin Anvil phishing kit in campaign PTF-03183.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"612f5d96adc3e3935e170e7c9abfd47aa67dcd455370c9f4a936bf91231b0aca\", \"bef1c4864936eb6a63dc0b9f6abde2f9f9cb481f304a95f31e846e13daf1932e\", \"b178634dff3fdf2e3ba94ff80fb8c34bc7100278aa8a2aff136f36635ea37ba5\", \"22595bcd976bcb2f24cf8f42d7135db6a0e3ca8cfb36917bffe387a7548a53cd\", \"3fb49e46dbc1dc0ecc611c431f4afdfe5b1d1c779381ff888e29511ee43a661e\", \"cafca08d8b2835688215f51c5e2fd845fe074c841ab3de52e26cdcb9ee565b08\", \"4155a87b424bc69a42598c77e603a7db180a7119cf5b3176ddc0ea9cef164660\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03183"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "dc2d3067-0185-5867-ad49-6c5f4f7fe0d8",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Tin Anvil",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-03183",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "dc2d3067-0185-5867-ad49-6c5f4f7fe0d8_1",
+    "type": "security-rule"
+}

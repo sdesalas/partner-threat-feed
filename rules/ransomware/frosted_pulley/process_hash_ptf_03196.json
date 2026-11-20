@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Frosted Pulley ransomware sample, as reported in campaign PTF-03196. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Frosted Pulley Ransomware: Process started from known malicious binary (PTF-03196)",
+        "note": "## Triage and analysis\n\n### Investigating Frosted Pulley Ransomware: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Frosted Pulley ransomware in campaign PTF-03196.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"0661ca5080217d48d4cd8926debf72e4b9639288676f16812448f022da06d6be\", \"364a1cb3a499e64b3f9cbdc50ff04d6fb7f03e4b5275f6d2f0985c53934063f2\", \"56564a2e3c0080ee43fc2f6f044a022f922863d783d700e9c22af660342747ef\", \"467161c8eedd390ac42d18fd34f8a9b6b148d561d8f2d777f13959ca45df93a3\", \"cdbdd53fd64d41b91243c30eab33113111ee098631f8365815a99549673f7e76\", \"1742671dfe5e91cf3470284ed61657d2f728ec2f0ee262f62a5f8f4b4f0976b9\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03196"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 99,
+        "rule_id": "3df511bb-684a-5bc9-b177-a0a38f324c0e",
+        "severity": "critical",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Frosted Pulley",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-03196",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "3df511bb-684a-5bc9-b177-a0a38f324c0e_1",
+    "type": "security-rule"
+}

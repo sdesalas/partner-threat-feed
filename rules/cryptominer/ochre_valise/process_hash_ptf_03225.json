@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ochre Valise cryptominer sample, as reported in campaign PTF-03225. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ochre Valise Cryptominer: Process started from known malicious binary (PTF-03225)",
+        "note": "## Triage and analysis\n\n### Investigating Ochre Valise Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ochre Valise cryptominer in campaign PTF-03225.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"8654894a950b426b15e332f4c5c202ab666337d5ca0e6bcfc237ab6950040bd5\", \"cba0380478b69c234cf111688db69c7a116bfe0b4dcff0215e4b9f36c397b30b\", \"3e8518cdff854bb691be3345f544208f008b2edc34673a221d63d743516d3cbe\", \"e4dfda2d9d141634e3e6b111ef17829bf4b60d6d07447dece216dcac9f5f6c2e\", \"4ba908afdc3155c27dc355dff38dab22e627ce202134d46a1981d9c45d55fc93\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03225"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "caf1eeb2-b92b-5d3d-9d48-7bed8cad1edc",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ochre Valise",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03225",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "caf1eeb2-b92b-5d3d-9d48-7bed8cad1edc_1",
+    "type": "security-rule"
+}

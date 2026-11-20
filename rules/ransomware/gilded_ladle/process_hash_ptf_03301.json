@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Gilded Ladle ransomware sample, as reported in campaign PTF-03301. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Gilded Ladle Ransomware: Process started from known malicious binary (PTF-03301)",
+        "note": "## Triage and analysis\n\n### Investigating Gilded Ladle Ransomware: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Gilded Ladle ransomware in campaign PTF-03301.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"eabd5ce6c2b3958956506f22e8e3a0069f458fe652906e27200ef133e0993a76\", \"fa52b75187c66e185b05ebda6a3bf5332646330c66a574970b267c786f027414\", \"612b0b1d3a15b8fc2bec090dd210804823ab516e6245c7d4aa077dfc06716907\", \"14ba4b917ffe5b06658361149238630530ee16f7503bfab1ff89440aebe68ac6\", \"0c995cf63bccc2faeec7e1d87c367e45b395107945c57cebad066b1c0d0fd63c\", \"902cc88ecc84ebf819c18ffda2f2b112a052b25f238e0c8f579271672d74c13b\", \"b9d657fe4885b4bc53483041cbf0c3172ee98be7e3f0e4c283156b18fee487da\", \"a8ee87d4e648e6a55be56972cb45593e0f177cb3165424183984b8ee5ada3acd\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03301"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 99,
+        "rule_id": "1a853cca-3a37-5bd2-b1d0-925201b8405f",
+        "severity": "critical",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Gilded Ladle",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-03301",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "1a853cca-3a37-5bd2-b1d0-925201b8405f_1",
+    "type": "security-rule"
+}

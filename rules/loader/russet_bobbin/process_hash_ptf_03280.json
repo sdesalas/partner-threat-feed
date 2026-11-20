@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Russet Bobbin loader sample, as reported in campaign PTF-03280. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Russet Bobbin Loader: Process started from known malicious binary (PTF-03280)",
+        "note": "## Triage and analysis\n\n### Investigating Russet Bobbin Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Russet Bobbin loader in campaign PTF-03280.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"b521b0257a326d1234fd5d893e1b1b06723ba68125d5a8a5a466f1d18f961595\", \"c5f451d4448ee5f17019292b30f3a1b225a91052d75fa00fd06bfd5e0065ae4d\", \"f0f2846bdb3dc1528c160f11dcf4504a037b472b0b32c4ceeea1dec837379acb\", \"ae367977bdacb1a8066650a70085c01d7c385b4f6222c436711de148f34cfb38\", \"483630844b13df4383a30de6c61947cbe0daef3d3b5ea29f8e62e4d4a8be8062\", \"0f259f40a9283f6fad8d66b93293778c315208e1bc3310fa2a4e6b0b2c1e7893\", \"65f91238ab607d59589e15c78d10957fdfe604cfbde83235e3b9892a1545ab60\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03280"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "44ac5402-0557-5aa0-b1f2-70cc01d8724f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Russet Bobbin",
+            "Threat Type: Loader",
+            "Campaign: PTF-03280",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "44ac5402-0557-5aa0-b1f2-70cc01d8724f_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Juniper Abacus phishing kit sample, as reported in campaign PTF-03259. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Juniper Abacus Phishing Kit: File with known malicious hash written (PTF-03259)",
+        "note": "## Triage and analysis\n\n### Investigating Juniper Abacus Phishing Kit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Juniper Abacus phishing kit in campaign PTF-03259.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"6e52a410056179b73ca18011c460ed908709fe18e2007c25560be3b17dfce3fb\" or \"e75aeba3411a3229f3ebc8c6e8f6224ba18e7b30c4b18222f61559d9da75ef62\" or \"4eee9e3aab99e80b16833ba740c5f6dafb8ab46103fe7fde0e13196d1033b540\" or \"537bab9b928b7594e164ebb2df37c4b5227da04bc97be5c4b1f52c2ec8b5951b\" or \"ff93257ee202efa38a75be0aafcd1fb49a8a0db7bf2aaa7ce3829e887739364a\" or \"8e1d2c7c3f976201dba87c7bb780f8b97c8e31c8fdb6bdbf15dcc1c37958cef8\" or \"c74e21241ce9564e46d66f928dbacb9f1121a59e6ddc85cb2497e246cb026983\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03259"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "feecff29-fec9-52ff-a574-a8173b992b70",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Juniper Abacus",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-03259",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "feecff29-fec9-52ff-a574-a8173b992b70_1",
+    "type": "security-rule"
+}

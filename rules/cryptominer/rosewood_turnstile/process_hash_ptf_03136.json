@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Rosewood Turnstile cryptominer sample, as reported in campaign PTF-03136. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Rosewood Turnstile Cryptominer: Process started from known malicious binary (PTF-03136)",
+        "note": "## Triage and analysis\n\n### Investigating Rosewood Turnstile Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Rosewood Turnstile cryptominer in campaign PTF-03136.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"9cd77f29e5f4c81ba1d80a6ac174a3ca38280f557e2a5c0177d8f10c8ca0bd24\", \"f42d21ac5f07fa02b5761e470a0207cd396a4c2cee158dce08bc3513199d9ebd\", \"c940fda0f076f0a4b2463eb561e8da2e9caf242bbdd74194d3387a0c4a2ed2a9\", \"712cfe8c3484004be05bb1c99ba006d55f344e9ec35f8ea64e89b6f807ebeb6d\", \"2249a26dc25d76f35568b7e406e5399b1510d95e50f4de34ca49d450b4b035df\", \"40079f5503f29e631ec9f62111b0a399a26555b5bbacb5052461f54206f05e9f\", \"fd1565545bca3a5a62c02f1ccad93aa47b51ae493249e52e599b958a703cbf81\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03136"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "76a141ff-28d0-5013-a6b9-60345d588f83",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Rosewood Turnstile",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03136",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "76a141ff-28d0-5013-a6b9-60345d588f83_1",
+    "type": "security-rule"
+}

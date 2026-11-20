@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Tin Trellis infostealer sample, as reported in campaign PTF-03156. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Tin Trellis Infostealer: File with known malicious hash written (PTF-03156)",
+        "note": "## Triage and analysis\n\n### Investigating Tin Trellis Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tin Trellis infostealer in campaign PTF-03156.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"fdd92e182e4a4c7b867423a1a374e20fd399c7daf7f988a74cc161c43a1e7190\" or \"448d38564412cd8cbcbd77e50e2fe4e97053cf6bfe2808232fa21d6289a67298\" or \"cbb805026c22e29df2ae1d676a0315e2c4312c6b3cff14e30db319eb9093fa26\" or \"b83d17799e25712cc56b20e1ca917302c6f0661bd6ab6622915f5b7f54d6537b\" or \"b52ed165b3a4c3806ec5ed848d5b60cdb0342048bb2dfc045d81b0c7534247d4\" or \"aa2edc8e625e26a448114a3496201afee8849e190b7a15f435427c37d6025101\" or \"1e4a9fb5658c76dfd5a0c9672f234560ce99362583f46dcbf4640226750f4fd3\" or \"d488e3fe8d88b176f565902ce421f8f6c99943a5cb500636d5d427e1d09d5042\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03156"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "768bb268-cbb8-5899-ad3d-a92d75bb6914",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Tin Trellis",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-03156",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "768bb268-cbb8-5899-ad3d-a92d75bb6914_1",
+    "type": "security-rule"
+}

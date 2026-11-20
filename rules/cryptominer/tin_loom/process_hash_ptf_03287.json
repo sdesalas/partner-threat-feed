@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Tin Loom cryptominer sample, as reported in campaign PTF-03287. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Tin Loom Cryptominer: Process started from known malicious binary (PTF-03287)",
+        "note": "## Triage and analysis\n\n### Investigating Tin Loom Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tin Loom cryptominer in campaign PTF-03287.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"b5c220786e933ba34a3fbf42e775131fef831f730114f0b6def53285b1657c53\", \"f73d7de6a29d4c0f1251684e938f0f14efa2a1012e633eedf2b1d581d23238a7\", \"6302932722e54f26e02b3fcb61e22e8e88768fa3d0e786fe10e36be7a3ff2746\", \"d465592618e39f923248f4886f5d4c850ca42290332038797cb82f9e2a4e6f1b\", \"30f9c4d6e425416a4a89222e202638d671777f45132bc150bdb731371bd3fcaa\", \"6acf2ad19bc8c26e0cef7b00c254ec9ffb61611091a61ca3e691360404c1fbe2\", \"eaea856773276c1aa61b2a662ecd04aac26ad860bfcb67603f8adaaf154e702f\", \"9b65daf1bafe0551ec3aa5132c33f4b51e4a4997b643c1f050e846c6e81b4b08\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03287"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d491738b-ee97-5ed4-8d9c-e22374d274f4",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Tin Loom",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03287",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "d491738b-ee97-5ed4-8d9c-e22374d274f4_1",
+    "type": "security-rule"
+}

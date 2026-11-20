@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Cedar Mallet phishing kit sample, as reported in campaign PTF-03229. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Cedar Mallet Phishing Kit: Process started from known malicious binary (PTF-03229)",
+        "note": "## Triage and analysis\n\n### Investigating Cedar Mallet Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Cedar Mallet phishing kit in campaign PTF-03229.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"9bb8ce2152d0feefff5b7fa80c73e99ef10d1ef80648e4d937b9f0f8fdbf372f\", \"3db163d3ae171424dda5bf4818f2ab16cb7459efa859eb13c708ac936345dbca\", \"bf8f3b6adc41c5aaed62025d9aa9340432adf98d7add858d1bd3677e221244c0\", \"e9efbce7dbde7a348e5d117850681ff7735779587d27fc4c32073d84d002ef9f\", \"e0593ecc93684043c71f817b4f95c0c1e0d94922f02fe785dd71b1cacb0c3577\", \"37069f0b7abb6ddc5d17a56b53ba44101cb034f39c6dc59eff1e33a6dd4c3608\", \"52c1fbf63a238a4cf21d8b3864416ece5efc3c68c2d3b4cad42b2556f55fda52\", \"7bcc2312eb1fd98594d9b2b81bcb34b912633ca5077e2ca1cfd0a2e5bf7f411c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03229"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "887ea12f-8992-57f1-ac4d-dbb045a9c0c6",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Cedar Mallet",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-03229",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "887ea12f-8992-57f1-ac4d-dbb045a9c0c6_1",
+    "type": "security-rule"
+}

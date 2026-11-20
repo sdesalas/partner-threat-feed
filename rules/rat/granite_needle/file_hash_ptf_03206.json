@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Granite Needle remote access trojan sample, as reported in campaign PTF-03206. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Granite Needle Remote Access Trojan: File with known malicious hash written (PTF-03206)",
+        "note": "## Triage and analysis\n\n### Investigating Granite Needle Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Granite Needle remote access trojan in campaign PTF-03206.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"a76fffab39825a6bece6e3bf0f64f8a45bd0ff31525bb1a4732a3e33357d5c0d\" or \"9119ccf8c41cb4a9b49a5373f2ff0e14bcbbe568fa48236a7e6f53c44173fa95\" or \"0138304ae6f10a9f23b480ea1a2bbe1313a6a8f5e6e6d756e3f7d01807349ed8\" or \"029859c8f1be95361f5799c1b3741ade16fd54ee1dcf8551d14ec956f8484aba\" or \"8cd8248c84e285bce9da6408b93bf8ae45654252757a7a7baa4992b053fa0916\" or \"d80b4cd2e15586236da03b39faee40089803c361a3001d09df4264034dc7c6ef\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03206"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d5924ea8-6718-5c27-b4cb-4edc439188d6",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Granite Needle",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-03206",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "d5924ea8-6718-5c27-b4cb-4edc439188d6_1",
+    "type": "security-rule"
+}

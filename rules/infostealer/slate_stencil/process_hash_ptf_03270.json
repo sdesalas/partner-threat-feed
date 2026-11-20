@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Slate Stencil infostealer sample, as reported in campaign PTF-03270. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Slate Stencil Infostealer: Process started from known malicious binary (PTF-03270)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Stencil Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Stencil infostealer in campaign PTF-03270.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"a90d9e531e32d783f8f38779b3455eda8ef66e1e52105797ef846ace3681df93\", \"0451b8fc38a9cad1f3bbfa85a7c45b72470835e69f31a3444ec65100518169f1\", \"d2640602a4626bf9656fe3de061c8f0118ba226651f0392b289cb05f77157a62\", \"9cd17ff5b2521c66bc1a9a07fdb980a2710239866fbcc40265b7ec946410e76f\", \"455f20150d7a5397cf5a8e5d6e0483af6868984d46ccf5aecc7f18931f10db4e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03270"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "6d99e8fa-7a18-583e-b892-d330746e4727",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Slate Stencil",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-03270",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "6d99e8fa-7a18-583e-b892-d330746e4727_1",
+    "type": "security-rule"
+}

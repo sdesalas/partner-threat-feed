@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Tin Hourglass botnet sample, as reported in campaign PTF-03248. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Tin Hourglass Botnet: Process started from known malicious binary (PTF-03248)",
+        "note": "## Triage and analysis\n\n### Investigating Tin Hourglass Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tin Hourglass botnet in campaign PTF-03248.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"46fba51b85fc6aa1f2fefe9f396112721b915ff237a7a6eeea3997271894fc21\", \"9bb55db4c6c209f4b3d0c7249c9772a499c85b29cba32a9a3e35eab085368673\", \"ef10293e97bebf18fbbd182e8a32f8eab5527140017c9d271071b65a37081a95\", \"da70fc8a5fc646002195f4a5d54123715cd8b247711c814a2c38a0c9ff46e24f\", \"5524c8afef9f085abfe9986fb3fed36e1b15ef668c7829eee68abe82e33615a7\", \"3bd6fc277800788cb6dce00cdb6fa0ef2fda9dbafce9c01ce928abf1c034f766\", \"bc54e339246facac91e155d1873a58431a26fbb1bb95dcca513b67e8bce2d8c0\", \"e948afb88ac43f9b2f70f9e93f516f259f8aad62645336f582571cb51e7fba63\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03248"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "3ab2b9d9-6ab6-595f-847c-9ae7db7a8438",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Tin Hourglass",
+            "Threat Type: Botnet",
+            "Campaign: PTF-03248",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "3ab2b9d9-6ab6-595f-847c-9ae7db7a8438_1",
+    "type": "security-rule"
+}

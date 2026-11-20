@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Tin Anvil phishing kit sample, as reported in campaign PTF-03186. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Tin Anvil Phishing Kit: File with known malicious hash written (PTF-03186)",
+        "note": "## Triage and analysis\n\n### Investigating Tin Anvil Phishing Kit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tin Anvil phishing kit in campaign PTF-03186.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"668698384eaeebd7f2112fbb4c8c0257e7766878bcaf24b342798480f4c4840e\" or \"6ac8010eab3f69798c42d95ccce575c380b46c8fb6332cb18756f6b2cf931151\" or \"2a3c885f62a6d71c24e15c4a2304dbdd2baa6060b90f7365faba0f7e931448cc\" or \"dd72f886c99806b5fdb2ac6b4800578f31540397029242f600a01648c6765439\" or \"930705c2c9622246652272701fc4d0a21b0d118e03250f5b085f385720ec2580\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03186"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "8dde01d4-b200-5e1f-b029-42737d0fa8ed",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Tin Anvil",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-03186",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "8dde01d4-b200-5e1f-b029-42737d0fa8ed_1",
+    "type": "security-rule"
+}

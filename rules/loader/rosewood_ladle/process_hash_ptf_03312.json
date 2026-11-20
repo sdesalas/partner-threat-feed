@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Rosewood Ladle loader sample, as reported in campaign PTF-03312. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Rosewood Ladle Loader: Process started from known malicious binary (PTF-03312)",
+        "note": "## Triage and analysis\n\n### Investigating Rosewood Ladle Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Rosewood Ladle loader in campaign PTF-03312.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"8f8d9be64645390c16ffbbed9554a2b617b0fcc9d9be2939f895af508da881af\", \"54b89340300264cf17119bb929b539b0eb9decae25b086e150d7794c7d0d10bb\", \"2f7d998dcca443b4b4c2ca21a8322bdf9b3cddc24ca0e2524a22941d1ee76e0e\", \"44df364267cfc57babd839063a4a6b29a86398218ce22d8be1b46e32b0a2a64d\", \"6253fe1adf9908ff8e9a38ceccde5ce34fe7d3267d90557197179f7b3968c8f8\", \"80ba4cb4dff36e745963cc857bcf1372804b1bc85f26cd4b0e3ec0e13e3f2ea6\", \"5016116413ff2502c356500ffe1fedb0946a0094aa4ec2d02ccbb1a4b3d61b93\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03312"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e795d3a4-2c75-5c99-b8c8-3a9a726bfb31",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Rosewood Ladle",
+            "Threat Type: Loader",
+            "Campaign: PTF-03312",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "e795d3a4-2c75-5c99-b8c8-3a9a726bfb31_1",
+    "type": "security-rule"
+}

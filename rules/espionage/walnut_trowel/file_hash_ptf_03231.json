@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Walnut Trowel espionage toolkit sample, as reported in campaign PTF-03231. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Walnut Trowel Espionage Toolkit: File with known malicious hash written (PTF-03231)",
+        "note": "## Triage and analysis\n\n### Investigating Walnut Trowel Espionage Toolkit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Walnut Trowel espionage toolkit in campaign PTF-03231.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"cf3f4ca20dbbbdf5c9ba1e359d749c05cc9b50195dd6431049599c7e5ac3b557\" or \"aa24f5eff2abcc68e4ce45606a72c4d80ff0e22abf768487c70890f0060fc844\" or \"7fb0e457f9e76745de1c3b1591b3b89f07028d89d99a7714554b24e1331c1a2c\" or \"91342251c1756f64cd3c502468a6f89e78b077dcf14e8dbf46b05f7a5a26452b\" or \"fb80f1d2f6c21f00044b6a141e70e1e655d9b06c12d0f65c95673dda85be850c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03231"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f3088a40-95b0-59e2-a2b1-a535bc7988fd",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Walnut Trowel",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-03231",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "f3088a40-95b0-59e2-a2b1-a535bc7988fd_1",
+    "type": "security-rule"
+}

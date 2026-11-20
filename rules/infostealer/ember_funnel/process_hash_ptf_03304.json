@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ember Funnel infostealer sample, as reported in campaign PTF-03304. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ember Funnel Infostealer: Process started from known malicious binary (PTF-03304)",
+        "note": "## Triage and analysis\n\n### Investigating Ember Funnel Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ember Funnel infostealer in campaign PTF-03304.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"dcfc0dbfaa8bc7fb284db0e2c1fd0b77691a04634bf0e63b3c3ff7351ea78ce2\", \"d088924985f87bd1328593d72fa2745ab605927f63629da5d9ba5db87cebc0dd\", \"20485593e8b6f7a69aef2bd13a580bcdd51e9a2e4777dda2d6dea33f9eacceb3\", \"69aeb96e9c8b2844183bfec6da6f8dc283be8901b8690b0195ef46de16dfdc8e\", \"27cbf815fb51a9c1e45db245f23bbb8fac63c16076092c855bd50f4fabfca67b\", \"0d1e9497f5c59cb6690be8dfbd58d76904f3d00a47064ea142ff30267db6b506\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03304"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "95c25ae8-1c3c-513a-8753-cc6ae61b4bfb",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ember Funnel",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-03304",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "95c25ae8-1c3c-513a-8753-cc6ae61b4bfb_1",
+    "type": "security-rule"
+}

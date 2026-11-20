@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Walnut Bobbin espionage toolkit sample, as reported in campaign PTF-03294. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Walnut Bobbin Espionage Toolkit: Process started from known malicious binary (PTF-03294)",
+        "note": "## Triage and analysis\n\n### Investigating Walnut Bobbin Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Walnut Bobbin espionage toolkit in campaign PTF-03294.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"08c3946a0a600386fd3f80a799b60e1611dc6277c1786f2b31cb14e8aeb0dd6a\", \"0943bb863d16656bb57ceaf4160f499237e422e5c552dd8fd9a40445f573d630\", \"a56428077e84908a8cc52108fba4c840972d69518a1a81484f60d6de3a2b05c0\", \"13d7d677518eef5c581fc0805560f069a26e252a73b873898c08480ac1cfed65\", \"79177ff2cfbeee4f05627726fa4327c1000b4f640488d233968f4fee6ca61158\", \"f9202a9482a8d76b6253d8660c4d51a2fbff12a8192d28008a8c15786387cc06\", \"d7ed0efaedcdb1d37b7bcf3061ca43183720a8c9d4b802168efb21cde83157f1\", \"9309ef91a0b392f4a3ca32d4ed77aa51967cbf298c76009018f9026078833af9\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03294"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "52084873-592d-50b3-a782-3e970c55f7b1",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Walnut Bobbin",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-03294",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "52084873-592d-50b3-a782-3e970c55f7b1_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Umber Sextant banking trojan sample, as reported in campaign PTF-03323. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Umber Sextant Banking Trojan: Process started from known malicious binary (PTF-03323)",
+        "note": "## Triage and analysis\n\n### Investigating Umber Sextant Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Umber Sextant banking trojan in campaign PTF-03323.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"77e9d4ac3eef5dba3bdae9b9b37bb173a294b67fe384ec5748955275d76c0131\", \"778ba8765a1fb2a5ef693ce4e0783cc7488b65a1109d458fedc633750390c6a9\", \"5a3baffcaf7654937800722773d321d6ff7ac26c6a594931a653b6ffefd447d1\", \"b441340958d55aa52b36d54fdb730da44c9fbe0c2ab40e39e8aa0dc94458af7c\", \"0ebd7142e37532f8eaf75a411cdb3d562995ca8adee48c055740ecc40d70d270\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03323"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "dcabfed7-ec5d-51f9-97b8-e96e85b696eb",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Umber Sextant",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-03323",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "dcabfed7-ec5d-51f9-97b8-e96e85b696eb_1",
+    "type": "security-rule"
+}

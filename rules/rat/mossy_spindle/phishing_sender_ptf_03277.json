@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies email messages from sender addresses used to deliver the Mossy Spindle remote access trojan, as reported in campaign PTF-03277. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-email-*",
+            "filebeat-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Mossy Spindle Remote Access Trojan: Email from known phishing sender (PTF-03277)",
+        "note": "## Triage and analysis\n\n### Investigating Mossy Spindle Remote Access Trojan: Email from known phishing sender\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mossy Spindle remote access trojan in campaign PTF-03277.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "email.from.address:(\"hr@node-sync32.example\" or \"it-helpdesk@data-media45.invalid\" or \"payroll@relay-relay1.invalid\" or \"shipping@login-sync41.example\" or \"shipping@portal-connect54.test\" or \"shipping@secure-track96.example\" or \"support@api-cloud30.example\" or \"support@mail-edge23.test\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03277"
+        ],
+        "related_integrations": [],
+        "risk_score": 47,
+        "rule_id": "0053c3c8-6852-5196-bb8f-65f8a5341e59",
+        "severity": "medium",
+        "tags": [
+            "Domain: Email",
+            "Use Case: Threat Detection",
+            "Tactic: Initial Access",
+            "Threat: Mossy Spindle",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-03277",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0001",
+                    "name": "Initial Access",
+                    "reference": "https://attack.mitre.org/tactics/TA0001/"
+                },
+                "technique": [
+                    {
+                        "id": "T1566",
+                        "name": "Phishing",
+                        "reference": "https://attack.mitre.org/techniques/T1566/",
+                        "subtechnique": [
+                            {
+                                "id": "T1566.001",
+                                "name": "Spearphishing Attachment",
+                                "reference": "https://attack.mitre.org/techniques/T1566/001/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "0053c3c8-6852-5196-bb8f-65f8a5341e59_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Gilded Inkwell banking trojan sample, as reported in campaign PTF-03286. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Gilded Inkwell Banking Trojan: Process started from known malicious binary (PTF-03286)",
+        "note": "## Triage and analysis\n\n### Investigating Gilded Inkwell Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Gilded Inkwell banking trojan in campaign PTF-03286.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"f76c708a2fdfbcfb62cf9b617453a463ef1ecd1588f7b234f4dfd7d45c44073b\", \"8f061632cf6fa24358532d05b91b7a3aed6c4537cd9ffcf1755339a72f9d3096\", \"0b1610f39a309586c6b315d17718490f31f5ae6747de1a801b4df1caf0b6572c\", \"f372e5f609294c5deaf164aaeb3496c7443ceda543cffa947a7b69601d9a1525\", \"ca2c3c0bcf3c665f911f4c5ba0bb901a7a31f6c6e1449156703dec1633ac3116\", \"27da07e6b59e614a5b4e289e72a30b714760e4e9ef0f41fa013ca93b2fb8af73\", \"274c8125ac23f124043ecd11f7ed74b7106d5273c58a991f318537978e6754cb\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03286"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "0723cd43-611c-54b4-bf36-8c8e9ba55143",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Gilded Inkwell",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-03286",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "0723cd43-611c-54b4-bf36-8c8e9ba55143_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Rosewood Ladle loader sample, as reported in campaign PTF-03310. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Rosewood Ladle Loader: File with known malicious hash written (PTF-03310)",
+        "note": "## Triage and analysis\n\n### Investigating Rosewood Ladle Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Rosewood Ladle loader in campaign PTF-03310.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"cbf22e5d162cdd2e21a180cfbd46ad94e2561ec220b554e83e0139f570aeb643\" or \"5bf177321813446c0a9a4ac5f2ea7b0c250cec62c990a8b6d1cafecf0794336e\" or \"8196f734624ad20c2c9ef94adf6759ed407f6498b384df4b220c539a1fccd940\" or \"f946c604bf69f2a0a3b1182a4df0bba520e7a7746621ff3ae016f9ef877dd3a5\" or \"f2ffe6f80d76bd1d0c1eb9edcc860ef3285bf5c23308a4636a208c52dc4c38ef\" or \"5dc8f87b72ca291cd8f5e3406c137910433d08c37af54118a035e2276ad1f6b2\" or \"710e1f8688856b0f6a70fae1febcceedbe008a37746e8eb25f9435814c5defcb\" or \"e0951798be408da4908d94a0c0a8f745796ed5133d0972fabb46aecda83eebf8\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03310"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ea502cd0-2f71-51a3-bc95-3b12f5429d48",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Rosewood Ladle",
+            "Threat Type: Loader",
+            "Campaign: PTF-03310",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "ea502cd0-2f71-51a3-bc95-3b12f5429d48_1",
+    "type": "security-rule"
+}
