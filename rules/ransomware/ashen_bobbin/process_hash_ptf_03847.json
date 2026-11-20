@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ashen Bobbin ransomware sample, as reported in campaign PTF-03847. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ashen Bobbin Ransomware: Process started from known malicious binary (PTF-03847)",
+        "note": "## Triage and analysis\n\n### Investigating Ashen Bobbin Ransomware: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ashen Bobbin ransomware in campaign PTF-03847.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"4a33a10f1113458cf26bc588ab2288622ac5a58d142ca3266386727e61ad5ffe\", \"7eed3308104f8c4cf51a1c85563fe44bd8aa9403578bab342c231a0bfb96219b\", \"a4cbf5f66eebd8464314c32b83cc47b6103fed7d0d2dd59ee0a9ac3180d1f112\", \"adf162325bcff02303aa7df8966ba2288b66991aa97a01387e80b408b7dbf423\", \"5b824b2302fed3760f325940fe5b82f524cbf9318630f0dd49d662045c1827c0\", \"b756f04b17a7ac7a187654faf27785c1006f26f78c7ec13e38a34e1e2191a6c3\", \"8a0ad25a2d4951f5c9abafcc9b4d7b73eeb72d2aad0d49ef6e9b83c768b13599\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03847"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 99,
+        "rule_id": "00e1dc81-7b9d-5cf8-93ac-109e12ff01aa",
+        "severity": "critical",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ashen Bobbin",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-03847",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "00e1dc81-7b9d-5cf8-93ac-109e12ff01aa_1",
+    "type": "security-rule"
+}

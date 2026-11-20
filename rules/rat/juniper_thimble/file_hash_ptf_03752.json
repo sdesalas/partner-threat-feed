@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Juniper Thimble remote access trojan sample, as reported in campaign PTF-03752. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Juniper Thimble Remote Access Trojan: File with known malicious hash written (PTF-03752)",
+        "note": "## Triage and analysis\n\n### Investigating Juniper Thimble Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Juniper Thimble remote access trojan in campaign PTF-03752.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"4997c0e358a5f336cb6f3a85c1fa700614d39333a34aa2b1a00303d6dec13ed4\" or \"2fdb12921efa63be0a4115fcd46a1f9480277e748eedfc2084f2789402e09183\" or \"bb704190b0119f4a5b50d6712c3bc112479301bb0159045837e05bfa80282a9e\" or \"f87a392146c27835ca11c32973480f6496149b13eb24c07703d3a019c964d168\" or \"6bafcef25bd91acfb3ba8e61cb4135280d756484e4c37f41e7d3fb5e252cd630\" or \"fbc55fcff8a287e99d459481294444f611df2c72a6732daec600a4d6d2a2513a\" or \"f926fa4e43e2e6313214e957bb809be6ab604d89ae8fbca5972609d3e84e569c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03752"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "62f9087f-9d53-5614-a222-72e41ad66222",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Juniper Thimble",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-03752",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "62f9087f-9d53-5614-a222-72e41ad66222_1",
+    "type": "security-rule"
+}

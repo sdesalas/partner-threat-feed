@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Saffron Loom cryptominer sample, as reported in campaign PTF-03802. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Saffron Loom Cryptominer: Process started from known malicious binary (PTF-03802)",
+        "note": "## Triage and analysis\n\n### Investigating Saffron Loom Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Saffron Loom cryptominer in campaign PTF-03802.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"9f45a007b7584afbee8599abfc4befe7451429696381c18485cc0d7656a4add3\", \"da7c165249b39c83cb74488f6520da3a5c7ec2ab96e443db11c517b907b49c16\", \"cfa5a9e7bdd66f956f5d1e257db3df7814eb49d4b550c3327eb1a92c5aed3b63\", \"e796ee9a92c2c85a19454d7e693124948bb11898502f69f3e25e4e30c72d520f\", \"488f510a563a919af780f24b1225f4a39247f14b66f68bf9e25c9d8b86b64105\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03802"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "c9faf397-6e74-557d-b311-895c622a33c7",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Saffron Loom",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03802",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "c9faf397-6e74-557d-b311-895c622a33c7_1",
+    "type": "security-rule"
+}

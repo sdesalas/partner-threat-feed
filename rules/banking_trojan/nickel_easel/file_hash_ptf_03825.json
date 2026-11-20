@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Nickel Easel banking trojan sample, as reported in campaign PTF-03825. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Nickel Easel Banking Trojan: File with known malicious hash written (PTF-03825)",
+        "note": "## Triage and analysis\n\n### Investigating Nickel Easel Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Nickel Easel banking trojan in campaign PTF-03825.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"d6cbd57414ee2912512f7f5c43f95070366936691964cac05872abacb237d496\" or \"de52dceaca455c6dfd568c571683156ec19957b1aee44c689b65a62c113e723a\" or \"d7d968ae4773387cb21ece52a714b06c0907dd52794ec9ee92167586c215d928\" or \"dc99c5a3d5abe58b891aa75520015a2ec3e91f290c88452b44c7c881727c6891\" or \"1ba9b71b8670fc8c59079b40bfd75486510f735970dcd041bd605fd539b0d490\" or \"f73b8b0856e4b028b93ca6f8a117e69819aef210d3506debd5eedbf36b479f2b\" or \"2082abe7624b303a88c7d725d53dd105bad38de49be18549b0b970987a2a4a47\" or \"b893976b23156851b6c644842a4307a8a4da36e5a9d1bd0856011e2c24504190\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03825"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "84f64bf1-3e0e-5807-a71c-e20c73fc56db",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Nickel Easel",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-03825",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "84f64bf1-3e0e-5807-a71c-e20c73fc56db_1",
+    "type": "security-rule"
+}

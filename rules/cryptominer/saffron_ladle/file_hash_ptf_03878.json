@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Saffron Ladle cryptominer sample, as reported in campaign PTF-03878. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Saffron Ladle Cryptominer: File with known malicious hash written (PTF-03878)",
+        "note": "## Triage and analysis\n\n### Investigating Saffron Ladle Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Saffron Ladle cryptominer in campaign PTF-03878.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"0e10272a0f8e45c80c04eb0dcf014f522fac05d399dd4c6a4ef96c4a260553f5\" or \"8f7cb9cf5b6bb4d87853f97e63c686698a78d37d9fdbdfa9a6cf210ab9b819a4\" or \"82732c1325011889b7f023b2117ea10f61227b3ff1482d215fb186e3d61415ea\" or \"de40566bd1c983bd8709a79bc09339f050a1191973fc618753d19105aec6bb3c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03878"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "9649817f-88e0-5a87-9d8a-ac66b1a216bd",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Saffron Ladle",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03878",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "9649817f-88e0-5a87-9d8a-ac66b1a216bd_1",
+    "type": "security-rule"
+}

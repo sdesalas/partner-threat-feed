@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Lacquer Valise ransomware sample, as reported in campaign PTF-03811. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Lacquer Valise Ransomware: File with known malicious hash written (PTF-03811)",
+        "note": "## Triage and analysis\n\n### Investigating Lacquer Valise Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Lacquer Valise ransomware in campaign PTF-03811.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"ff68bbca932a25fc42d9fbc36664bdec6a27af7ef9a03d012dcdffde77154efa\" or \"3b1d6d34b97eff50c452ff0a02ae6e1f66615460d1866280aef8450be26d7fd2\" or \"5fb34fe471d31af640b1feae5bf2719868a0ffd530cb3d35928e33751f5f88ea\" or \"004dd0f739147e531e904a62aa31389654bb51623c0f17d1f6659c1849bc993b\" or \"b2de7a28d42b3bb378b287bc324a7813fd364cc2daba850a045f29fe4460abf8\" or \"5b6eaa5d4deae540af3c8edc8e220230ea528df389bc024e425056e6632667f1\" or \"b6186aebb46541c441ddb3bafcb1e9621a88ab126b13975e5f268cb6d602b547\" or \"f03c264a0e8f18fd7ab63ae0567a2393e6a0c1fe5869e67668bc009cea96b383\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03811"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "1981cd45-0323-53bd-a7af-f89aa4141acf",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Lacquer Valise",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-03811",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "1981cd45-0323-53bd-a7af-f89aa4141acf_1",
+    "type": "security-rule"
+}

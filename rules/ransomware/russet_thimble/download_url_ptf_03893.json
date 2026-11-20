@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Russet Thimble ransomware payloads, as reported in campaign PTF-03893. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Russet Thimble Ransomware: Request to known payload URL (PTF-03893)",
+        "note": "## Triage and analysis\n\n### Investigating Russet Thimble Ransomware: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Russet Thimble ransomware in campaign PTF-03893.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://assets-update51.invalid/gate/8747.bin\" or \"https://connect-secure49.test/payload/6474.php\" or \"https://data-node59.example/update/1909.zip\" or \"https://login-files95.example/update/8180.zip\" or \"https://node-login25.invalid/invoice/7064.zip\" or \"https://node-login35.example/gate/2338.msi\" or \"https://secure-static90.invalid/invoice/4541.zip\" or \"https://sync-mail13.invalid/install/3650.zip\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03893"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "12284bcb-5385-5891-8b20-ebce6bb25c26",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Russet Thimble",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-03893",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "12284bcb-5385-5891-8b20-ebce6bb25c26_1",
+    "type": "security-rule"
+}

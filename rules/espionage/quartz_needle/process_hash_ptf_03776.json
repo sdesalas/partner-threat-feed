@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Quartz Needle espionage toolkit sample, as reported in campaign PTF-03776. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Quartz Needle Espionage Toolkit: Process started from known malicious binary (PTF-03776)",
+        "note": "## Triage and analysis\n\n### Investigating Quartz Needle Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Quartz Needle espionage toolkit in campaign PTF-03776.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"d3c27ca017b4734c5dc375b2a739896ee1d2fb3e27c3a2b0336de82af6d7653c\", \"415252f4107840feb4ac3487b3a637a523e7a0d9ed3f6f8f436c42ecf5d198a9\", \"2198eb2d83aefadafec6a50aeda1359dd137e47a86b9c06776f103aa59fc7555\", \"948a8e32168045f17da11a9f5fa5a41c148c1cd66390af1b2ac2a4c9a9396436\", \"a695e62398adb43a42f278962cb6b3c48c58401c3f1c51ef0cf88fdeda73e144\", \"4d190614ec0ffd7c429168ebed34e03cd766410f30519e45b629b12f6490de4e\", \"26453e19b77f30baba12830b46683be09f7596c8d24e74003e62cf15f7a70e8d\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03776"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d6c7b985-575c-5db5-9600-1c8eea93220c",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Quartz Needle",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-03776",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "d6c7b985-575c-5db5-9600-1c8eea93220c_1",
+    "type": "security-rule"
+}

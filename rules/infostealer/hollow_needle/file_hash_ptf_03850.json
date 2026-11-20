@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Hollow Needle infostealer sample, as reported in campaign PTF-03850. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Hollow Needle Infostealer: File with known malicious hash written (PTF-03850)",
+        "note": "## Triage and analysis\n\n### Investigating Hollow Needle Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hollow Needle infostealer in campaign PTF-03850.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"1e31f37ff972f952c07457daba936f48e392cac10b43a8411e22cd2bcdf13b6c\" or \"1177278030bc06cfb4fb82d4127ce582974049917770327a62f0615d4e116e6b\" or \"ef46edba2cb7412202f940c7c689ca5c79082f15911bef061bc502dcfa6243ce\" or \"38141b2edc0c18ad5dfe9a9cffe3d2e118c39f6f5567b841e6c8a795d037454c\" or \"f191b52a8401406a34b9cf46e6ac0a6a1b67a4b7bd909b2ee3d5211247db67ab\" or \"9adedce05efd04b98a5996eb512c0084d8c1a81b95b1a479e61ff05d78bcbc76\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03850"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e1fb6636-20b4-5787-805e-68f507cebd08",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Hollow Needle",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-03850",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "e1fb6636-20b4-5787-805e-68f507cebd08_1",
+    "type": "security-rule"
+}

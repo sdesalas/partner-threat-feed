@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Nickel Trowel remote access trojan sample, as reported in campaign PTF-03938. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Nickel Trowel Remote Access Trojan: File with known malicious hash written (PTF-03938)",
+        "note": "## Triage and analysis\n\n### Investigating Nickel Trowel Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Nickel Trowel remote access trojan in campaign PTF-03938.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"e82cb784133aff7d49451e04c4e7b1d5051c26a6cba586b41de7a532cfee63bd\" or \"38c2c7ba710e1d7c380802f6b62b5972503e2d7713a78c46cc6cc6669aab45ef\" or \"48cf24a0248aa1b09b91a8bf62f2eb49e708db4b15e7e2bf0369789fca33be2c\" or \"8fdab577c196c5263eaa6ef67a31e76ced5a0ca61c05da71098c0d8254199df9\" or \"15d79920b47f691d7f16a93ca7e4ae3304ace4a06f4209b8483a03be6074025c\" or \"bf2972c591a9348ba2aa4da0b32b808c1ea1dcab7f2daed1189f2cdc90bfb318\" or \"206d37958b4678d79ecd84a2587da7757fdc96449a80ae60db268eeb379392a5\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03938"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f26c2f9d-9e2c-5f2b-8368-559968c97330",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Nickel Trowel",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-03938",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "f26c2f9d-9e2c-5f2b-8368-559968c97330_1",
+    "type": "security-rule"
+}

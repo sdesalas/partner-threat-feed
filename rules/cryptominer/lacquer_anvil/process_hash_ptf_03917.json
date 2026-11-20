@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Lacquer Anvil cryptominer sample, as reported in campaign PTF-03917. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Lacquer Anvil Cryptominer: Process started from known malicious binary (PTF-03917)",
+        "note": "## Triage and analysis\n\n### Investigating Lacquer Anvil Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Lacquer Anvil cryptominer in campaign PTF-03917.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"e5f14f4ed2c2d40697261a5e2a0f8e809b96fb0d8a67a8e8bba45f2a8f5fca2d\", \"24f44b790d6b36098fc92913181c4fd1ae62efb1c3be867d53fab7142a4321dd\", \"4ddbf4e37c612ffacfd7fa1bc4976f775df083017799e469f84894886f1abeb3\", \"05b466356952412e6e9eb79bda1b9c290d629a815f60607ba0432a904ca0ee50\", \"981f73ed2283942239c2882a9a6e8a0204b781aed1cc14feed1e685aa913530a\", \"30be1cf035f4af9f538a148b7e66b277bdb98b33e0ac8f8d32a83ee098ec4d42\", \"da997664ee685d0c7ddcd88da7fb9332968d570672b42823bfd5d36d7769b413\", \"7ec157528ac3dde6d1dc66543eb4901cdcc61d704d0f24f4c6fafbea86c29415\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03917"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "df461a81-5b68-51c7-b33e-0a2a2479e60d",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Lacquer Anvil",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03917",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "df461a81-5b68-51c7-b33e-0a2a2479e60d_1",
+    "type": "security-rule"
+}

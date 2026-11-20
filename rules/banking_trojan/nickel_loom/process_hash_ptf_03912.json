@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Nickel Loom banking trojan sample, as reported in campaign PTF-03912. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Nickel Loom Banking Trojan: Process started from known malicious binary (PTF-03912)",
+        "note": "## Triage and analysis\n\n### Investigating Nickel Loom Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Nickel Loom banking trojan in campaign PTF-03912.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"d5c7e2e84a07267e543c3d4929c3724ed6076ab95e8aec157fb19545058e65ed\", \"7025a792641e0bda29e252b35e3d76352566e6485fdbfe84ab1ed2b174a42e22\", \"8fb577c80690aa225aca8763fe0105226522e02c2250e51f3dd59696236111b1\", \"5a6d55c6e0256dc7b2dc0aa70928fb38546f6e77a9d628129c472315cc782e41\", \"6dc6fcd8f6351e4aa01a1abfbb397155344289ee2ce659cba0b3a5bf3b70b4c9\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03912"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ae9ea186-4d13-537a-8126-503c63e6550d",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Nickel Loom",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-03912",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "ae9ea186-4d13-537a-8126-503c63e6550d_1",
+    "type": "security-rule"
+}

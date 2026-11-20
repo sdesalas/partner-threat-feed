@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Brass Trowel espionage toolkit sample, as reported in campaign PTF-03928. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Brass Trowel Espionage Toolkit: File with known malicious hash written (PTF-03928)",
+        "note": "## Triage and analysis\n\n### Investigating Brass Trowel Espionage Toolkit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Brass Trowel espionage toolkit in campaign PTF-03928.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"77b4fb4aa0badf1ab2fa168d420115843e0e6f067e1c43fec8951d50e504c6ef\" or \"7b65eb77effdd3053c0bbb6088b0c2bcee569701f9f25d53f9b6aee960dc736d\" or \"5b234025dc8bbea1a51102f7aa827e094c38f46dbf5052c9d7fbbe78505c7694\" or \"07e6e23b3625e36f88b8c5fa6d00413e04b9b9046ab09e0eae3dd9a22708c456\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03928"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b64805db-d36e-5528-8ffb-d86f64021511",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Brass Trowel",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-03928",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "b64805db-d36e-5528-8ffb-d86f64021511_1",
+    "type": "security-rule"
+}

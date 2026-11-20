@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Lacquer Anvil cryptominer sample, as reported in campaign PTF-03918. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Lacquer Anvil Cryptominer: File with known malicious hash written (PTF-03918)",
+        "note": "## Triage and analysis\n\n### Investigating Lacquer Anvil Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Lacquer Anvil cryptominer in campaign PTF-03918.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"0949c70a262472c1f80b763c5071d6afd913552834a23ca571e731570eb33b89\" or \"06c7efe2fb5b32239bb3ffc63b84886b1cc126350ed6839fd4c47d3f9993fc7f\" or \"9546c8024ed9a69cb9543159bb2bfb60c8ccfde666d6dbc002b95dd82c3b116f\" or \"7d3727cbb938768c28b0673ce9cb7a50a338d16720580e4ced70689e971b181b\" or \"57b1729b6b0100e6b09f98d34b41e8cb000b6d767f04adee113fa264ddf148d7\" or \"4137d5b180fa93f82c8762bb645dc30bd5f40778aa0e9d52dd6dc6ed3eaf9871\" or \"8b96baa8da53fd2b0abc2b1530dd8e4c54b443b33582a28a9453686ea4148cff\" or \"538cf8ad6bac4668f45d7d884eac0ef03aaac3d0aa1abbb7381618230706c372\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03918"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "55a6d83a-21de-513b-917f-081510c6c4a6",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Lacquer Anvil",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03918",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "55a6d83a-21de-513b-917f-081510c6c4a6_1",
+    "type": "security-rule"
+}

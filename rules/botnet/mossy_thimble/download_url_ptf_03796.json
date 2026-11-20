@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Mossy Thimble botnet payloads, as reported in campaign PTF-03796. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Mossy Thimble Botnet: Request to known payload URL (PTF-03796)",
+        "note": "## Triage and analysis\n\n### Investigating Mossy Thimble Botnet: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mossy Thimble botnet in campaign PTF-03796.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://api-files71.invalid/payload/8639.zip\" or \"https://assets-static6.example/invoice/2682.bin\" or \"https://assets-sync5.example/download/1123.php\" or \"https://cdn-assets70.example/gate/7935.php\" or \"https://cdn-files24.invalid/download/9192.php\" or \"https://cloud-node25.invalid/payload/8387.php\" or \"https://node-portal58.test/invoice/2196.zip\" or \"https://update-mail78.example/gate/2514.bin\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03796"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "73a21fe4-7def-527d-9fe6-7642c6300275",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Mossy Thimble",
+            "Threat Type: Botnet",
+            "Campaign: PTF-03796",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "73a21fe4-7def-527d-9fe6-7642c6300275_1",
+    "type": "security-rule"
+}

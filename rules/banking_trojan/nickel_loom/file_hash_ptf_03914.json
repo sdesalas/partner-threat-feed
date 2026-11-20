@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Nickel Loom banking trojan sample, as reported in campaign PTF-03914. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Nickel Loom Banking Trojan: File with known malicious hash written (PTF-03914)",
+        "note": "## Triage and analysis\n\n### Investigating Nickel Loom Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Nickel Loom banking trojan in campaign PTF-03914.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"ab6c3c44176a50ba755797666f1577962582c54b0988cc23f287ef0c2ec46b8b\" or \"7269c2b8ad7ee6cde405121cb4ce2299424589a02095d68154e31826ca8c207f\" or \"ec456b500a6ac164eee3c116f69b9696dcd69e22f4743cc4e8a024e02ee47a51\" or \"510e9695addc2a6964e50f33c666c7abbde3a313b8d9d3f515197694032f40ff\" or \"07e8dd98948bef0d0f3b3c84e6e4908bd388b36bf857d5e412db8ddb8645ada0\" or \"7d1983993695efc716af746ad46f33e44796c699e034bba5531fec1933c5eff6\" or \"da24424157969bd300f7f4bd2fdfb62fd6bb8aba6ba36df309451ca32a8d2f08\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03914"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "40a170bd-71d4-5831-b974-ec7d537f6ba1",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Nickel Loom",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-03914",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "40a170bd-71d4-5831-b974-ec7d537f6ba1_1",
+    "type": "security-rule"
+}

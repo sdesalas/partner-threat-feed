@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Birch Funnel remote access trojan sample, as reported in campaign PTF-03789. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Birch Funnel Remote Access Trojan: File with known malicious hash written (PTF-03789)",
+        "note": "## Triage and analysis\n\n### Investigating Birch Funnel Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Birch Funnel remote access trojan in campaign PTF-03789.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"3b1897cf6c8b73b90714165697d0a9b8e188b8ee57fb95fa274f9a4bbee601ff\" or \"8b702f8a44f1b4e6adee003c467bdae6d3242c9896d408d751651d99df2a41b9\" or \"a9742f259830a8495ab016086b154a4bc810cf7de7b54fb40f5398442715c5bd\" or \"3d0046775ce9cd511d5fa745f448094b954e692c16004c78a127ff688cddaf44\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03789"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "320f1fd4-f9c7-5956-91c0-cbd1d8d1654f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Birch Funnel",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-03789",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "320f1fd4-f9c7-5956-91c0-cbd1d8d1654f_1",
+    "type": "security-rule"
+}

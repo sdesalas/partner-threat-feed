@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Tawny Abacus botnet sample, as reported in campaign PTF-03866. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Tawny Abacus Botnet: File with known malicious hash written (PTF-03866)",
+        "note": "## Triage and analysis\n\n### Investigating Tawny Abacus Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tawny Abacus botnet in campaign PTF-03866.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"1c93222ab8ab53b4c05bd65aa32a715cde4322f1e7ef5960eb573f16c01686de\" or \"24d69cbc98881a6e072535a103f969c07575e0e2e67f8a9f8ce55676b0fa59d3\" or \"61c43d528cb6714e3523e75401cafa52255a96a0132591d23f364a257c9b3fa0\" or \"14c6edd2007d89f420ba2bf80249290c61267a25a05e90ff0eab308aba3dffab\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03866"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f9479654-54c0-50b5-b943-0c66e8515f73",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Tawny Abacus",
+            "Threat Type: Botnet",
+            "Campaign: PTF-03866",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "f9479654-54c0-50b5-b943-0c66e8515f73_1",
+    "type": "security-rule"
+}

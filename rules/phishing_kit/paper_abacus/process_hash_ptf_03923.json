@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Paper Abacus phishing kit sample, as reported in campaign PTF-03923. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Paper Abacus Phishing Kit: Process started from known malicious binary (PTF-03923)",
+        "note": "## Triage and analysis\n\n### Investigating Paper Abacus Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Paper Abacus phishing kit in campaign PTF-03923.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"34c917b09dea8b3bd3ff3a4e26e2c84aad86ab600b44f46f51c6d9826f23426f\", \"92c7500813dfc9a602ee83377934aa3769a6668986b45343a4981d9414abdf5f\", \"15e888a2ddd6a352c5117b166e04884d31522a282b32f36409f2f14b39aa3bf2\", \"2ec845ed457b7810a7833738b5d2e12458dff004477bbc196015d8aeba96857e\", \"084a591467c6e37407394077f6d2a63e341290990346c8dc39d81e97dfb7cd2b\", \"63b9225a451956e1290287daa4c1b5300bcdaed37daf7d98a2bef2bb7b79e974\", \"8db096e268a5beec3b2b4ba490ee5f9557a8cbb928577a379aa8cce6f3897bce\", \"a5103e649e0d0485282c20cd5e17b00b0127fd8abbac60fc553450afc4313c4a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03923"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "de40020e-1089-5045-98be-fdb527baa62a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Paper Abacus",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-03923",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "de40020e-1089-5045-98be-fdb527baa62a_1",
+    "type": "security-rule"
+}

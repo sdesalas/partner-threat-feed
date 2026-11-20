@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Hazel Spindle espionage toolkit sample, as reported in campaign PTF-03888. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Hazel Spindle Espionage Toolkit: Process started from known malicious binary (PTF-03888)",
+        "note": "## Triage and analysis\n\n### Investigating Hazel Spindle Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hazel Spindle espionage toolkit in campaign PTF-03888.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"8b0734fdc9c25d628b2930881c2ce8865f483046b35c66a990bba9607bfb2d9e\", \"cb01d3ea63805adb31338a4038bd8ab9a579f3267b2b21bc7310df197729dcec\", \"719d847bada03741574b26b91e8eb10b4613516592d0ca80e045718412c1c8fd\", \"4978755164c2b0d23c85e3fb2bdbe531e2c0e7800af2283a78ebfa7705c5462c\", \"e3998df323be6765778195446d8236a6ad9133e3f50a144fb60c8d051b652216\", \"7190f459f5aea2f0b5527ecf8492cae6a6b94fa2f0bddf7c89d52dacfe1b787c\", \"7cdce7b4c9af7e39d9e69f967205d0efb772335c9b36345929b8a04bad879176\", \"34a43606f6939ae0e2593696877129a6b903763d39a11642512bfdcb478190c6\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03888"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e089e4fa-223a-5117-bba0-1e6628fbeceb",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Hazel Spindle",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-03888",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "e089e4fa-223a-5117-bba0-1e6628fbeceb_1",
+    "type": "security-rule"
+}

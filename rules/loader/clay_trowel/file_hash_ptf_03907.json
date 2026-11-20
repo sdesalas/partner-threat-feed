@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Clay Trowel loader sample, as reported in campaign PTF-03907. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Clay Trowel Loader: File with known malicious hash written (PTF-03907)",
+        "note": "## Triage and analysis\n\n### Investigating Clay Trowel Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Clay Trowel loader in campaign PTF-03907.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"2fd42979c9945d0994a80b6273bfd4d67fceda1272622406734a9cfe713c3bc2\" or \"75ba6ee0ddca09e63a6f6bf51bd016d4ec962f9de352d1793c42b115bc145d38\" or \"83618220f5eb33e2506239f6dc4bd84862d31d00bc7e540b9e45bed66fbe7d3c\" or \"28dc8f42d31f7f891cecc2f79be8c4fbaa1452bffb5b9eb8d1544ded45798c9e\" or \"1319a6f5bdbeaa89cc858aa96baf698e61f242c2aa792a64cc744a67b5fa5041\" or \"e26ee95489d982102461388d9e54ffe7a7b7ce1a3a44be862cb45c78f7c9c73e\" or \"00921cc0bfb43716a11ac85bf1ab52726fe18ca788d355dad798eae6b268316e\" or \"534710583ae70359f7aaed7c96cc7bdaa34701cfde6dc1181fed579427377f00\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03907"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ef975caa-eb50-59aa-a145-76ff890fc7b6",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Clay Trowel",
+            "Threat Type: Loader",
+            "Campaign: PTF-03907",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "ef975caa-eb50-59aa-a145-76ff890fc7b6_1",
+    "type": "security-rule"
+}

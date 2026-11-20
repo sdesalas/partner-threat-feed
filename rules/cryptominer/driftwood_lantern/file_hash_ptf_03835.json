@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Driftwood Lantern cryptominer sample, as reported in campaign PTF-03835. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Driftwood Lantern Cryptominer: File with known malicious hash written (PTF-03835)",
+        "note": "## Triage and analysis\n\n### Investigating Driftwood Lantern Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Driftwood Lantern cryptominer in campaign PTF-03835.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"2d02e0e485693597e7bcb95185b425b3cb0a3db8e524ae201150b1b51f93e193\" or \"05f77803e9dc95352da0c77c5af5c7dc6dd3ce8c54ad820ed2246bc378cd36f0\" or \"e05028ee6adba44cd47ebb8e9f64b2a9678b88a38ca8f7580f234215b0af1278\" or \"00996a215410d000113cd0f6ccc711267a878dcfe2932e0f11dca11eddb324e1\" or \"b6a4a3f2a32fcd09f03154a3dbaff7773f18433edc76007526be825edd94a4c9\" or \"94bc2312c8fb141bd7334e99986ad9d4aaeffa5c1fbb758a1d972853dd4f9410\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03835"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "414f74c8-4ab7-59c0-b1a4-535cddbd4971",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Driftwood Lantern",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03835",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "414f74c8-4ab7-59c0-b1a4-535cddbd4971_1",
+    "type": "security-rule"
+}

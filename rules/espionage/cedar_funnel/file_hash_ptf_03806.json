@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Cedar Funnel espionage toolkit sample, as reported in campaign PTF-03806. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Cedar Funnel Espionage Toolkit: File with known malicious hash written (PTF-03806)",
+        "note": "## Triage and analysis\n\n### Investigating Cedar Funnel Espionage Toolkit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Cedar Funnel espionage toolkit in campaign PTF-03806.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"6c9568a4831d8f9b17761cdbba6f338f0e8ee0d90624a5b84748301e42bdb395\" or \"e0a145cd17293ee1de68fdcf9223d7cfd2fa16885c84491eda45721a64421716\" or \"28f449a1a5c8bcc4c5b73c079bc5e04f895391396a395821f0214a985132869e\" or \"ea1eebfdab00a51bcaa9cd4e8abbe7aab8a4ed65996a21701db37fd126183ba9\" or \"2bf26feccfb7ca40e340966416c6ecbdb1ac46bd38d497a7065853a44efd2cae\" or \"6202d6a1bde3ed2aa2dfaa16946678f8c1fdf1c28bdd394ae7733c24fe46e988\" or \"10a622989ba6553fddfa50bf1524b04182f987e372926d7ab9a41b006fb9caf1\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03806"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "5e376572-e274-5caa-a2c9-4330be0bdb50",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Cedar Funnel",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-03806",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "5e376572-e274-5caa-a2c9-4330be0bdb50_1",
+    "type": "security-rule"
+}

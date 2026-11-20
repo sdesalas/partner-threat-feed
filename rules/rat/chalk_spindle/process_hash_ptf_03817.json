@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Chalk Spindle remote access trojan sample, as reported in campaign PTF-03817. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Chalk Spindle Remote Access Trojan: Process started from known malicious binary (PTF-03817)",
+        "note": "## Triage and analysis\n\n### Investigating Chalk Spindle Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Chalk Spindle remote access trojan in campaign PTF-03817.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"ee3968972f1633618e6e92d3b25185d4339470b568462c4804a4d9338b02f718\", \"fe9bc0dfe433952296b07764c419d30ba66995ed206df81eb197726e5fa05717\", \"029236250dd8d35375bb846911a4c78d8cfa3cc37d860036faeb58339132fdb5\", \"a3d9b02c4c91b175786d620d3a8b5c80c591fcc64a2c373d7bedb9682b10709d\", \"b953e1a75944194714fe16b5713e720b757c48354c1008a89834c60dd0075779\", \"ba43fb960e4e90e08a46f89c4ff46b5c5480de88b74839da0174f07e8bb3974b\", \"55fb084b9b1032c0165c7923e42582f2d2e7dc5359284c14abfa5c102ccd8d6f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03817"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "1d41d75d-f943-5808-9d1e-336c4418b4f7",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Chalk Spindle",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-03817",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "1d41d75d-f943-5808-9d1e-336c4418b4f7_1",
+    "type": "security-rule"
+}
