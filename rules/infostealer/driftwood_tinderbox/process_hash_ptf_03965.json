@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Driftwood Tinderbox infostealer sample, as reported in campaign PTF-03965. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Driftwood Tinderbox Infostealer: Process started from known malicious binary (PTF-03965)",
+        "note": "## Triage and analysis\n\n### Investigating Driftwood Tinderbox Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Driftwood Tinderbox infostealer in campaign PTF-03965.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"3e029c4c4442cbb1f2f575a5b56e69cf91cc10b09016b925a84cc1dc9874add5\", \"6632ce694d934e3ee43244fbec6261dccd49c9d6f60b66ca78469bc85e2372cb\", \"9b63376ce19704fe0ba67d6c2407654382b0ab146b95df9f5531d6090d3bf86c\", \"3d6221731acdb633f6ec5b1da7e4706b5298e8355b6d50fbb6579a01de82b7a6\", \"e30af25dd8c37c95800f2efa78b90c04e3e639dfaf5037ba934e40efd05441d9\", \"50b7bc0b94ced39b353db1cb8c7517fc5fa398f3d2a0d6605a55c6258a06a1af\", \"fa4c3727285f5acbfe1bf950166e014ea68fcac4beb5b1bddbfc203d18cf476f\", \"6d75a344e5728b2d518d3e2e242afaca073a12cbd053498e9a83176effdd2d9d\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03965"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "fb14b348-b4ad-5247-8c54-55870720b81e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Driftwood Tinderbox",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-03965",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "fb14b348-b4ad-5247-8c54-55870720b81e_1",
+    "type": "security-rule"
+}

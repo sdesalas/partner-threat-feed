@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Slate Lantern cryptominer sample, as reported in campaign PTF-04085. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Slate Lantern Cryptominer: Process started from known malicious binary (PTF-04085)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Lantern Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Lantern cryptominer in campaign PTF-04085.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"71de981e37595447e656348ca2bbdba1d1b9173dc217f44e69974355b9563495\", \"3b0646cc61d26ce5ebca4982ba0b5be438e62525611580a3f5fcafd357f5ae42\", \"9b7e0812cdeb9c34260c540243189797cefdd42b7ad02ca0a7a7a4679da92eba\", \"6c05557fb579b6e5e6a9c6ff7acbc1898020adec158683836547b31b3e6a3a80\", \"d88bc30cf84e4d972ad4a16c66a5f4c567852ea0ee41dec35d39375684dd939e\", \"566033379e23f588c3decb7b52b053c7dc29cd04e7800c75d35bae5e3e9c030a\", \"c26a510426f0ca0f23bdbf3fd123847e9042de0f07ceed278930f5754b5c7585\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04085"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "bf176b3c-94ae-5e41-957e-31bc7c8006ec",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Slate Lantern",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-04085",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "bf176b3c-94ae-5e41-957e-31bc7c8006ec_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Brass Ratchet botnet sample, as reported in campaign PTF-04113. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Brass Ratchet Botnet: Process started from known malicious binary (PTF-04113)",
+        "note": "## Triage and analysis\n\n### Investigating Brass Ratchet Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Brass Ratchet botnet in campaign PTF-04113.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"3b388d141c33b0e992bda420629c937f05a374129eecd11971f15390d10dfbce\", \"39aabbc56381af262b6de391109dca6dc5db8464d2937596651af4e154c5fa72\", \"a32c227a6a2687a30a65adbac2a6ecb7154916e4eddcbab1bdd808feb53a4856\", \"fefd7c8a84feec2601fd9fb1969c42eaff9c7fdb181337cdc52b3e074ba4420e\", \"a7bfa04974eabbb04abdc741ae3f4f3ae5dd082ca444b653ed5727f711f54eec\", \"97df35b460b07628d51df6cbd0758b36f9f2a741d0d2443468477490caeb3328\", \"95cfe6e4418f40c23d87bf83b92610d2a7928391fd84153fb4f6531ca234ce8d\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04113"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "751c4616-5bc7-5e57-92ed-53f09fa81dcc",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Brass Ratchet",
+            "Threat Type: Botnet",
+            "Campaign: PTF-04113",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "751c4616-5bc7-5e57-92ed-53f09fa81dcc_1",
+    "type": "security-rule"
+}

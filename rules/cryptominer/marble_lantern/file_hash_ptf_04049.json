@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Marble Lantern cryptominer sample, as reported in campaign PTF-04049. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Marble Lantern Cryptominer: File with known malicious hash written (PTF-04049)",
+        "note": "## Triage and analysis\n\n### Investigating Marble Lantern Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Marble Lantern cryptominer in campaign PTF-04049.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"40335c22d1252d3e953c364f9bb1bdead69faeaf60fa480e3f26f059c17cd7dc\" or \"9972f06fc2bee7940b59688eaaf2ff4f76e100c968a4448903bbc4c5e5a619ea\" or \"30bda2b2f51bb7b005087efda9e84ff4fc831c0fbab3f8ec3ae1489e1c0552e8\" or \"9de170e0c78c7ad354ac613d63a2475100325a88d110dc9f136b938af2b66070\" or \"6e575ca0b79a6acd61794a8eaf269625fa58b85e8965883e6909fcf2747c383c\" or \"679fa7407ee2f68490b83e02924350272d03da227345b9982887fe9fafe66856\" or \"a7d6992c5d0ad62bfd1a3f659b8660f9fb87f8a7a2253497ee148ea6cbcdcff2\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04049"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f12a0665-230b-5f0a-9a32-5f5082d5edf8",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Marble Lantern",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-04049",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "f12a0665-230b-5f0a-9a32-5f5082d5edf8_1",
+    "type": "security-rule"
+}

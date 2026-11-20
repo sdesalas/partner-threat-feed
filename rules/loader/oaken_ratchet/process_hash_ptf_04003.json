@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Oaken Ratchet loader sample, as reported in campaign PTF-04003. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Oaken Ratchet Loader: Process started from known malicious binary (PTF-04003)",
+        "note": "## Triage and analysis\n\n### Investigating Oaken Ratchet Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Oaken Ratchet loader in campaign PTF-04003.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"658ead7bdedc662023ebf919ed448f72eaa9e107bd70e45d8d9e610199fbf974\", \"4b5b65dada662cc7583aaff22e37a3f6952ba613b8158d891dfd084c42b46d40\", \"b9dec681fd8b40bafa9c003b66bf0cb56ac6a4a75c8d3519827c7f49c7c73c5e\", \"0d8cc9a73f3ce43ce1faeb16f417cdb9440403aecb6290beb18d34caafd6d398\", \"9bec22b7fc3776220e9265fff6517c5be88cf0d9dab6fcc37a84c3edb102db1b\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04003"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d6805850-13dd-5dca-b8e3-c58f7e6a27c7",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Oaken Ratchet",
+            "Threat Type: Loader",
+            "Campaign: PTF-04003",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "d6805850-13dd-5dca-b8e3-c58f7e6a27c7_1",
+    "type": "security-rule"
+}

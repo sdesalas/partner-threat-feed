@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Umber Pulley ransomware sample, as reported in campaign PTF-04058. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Umber Pulley Ransomware: File with known malicious hash written (PTF-04058)",
+        "note": "## Triage and analysis\n\n### Investigating Umber Pulley Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Umber Pulley ransomware in campaign PTF-04058.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"75f4116429eb42edb4ae773456f3a2456ed23c202e4a7a9d0f0b339efb137212\" or \"2d7c5ad76784258e9f1bbce162c0d1c2d9f3771dbb67920bca4af62aa5c04c37\" or \"f5f44b5d0f16980932abf847cd526c25c2dd5f654d4b0a1481e9e1cf452c370a\" or \"0077ef3867b20be9eb384a58ad96dbadbfc881390245875beb70e89a027139d9\" or \"8138236ca2f76dda520a659ba00a505209fa0df7aa86a78ac4e7726285193679\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04058"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d91bcd34-ab69-5ba7-9535-e924de202c0f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Umber Pulley",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-04058",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "d91bcd34-ab69-5ba7-9535-e924de202c0f_1",
+    "type": "security-rule"
+}

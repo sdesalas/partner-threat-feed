@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Slate Bellows espionage toolkit sample, as reported in campaign PTF-04131. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Slate Bellows Espionage Toolkit: Process started from known malicious binary (PTF-04131)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Bellows Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Bellows espionage toolkit in campaign PTF-04131.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"435b1638d7de94bb43a262c6343a2be839d06b429d19a1633af69f02ba8d769f\", \"94c0de4cf82a6f42a291aa418b8f8a67e749b85bcbad63ec8a3c5c21903d78a0\", \"56ef25d58ad58f270ab49a2022f498a376cefba63e8a55f45d1c906d80d73942\", \"adf87b4d37baa0566da753a0143aa557c5e2dcd9de5aeb451065d4e8fbce75b9\", \"3536eb47551a941b07a128276b06788dc651bee0a0e672148794d999cf32992a\", \"c157c7bff3c44f37b4523140a669d055d0a5c71091b2422cdb56545073ea5cd2\", \"9841dd66c2283d9c435e491175857426d03da6634e59ab677ecd53a7e6d84f67\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04131"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f08cb405-ba75-5b50-85e4-3b582124e523",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Slate Bellows",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-04131",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "f08cb405-ba75-5b50-85e4-3b582124e523_1",
+    "type": "security-rule"
+}

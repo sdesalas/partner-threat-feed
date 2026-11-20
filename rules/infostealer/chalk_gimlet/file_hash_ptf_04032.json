@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Chalk Gimlet infostealer sample, as reported in campaign PTF-04032. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Chalk Gimlet Infostealer: File with known malicious hash written (PTF-04032)",
+        "note": "## Triage and analysis\n\n### Investigating Chalk Gimlet Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Chalk Gimlet infostealer in campaign PTF-04032.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"e85cdcd779079c4f250ac445d946d63077cee5b0c2eb15088ff11e9e864311fc\" or \"6cd8eb5c45ef11b221249d41e963072cadde0aeb1a5990052baecfde52e56ed8\" or \"7d3c29c2afebbca57c79782077a2f1f3f10c4d481a09295f0d6c2c1e86dc0522\" or \"3aa82fddbbb262cf7cbb7bd256a569e72beb2ddda8401de16e861501c079766a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04032"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e0d93358-3099-5984-9b10-f72b50b51459",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Chalk Gimlet",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-04032",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "e0d93358-3099-5984-9b10-f72b50b51459_1",
+    "type": "security-rule"
+}

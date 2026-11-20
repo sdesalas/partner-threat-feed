@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Mossy Loom loader sample, as reported in campaign PTF-04110. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Mossy Loom Loader: Process started from known malicious binary (PTF-04110)",
+        "note": "## Triage and analysis\n\n### Investigating Mossy Loom Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mossy Loom loader in campaign PTF-04110.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"6f707a95b8b6bceaf2f74fd8ab83723401d345f027d7b16cc86264e4ea59e8a0\", \"7d6d5aed5130547a4ff6a2ac24192b140a6be7b53645f02dec3e40f8f05bf561\", \"d9828912c88bedb25d8ced0a867b0abbc89a9efbbd04618ed054177431273697\", \"39fc02a0d5b18c1d5c9c2c02d52ea6d01908b7d1550fb796051553e3843cd732\", \"13463487433be20076fcf8ecbfe7f06fbedba4c292db007f985631a98ffd93b4\", \"ed5702ad5907af1f64abcab0be95323f999ced8278b95f33d6ec08387124eea4\", \"78475063d38b928e27e58f809363f8bdc3251076dafa2ae2b793baa2f72e41d4\", \"9d463dbeff48c9cb1fc990f72588c22e2b3f931d0533ba313dc52dc193d12bfd\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04110"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b5852b4a-5149-55e1-a8aa-06b2196c427b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Mossy Loom",
+            "Threat Type: Loader",
+            "Campaign: PTF-04110",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "b5852b4a-5149-55e1-a8aa-06b2196c427b_1",
+    "type": "security-rule"
+}

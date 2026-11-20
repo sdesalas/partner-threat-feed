@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Mossy Loom loader sample, as reported in campaign PTF-04112. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Mossy Loom Loader: File with known malicious hash written (PTF-04112)",
+        "note": "## Triage and analysis\n\n### Investigating Mossy Loom Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mossy Loom loader in campaign PTF-04112.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"389e3fc7e29a0c2723253286ef3deec7b68f5bd4823878631f18178a3d1623ce\" or \"3c8be88e7f9a952fe3c1c5197dbeb7f226ec53ef1803cad114cc7e1430950ebc\" or \"0ac4aafb77e76eae38186de3a0fdd1d3ec41aa27eba58e57b0a2d4cbd90651db\" or \"1541b0f516c6c6043ba372d21e763e18166c09af785fac84abb061619b39847b\" or \"3bfd48bc17444a93c5b632a4133736d1b63f2972b4d410dddc496f73cee7030d\" or \"72a602c25bf266aa2aa43c96cc394f13e1f97b81fbb588bb8b33728eb95da12b\" or \"f3569cbed998ac2f7e1af54403d9d9aeeacd2807530819c43283ab1221a55033\" or \"4c9425d7ceda7409a9b9305740c9cd9a5ce76250d9ce5b0734724af83eff2c73\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04112"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "3cad3a91-eaed-5042-8842-313b9a273e67",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Mossy Loom",
+            "Threat Type: Loader",
+            "Campaign: PTF-04112",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "3cad3a91-eaed-5042-8842-313b9a273e67_1",
+    "type": "security-rule"
+}

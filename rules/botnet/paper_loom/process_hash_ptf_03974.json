@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Paper Loom botnet sample, as reported in campaign PTF-03974. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Paper Loom Botnet: Process started from known malicious binary (PTF-03974)",
+        "note": "## Triage and analysis\n\n### Investigating Paper Loom Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Paper Loom botnet in campaign PTF-03974.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"0e896da2d31e7558361606194f624a543bb2ea7a154ea956a7c9b8ca1ac2b704\", \"3a74b6211c93c66a67bd1ba8248954fff1a94a387aca5e966cf8474b7cd5e81c\", \"b744082d37b47d1fba65740638d2b14704fcf3ef5c21336768520d24f7a64828\", \"fbe66a83e628112d06c30e61aff724b8612c8ce0bcf7fa8450cff8720b073e0e\", \"92f6c014625494ef86c65ea25fdac937c7643aa63c4d713b47776f31e6a03b6f\", \"475152deb9ff4541ae6c5c45151d13b31be615e890f875d3fb6184fa909dc85f\", \"ca0362ce6c4a479613f95a827bc30ff43dab2ceecb4b0c832b0a3f31a878540d\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03974"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ff640d59-4dd1-5217-bcf9-1bdc6323a64e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Paper Loom",
+            "Threat Type: Botnet",
+            "Campaign: PTF-03974",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "ff640d59-4dd1-5217-bcf9-1bdc6323a64e_1",
+    "type": "security-rule"
+}

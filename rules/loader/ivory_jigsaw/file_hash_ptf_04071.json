@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ivory Jigsaw loader sample, as reported in campaign PTF-04071. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ivory Jigsaw Loader: File with known malicious hash written (PTF-04071)",
+        "note": "## Triage and analysis\n\n### Investigating Ivory Jigsaw Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ivory Jigsaw loader in campaign PTF-04071.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"3cdcc4e2e308ddfafa414ba6fb5d6de66613b043ddc7a85d03ed71694db2f46d\" or \"c55d837e4ab3a8385450c1e8559d7dfefee0bcb601f7c58567fc61c1703eab9b\" or \"7183c2142df43055e1160e68ad4067f272fa2d6065048549b6810faaf46a7b61\" or \"bebdfc0fb25e9f243ca7eb5c01e9ab247f7e203614cba4c6bf45adfd3848a538\" or \"465f9e5e94c6e8bf2886b76fd4332e9e585124ed5546dd716e3608ee93af505b\" or \"7e2fdc9487b79de9c8f520354d3463a9752ae527dbc1c40fe5b89e4826c03e49\" or \"ad0ae53f8413a4f003e148728e9af88c7ddb7faa819f8611e88a32dbaf5c862a\" or \"929f28a1175b8135d3c65844f64ef84be4c7c1abacc1140fba27d6e9bb56213a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04071"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ca5f3043-eb5c-5572-95fa-b19c928ec7a1",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ivory Jigsaw",
+            "Threat Type: Loader",
+            "Campaign: PTF-04071",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "ca5f3043-eb5c-5572-95fa-b19c928ec7a1_1",
+    "type": "security-rule"
+}

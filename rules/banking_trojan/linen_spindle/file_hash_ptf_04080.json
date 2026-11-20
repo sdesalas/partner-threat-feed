@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Linen Spindle banking trojan sample, as reported in campaign PTF-04080. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Linen Spindle Banking Trojan: File with known malicious hash written (PTF-04080)",
+        "note": "## Triage and analysis\n\n### Investigating Linen Spindle Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Linen Spindle banking trojan in campaign PTF-04080.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"6c2a559a9d07c0ff91300da57804287acc63a8bcf3d649451e95a89b7f12a966\" or \"ea35c84207c7ebc0d9085a83d7e74cad4cb107044d78a9830b3d840fec0875db\" or \"4f10efd8c12c98e02f0e027df31886aad0363ea95fcc066295fb62d94fcaf2d9\" or \"029c6f8a58c7a338464b95ab43aab5f5aa05485de6398aa575f9b6157de00ea1\" or \"0f230ba7f516ccf9c34c0497913f2896fc36c0e5353a04423e6069b66247d8ca\" or \"573d0ecfaac4070be7e8f22975901547bedefb1622a6acec2a56303b4d38c71e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04080"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "5317008a-798d-5388-80df-a0b709a16e68",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Linen Spindle",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-04080",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "5317008a-798d-5388-80df-a0b709a16e68_1",
+    "type": "security-rule"
+}

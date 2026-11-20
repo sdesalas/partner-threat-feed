@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Umber Abacus ransomware sample, as reported in campaign PTF-04132. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Umber Abacus Ransomware: Process started from known malicious binary (PTF-04132)",
+        "note": "## Triage and analysis\n\n### Investigating Umber Abacus Ransomware: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Umber Abacus ransomware in campaign PTF-04132.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"57f77008877cf3ce43ea04fe501b683d6fd958afe450179ba35f2086bd907eac\", \"83b7ff7c0a6cc2a0d712f13c002988a2e92dac63ad6c655fbe27f8b2e4fb3825\", \"3c536d77056ec07eaff9b2186946d124ad3e792ab5b9462113029f9c379c778a\", \"885816c9619dfbcdd4f0213e10d373c53d79f682809d78bfd8d1e18a3009b75e\", \"9e82a3f4262069f1da66b867205d9f3e48cee4495c24375b0adcb9e3a8c49caa\", \"79ade5829c65ee1b99126090dee72b99badec5145a12fbe625abc3590e8452a7\", \"1c5f0cee3269e590884761324af8f3aba4585c6c16008c8d68444419b89925ec\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04132"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 99,
+        "rule_id": "f83a57bb-62df-50f7-8b65-2e9c74581355",
+        "severity": "critical",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Umber Abacus",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-04132",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "f83a57bb-62df-50f7-8b65-2e9c74581355_1",
+    "type": "security-rule"
+}

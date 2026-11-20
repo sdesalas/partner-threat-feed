@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Umber Hourglass phishing kit sample, as reported in campaign PTF-04018. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Umber Hourglass Phishing Kit: Process started from known malicious binary (PTF-04018)",
+        "note": "## Triage and analysis\n\n### Investigating Umber Hourglass Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Umber Hourglass phishing kit in campaign PTF-04018.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"db0c295dbfa9f1329cd9a78a4f1c8d41a604f8c18bb4eec547dfc58300d21ecd\", \"50be51a9a20353acc2d3bb5be1de4f22f3a8dcdfa75a8d3b9a3597ae9a147646\", \"0d1a29fb89c3c2a432b8f7b18e5cef425b9f51b06ca366b0ff8057635339ea94\", \"3b0df3d616c4c7d7277b7581bf77644515d8395f2506014d9359a57077b7633a\", \"7878392b125b054919debebd46d54b9b4c32bd484825c8674e366b95eae78ce6\", \"f771ea7f6de36a17f6bc9f264db37250344055b07673bb741d2c644ef4ad735c\", \"7737e1e2e0e158f99736f65807824bdbb6114dbc170b684f807fa63763096215\", \"9438d24edc2e2f9b1bca1d3207e54a89c7f4c6783cabf7e5313db255f1c1228c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04018"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "4b1f604f-34cf-5552-9490-47f03e8ec66e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Umber Hourglass",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-04018",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "4b1f604f-34cf-5552-9490-47f03e8ec66e_1",
+    "type": "security-rule"
+}

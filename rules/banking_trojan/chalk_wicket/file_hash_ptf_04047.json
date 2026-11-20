@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Chalk Wicket banking trojan sample, as reported in campaign PTF-04047. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Chalk Wicket Banking Trojan: File with known malicious hash written (PTF-04047)",
+        "note": "## Triage and analysis\n\n### Investigating Chalk Wicket Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Chalk Wicket banking trojan in campaign PTF-04047.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"c43cb7a3f316bdbe18f294f42ee29cd85b152aabfa8347f4dbaf54f27ae8bdff\" or \"2c2765031018641576c94f64e31a6844eb76d976a2bff6544b358eb99192d191\" or \"09097cd2ad7e876b846fb1c428f1fe40226b462033a8fa0f84ca75fa292daac9\" or \"58fe366a545804783d58c0b033815c54c57f17558264696e1500f76da6a2cdda\" or \"2926dc4e9d45bd063c179eb09c121394eda4cd7d8996701932d031c8e2669456\" or \"5705928c32164430e46f764583dd3f8db9b874e2b292fa2518f33ee4f96ff981\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04047"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "0cd624c8-fa39-5957-9631-54a9d3e0cb25",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Chalk Wicket",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-04047",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "0cd624c8-fa39-5957-9631-54a9d3e0cb25_1",
+    "type": "security-rule"
+}

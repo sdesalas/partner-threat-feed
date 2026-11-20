@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Linen Stencil cryptominer sample, as reported in campaign PTF-04015. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Linen Stencil Cryptominer: File with known malicious hash written (PTF-04015)",
+        "note": "## Triage and analysis\n\n### Investigating Linen Stencil Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Linen Stencil cryptominer in campaign PTF-04015.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"f8b26289ee7abd8c4d399aa01f10666acf43733c6c2a0fbf176300dadeacd7e6\" or \"7c51c83d7796b6df2f96073615c6bd1ee6fc03eefb7c2d69ddf5f5604ee7901c\" or \"296c3d48d44f0b9e0626e331dd77905122c70c953e8556c5d61e6c192f16d0b2\" or \"abadee82104b89fe6bc9483c3a28dcc38055783e3f89e643113022d4a186bfa2\" or \"3fd37290068259e9da4bf68176ea8462fb25465b15a1d9a23791688a1c66d550\" or \"8d22b43cec2279056069065584cf300f505231fe6a6e65760b1154b4acd4efc4\" or \"15d8075b43b4fc9274f5d8ce296b96f9f9fafbf0005b2eb18654e3231eed4d39\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04015"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "45d0a6ad-2568-518b-abaa-abd465d5be69",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Linen Stencil",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-04015",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "45d0a6ad-2568-518b-abaa-abd465d5be69_1",
+    "type": "security-rule"
+}

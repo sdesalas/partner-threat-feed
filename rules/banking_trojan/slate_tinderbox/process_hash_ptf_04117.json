@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Slate Tinderbox banking trojan sample, as reported in campaign PTF-04117. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Slate Tinderbox Banking Trojan: Process started from known malicious binary (PTF-04117)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Tinderbox Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Tinderbox banking trojan in campaign PTF-04117.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"f4786d6e27f57246ae8e8f047f654da42b518e60af856e5fb05f200773556de7\", \"96d67c88e94825fa44e6c64ae0b0736859e95d6143e9ef1470ba9131440cdef7\", \"b944f4fc876e59c2122add99a5dce40b65690974e8d013029faf4c55a4a79300\", \"1cd854f4f7252889cf65b07df0260bfcdce27f69c1e55b2ccc906a438d8f48a7\", \"71a9363cfdcd5b75f84d18b8d0a7eee193bb938f8bb4eacf7b4fd71bfe254b47\", \"70ce0e37a8bea21211a7bb1fc9dcd5af4e7fc2b5fc6fcbf052653868328563e3\", \"96d2c8516f03ceed3dee27aa4b823e98694e620308f2b28fe2467ecfcc3fd185\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04117"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b9a851eb-604b-5062-a4f0-ca39c29102e2",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Slate Tinderbox",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-04117",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "b9a851eb-604b-5062-a4f0-ca39c29102e2_1",
+    "type": "security-rule"
+}

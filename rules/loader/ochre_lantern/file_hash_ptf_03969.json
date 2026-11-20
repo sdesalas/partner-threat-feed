@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ochre Lantern loader sample, as reported in campaign PTF-03969. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ochre Lantern Loader: File with known malicious hash written (PTF-03969)",
+        "note": "## Triage and analysis\n\n### Investigating Ochre Lantern Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ochre Lantern loader in campaign PTF-03969.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"dcb6d3845ec6046e39730f746c57c481119fedb5311191eeb279048498ff34e5\" or \"1ed4abcb677789ed103939484f8b5f5fbb037684d44dd3f1269edd3e37c0368d\" or \"4ccead4fb5aa5765402e512c8cd578baf9c73ba7a09e5caf172ee684ebb427b3\" or \"7f028d3b5d84825296a6b53c34fa23b39e8375b76beb12a36cae83539e2a26a5\" or \"15ef3f6d6b1b819c72eae4a491fde6d7dc4b4fb7f15420769f79222ac0b91535\" or \"811488b76a007065f13363c7092dbbf1df997d51fd03d50faf1919ae713235f0\" or \"aacb1373b6cb2048f460ae39eb8f366aff1e0434c78dd056e6bb64ad6263abc8\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03969"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "0b6b150c-8d13-598c-b002-ad5ee68bde59",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ochre Lantern",
+            "Threat Type: Loader",
+            "Campaign: PTF-03969",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "0b6b150c-8d13-598c-b002-ad5ee68bde59_1",
+    "type": "security-rule"
+}

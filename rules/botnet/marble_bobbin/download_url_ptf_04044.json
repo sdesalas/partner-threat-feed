@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Marble Bobbin botnet payloads, as reported in campaign PTF-04044. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Marble Bobbin Botnet: Request to known payload URL (PTF-04044)",
+        "note": "## Triage and analysis\n\n### Investigating Marble Bobbin Botnet: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Marble Bobbin botnet in campaign PTF-04044.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://cloud-login75.test/doc/5083.php\" or \"https://data-connect85.example/gate/4305.msi\" or \"https://login-media53.invalid/invoice/2385.bin\" or \"https://mail-edge54.invalid/download/5795.zip\" or \"https://mail-mail72.example/doc/9385.php\" or \"https://update-assets17.test/invoice/5598.msi\" or \"https://update-files93.invalid/payload/6008.msi\" or \"https://update-sync19.example/download/6897.zip\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04044"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "a037e9ac-1a94-5fca-9d79-0f81b8b97a0f",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Marble Bobbin",
+            "Threat Type: Botnet",
+            "Campaign: PTF-04044",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "a037e9ac-1a94-5fca-9d79-0f81b8b97a0f_1",
+    "type": "security-rule"
+}

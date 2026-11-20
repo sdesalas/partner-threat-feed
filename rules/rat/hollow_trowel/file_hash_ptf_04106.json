@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Hollow Trowel remote access trojan sample, as reported in campaign PTF-04106. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Hollow Trowel Remote Access Trojan: File with known malicious hash written (PTF-04106)",
+        "note": "## Triage and analysis\n\n### Investigating Hollow Trowel Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hollow Trowel remote access trojan in campaign PTF-04106.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"2bdf141235e08a29e263f3c726e7a2d4d69b97a53f72b444d67d0b09c47e03ee\" or \"0af7c749de1b3f19f67cfccebd03ef8dc056ad5d7a722a78a467240afd88685c\" or \"9baf577195d420d5a07f03611df1efa957cb02892e3d28aaeb44b6f6f0823c2d\" or \"23be20f68d0d3db69152ad0b5d6956751f91e485ec27837065cbce65ffac096a\" or \"1a6ea71c6c05ccd39380d21bf33f588af79b8773cdf176077fc27bc7e22062d1\" or \"ac1b7b3bef2dbf3f87b9c20963160846ea2e617c9a091fc252cfb4608a5701d0\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04106"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "484aeee2-e7eb-5e6a-9279-da81ee0accf3",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Hollow Trowel",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-04106",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "484aeee2-e7eb-5e6a-9279-da81ee0accf3_1",
+    "type": "security-rule"
+}

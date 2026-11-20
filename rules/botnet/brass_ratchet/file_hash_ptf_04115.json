@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Brass Ratchet botnet sample, as reported in campaign PTF-04115. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Brass Ratchet Botnet: File with known malicious hash written (PTF-04115)",
+        "note": "## Triage and analysis\n\n### Investigating Brass Ratchet Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Brass Ratchet botnet in campaign PTF-04115.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"1bbcf3d771582453585dfaedcaa33fa6d5e46071f597b9a6d323cccebc6f0e69\" or \"d983620e40bb13d24e7bdf7e80a84ac5be274d6a18f866417a6b72ad401d0bec\" or \"0e477e72d6389caaa38ab2a308d999db40b31cc083ae4eac92e1e1b7421c5f4f\" or \"f0bcc9e3407d5a158566711cfc5feaf3d970fca7edc6bc9aac042bcc7e1473ef\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04115"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f561b031-2a34-5232-bc65-f00522bcdd7f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Brass Ratchet",
+            "Threat Type: Botnet",
+            "Campaign: PTF-04115",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "f561b031-2a34-5232-bc65-f00522bcdd7f_1",
+    "type": "security-rule"
+}

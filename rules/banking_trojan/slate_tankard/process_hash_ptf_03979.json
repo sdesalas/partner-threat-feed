@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Slate Tankard banking trojan sample, as reported in campaign PTF-03979. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Slate Tankard Banking Trojan: Process started from known malicious binary (PTF-03979)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Tankard Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Tankard banking trojan in campaign PTF-03979.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"f19be4a151164991a817d8ff37d25e84c19114118b8a6acabb0e1e6889e70af4\", \"8f574b9dcc327efc1c9950d5e7444aaaf160a050e0c4bc2b653af10c3410ac64\", \"0a594e678440c59a4f3313f15e6cb587dd3863aca778edcba80414eba60b38e1\", \"72435ef8c8ddd4d5b0aef3794f822b6fac44576a66ae0d420121ebe92001e248\", \"cf593977ceba127609ff722e75192e38f48204e0f4d873fbce0d65d0981c27a9\", \"c526072c69be3e9cc72acd893c30547c52ac9604d8a9ab9e4ccadc46b92ef5fb\", \"58ddd8d067a5b6dc8e609ae714d7cb3b4b9b9e602009b9400d92d6634c075d40\", \"6ebe91fd7317823591cc55d98297a0b8603c3d071f2f0fbba5656484917e92e1\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03979"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b074910f-d9b5-55e0-b9f8-2ccd7323ab9e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Slate Tankard",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-03979",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "b074910f-d9b5-55e0-b9f8-2ccd7323ab9e_1",
+    "type": "security-rule"
+}

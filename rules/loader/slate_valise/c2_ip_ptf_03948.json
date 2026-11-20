@@ -1,0 +1,72 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies network connections to command and control IP addresses used by the Slate Valise loader, as reported in campaign PTF-03948. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.network-*",
+            "logs-network_traffic.*",
+            "packetbeat-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Slate Valise Loader: Connection to command and control IP address (PTF-03948)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Valise Loader: Connection to command and control IP address\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Valise loader in campaign PTF-03948.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:network and destination.ip:(\"198.18.180.55\" or \"198.19.81.108\" or \"198.19.239.248\" or \"198.19.150.38\" or \"198.18.3.195\" or \"198.19.102.101\" or \"198.18.24.59\" or \"198.19.152.6\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03948"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            },
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "fa6a95d1-f803-5aa8-b617-0e766a7cdfe9",
+        "severity": "high",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Slate Valise",
+            "Threat Type: Loader",
+            "Campaign: PTF-03948",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1071",
+                        "name": "Application Layer Protocol",
+                        "reference": "https://attack.mitre.org/techniques/T1071/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "fa6a95d1-f803-5aa8-b617-0e766a7cdfe9_1",
+    "type": "security-rule"
+}

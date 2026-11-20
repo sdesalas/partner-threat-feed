@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Brass Pulley cryptominer sample, as reported in campaign PTF-03956. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Brass Pulley Cryptominer: File with known malicious hash written (PTF-03956)",
+        "note": "## Triage and analysis\n\n### Investigating Brass Pulley Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Brass Pulley cryptominer in campaign PTF-03956.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"db7add349d3b599ba92b910f4a9238b5d148ad970870955116cdd3abef8e2d3a\" or \"bc0c295807869e06961c8e07681a9f123d182aa2c965089b162c4eade2cd3764\" or \"c78aa2049a5706f5baf637e7b1bf10ee7e7a59b12015e7a8ad3094c40fd6403f\" or \"5b00e452aa495a44a9df57ccf199a33af3937122e8f80652c640887290c3b60b\" or \"d50f005fedd94126aaf098466ba56f0f8c113d13b2adb90ac6617ecb597e8508\" or \"053b962fcaf91be4e7ba7b834c4f3e45e76568ba21790c4bc5e9641dba914848\" or \"d6b20fcc8d9eb88eff9d39479c7f021b8680780730dafa2e0f842deee8be2614\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03956"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "4ab4d983-423b-5313-ac6f-a905db75c5eb",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Brass Pulley",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03956",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "4ab4d983-423b-5313-ac6f-a905db75c5eb_1",
+    "type": "security-rule"
+}

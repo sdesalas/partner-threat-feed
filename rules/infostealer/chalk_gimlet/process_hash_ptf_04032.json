@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Chalk Gimlet infostealer sample, as reported in campaign PTF-04032. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Chalk Gimlet Infostealer: Process started from known malicious binary (PTF-04032)",
+        "note": "## Triage and analysis\n\n### Investigating Chalk Gimlet Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Chalk Gimlet infostealer in campaign PTF-04032.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"f03b5c6c855e63e85e23dedf59b4a5175cbdbec7e244196a63c615bb0439aad3\", \"d8321d10db7f8b0d0002ca319748abd5bd823951e33ccf7bc5f845f87651db09\", \"063a231ae3db944c4cebd0449bb27771ec0825f29119027167fd137ab16ad886\", \"33b40b73f722426ecb891798fb2a949993fffec80cd2ef756a6e2520af873aa5\", \"5e52d7300bb2b840f8b8044ad29846c59673fad7d9925925334ba866726f6653\", \"24d5ee75eec50224d970c5abf593282f7bccee31841e23fa9ff774b9cf3d2a90\", \"db3353ac1994d1ef99709716547e23e117cec266df371f0141b639c67bf862c5\", \"74b83e0199441b1cb4999b9513a166b4378848112b3ece9221827905cb1522b0\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04032"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e6bcb7c6-def3-5833-b9f1-1767ac794e99",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Chalk Gimlet",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-04032",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "e6bcb7c6-def3-5833-b9f1-1767ac794e99_1",
+    "type": "security-rule"
+}

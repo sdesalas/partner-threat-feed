@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies email messages from sender addresses used to deliver the Umber Pulley ransomware, as reported in campaign PTF-04058. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-email-*",
+            "filebeat-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Umber Pulley Ransomware: Email from known phishing sender (PTF-04058)",
+        "note": "## Triage and analysis\n\n### Investigating Umber Pulley Ransomware: Email from known phishing sender\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Umber Pulley ransomware in campaign PTF-04058.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "email.from.address:(\"billing@files-connect85.test\" or \"hr@relay-edge47.test\" or \"it-helpdesk@portal-relay89.invalid\" or \"noreply@api-mail75.test\" or \"noreply@edge-media7.test\" or \"noreply@static-update11.test\" or \"shipping@update-auth56.example\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04058"
+        ],
+        "related_integrations": [],
+        "risk_score": 47,
+        "rule_id": "8e541948-97d8-54dd-bff3-30dccd7d6b68",
+        "severity": "medium",
+        "tags": [
+            "Domain: Email",
+            "Use Case: Threat Detection",
+            "Tactic: Initial Access",
+            "Threat: Umber Pulley",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-04058",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0001",
+                    "name": "Initial Access",
+                    "reference": "https://attack.mitre.org/tactics/TA0001/"
+                },
+                "technique": [
+                    {
+                        "id": "T1566",
+                        "name": "Phishing",
+                        "reference": "https://attack.mitre.org/techniques/T1566/",
+                        "subtechnique": [
+                            {
+                                "id": "T1566.001",
+                                "name": "Spearphishing Attachment",
+                                "reference": "https://attack.mitre.org/techniques/T1566/001/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "8e541948-97d8-54dd-bff3-30dccd7d6b68_1",
+    "type": "security-rule"
+}

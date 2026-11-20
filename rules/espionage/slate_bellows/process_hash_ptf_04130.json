@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Slate Bellows espionage toolkit sample, as reported in campaign PTF-04130. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Slate Bellows Espionage Toolkit: Process started from known malicious binary (PTF-04130)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Bellows Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Bellows espionage toolkit in campaign PTF-04130.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"162bfda9563834bca866ce2bbe54641c3dbdb28c3717de08626e431191541a36\", \"8e3d5de8bd38f655e0e75ce14539a6a59df43efea6f637900b044a9832e5ee0a\", \"0e208165b7fcf2434e3c1db02980966c28c1b887c00794a614a6653bc6e6217f\", \"915b62c45a4ea7800ac887cd0cbf0a213c9b704939f8cfe4d973cb237e5de792\", \"cff258e50396f97e5bcb319b4e19b7e305a5decb35b96862832f331c3f892672\", \"884bf8bec5d518581d6726c1e8ba5f4971f575160d96345a6ec4587748b3656f\", \"476eb8fb32d762d6987dfabe521e31b67ced7ef006c67c749d2f2ded61431e9a\", \"e023cb53c0a19f973817f9d166cc73f795b5e4243012b8808987f22dab65705b\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04130"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "85c97822-da74-58b4-9d16-8cd782439bf1",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Slate Bellows",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-04130",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "85c97822-da74-58b4-9d16-8cd782439bf1_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Russet Inkwell remote access trojan sample, as reported in campaign PTF-03995. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Russet Inkwell Remote Access Trojan: Process started from known malicious binary (PTF-03995)",
+        "note": "## Triage and analysis\n\n### Investigating Russet Inkwell Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Russet Inkwell remote access trojan in campaign PTF-03995.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"b635c407443bee79e5b4dcaa3bf2ba708afba6a008abab51680158947c71e74d\", \"abe51d5ffc4dda48c359923252552882c47e0dedd3b7aff3b272c393833da959\", \"4e8abd3d195f9d1503e5e95e320a1ca11c32f87b9871a2dafd265a3139036ae1\", \"291f99e70052f1a2858f6eb7892b06bcfd0607018c25df86cd716c16f09405e5\", \"d3ad648ae0a909cedfa3bd18916cf220f27ea999b91953d82a5f107ffd1e3c63\", \"dbbab4e0d3ea2cd5fd5d79b66d72b1d521774b81ffa0037650c64b5417d92ac6\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03995"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "03f94ed8-d80b-590b-b3f2-e121d3995fbf",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Russet Inkwell",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-03995",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "03f94ed8-d80b-590b-b3f2-e121d3995fbf_1",
+    "type": "security-rule"
+}

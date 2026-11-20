@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Umber Lantern ransomware sample, as reported in campaign PTF-03990. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Umber Lantern Ransomware: File with known malicious hash written (PTF-03990)",
+        "note": "## Triage and analysis\n\n### Investigating Umber Lantern Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Umber Lantern ransomware in campaign PTF-03990.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"1dd2a9591de897ad3697f449b11577f073944f35b891322907fc601419063e6d\" or \"881c85b2e25d8ee39c5da4b27d2924c8b8f70158fceec25fcc62604a3229663d\" or \"ef277bd1354797f04180871372403106b92bf1bfd2cc02fd4c71ac4a6b8286aa\" or \"e8f2e6c79baeb748540b185f6d1058491b82d63b89cd3ac065618a61961dcb99\" or \"1446393bbb4032da12d13c25ab63401ff3174041cd92a0f3aa7f00bec718c65a\" or \"39ec86ac005c97c18e80968273a6582621e7ffb126e6e5cc1e57cf8fd29994ae\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03990"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "87454483-9eb9-59fd-8b81-01dd9f438379",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Umber Lantern",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-03990",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "87454483-9eb9-59fd-8b81-01dd9f438379_1",
+    "type": "security-rule"
+}

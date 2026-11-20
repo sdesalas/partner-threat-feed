@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Slate Bobbin ransomware sample, as reported in campaign PTF-04098. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Slate Bobbin Ransomware: File with known malicious hash written (PTF-04098)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Bobbin Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Bobbin ransomware in campaign PTF-04098.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"e0b87ba4d9c431a3bdabf007d67ae7af50cd7e934a9a67ea35438119c82185b0\" or \"a2601a330fa03ed3bba36a05611b94c581828e47591886168bb99610610bc06b\" or \"4718e36ec2432060273e74dd1b13858f6ac73de7b9f1a32dde208dbe5db464d8\" or \"406c47a479ab01d092438a2712838fc6acd656d7ca1689a38f292ba992202d45\" or \"caf27d2fde30920325b1669149ead677d9ac02538d83685337aedc408e1e7d43\" or \"35270e74f4b20173e3ced1f1afccd002fa0ac88410682d029faaa1a9ad091701\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04098"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "0732faf6-5bc6-5f75-ad0a-cd30fb02b70e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Slate Bobbin",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-04098",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "0732faf6-5bc6-5f75-ad0a-cd30fb02b70e_1",
+    "type": "security-rule"
+}

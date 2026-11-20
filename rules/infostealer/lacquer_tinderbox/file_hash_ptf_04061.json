@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Lacquer Tinderbox infostealer sample, as reported in campaign PTF-04061. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Lacquer Tinderbox Infostealer: File with known malicious hash written (PTF-04061)",
+        "note": "## Triage and analysis\n\n### Investigating Lacquer Tinderbox Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Lacquer Tinderbox infostealer in campaign PTF-04061.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"2c05e1f03d73e9d4748ec324a4421ab7a7d309f4892c3db25fce28c6e04f561a\" or \"7b47f990bda251b2b87e1b6a0e127021a3dd9b6fe0e8024dd1c681b69f30b111\" or \"a1249939f91021b434958e5c65b5bfdcb2e919ab0ebe68e3c3a18c9f2262dcf0\" or \"a832b4cdd28ddf8026e2fa001c3dbaaf36242f11d2ad36cf723d1eddb3b03e18\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04061"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "dbe304e1-41fa-569e-833b-ec572a3d2cc4",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Lacquer Tinderbox",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-04061",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "dbe304e1-41fa-569e-833b-ec572a3d2cc4_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Tin Mallet infostealer sample, as reported in campaign PTF-04138. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Tin Mallet Infostealer: File with known malicious hash written (PTF-04138)",
+        "note": "## Triage and analysis\n\n### Investigating Tin Mallet Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tin Mallet infostealer in campaign PTF-04138.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"be76de7cc9e6bbe58895f58ec22da76b2e60651b4ad63e97bb2beeb813b12ea5\" or \"9a1ded93885cdf64747e1be135a513ed26e6b2bc661f401175763687885c1945\" or \"dcf0ea3ccdacaa906a5aa85b88f84b1531c84e241caf38606be013e84fe3dcde\" or \"409f8f12b24d483122e2fe091a66359faff173d59b0e2cc9d74ac2dd607f3da7\" or \"9dea0c7966e98b80d2527fe8f4286a2d04741866b09c42d970650a74eda15323\" or \"62a25309583693e7eb4c29ff7800b9445124cbd9fc990f363d04ef761f8c821f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04138"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "bc0f9b53-3ac6-5742-a5b7-6cffec05a962",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Tin Mallet",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-04138",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "bc0f9b53-3ac6-5742-a5b7-6cffec05a962_1",
+    "type": "security-rule"
+}

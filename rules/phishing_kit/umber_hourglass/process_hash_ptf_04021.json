@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Umber Hourglass phishing kit sample, as reported in campaign PTF-04021. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Umber Hourglass Phishing Kit: Process started from known malicious binary (PTF-04021)",
+        "note": "## Triage and analysis\n\n### Investigating Umber Hourglass Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Umber Hourglass phishing kit in campaign PTF-04021.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"83e7edb55c86708943c23bcadd4d5901fa2a4ce30d5c66c87938fa563c0b3600\", \"600e672d58f2ae1094cd9ec916ecc6a100a2714b09df2577f24158fd279f4af1\", \"40816692e0e30c8d2385994a8b6674f2937bc2a4186fa3a0c418cc31eeaa817b\", \"7bf6c8cafa31b4f0f2141cfa05e4b07e348249879d27c0b858907b33aea79186\", \"51a336835215c447188e8efa20f9e149b84f300d4d8f2c2e8c022ed2fd60727f\", \"8e2b00d1f82bc06d39c6e6cce0347e0ab0f2e675f34789daf14e555da16dee85\", \"33944c01620f207d8eaed575a374ca16ccadeef1acd1972e39d24a76c8843663\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04021"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "1929c5f1-f8a0-5231-a05f-dee3a31595b1",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Umber Hourglass",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-04021",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "1929c5f1-f8a0-5231-a05f-dee3a31595b1_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Cedar Sextant phishing kit sample, as reported in campaign PTF-04122. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Cedar Sextant Phishing Kit: File with known malicious hash written (PTF-04122)",
+        "note": "## Triage and analysis\n\n### Investigating Cedar Sextant Phishing Kit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Cedar Sextant phishing kit in campaign PTF-04122.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"2399ed4473a5315b8feab23c1cc70ca693574c03cfb6c090fd840b0afaf4f26e\" or \"1e390d73df0e50ccecfec3e100c083d6431f4bf3ca02ef7a5ff9b2a16b25fbc0\" or \"da8d243f3a23812560e83c235e8229d59d9b41b94c90ce3be042b8c73750e000\" or \"2e617795082809cc1562b88160cb1b09b65d25be4dc193839281ec2fcc162f1d\" or \"ad89b4dee8f97d47a95227b8ed0f08955906059b0548892c9defad16a9e81538\" or \"8439e36e715eb21d70f6d0e82fddcf79fb32b2a7a2b7ef77e6693926dcfbdd86\" or \"cb1c58a4fb300006233b026af548d818a395b5065e35faf27b4fcdb3af258672\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04122"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "64e2d656-a090-506f-bce5-d3c3e090c75e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Cedar Sextant",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-04122",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "64e2d656-a090-506f-bce5-d3c3e090c75e_1",
+    "type": "security-rule"
+}

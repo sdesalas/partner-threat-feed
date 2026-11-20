@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Nickel Tinderbox phishing kit sample, as reported in campaign PTF-03959. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Nickel Tinderbox Phishing Kit: Process started from known malicious binary (PTF-03959)",
+        "note": "## Triage and analysis\n\n### Investigating Nickel Tinderbox Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Nickel Tinderbox phishing kit in campaign PTF-03959.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"f3f5fd38e083368ad50f8ca889dfceef23bfcada97d9273c73b630192dcc066c\", \"3206bcf6f7f26a0cdfe0e9f6c59ca4b8f6462e0c8cbb4c0fbe62a11e4b8ab3a2\", \"3d3aaff1c5672755f1957c5f705fc6c1e5d06a9fbb4e3f7313b4f86a3bbb46be\", \"c162c514b064bf1c7e4bb7c032ea04c9f2bf6730518083f108a86d14a645da34\", \"6aa9e4a939849ef2118dce30d9e5fc735c9083a11156aff2eebff6c2afc0c815\", \"20db4dab9c74086b849c68c653766f20c15a87dad1571d14eaba2f3ac37d32f6\", \"ddd4c719966d7e90b142358fddc8e84547ce764be47d0f3511cc25ac6c45ae0f\", \"88488d3dcc68eb9c3a8ec7cac8f829eafb50706428982f5b5b5ed21615c70b0b\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03959"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "52e27c9c-f8e7-570e-89d1-e529a1bce1dd",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Nickel Tinderbox",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-03959",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "52e27c9c-f8e7-570e-89d1-e529a1bce1dd_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Frosted Trowel botnet sample, as reported in campaign PTF-04072. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Frosted Trowel Botnet: File with known malicious hash written (PTF-04072)",
+        "note": "## Triage and analysis\n\n### Investigating Frosted Trowel Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Frosted Trowel botnet in campaign PTF-04072.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"f72d9ba7041701ad1bd02e2e017739a9859e67e6aabbafba3de89c9622a2b26b\" or \"815f7af1b2172605c994cde960b822c8c4cb83d430db5e8e8f4c326387272f45\" or \"238716d9e017f0f430278b831eaa4d75588e9d0c3ae286c4570a9b01657d3b09\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04072"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "9e49890a-b831-5b86-9a9d-991cd69fd3cb",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Frosted Trowel",
+            "Threat Type: Botnet",
+            "Campaign: PTF-04072",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "9e49890a-b831-5b86-9a9d-991cd69fd3cb_1",
+    "type": "security-rule"
+}
