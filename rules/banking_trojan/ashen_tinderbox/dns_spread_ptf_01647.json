@@ -13,7 +13,7 @@
         "license": "Elastic License v2",
         "name": "Ashen Tinderbox Banking Trojan: Several hosts resolving command and control domains (PTF-01647)",
         "note": "## Triage and analysis\n\n### Investigating Ashen Tinderbox Banking Trojan: Several hosts resolving command and control domains\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ashen Tinderbox banking trojan in campaign PTF-01647.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
-        "query": "FROM logs-endpoint.events.network-*\n| WHERE dns.question.name IN (\"files-assets73.example\", \"track-auth79.test\", \"track-cloud12.test\")\n| STATS host_count = COUNT_DISTINCT(host.id), hosts = VALUES(host.name) BY dns.question.name\n| WHERE host_count >= 3",
+        "query": "FROM logs-endpoint.events.network-*\n| WHERE dns.question.name IN (\"files-assets73.example\", \"track-auth79.test\", \"track-cloud12.test\", \"cdn-secure144.invalid\", \"secure-edge133.example\")\n| STATS host_count = COUNT_DISTINCT(host.id), hosts = VALUES(host.name) BY dns.question.name\n| WHERE host_count >= 3",
         "references": [
             "https://partner-threat-feed.example/campaigns/ptf-01647"
         ],
@@ -62,8 +62,8 @@
             }
         ],
         "type": "esql",
-        "version": 1
+        "version": 2
     },
-    "id": "fd5e004c-2e99-5404-be47-c7d5b34fc06d_1",
+    "id": "fd5e004c-2e99-5404-be47-c7d5b34fc06d_2",
     "type": "security-rule"
 }

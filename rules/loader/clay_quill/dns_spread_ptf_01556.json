@@ -13,7 +13,7 @@
         "license": "Elastic License v2",
         "name": "Clay Quill Loader: Several hosts resolving command and control domains (PTF-01556)",
         "note": "## Triage and analysis\n\n### Investigating Clay Quill Loader: Several hosts resolving command and control domains\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Clay Quill loader in campaign PTF-01556.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
-        "query": "FROM logs-endpoint.events.network-*\n| WHERE dns.question.name IN (\"assets-mail46.test\", \"auth-mail59.invalid\", \"relay-auth7.test\", \"update-track33.test\", \"update-update60.example\")\n| STATS host_count = COUNT_DISTINCT(host.id), hosts = VALUES(host.name) BY dns.question.name\n| WHERE host_count >= 3",
+        "query": "FROM logs-endpoint.events.network-*\n| WHERE dns.question.name IN (\"assets-mail46.test\", \"auth-mail59.invalid\", \"relay-auth7.test\", \"update-track33.test\", \"update-update60.example\", \"update-cdn136.test\", \"secure-cdn158.invalid\", \"edge-cdn141.invalid\")\n| STATS host_count = COUNT_DISTINCT(host.id), hosts = VALUES(host.name) BY dns.question.name\n| WHERE host_count >= 3",
         "references": [
             "https://partner-threat-feed.example/campaigns/ptf-01556"
         ],
@@ -62,8 +62,8 @@
             }
         ],
         "type": "esql",
-        "version": 1
+        "version": 2
     },
-    "id": "e7aaa74a-5941-5327-aa47-107a075b2043_1",
+    "id": "e7aaa74a-5941-5327-aa47-107a075b2043_2",
     "type": "security-rule"
 }
