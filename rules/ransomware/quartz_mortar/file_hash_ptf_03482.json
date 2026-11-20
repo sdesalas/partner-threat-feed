@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Quartz Mortar ransomware sample, as reported in campaign PTF-03482. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Quartz Mortar Ransomware: File with known malicious hash written (PTF-03482)",
+        "note": "## Triage and analysis\n\n### Investigating Quartz Mortar Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Quartz Mortar ransomware in campaign PTF-03482.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"d6f3850a8ffb236f46ddfd1ca1e59943d707d5c86519894b2062621c85cca1f5\" or \"9b3b61840120bd98052733f1347642d3dd3be23954a31575a2c4331f8f9a00fa\" or \"7e7c031974347d300766688c97b8bdba02120e07659687a6fb529e28118fa4d6\" or \"5432d6aed765b95145e0c5e9ad51ce91552b0837d3779c4bde1686f4ec3ff308\" or \"da4fb72deb37854d94d84b68a77d91e03faa92efd42d78c99401e231bfd5ccce\" or \"395d3dda6c0435fcc1ace68a6dbdeab752afd45ec29a02339eb281b8ae3b5516\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03482"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d6593320-f175-56bb-9fb8-9463abe1fa2a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Quartz Mortar",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-03482",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "d6593320-f175-56bb-9fb8-9463abe1fa2a_1",
+    "type": "security-rule"
+}

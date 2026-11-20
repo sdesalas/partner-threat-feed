@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Paper Stencil loader sample, as reported in campaign PTF-03348. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Paper Stencil Loader: File with known malicious hash written (PTF-03348)",
+        "note": "## Triage and analysis\n\n### Investigating Paper Stencil Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Paper Stencil loader in campaign PTF-03348.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"c26acc164cf2401646a69fdc8e82472e5591d935809fa7371bb15dd327df6603\" or \"f49f5c046eae853f88d0b87a66a21e29e7390f24c7aa2b729cc1c735b755b4a1\" or \"05b4b8064fe297254b1bd22e71964b257d492b40b1683c787ce1889ad16f91c1\" or \"3397918d424cb26faf67136676daef4bd451bedb3bac83970287f985c5ecd9eb\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03348"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "5c86c2d2-d97e-5dc2-814d-9d88ec6ba3b9",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Paper Stencil",
+            "Threat Type: Loader",
+            "Campaign: PTF-03348",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "5c86c2d2-d97e-5dc2-814d-9d88ec6ba3b9_1",
+    "type": "security-rule"
+}

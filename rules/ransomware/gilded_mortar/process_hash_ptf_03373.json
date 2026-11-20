@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Gilded Mortar ransomware sample, as reported in campaign PTF-03373. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Gilded Mortar Ransomware: Process started from known malicious binary (PTF-03373)",
+        "note": "## Triage and analysis\n\n### Investigating Gilded Mortar Ransomware: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Gilded Mortar ransomware in campaign PTF-03373.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"2fd77a78df18c34d24c603dcffc87da0b46a2895275025b4b897b30dba86366c\", \"3e17dbd5caf4a225e654875e599edbf242ef1ea536d65a05965d5dfe902ca299\", \"d295f42675ba4c542754081275b7f7898939f50626357ad4b3ae85303b91db39\", \"b1c9967dfdb016675379e9b00ba7abdaa6bc223350a22c5e4f4f52e9e0c413c1\", \"9feaecdcca320cbd9cf094aacf3b1193fa4e043c764876db71d81e56c6a791e5\", \"94906c46783b3c4f1e9ff4353f0e34e716dd5f919e0bc4784a29fdbfbca15e54\", \"a87be19fc86110a565d39ad3f274f095e5a5e98d74cf3a3b7e6ebf049db58123\", \"d9872f09ce96ccdfb0c82ee7c5870a20736a8f31595950458e464699a8b6d3e5\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03373"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 99,
+        "rule_id": "44777d49-66a5-511f-9bfd-4fdfc1f28b3c",
+        "severity": "critical",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Gilded Mortar",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-03373",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "44777d49-66a5-511f-9bfd-4fdfc1f28b3c_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,72 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies network connections to command and control IP addresses used by the Tawny Turnstile loader, as reported in campaign PTF-03384. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.network-*",
+            "logs-network_traffic.*",
+            "packetbeat-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Tawny Turnstile Loader: Connection to command and control IP address (PTF-03384)",
+        "note": "## Triage and analysis\n\n### Investigating Tawny Turnstile Loader: Connection to command and control IP address\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tawny Turnstile loader in campaign PTF-03384.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:network and destination.ip:(\"198.18.18.180\" or \"198.19.178.90\" or \"198.19.16.25\" or \"198.18.129.119\" or \"198.18.97.108\" or \"198.18.78.57\" or \"198.19.127.105\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03384"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            },
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "05dc32f5-5190-5318-bc0a-7f187ef5e244",
+        "severity": "high",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Tawny Turnstile",
+            "Threat Type: Loader",
+            "Campaign: PTF-03384",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1071",
+                        "name": "Application Layer Protocol",
+                        "reference": "https://attack.mitre.org/techniques/T1071/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "05dc32f5-5190-5318-bc0a-7f187ef5e244_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Frosted Turnstile infostealer sample, as reported in campaign PTF-03374. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Frosted Turnstile Infostealer: File with known malicious hash written (PTF-03374)",
+        "note": "## Triage and analysis\n\n### Investigating Frosted Turnstile Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Frosted Turnstile infostealer in campaign PTF-03374.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"2f69cf06cd92d00d2737f30311965ba226e7a222a51f49404112ddc633be96a0\" or \"6a797c0519d40023aaea49e01d522b1c34c92ce56a908b8a30b9a1d68eb1db9c\" or \"e0d0865e518c65e9c53e13528899bf1245a70c329b851051649817a83da42e6a\" or \"2228fad45ac935e9c0286579576d3383c6b7822d6750370c70a999fd71cf0575\" or \"724977691a71158ca783d8728a67633a9a5fa7d8d1c470093b5499c2f6a28f03\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03374"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d80b176f-e5f1-5029-8e0f-ca425bce4e83",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Frosted Turnstile",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-03374",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "d80b176f-e5f1-5029-8e0f-ca425bce4e83_1",
+    "type": "security-rule"
+}

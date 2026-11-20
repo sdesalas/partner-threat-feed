@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Frosted Lectern remote access trojan sample, as reported in campaign PTF-03487. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Frosted Lectern Remote Access Trojan: File with known malicious hash written (PTF-03487)",
+        "note": "## Triage and analysis\n\n### Investigating Frosted Lectern Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Frosted Lectern remote access trojan in campaign PTF-03487.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"e975c46518c1919f406d548594d779ef409e1fc7e291a69f6d6f3677d531c2e1\" or \"c0a246c5a8b3eadb93b63c8b44ceb807b5a66abd79d7446590b770a373acd77c\" or \"6bf946057db1de2b1ec076a37ff4bc8a5c8a4f01d0b611d64fb9c7fe290dd2fc\" or \"d5f0ebbc4474f6037dfe422841fd39665657583970948ae7dda306560021b38f\" or \"a163231c7f5d867f6e6ac185d1fcf1729824b261f930267382db428c324a6e86\" or \"8d0b4938996a0165ce11acdcf438ffc2639330f361ed0524c672308caf81f809\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03487"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "300e58b9-60b9-5eda-b87f-03140ef64730",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Frosted Lectern",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-03487",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "300e58b9-60b9-5eda-b87f-03140ef64730_1",
+    "type": "security-rule"
+}

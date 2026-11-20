@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Walnut Abacus loader sample, as reported in campaign PTF-03453. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Walnut Abacus Loader: Process started from known malicious binary (PTF-03453)",
+        "note": "## Triage and analysis\n\n### Investigating Walnut Abacus Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Walnut Abacus loader in campaign PTF-03453.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"85f0b74f8a698c0f97284cb1351bd12ee6491933a2f8c0f51bd30899b3013af4\", \"41fa7e60295630d488bbc98ab3ba3c0d6f488fe51b274000f48758601bb93dc2\", \"9e89702e5b7810e4bdd9ce2520d01727ab657cd69ee0c9c78c91e01f3c41d68f\", \"9a2fd3fb9de45301fc58a3c9dbc58e39883ddec41575d6194566bad720699aa3\", \"460af999e5aa01757efc3608d27402950a4ea1b69ed2bcce8022a4c274df29dc\", \"0e7b50742d519ad4d7a9053c5ae92c170e7aa349e05433d2f3c180633ceabb82\", \"871870bac6b010f100e9451924634ba7adf5f58089aef11463ed460b1c508534\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03453"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "7a4c7039-c9fb-5f18-b8c1-08aa145dcb1d",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Walnut Abacus",
+            "Threat Type: Loader",
+            "Campaign: PTF-03453",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "7a4c7039-c9fb-5f18-b8c1-08aa145dcb1d_1",
+    "type": "security-rule"
+}

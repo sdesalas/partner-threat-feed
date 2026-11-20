@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Cedar Shuttle loader sample, as reported in campaign PTF-03416. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Cedar Shuttle Loader: File with known malicious hash written (PTF-03416)",
+        "note": "## Triage and analysis\n\n### Investigating Cedar Shuttle Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Cedar Shuttle loader in campaign PTF-03416.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"662c3d6ead1856d2f8bf5176c94fd45018e6d97340c1761dfe171355c904708e\" or \"d83b6b0ccc98ce9a87a239583d211ab959fa631a27809a17000bbdbbab1c04fc\" or \"8eae071c95d36c487cb18ec3d249a3c22de8560a74f17e3481748368a0a6b297\" or \"04833b5ef689572ac2c738b22748670b2083d8d263e70dafe801def99b1985d5\" or \"82f2c2ee7df4044a32dfc6e8c3779ce084f970bca16e94779bc34394b9fc5daf\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03416"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "80ca12ba-0e0f-5031-85d6-5571e7d6518f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Cedar Shuttle",
+            "Threat Type: Loader",
+            "Campaign: PTF-03416",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "80ca12ba-0e0f-5031-85d6-5571e7d6518f_1",
+    "type": "security-rule"
+}

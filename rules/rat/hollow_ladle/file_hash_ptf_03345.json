@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Hollow Ladle remote access trojan sample, as reported in campaign PTF-03345. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Hollow Ladle Remote Access Trojan: File with known malicious hash written (PTF-03345)",
+        "note": "## Triage and analysis\n\n### Investigating Hollow Ladle Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hollow Ladle remote access trojan in campaign PTF-03345.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"1a69e33c178ed8d1d884c5432c73a15a41b0256fec70f29afa0631f91c075e0a\" or \"b18c3f80bc600f2fd4724fa8c4310e6554057f61b7d4f167140b744ce7b9165c\" or \"d3289be3102251a2276b85da88a4bdcedc5960d9367644914a68a60a4fa8fec7\" or \"4c60b0f16c759c2045149b8e89724430d33d2cbc2a7706aee48d6cfe94027a93\" or \"c7c9c596b264b5b0b4d128502e59a32d1be45b28897a99b6f2d09b99055c7d8f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03345"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "eab33ded-b3b4-5d5a-92f6-5880a5b46997",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Hollow Ladle",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-03345",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "eab33ded-b3b4-5d5a-92f6-5880a5b46997_1",
+    "type": "security-rule"
+}

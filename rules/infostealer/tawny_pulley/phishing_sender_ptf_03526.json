@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies email messages from sender addresses used to deliver the Tawny Pulley infostealer, as reported in campaign PTF-03526. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-email-*",
+            "filebeat-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Tawny Pulley Infostealer: Email from known phishing sender (PTF-03526)",
+        "note": "## Triage and analysis\n\n### Investigating Tawny Pulley Infostealer: Email from known phishing sender\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tawny Pulley infostealer in campaign PTF-03526.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "email.from.address:(\"accounts@connect-relay29.invalid\" or \"accounts@relay-update66.test\" or \"billing@edge-assets86.example\" or \"billing@static-media49.example\" or \"noreply@update-update4.invalid\" or \"shipping@data-cloud42.invalid\" or \"shipping@files-auth43.test\" or \"support@connect-track91.invalid\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03526"
+        ],
+        "related_integrations": [],
+        "risk_score": 47,
+        "rule_id": "9c4d3a5f-678e-5744-8721-df3399df74ee",
+        "severity": "medium",
+        "tags": [
+            "Domain: Email",
+            "Use Case: Threat Detection",
+            "Tactic: Initial Access",
+            "Threat: Tawny Pulley",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-03526",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0001",
+                    "name": "Initial Access",
+                    "reference": "https://attack.mitre.org/tactics/TA0001/"
+                },
+                "technique": [
+                    {
+                        "id": "T1566",
+                        "name": "Phishing",
+                        "reference": "https://attack.mitre.org/techniques/T1566/",
+                        "subtechnique": [
+                            {
+                                "id": "T1566.001",
+                                "name": "Spearphishing Attachment",
+                                "reference": "https://attack.mitre.org/techniques/T1566/001/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "9c4d3a5f-678e-5744-8721-df3399df74ee_1",
+    "type": "security-rule"
+}

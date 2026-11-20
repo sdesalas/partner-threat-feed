@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Mossy Sieve remote access trojan sample, as reported in campaign PTF-03380. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Mossy Sieve Remote Access Trojan: Process started from known malicious binary (PTF-03380)",
+        "note": "## Triage and analysis\n\n### Investigating Mossy Sieve Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mossy Sieve remote access trojan in campaign PTF-03380.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"a7c698a08430aca0484482fcb6948c71b6be5c347aa89d628ba5f071384d1519\", \"a0019d828a0adfb7582084c91f1a90f8fb2a483e72991e0f15d55d7c73aaf364\", \"d9751d6d4cb1aee7f244b36f3523a7d38a555fb092d310504dcad67b5986e396\", \"a703de6c4f72bd7eb4320f21c4ef455d9978207af776dd92e19227c260f7b963\", \"c2c1860b2d2cba4d8f168cab6d7f66fa96a5f333d480918d1219e46a8c6bc2e0\", \"5301f00a854af6bfc12ac02bba97c4659777713e4fcd63e0d604b3c9d6441613\", \"e1f7f35678b63416b1dad77d5752bfefaa94051f919e9b8e5875b95652b2eb90\", \"591702a40bc87cf270f38a5e5ed5d36c4ff292113d9c506010198aa64f5d014a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03380"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "62cb82d2-49a7-5eb0-b4b1-5a23248e28e1",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Mossy Sieve",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-03380",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "62cb82d2-49a7-5eb0-b4b1-5a23248e28e1_1",
+    "type": "security-rule"
+}

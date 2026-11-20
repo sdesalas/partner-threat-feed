@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Hazel Funnel remote access trojan sample, as reported in campaign PTF-03414. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Hazel Funnel Remote Access Trojan: File with known malicious hash written (PTF-03414)",
+        "note": "## Triage and analysis\n\n### Investigating Hazel Funnel Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hazel Funnel remote access trojan in campaign PTF-03414.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"eb8a9b8bf624f3b3a6020c206bff0fd4fa10972c56f4a7e6d1d9e0f5361ee842\" or \"3b1a2466317705833b33b3f240c7b8e11e39b2e5d48a06906f76daf5de7f9261\" or \"fff425f4f4f0eba0dfd74c9758b09a5eebdb1830646ba1932cbec5d894a81ff1\" or \"b871b28653d65903b231fb97181b37d0ce71fabf6a4fbe24262cd1aad38ca1b4\" or \"6a76ece3694c99bf714fdae292f97068bb1d80f865b9b5da48ed70d971dc52ce\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03414"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "190a6ad3-578c-5feb-b54c-563dfe074a89",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Hazel Funnel",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-03414",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "190a6ad3-578c-5feb-b54c-563dfe074a89_1",
+    "type": "security-rule"
+}

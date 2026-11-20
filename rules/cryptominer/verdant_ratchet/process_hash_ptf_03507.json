@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Verdant Ratchet cryptominer sample, as reported in campaign PTF-03507. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Verdant Ratchet Cryptominer: Process started from known malicious binary (PTF-03507)",
+        "note": "## Triage and analysis\n\n### Investigating Verdant Ratchet Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Verdant Ratchet cryptominer in campaign PTF-03507.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"28b93c0ad6dc83106adf1113dba0fcba88e83855f84c66a639165e08991f0f03\", \"fb104e024a658622d9dc6c700e907f903d12194cc898230dc625dc49adaeaed5\", \"1b884f5ba1bfb93244bd196a85d2b2cb616e3f5a4099dc05d0f6497f98e99aba\", \"2e213797ce116184d1d03b24c060fd056a6196eeafb72eb5ac612f2ebf3a15b0\", \"5e89a360a419b563af720e78337bd923fd1b6ef37f455409bd7f1da776052841\", \"59fd5d94cb7012cdaed60a7494360bc0398976bb644f54036a850b682bea0c33\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03507"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "5cfb0cb1-f10a-5106-b9da-d53e12b955c3",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Verdant Ratchet",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03507",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "5cfb0cb1-f10a-5106-b9da-d53e12b955c3_1",
+    "type": "security-rule"
+}

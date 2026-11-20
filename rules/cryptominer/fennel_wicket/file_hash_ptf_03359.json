@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Fennel Wicket cryptominer sample, as reported in campaign PTF-03359. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Fennel Wicket Cryptominer: File with known malicious hash written (PTF-03359)",
+        "note": "## Triage and analysis\n\n### Investigating Fennel Wicket Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Fennel Wicket cryptominer in campaign PTF-03359.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"1f0be858238d87127959848cbd2ab6f2b008c1f7331ca4d092289e0ccb1fc158\" or \"ae06eab628791fd85b8546be742962362a4065bacbe55d6f780a5b503369cd64\" or \"2a7cf9e4b429eab68ad08b15cbd557eea9c490b55595294a70e32cc35223c1f2\" or \"b73c51d94b5cf48ac84363cdf34f551f99e3a7b57c8869828e46b59d851dd963\" or \"8808a363af4d697dd41e5b27fbe4b3d3aeba5d1b05a1ebaca3debbd598fcdfed\" or \"f872b60ff23cfbefad80598d281d5b7c2b01fd814063c60cbf36b93809787996\" or \"afaf5655cb7cbff83ec28003ba0c6474c08761cbe95a2ce9ad585db732647ece\" or \"8a097246c57a1b37b0be2f6c9aa41b1361da4534feb619d43130776553cf145c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03359"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "adabe15e-328e-52a0-ad6a-d013c4f0e93e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Fennel Wicket",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03359",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "adabe15e-328e-52a0-ad6a-d013c4f0e93e_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Driftwood Gimlet ransomware sample, as reported in campaign PTF-03436. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Driftwood Gimlet Ransomware: Process started from known malicious binary (PTF-03436)",
+        "note": "## Triage and analysis\n\n### Investigating Driftwood Gimlet Ransomware: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Driftwood Gimlet ransomware in campaign PTF-03436.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"ae7574575f3cde64bbb07051d464e300648094263b908cb58bd2fb99cc541e52\", \"cbd0e8d5c93bb0711414767b2e0fbd563716650a4518097d1706501f613cccbf\", \"4712bf7b449ceed84305debaa4d6150636d39fba0eab0f34b791660f71173cca\", \"ae879e46fd4734c96350f9bc87de6bf2a5c3537c24e3cd7ded35e5298f5eae0d\", \"88c5d51d8b5577518409772ae957f917a2eb7c3ca3b76ccc08ed025d445df72d\", \"89e7514d3ef617e32f2d4eb674caae6b67380bd06fab2e5eff3f1c62a7953a90\", \"53b51370bc48bf086c3372799c00fc46f09cfa67d5a1e8978bfbd9511d7989af\", \"b36c2a501630325fcc117e1c71d5d004b047a142ae6b7b13af712f2e7980cc02\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03436"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 99,
+        "rule_id": "0caec3da-a2aa-5112-9dd5-bb0c5bf9e364",
+        "severity": "critical",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Driftwood Gimlet",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-03436",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "0caec3da-a2aa-5112-9dd5-bb0c5bf9e364_1",
+    "type": "security-rule"
+}

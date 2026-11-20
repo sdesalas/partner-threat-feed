@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Walnut Satchel espionage toolkit sample, as reported in campaign PTF-03400. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Walnut Satchel Espionage Toolkit: File with known malicious hash written (PTF-03400)",
+        "note": "## Triage and analysis\n\n### Investigating Walnut Satchel Espionage Toolkit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Walnut Satchel espionage toolkit in campaign PTF-03400.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"a023fdbf4ec6e2610343d09fd589956d70b4ea5283834654f18b8065b8047cc3\" or \"70bcefe72a35a2e0e6010807e7dcb76a30504b8da1372d58657dfdeb452c4c1f\" or \"837ae9da0896ebd1167619d2a5bca0e5f53734bcd3977e4008fddf22b5a317be\" or \"d4da1eda83ba8aeea5c4548cdea126c16fea5408b262d7ccec9193b6b9e00ed2\" or \"56dd5db85337aac660cd6465bc581740705c2b10573fed1a8043a8a378d0d98a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03400"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "8805f275-bc82-5939-9296-14a09a9aff83",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Walnut Satchel",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-03400",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "8805f275-bc82-5939-9296-14a09a9aff83_1",
+    "type": "security-rule"
+}

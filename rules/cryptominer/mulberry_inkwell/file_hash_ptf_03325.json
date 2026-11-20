@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Mulberry Inkwell cryptominer sample, as reported in campaign PTF-03325. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Mulberry Inkwell Cryptominer: File with known malicious hash written (PTF-03325)",
+        "note": "## Triage and analysis\n\n### Investigating Mulberry Inkwell Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mulberry Inkwell cryptominer in campaign PTF-03325.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"ee3d019f0f49b62d531696e3a1a4d9355a274ec8b73abb11783c2b7e6da08fbe\" or \"359c03efe87bfc78b7d7a0eae0f9fa3e54e5e28ccde491766f091bd25cf5985a\" or \"be21b1ddb9d3e502c0eb08eb1b8ea40726bb5eb134a858d8e9869ce7cc8d59bc\" or \"b63a756b7e6631f0d1e85de907a99d8db8105619b5e2996301e436b988de7070\" or \"6b497054e232e0b3f7264df9ab841280015765d8ccbdf4ffed42b5574fcfb363\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03325"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "bfdc47bd-6ac7-5b6a-aca0-ce2b06a2d7bb",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Mulberry Inkwell",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03325",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "bfdc47bd-6ac7-5b6a-aca0-ce2b06a2d7bb_1",
+    "type": "security-rule"
+}

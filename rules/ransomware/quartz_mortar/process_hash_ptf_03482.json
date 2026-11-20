@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Quartz Mortar ransomware sample, as reported in campaign PTF-03482. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Quartz Mortar Ransomware: Process started from known malicious binary (PTF-03482)",
+        "note": "## Triage and analysis\n\n### Investigating Quartz Mortar Ransomware: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Quartz Mortar ransomware in campaign PTF-03482.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"90d7e6735be552c46f2db3eea7c4e4638f09e9108ee4d5f9b54d21e7a8114042\", \"0de3861e08728f3c811dad329a4f99e55549a92b87167e69f27e4d737907c0a4\", \"bd0c23e28a2bb392b1aeb4ecb619a1a2852067f29012ce6fae516d36d460952a\", \"a11d94ccdfc14ede815419c474b17fb4d7ba2542d0181d2d3d9c18c39ca6a042\", \"7be771c123ffac7343a27bae007b9f74e62a0584b7d59336eb0e9fd50ec5e175\", \"9cda5b233ae232ba9efba241685f46baabf5125ae3dc23e93ac9ce4a98c3a555\", \"b5546f56c35cd746dcd50e80e0ada5ecacfb967855326bfdddb7059e20a1e6bf\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03482"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 99,
+        "rule_id": "9bce2f47-a162-5fdc-a6c9-cd4e53d518aa",
+        "severity": "critical",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Quartz Mortar",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-03482",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "9bce2f47-a162-5fdc-a6c9-cd4e53d518aa_1",
+    "type": "security-rule"
+}

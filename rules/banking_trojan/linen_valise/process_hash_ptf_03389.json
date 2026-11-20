@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Linen Valise banking trojan sample, as reported in campaign PTF-03389. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Linen Valise Banking Trojan: Process started from known malicious binary (PTF-03389)",
+        "note": "## Triage and analysis\n\n### Investigating Linen Valise Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Linen Valise banking trojan in campaign PTF-03389.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"9ffdf43446006f0db8962b66d68573693535aebaa6af12d8dcd29a6a9a2cdcd1\", \"f97988e8ecd9d5c6655343f7300bf78047eab07702fc09a6871a2d46cbbbfab1\", \"bb7e2a3cb954cf317c4ec6d4a5dde74cf17573c625d367c0d621c2817ae35970\", \"8bf677da401e3a40e0541a3b27d663f5f66c6359c28fe2db3b493abeb45810f0\", \"1db35120477165dbb93fe93d09bf494ade80ed58044bf9cc5ea7e981b96fb861\", \"d467a44e9ebdc3d0d25022a47cfe00190ae941d541b3cf736bf7bc74512761fa\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03389"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "6a1e35a9-6970-5912-a9c4-500251a59eb5",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Linen Valise",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-03389",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "6a1e35a9-6970-5912-a9c4-500251a59eb5_1",
+    "type": "security-rule"
+}

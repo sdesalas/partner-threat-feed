@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Paper Keystone cryptominer sample, as reported in campaign PTF-03395. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Paper Keystone Cryptominer: File with known malicious hash written (PTF-03395)",
+        "note": "## Triage and analysis\n\n### Investigating Paper Keystone Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Paper Keystone cryptominer in campaign PTF-03395.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"7093ccd1b63abe0ab00f038834a0839bb86103cc5ca2dd576b212a70c5d07f49\" or \"8c03c458901b82fe740f097aa0e49243e3b2e6b30ed1256bf2b84103b39228ee\" or \"2353e441cfa576db54a944c7131c64254b75a018aa647b2daeee48b2a8653509\" or \"5a0970da9de12c21cd7b74aa3435fe826f818f43bc121ed98efdc379df837c79\" or \"e2498df9bfa86664e9e7e8e37154586d4a175b64b65bd733b9ee726688a23d4d\" or \"d93360cfcb02266fc4eb02b99369a45835b292bfe76273d1011ddf59a06c3625\" or \"30d35cc2a65061d7c76803b919c7d5ad686fae6aa64f802f173dfec29c9e7a38\" or \"4d5edfda231ab2e8780e643b8fdada2a9b47b5cc6a415d97a851987291ea8ae8\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03395"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "fb4ad147-4c9a-5102-b1e9-20979f6bafa0",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Paper Keystone",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03395",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "fb4ad147-4c9a-5102-b1e9-20979f6bafa0_1",
+    "type": "security-rule"
+}

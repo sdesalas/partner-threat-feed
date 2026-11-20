@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Nickel Lantern loader sample, as reported in campaign PTF-03493. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Nickel Lantern Loader: Process started from known malicious binary (PTF-03493)",
+        "note": "## Triage and analysis\n\n### Investigating Nickel Lantern Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Nickel Lantern loader in campaign PTF-03493.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"d419d7a26e7a0154e9d9010d76473d8a85ea6c2490d071139faccc510e3c9cda\", \"881a720c87f653c776010d68e7a9d7e349779715b2284f3db19ea44e51c18f42\", \"59f6c42036ac3233a56a9ad4e9b968f53a7b4f2edab4255b7e8fb3418923372a\", \"83fad50075d4260db4d3e4d10374330124a8156d98a03625eddfa7f1bc023335\", \"c6885dc2190ae60898beb9c4ae43facf82deb682cb03a044a0a2332124b0491c\", \"a6d7f415a09ae2145b6b6b18530f84261526f6bd3ec08ed01b07cdbdc143a556\", \"6fdb1b724345de99ec190df867330b2f6bad9bda5984d535042cf6de18e3e836\", \"c3ce5f8e91a273cbe12be89c4eac98676d560ab78488f1ae2d6350940148909a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03493"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "84594d58-1cbb-5f77-8f5b-f9f451ba16de",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Nickel Lantern",
+            "Threat Type: Loader",
+            "Campaign: PTF-03493",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "84594d58-1cbb-5f77-8f5b-f9f451ba16de_1",
+    "type": "security-rule"
+}

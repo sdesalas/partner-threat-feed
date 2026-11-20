@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Paper Keystone cryptominer sample, as reported in campaign PTF-03396. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Paper Keystone Cryptominer: Process started from known malicious binary (PTF-03396)",
+        "note": "## Triage and analysis\n\n### Investigating Paper Keystone Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Paper Keystone cryptominer in campaign PTF-03396.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"69eb1f298f22c3428c54c4e0f9d7203e65d3a52ffd4b707cd16495b733fe5e84\", \"92500dad7d2a0d70ee274aea1de6e6f1d4cd90059d9f22422cd954227fe70ed6\", \"36913b1c2a358c38e2c358ee9a3cf513f35c16a6f0b8e477eac6a9a1959da4db\", \"00519c1c42b88c6adb6e150ce675aac9c538d603bdd07d61c0d41e7107e256c7\", \"2ac1eeb3157af813b4b8183fb0e811a3e4420efa474f298783ba2efa244e7e20\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03396"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "4eaa4ce5-98e8-56c8-95ef-24509bc9b9a6",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Paper Keystone",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03396",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "4eaa4ce5-98e8-56c8-95ef-24509bc9b9a6_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ivory Ratchet remote access trojan sample, as reported in campaign PTF-03445. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ivory Ratchet Remote Access Trojan: File with known malicious hash written (PTF-03445)",
+        "note": "## Triage and analysis\n\n### Investigating Ivory Ratchet Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ivory Ratchet remote access trojan in campaign PTF-03445.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"87a6af732d48636ed2c10b0f45f9fef9510b0f50848247c600d6c2647e722df6\" or \"69bd5f1426bc7c77ee7bd3e6a8cbb81396f664636b66e060aa5ad7a9f542619e\" or \"5e56ebf6dfa12a1323f954237dab853140a83420550285dada3ca62d3716942a\" or \"981ae3bdd88dc0d9569499916a85798f3e41313670da41c63181525fd4afaa40\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03445"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "10df21bd-347f-5c3f-99a2-179dae512229",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ivory Ratchet",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-03445",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "10df21bd-347f-5c3f-99a2-179dae512229_1",
+    "type": "security-rule"
+}

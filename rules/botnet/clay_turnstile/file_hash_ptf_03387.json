@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Clay Turnstile botnet sample, as reported in campaign PTF-03387. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Clay Turnstile Botnet: File with known malicious hash written (PTF-03387)",
+        "note": "## Triage and analysis\n\n### Investigating Clay Turnstile Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Clay Turnstile botnet in campaign PTF-03387.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"26d4560c66bf190ed7679eb9a25007b418732f6d647f7025616f0956c701b994\" or \"0f2eebab300f136e058a8e5c38567dda649bdb51718f95f41903cd1fde4a2f23\" or \"94895cbed14944266c55a24543cf174a997f23aead91b8f1842eafaebeb5fd24\" or \"12d245f7a33f824f471e92a8f9edb5f0ce093d7bc2a86df89cc7434a100b9242\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03387"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b8c7c3f7-4c71-5a08-905c-9a3d6e76c2fb",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Clay Turnstile",
+            "Threat Type: Botnet",
+            "Campaign: PTF-03387",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "b8c7c3f7-4c71-5a08-905c-9a3d6e76c2fb_1",
+    "type": "security-rule"
+}

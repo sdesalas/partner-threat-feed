@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Walnut Abacus loader sample, as reported in campaign PTF-03452. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Walnut Abacus Loader: File with known malicious hash written (PTF-03452)",
+        "note": "## Triage and analysis\n\n### Investigating Walnut Abacus Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Walnut Abacus loader in campaign PTF-03452.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"3a73d0e987f193e5b63c8d70565c0237d06cf900ef6ed95debd6a7f5a87a1bff\" or \"78c190894992c826ea9079ffc7970193de2f61f62f2bf2d3d220583936e83eda\" or \"f75d4b70c37ebafd14b0d431d9f2df0fab66aa5588f7487cb1dbc87d6f04e27c\" or \"1167ddcdbb923c519f609b06e12735fa3650d59c00f83cc86d37586f87704740\" or \"bd642cb3cdd373f3306d28cc524167a8bd8db3ac44db87b450c3d8a4316d0d68\" or \"0d84ffe118ec085c9c324d83f4648c4dfbcd1e8ed3865567416692e0446d12ae\" or \"00135698b6f3bb0b1f6ce7589a906d0797e64e9d3fde27244b6e96664ca8969e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03452"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "7e9def56-47f4-59a3-b6b3-3ac2438cf83a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Walnut Abacus",
+            "Threat Type: Loader",
+            "Campaign: PTF-03452",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "7e9def56-47f4-59a3-b6b3-3ac2438cf83a_1",
+    "type": "security-rule"
+}
