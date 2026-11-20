@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Verdant Tankard phishing kit sample, as reported in campaign PTF-03110. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Verdant Tankard Phishing Kit: Process started from known malicious binary (PTF-03110)",
+        "note": "## Triage and analysis\n\n### Investigating Verdant Tankard Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Verdant Tankard phishing kit in campaign PTF-03110.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"4d26cd2e6ee604d23417d33994cb9d5739487eed1fc3461dbd8aaf50ce93c58c\", \"903acb7d31bd0bd85ff4901416b19edb39cdf867e584702c826488d3dc78286e\", \"e4c43f74f615e4d2a4da322df493d522f0ac30088805ec096341889c48eb7b55\", \"04050b005edd0a78340eff2db15e619d06ce1e41a19f1223fd556179e2bd02d7\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03110"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "aaf65066-4eab-5cb3-b1d1-0b3ca2c11aae",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Verdant Tankard",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-03110",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "aaf65066-4eab-5cb3-b1d1-0b3ca2c11aae_1",
+    "type": "security-rule"
+}

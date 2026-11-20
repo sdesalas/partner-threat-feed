@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Willow Hourglass espionage toolkit sample, as reported in campaign PTF-03044. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Willow Hourglass Espionage Toolkit: File with known malicious hash written (PTF-03044)",
+        "note": "## Triage and analysis\n\n### Investigating Willow Hourglass Espionage Toolkit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Willow Hourglass espionage toolkit in campaign PTF-03044.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"98b6e47652037ad6fd8490c9a776cf57e7e916b4c663ffd7ffb4e43b4bcc5538\" or \"3ddd870574b0774f999329995a5c0a7b34ab8ccab8b7858f136102b485a333f3\" or \"3296aeebaeeadaf48bae09eba277fc6cf53774a58c6d4b5cd0b7dd74dd1d0841\" or \"f8df8e035424b77fefea0dca4436c5372ba1ee84a149a544032ff3cce80a219a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03044"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ca4cc03e-0bef-5c8c-9d5f-86a618788a17",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Willow Hourglass",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-03044",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "ca4cc03e-0bef-5c8c-9d5f-86a618788a17_1",
+    "type": "security-rule"
+}

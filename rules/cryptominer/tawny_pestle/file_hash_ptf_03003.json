@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Tawny Pestle cryptominer sample, as reported in campaign PTF-03003. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Tawny Pestle Cryptominer: File with known malicious hash written (PTF-03003)",
+        "note": "## Triage and analysis\n\n### Investigating Tawny Pestle Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tawny Pestle cryptominer in campaign PTF-03003.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"d2524fdacf2cb0a49703731c627a2dfada6643615e06817c0cb495216090156c\" or \"d2c392ce188db55f735cd4e3ded728fbdbb14718bc1dc9efcffb521c94505698\" or \"35b9ca6f1247d93db96a22f534266fc970adf6275ca9cdf0efac5a05817a980e\" or \"3998d918df94851190232b4c8d0e1801e7f84cc9d9256bc44821874253f580ee\" or \"6058d90f36071664eea40ade7c48aa001655c52c7764f1820cb7f06bc5eee1ad\" or \"a6931c5e37812b3330deb232c89ff1d410e8cf35d5538188d5d162cdf72e21f6\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03003"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "dc3e573c-1681-5470-a4c6-e7d2cac141b7",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Tawny Pestle",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03003",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "dc3e573c-1681-5470-a4c6-e7d2cac141b7_1",
+    "type": "security-rule"
+}

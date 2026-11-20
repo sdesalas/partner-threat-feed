@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ashen Needle remote access trojan sample, as reported in campaign PTF-02985. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ashen Needle Remote Access Trojan: Process started from known malicious binary (PTF-02985)",
+        "note": "## Triage and analysis\n\n### Investigating Ashen Needle Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ashen Needle remote access trojan in campaign PTF-02985.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"4e667c208202c7bb27fbc70208e3ab9294087fc0a1303e4b05ef178c4e98fed1\", \"1730b47dafe8bfd05693439b293001cc8a8ef4391966645d74785e6276349018\", \"f4809b49334871efece29dc2ac2e7c717f927a1902a7b2b447a82fda48bef70c\", \"8e56b5cd3fc73d74c7b82983380ae9453ee382610f67d2c3d82adf3052def9c3\", \"dd8a274e80873f582ecdf2f21e334ab9dbc4c51de16e22a18a98138bd23d2a0c\", \"a5daa147ec12855c15a868cb572c80637374ea83d5bd099f3c5244179f427fb2\", \"bdc63d7737285e53e5da75066d1ae3b2d0ffb713b0ea5bf84698694c743a1284\", \"24a5c85c6329b144663583a578d46b71aeb3935394bcf13b50347f56a09e488f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02985"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "296bf1f8-1adb-56ed-b70e-5955c1b7cc38",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ashen Needle",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-02985",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "296bf1f8-1adb-56ed-b70e-5955c1b7cc38_1",
+    "type": "security-rule"
+}

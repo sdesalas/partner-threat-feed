@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Dusky Spool espionage toolkit sample, as reported in campaign PTF-02939. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Dusky Spool Espionage Toolkit: Process started from known malicious binary (PTF-02939)",
+        "note": "## Triage and analysis\n\n### Investigating Dusky Spool Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Dusky Spool espionage toolkit in campaign PTF-02939.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"3308e4aee2fcb43dc696c94253141e24578676040ecbac45dcef79a0a65f3aa2\", \"87f01fd0653de3bc048482e3b9cf4b52130e581fc57c46192c4dab65b02e7a53\", \"d9fe19113f3e79c67f55b269a99387c202db6643001cffc6dd3fd670ad9ad2e9\", \"7e07f7ffcbda2be6f10c2123b24cb71f187aeb847ee6f76c9cab1373e91c4821\", \"60e99f935cfa7eb379089d872383efe3ea5a2fc0d3def8fab0142465d4c2e1fb\", \"b62dd4d39fb4b3acd4aa3243044937582f903eeb864dd38cb43b040b8bf5811e\", \"d8e947e8e00172e7eac3144c4f47c71b6bae03e2f34ee76dd608b57bfecd6741\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02939"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "392d0906-7916-5b67-8cc0-378592016895",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Dusky Spool",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-02939",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "392d0906-7916-5b67-8cc0-378592016895_1",
+    "type": "security-rule"
+}

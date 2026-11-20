@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Brass Needle botnet sample, as reported in campaign PTF-02959. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Brass Needle Botnet: Process started from known malicious binary (PTF-02959)",
+        "note": "## Triage and analysis\n\n### Investigating Brass Needle Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Brass Needle botnet in campaign PTF-02959.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"4ded0d6269371247db17cdfaa57b3ef6d78a02c1337214a5be15099dafafb676\", \"048f9a01c518058ab8b8229d4ea73823c230875f94f1c6d6aa6b1e8861047ad4\", \"e0a4561457d8188dde0196cdd0744bb7a1f392a12842c857734ad5310b817e83\", \"db927c48b293de322173e46eb114567ac5bb8a05a948229d0aadcc508ecfaa93\", \"54a81eaddd2b60e757e1b5ff3e0a9a3766fc6bd8028f180fa44dc7278fd9e079\", \"dedcf89d2bbfe987898fe0a3472e37def444f9e6172209a9294321e510cb31e2\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02959"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b541a68d-54a1-53df-b4a8-0e0526c79115",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Brass Needle",
+            "Threat Type: Botnet",
+            "Campaign: PTF-02959",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "b541a68d-54a1-53df-b4a8-0e0526c79115_1",
+    "type": "security-rule"
+}

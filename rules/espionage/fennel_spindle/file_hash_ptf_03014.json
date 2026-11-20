@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Fennel Spindle espionage toolkit sample, as reported in campaign PTF-03014. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Fennel Spindle Espionage Toolkit: File with known malicious hash written (PTF-03014)",
+        "note": "## Triage and analysis\n\n### Investigating Fennel Spindle Espionage Toolkit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Fennel Spindle espionage toolkit in campaign PTF-03014.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"2a49bc64c2ec7b7a2dbc9bc01a121bff41d251d630f3eac241e3558b51c0e5ee\" or \"50f9f0df2f0e154da3331d4a48780aafcc39ba51f2ee091eb1b03fea4fbb248d\" or \"33167de15c12781c66c8e1e5f8f2e43aa4a084f3ca5f979e5562078708bfdeb8\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03014"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "585c11cf-dcae-5912-a7ab-6c0cdbb1e4cc",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Fennel Spindle",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-03014",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "585c11cf-dcae-5912-a7ab-6c0cdbb1e4cc_1",
+    "type": "security-rule"
+}

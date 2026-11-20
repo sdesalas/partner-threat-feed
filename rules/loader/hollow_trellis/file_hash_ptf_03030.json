@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Hollow Trellis loader sample, as reported in campaign PTF-03030. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Hollow Trellis Loader: File with known malicious hash written (PTF-03030)",
+        "note": "## Triage and analysis\n\n### Investigating Hollow Trellis Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hollow Trellis loader in campaign PTF-03030.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"ee7240022e740f3227e42f0dc61f39687042688fb8045c0ed2cff75f6e4082af\" or \"59f8517d6c81f4e3ac67b40c119afb1e3a55f6db5f8ad64431911c79604bdb0f\" or \"c7e1b857f6cdcde61f3cd220f76a30b0a6ed513dbfaf82f24100cf2fc1d2511a\" or \"6919ffa07d51f31c5520e2da1a5f87024a2280abff607c329a7ee8b5b979cd49\" or \"6e5720a563c676c274907f0f7845dc394fc812b0be2389988bd74876365a8689\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03030"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "3916cc36-c40a-5a92-a70e-aafbd87c82b5",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Hollow Trellis",
+            "Threat Type: Loader",
+            "Campaign: PTF-03030",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "3916cc36-c40a-5a92-a70e-aafbd87c82b5_1",
+    "type": "security-rule"
+}

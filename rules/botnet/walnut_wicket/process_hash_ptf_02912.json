@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Walnut Wicket botnet sample, as reported in campaign PTF-02912. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Walnut Wicket Botnet: Process started from known malicious binary (PTF-02912)",
+        "note": "## Triage and analysis\n\n### Investigating Walnut Wicket Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Walnut Wicket botnet in campaign PTF-02912.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"40bd1302689c2cc9ea7a6f0de5ecd5d418eaf9ae1337694ccc44bc9deae50bf6\", \"aad655468b3b84d66b34a23972daa2fec3173cbe898b5a390de5c5cdef09f381\", \"b06fa06f013df12e6eb3176d899dd42eabb43165528f221a389b22a0d7fae688\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02912"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e9068653-6259-5f6e-8841-5d06ee062222",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Walnut Wicket",
+            "Threat Type: Botnet",
+            "Campaign: PTF-02912",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "e9068653-6259-5f6e-8841-5d06ee062222_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Tawny Gimlet infostealer payloads, as reported in campaign PTF-03020. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Tawny Gimlet Infostealer: Request to known payload URL (PTF-03020)",
+        "note": "## Triage and analysis\n\n### Investigating Tawny Gimlet Infostealer: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tawny Gimlet infostealer in campaign PTF-03020.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://data-assets84.test/gate/2849.msi\" or \"https://login-assets18.test/install/1178.php\" or \"https://login-secure31.invalid/doc/4143.msi\" or \"https://mail-auth87.test/invoice/8669.php\" or \"https://media-data46.example/doc/6912.zip\" or \"https://relay-assets97.invalid/doc/6962.php\" or \"https://relay-auth29.invalid/install/2325.php\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03020"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "3d9e1d00-9900-58e4-8ea4-7c04826e6932",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Tawny Gimlet",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-03020",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "3d9e1d00-9900-58e4-8ea4-7c04826e6932_1",
+    "type": "security-rule"
+}

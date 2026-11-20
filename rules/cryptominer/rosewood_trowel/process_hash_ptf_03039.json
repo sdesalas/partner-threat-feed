@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Rosewood Trowel cryptominer sample, as reported in campaign PTF-03039. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Rosewood Trowel Cryptominer: Process started from known malicious binary (PTF-03039)",
+        "note": "## Triage and analysis\n\n### Investigating Rosewood Trowel Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Rosewood Trowel cryptominer in campaign PTF-03039.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"5facdaa2751bb9ef283a337132635a38eac68ac97d547c3677debfbf142da67d\", \"4e5e16b03df6da3c0943773337bd884a573d855cfbc3f0c6406c26ef17c0d077\", \"043a4e7cc4556a41c5e17bb01ec668d035bd1d8082a16e5b997d2a0542ba7432\", \"77f7351ac1bc8f7fd7b01f84362965250cd0bacc4908b8759d458f1c63104cc9\", \"f4d6b1e98c10eaeba1637e7949d5e2fdf84f9846c318f5fdcb620b133f55d32d\", \"9e13a8ab9226a0b394bd1ec22131676426d9851c0eca787745766d163b4bcee7\", \"a4a9688186d374cd8af4c617f6e1db34158eb66d681116eda6dc36c788f8993e\", \"b345833577f5e4e071fff5104876d128349d0211c6235a8a871d6469e9f16e00\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03039"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "05ff93af-b538-55db-b85f-a8c1af42ac6e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Rosewood Trowel",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03039",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "05ff93af-b538-55db-b85f-a8c1af42ac6e_1",
+    "type": "security-rule"
+}

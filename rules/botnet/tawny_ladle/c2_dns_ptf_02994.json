@@ -1,0 +1,79 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies DNS lookups of command and control domains used by the Tawny Ladle botnet, as reported in campaign PTF-02994. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.network-*",
+            "logs-network_traffic.*",
+            "packetbeat-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Tawny Ladle Botnet: DNS lookup of command and control domain (PTF-02994)",
+        "note": "## Triage and analysis\n\n### Investigating Tawny Ladle Botnet: DNS lookup of command and control domain\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tawny Ladle botnet in campaign PTF-02994.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "dns.question.name:(\"api-edge64.test\" or \"connect-assets99.example\" or \"data-connect3.invalid\" or \"files-connect45.example\" or \"login-track37.example\" or \"node-static47.test\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02994"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            },
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "9e042826-0e98-5a0f-bea0-12a2330099eb",
+        "severity": "high",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Tawny Ladle",
+            "Threat Type: Botnet",
+            "Campaign: PTF-02994",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1071",
+                        "name": "Application Layer Protocol",
+                        "reference": "https://attack.mitre.org/techniques/T1071/",
+                        "subtechnique": [
+                            {
+                                "id": "T1071.004",
+                                "name": "DNS",
+                                "reference": "https://attack.mitre.org/techniques/T1071/004/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "9e042826-0e98-5a0f-bea0-12a2330099eb_1",
+    "type": "security-rule"
+}

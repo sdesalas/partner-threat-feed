@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Gilded Loom infostealer sample, as reported in campaign PTF-02982. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Gilded Loom Infostealer: Process started from known malicious binary (PTF-02982)",
+        "note": "## Triage and analysis\n\n### Investigating Gilded Loom Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Gilded Loom infostealer in campaign PTF-02982.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"917c0f1419a1cd57fff932235c026f22740a6bf778b1bd6a644d0307e85b6a0c\", \"7ac2641e90cde43dfa969a1aa8f55ce9d5185fed0c0a2ffcbe331819a87d725a\", \"646d54adcc89467519da27a7926d7cde41cb821ebb2fe6c872c51bdfa27a5a87\", \"1512bcf99a3b69b169bf58fbc071f9556e82d332b5af907e05d86bdaf2186ad1\", \"3adad4d54e553fbee24a00324397de2ef02567b0ed616d1860540414811b37a6\", \"b7e21e66b544f7d2a1b02b60c733addcd8a18212840fc31780f06655642f4264\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02982"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "0f6a945d-5670-5359-a698-3c6f3dbb513b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Gilded Loom",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-02982",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "0f6a945d-5670-5359-a698-3c6f3dbb513b_1",
+    "type": "security-rule"
+}

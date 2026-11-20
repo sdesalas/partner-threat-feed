@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Fennel Spindle espionage toolkit sample, as reported in campaign PTF-03014. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Fennel Spindle Espionage Toolkit: Process started from known malicious binary (PTF-03014)",
+        "note": "## Triage and analysis\n\n### Investigating Fennel Spindle Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Fennel Spindle espionage toolkit in campaign PTF-03014.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"b762c52bc33137b9e8acf5c58f33014b10c5c6bf2098094fb48277615dfb34da\", \"31689be2668035f13ebf5cdeda5feffb1cc9507b5052e7500216528dfbb6de56\", \"e6fdb07ca7bea2bc3986881a0e7bd6cce9e76f932663f966a813eebcc22d8774\", \"8d8c921961db28c67ac71a4fdf53ee137d7e4334a91eaebe876a16a45ed1abaa\", \"8ee6937e2e9d575d563a78f6d2a27b6292ee609fb8126a0da8f580afe7482087\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03014"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "3018d084-57b3-5d01-b020-448cee7ed4d8",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Fennel Spindle",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-03014",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "3018d084-57b3-5d01-b020-448cee7ed4d8_1",
+    "type": "security-rule"
+}

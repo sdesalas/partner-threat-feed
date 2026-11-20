@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Quartz Trowel phishing kit sample, as reported in campaign PTF-03005. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Quartz Trowel Phishing Kit: Process started from known malicious binary (PTF-03005)",
+        "note": "## Triage and analysis\n\n### Investigating Quartz Trowel Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Quartz Trowel phishing kit in campaign PTF-03005.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"08fa0a16c176bfff7ca721ea2e3a3d4fb496dba73eff3ebbbc788b4f63b710e4\", \"b35493c6eedd52844e4421d67de49e5856865791c0d823ef453b2ce745e0aa1d\", \"634d5ea137133a642d687fe9095a207167d791053909731fb4198ca27b94e5b2\", \"cec3362367118bf597deb16b7f9d5060ee722c40901f39df596a133ec54e6812\", \"9827d0973df1fcf3935563058aa8202557bbd4d04bc2a498ff693acce9886bcc\", \"29d122ba5ea7c2f4629d317058f0d02cd0f6bb25cebc61ca22f63415aa98f83a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03005"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "6aec061d-f2ee-5605-95a6-159a7b8b2ad5",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Quartz Trowel",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-03005",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "6aec061d-f2ee-5605-95a6-159a7b8b2ad5_1",
+    "type": "security-rule"
+}

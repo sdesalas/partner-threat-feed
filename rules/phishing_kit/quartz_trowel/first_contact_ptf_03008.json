@@ -1,0 +1,76 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies the first time a host connects to a command and control domain used by the Quartz Trowel phishing kit, as reported in campaign PTF-03008. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "history_window_start": "now-14d",
+        "index": [
+            "logs-endpoint.events.network-*",
+            "logs-network_traffic.*",
+            "packetbeat-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Quartz Trowel Phishing Kit: First connection from host to command and control domain (PTF-03008)",
+        "new_terms_fields": [
+            "host.id"
+        ],
+        "note": "## Triage and analysis\n\n### Investigating Quartz Trowel Phishing Kit: First connection from host to command and control domain\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Quartz Trowel phishing kit in campaign PTF-03008.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:network and destination.domain:(\"cdn-edge5.invalid\" or \"cdn-login42.invalid\" or \"connect-auth84.invalid\" or \"files-cdn3.test\" or \"secure-auth48.example\" or \"static-mail39.example\" or \"track-cdn83.test\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03008"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            },
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "ca936db8-b0e5-59f7-bd21-8247aa755879",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Quartz Trowel",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-03008",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1071",
+                        "name": "Application Layer Protocol",
+                        "reference": "https://attack.mitre.org/techniques/T1071/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "new_terms",
+        "version": 1
+    },
+    "id": "ca936db8-b0e5-59f7-bd21-8247aa755879_1",
+    "type": "security-rule"
+}

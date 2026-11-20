@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Copper Satchel cryptominer sample, as reported in campaign PTF-03072. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Copper Satchel Cryptominer: File with known malicious hash written (PTF-03072)",
+        "note": "## Triage and analysis\n\n### Investigating Copper Satchel Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Copper Satchel cryptominer in campaign PTF-03072.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"1dcd8731ed76f5a406cd70705ee0857b07cb85d0b01bea000199487cad5eebfc\" or \"1fd273003fb5521118892af0f22289cfbd152de59c4b071f97c5576264d161cf\" or \"a6eabf6fdda3f042061a22642721fce885a6fd64b97e1183e179cfd54cee0128\" or \"e8427fc94d9ef371ef90106d57c3e84b2335db05e88f756635f217b5645bd163\" or \"8b3511e283180f4067479f92913c909ff67b0b8b60a2ba97e212f66fde8313e2\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03072"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "3c5a0e28-a47e-5be8-af7d-f7c7aea654db",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Copper Satchel",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03072",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "3c5a0e28-a47e-5be8-af7d-f7c7aea654db_1",
+    "type": "security-rule"
+}

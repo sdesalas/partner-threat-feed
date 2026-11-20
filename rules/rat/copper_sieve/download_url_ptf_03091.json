@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Copper Sieve remote access trojan payloads, as reported in campaign PTF-03091. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Copper Sieve Remote Access Trojan: Request to known payload URL (PTF-03091)",
+        "note": "## Triage and analysis\n\n### Investigating Copper Sieve Remote Access Trojan: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Copper Sieve remote access trojan in campaign PTF-03091.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://cloud-cdn68.example/download/1477.php\" or \"https://data-edge46.example/gate/3431.bin\" or \"https://files-edge29.example/invoice/9138.bin\" or \"https://files-update87.test/invoice/1740.bin\" or \"https://node-secure59.invalid/invoice/8939.msi\" or \"https://portal-login28.invalid/invoice/2871.zip\" or \"https://secure-files99.invalid/doc/6205.msi\" or \"https://update-connect69.invalid/update/2729.msi\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03091"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "27783b8c-56e6-5819-b4f0-f966c8e7cf7c",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Copper Sieve",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-03091",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "27783b8c-56e6-5819-b4f0-f966c8e7cf7c_1",
+    "type": "security-rule"
+}

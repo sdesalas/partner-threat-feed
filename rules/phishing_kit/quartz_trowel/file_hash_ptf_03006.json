@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Quartz Trowel phishing kit sample, as reported in campaign PTF-03006. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Quartz Trowel Phishing Kit: File with known malicious hash written (PTF-03006)",
+        "note": "## Triage and analysis\n\n### Investigating Quartz Trowel Phishing Kit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Quartz Trowel phishing kit in campaign PTF-03006.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"94e16344dcf4a74afe185d5b456d72e63bf31f8c94d623d29f3e1533ca1c0e69\" or \"6165cd37a833bdfac5061eff1c6951c0ebb524cff7bb016e0a74bff17969fbac\" or \"b77135f5eced7e739eeaaebb1276d11914c6243444118b9d5ba7e7c9662531bb\" or \"2f72e9ff48817e6a61b4502edb88fa1f28fc5d707846f5763dc58770fdd7afc8\" or \"6339c5e2f93feda9881429d336fe89f3af90a4c2fd51ea5ee10b35eb49dbbeda\" or \"bbda08f99135bc70d490521c1244807a7338b53eea290c27d0dfe2fff73db619\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03006"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "16377f90-683f-5254-b538-d81556ebd06e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Quartz Trowel",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-03006",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "16377f90-683f-5254-b538-d81556ebd06e_1",
+    "type": "security-rule"
+}

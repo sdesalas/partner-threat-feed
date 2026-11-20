@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Tawny Gimlet infostealer sample, as reported in campaign PTF-03020. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Tawny Gimlet Infostealer: Process started from known malicious binary (PTF-03020)",
+        "note": "## Triage and analysis\n\n### Investigating Tawny Gimlet Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tawny Gimlet infostealer in campaign PTF-03020.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"1ec0bc01d33f4dc5df922c156c1b012864ff5e236797fc8bb046103a330ff89c\", \"65aa9882703fb63dfd551c74e31114bb278022278834ea7cb5c1ff26f9dfa4b9\", \"03ae865e3ad3bea52eaad05256b9d42bd05a0d21d935572f1706f37d316913cb\", \"29c64d22197cbe145d2e057a6ca8e92b364dfae50c26f3267dd7c1c895461f73\", \"8d8081f78f7359a67fb572046173b1ac2a94606ae2073bde5902163d015eda26\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03020"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "13519f3b-31f4-5ac4-a889-f8a84aa135d6",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Tawny Gimlet",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-03020",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "13519f3b-31f4-5ac4-a889-f8a84aa135d6_1",
+    "type": "security-rule"
+}

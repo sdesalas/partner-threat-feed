@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Flint Jigsaw banking trojan sample, as reported in campaign PTF-03069. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Flint Jigsaw Banking Trojan: Process started from known malicious binary (PTF-03069)",
+        "note": "## Triage and analysis\n\n### Investigating Flint Jigsaw Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Flint Jigsaw banking trojan in campaign PTF-03069.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"87e43e31aa20cd9fcdd08746cccaee3a23f20a3d2e0c36810031f28a3d87fd15\", \"7b6f51b41d4e85c655dcddba00249d372fbed7e50a7d6538ed390b3083549e86\", \"82b275cc3a82ede880ad46cf6c7755e47b548db9eca356b4a61e560099f06e3c\", \"c2433648e808068142cae34bd84130d1022f484a7437dcb8d75563400c309204\", \"1ea7bf202d65e94257c9dd7496c99c11985416a82313197613002ab0539e2bde\", \"3356e10c5dfeb496104f854bda8c0f02c554a1a55b979b406ac90c98acd25d00\", \"342e0febb3743d1f02d247100a213978317e40002191cfcbbeea1b2220683ce1\", \"7ec7ab3941c60c32c2db478691a4c9962767506bfec376a90c1037ad00a7b824\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03069"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "17397290-b0a1-5eff-979d-860cd090696f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Flint Jigsaw",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-03069",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "17397290-b0a1-5eff-979d-860cd090696f_1",
+    "type": "security-rule"
+}

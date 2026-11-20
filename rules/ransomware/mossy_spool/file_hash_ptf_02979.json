@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Mossy Spool ransomware sample, as reported in campaign PTF-02979. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Mossy Spool Ransomware: File with known malicious hash written (PTF-02979)",
+        "note": "## Triage and analysis\n\n### Investigating Mossy Spool Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mossy Spool ransomware in campaign PTF-02979.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"1a99d9237abce3bea8631b8a87a0030711d8d22d6e7a109b9573f63403b0e81f\" or \"5829830a81d36394f325209e23dda4d43b86cc24db657a08c4a690e400e33454\" or \"79d8978bb881c02cf1e8f0215049b3b320901fb4ad1100a6fcbbe55a37acbcbd\" or \"3d13ac4c5c5a051896a50ad913ba8d3b731a56d6783717d6b96be97e9202e865\" or \"52819dcf1aa7e951e2368b0b5696f352c89e98b05877d570f409bb933ed1bd06\" or \"59ede2a37d15c3bb841bbe944e718752c1b959b130be939bcf12128c04ba1c55\" or \"d077a0f7b10fed6e8219db19d89e82c282cf3287a5853be73d444733e0df59b2\" or \"82e8208a9d0bf0bfdb190c7a72f8f2134ecc01e36f3720afa29cf723081a86ca\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02979"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "57d83195-3a72-5722-9923-1a529639c265",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Mossy Spool",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-02979",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "57d83195-3a72-5722-9923-1a529639c265_1",
+    "type": "security-rule"
+}

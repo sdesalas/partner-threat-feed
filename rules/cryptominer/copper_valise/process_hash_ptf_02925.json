@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Copper Valise cryptominer sample, as reported in campaign PTF-02925. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Copper Valise Cryptominer: Process started from known malicious binary (PTF-02925)",
+        "note": "## Triage and analysis\n\n### Investigating Copper Valise Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Copper Valise cryptominer in campaign PTF-02925.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"647c2264cdfee7af9b78d9d4d46bd71230f96d5c6caf8952c1757212925a3d6d\", \"04831fb0908539880b0cf393dc5e6db6c479bac0301a767ef7ccbaec88d90a8b\", \"baf89e6102ca00bb3edf23ca13642cb37739436d48628a3f4cc6d61a22b35069\", \"9f9c30716aabcf47d687d5c8a75fe64affaf29a9883ca9487acc0f856d04a85d\", \"193b0cc5ee81751cfb7cd70a9411e2a5043082d28940b99a531766660ac09803\", \"032813f058c034f4db38e9a6f8ae0b1131f7a575b2cc82e9bc1bcd6d3e8b8e14\", \"c3d9fba200a166e7fd8b95b51e9549b89b68ab3d0d7fe3243650f6f02c54e9ea\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02925"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "94ea671e-8878-56bd-bf77-a946929fd303",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Copper Valise",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-02925",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "94ea671e-8878-56bd-bf77-a946929fd303_1",
+    "type": "security-rule"
+}

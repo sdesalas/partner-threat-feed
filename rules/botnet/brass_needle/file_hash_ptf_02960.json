@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Brass Needle botnet sample, as reported in campaign PTF-02960. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Brass Needle Botnet: File with known malicious hash written (PTF-02960)",
+        "note": "## Triage and analysis\n\n### Investigating Brass Needle Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Brass Needle botnet in campaign PTF-02960.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"fb4df61123776eae60a93f8f64ae417f32b5aaa523b9ac27e59d784eb1b37b22\" or \"be51b67f917a88adabf5e8817f8bd1604b6d3b12b554f654c890790da47b5b51\" or \"c5cb021265be48dafd1af1983b144899e5e8a7ae3e864a254a7367efde0bfa4c\" or \"e4b995278d3d31c8af6e25f15a9593cdb0dfdd2a29bc1d3806e81b9b5527f5eb\" or \"f0597885d8c0b0c75ca83548acb0d86a2551d8e06da868b2e5e9fe91382b3659\" or \"a3abe97e261cfb36ff2b9d71448d3911bf4ca3feeac3ab0b11aa61f4eedd04d0\" or \"62455882e2a8cc5c864404524318e12bb1a0598b706b8c0f43191492b9db330a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02960"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "036948f7-cc65-5ce1-ad15-84d6b1bedaf9",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Brass Needle",
+            "Threat Type: Botnet",
+            "Campaign: PTF-02960",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "036948f7-cc65-5ce1-ad15-84d6b1bedaf9_1",
+    "type": "security-rule"
+}

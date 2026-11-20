@@ -1,0 +1,72 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies network connections to command and control IP addresses used by the Mossy Stencil banking trojan, as reported in campaign PTF-03038. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.network-*",
+            "logs-network_traffic.*",
+            "packetbeat-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Mossy Stencil Banking Trojan: Connection to command and control IP address (PTF-03038)",
+        "note": "## Triage and analysis\n\n### Investigating Mossy Stencil Banking Trojan: Connection to command and control IP address\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mossy Stencil banking trojan in campaign PTF-03038.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:network and destination.ip:(\"198.19.161.43\" or \"198.18.199.236\" or \"198.19.228.64\" or \"198.18.170.223\" or \"198.19.162.249\" or \"198.19.3.133\" or \"198.18.30.1\" or \"198.18.29.62\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03038"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            },
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "27b4d0a2-12ab-50e5-823f-5b7b1bcc6000",
+        "severity": "high",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Mossy Stencil",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-03038",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1071",
+                        "name": "Application Layer Protocol",
+                        "reference": "https://attack.mitre.org/techniques/T1071/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "27b4d0a2-12ab-50e5-823f-5b7b1bcc6000_1",
+    "type": "security-rule"
+}

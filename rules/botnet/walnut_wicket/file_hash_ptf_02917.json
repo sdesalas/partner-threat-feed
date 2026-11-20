@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Walnut Wicket botnet sample, as reported in campaign PTF-02917. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Walnut Wicket Botnet: File with known malicious hash written (PTF-02917)",
+        "note": "## Triage and analysis\n\n### Investigating Walnut Wicket Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Walnut Wicket botnet in campaign PTF-02917.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"f73fd696d2e7d65844b5f66876753744aff0fbc59395e97726e8d2286c4514b5\" or \"a32ecf023d158f5c2c6c28dcedeb9ffd2ed643c8e92ce83100204ba38da504fb\" or \"e3981e4ecf9e9dbb100fe6cdf396e7f542763b15984ac4f55201dde495bb77ca\" or \"7bb7505171063a90ca2ca3b8b18617b2d7c484a7e88e4f906625c1bb808a6830\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02917"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b9a1cbc1-e7ba-5c8b-9e91-f6adac5ac37f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Walnut Wicket",
+            "Threat Type: Botnet",
+            "Campaign: PTF-02917",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "b9a1cbc1-e7ba-5c8b-9e91-f6adac5ac37f_1",
+    "type": "security-rule"
+}

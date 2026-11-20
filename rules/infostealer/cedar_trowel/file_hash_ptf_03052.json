@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Cedar Trowel infostealer sample, as reported in campaign PTF-03052. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Cedar Trowel Infostealer: File with known malicious hash written (PTF-03052)",
+        "note": "## Triage and analysis\n\n### Investigating Cedar Trowel Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Cedar Trowel infostealer in campaign PTF-03052.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"e386a603161516437e7730b02f21adac2f52893563af95ddc81d879df39c5558\" or \"351db09e5d95252ad3432e8e6f0819735235b124363ec79082267095f71dda70\" or \"787be14fc3aca023a38b574490e3a4a684757e03dd0ba238b0df0a814da81306\" or \"4fcfb1e7e0e506bba450e3d5c864c0152237cded09957314d8363cfc32e02726\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03052"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ca713bcc-1b0a-5bad-b258-718bfbdcb234",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Cedar Trowel",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-03052",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "ca713bcc-1b0a-5bad-b258-718bfbdcb234_1",
+    "type": "security-rule"
+}

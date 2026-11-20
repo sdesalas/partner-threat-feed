@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ochre Loom banking trojan sample, as reported in campaign PTF-02963. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ochre Loom Banking Trojan: File with known malicious hash written (PTF-02963)",
+        "note": "## Triage and analysis\n\n### Investigating Ochre Loom Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ochre Loom banking trojan in campaign PTF-02963.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"21dcf146452b6042c6f3a013d157acae52188b34d94016735493d43aa34d2d43\" or \"5a556d5ed5ba22e09f759e6acc208515e64c34a978d4f0a8786e3ee84ffeb818\" or \"e3ad3c4f22928e4a28e496477d4ca59040fbaf53383fa561703939e1ca1d033a\" or \"6a499dae34110007b9c4274164d9dbab16fd95fba57d3db2b1d248d40f6ec384\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02963"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "6edd3527-aa02-5646-b6a2-53ea86b7f243",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ochre Loom",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-02963",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "6edd3527-aa02-5646-b6a2-53ea86b7f243_1",
+    "type": "security-rule"
+}

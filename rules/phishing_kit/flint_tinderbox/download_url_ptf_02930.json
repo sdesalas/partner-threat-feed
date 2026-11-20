@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Flint Tinderbox phishing kit payloads, as reported in campaign PTF-02930. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Flint Tinderbox Phishing Kit: Request to known payload URL (PTF-02930)",
+        "note": "## Triage and analysis\n\n### Investigating Flint Tinderbox Phishing Kit: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Flint Tinderbox phishing kit in campaign PTF-02930.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://assets-cdn60.test/doc/7547.php\" or \"https://assets-track90.test/payload/7983.zip\" or \"https://relay-assets91.example/doc/2041.php\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02930"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "6fac3703-b98d-5b1d-a1ca-81187b8cefe8",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Flint Tinderbox",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-02930",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "6fac3703-b98d-5b1d-a1ca-81187b8cefe8_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Dusky Gimlet banking trojan sample, as reported in campaign PTF-02919. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Dusky Gimlet Banking Trojan: File with known malicious hash written (PTF-02919)",
+        "note": "## Triage and analysis\n\n### Investigating Dusky Gimlet Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Dusky Gimlet banking trojan in campaign PTF-02919.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"ebd7e84736b45c1fb4709560aa0ff46ad5aeaa660ef0a720c34791a7d6e0b2fe\" or \"4446b0fcd931398afaf46f35a6c03d80bc01e6c28d7df930323769d592d156ab\" or \"f7b351b0d603f1666ffb97ff679ce089f81bc07bc36abcfaca609c8e9b354fc1\" or \"209432151986712287b3e1f34a7e2ec0121772d7258d4d34c7876cf1e64e5f15\" or \"6cebe3d59aa33dac03a12542783a9af8a02f23be2f246bf2a49922b7a80ccb93\" or \"a5cfddc67c16e31b9595b797d51970a8fd097c5f3690f09fcb4a3920f317928f\" or \"ee8b068e80181861420eaa3ec9c43e50982ef030631468afe9b4a90f09d43eeb\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02919"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f013a1df-55db-5ed3-9986-edb01f1ff1ef",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Dusky Gimlet",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-02919",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "f013a1df-55db-5ed3-9986-edb01f1ff1ef_1",
+    "type": "security-rule"
+}

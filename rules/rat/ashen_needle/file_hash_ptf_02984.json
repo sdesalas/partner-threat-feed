@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ashen Needle remote access trojan sample, as reported in campaign PTF-02984. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ashen Needle Remote Access Trojan: File with known malicious hash written (PTF-02984)",
+        "note": "## Triage and analysis\n\n### Investigating Ashen Needle Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ashen Needle remote access trojan in campaign PTF-02984.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"15030ae0beb533882e2dd3af83ce11a9a925874ce6992c259a1696a8ab699996\" or \"ac794c648bec29918f9ca027ba060dad4dd044368a78646c30d70e9f6ef10090\" or \"176c9a039e1047f24362a89a8412e7a478a3b3e2cb3f20e793fb6e31dd6d15ec\" or \"9e02a47bdfc612d386df6d237fb0120dafecb9c3ea527f112917a10048699330\" or \"a15f315424a946322352fa7c231bfdd9b7fca9fba35c3ff5b4e490440a96a089\" or \"0dd4fd42b8999b74bc68f242a137c54c39411373ff0926533dcd138bdc69f5a0\" or \"047a72207bad8bf77762747a19934f196ffbc05196a6c072df54e98fdc1de83c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02984"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "433ae231-a2c4-5f44-9f3d-56230e5a3fba",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ashen Needle",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-02984",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "433ae231-a2c4-5f44-9f3d-56230e5a3fba_1",
+    "type": "security-rule"
+}

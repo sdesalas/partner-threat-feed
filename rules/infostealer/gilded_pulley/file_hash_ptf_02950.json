@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Gilded Pulley infostealer sample, as reported in campaign PTF-02950. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Gilded Pulley Infostealer: File with known malicious hash written (PTF-02950)",
+        "note": "## Triage and analysis\n\n### Investigating Gilded Pulley Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Gilded Pulley infostealer in campaign PTF-02950.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"6dd9afbdcd804c09fc8678a60dfd7f52791375391753417034e1e7fbc9d3a8ee\" or \"6d897404197ddbb2b783c4981e9e7113e779a8270aefaa7e87266f9bc9931183\" or \"daa968a0bf9776df075f56e69bcf81c7104dd4e59d4b681f891c015324b97ef3\" or \"815bd322f1fa35c8249241644a2529f11adfbdb47f8bd15b4279ae75dcb3fd0e\" or \"bca2313f9de2da863c21d0db44c4bbe48b2f7c8ff3e6274d107363ce670c3a48\" or \"e4238d19ba3f321ad3875820b27a338916c5f17ac89c638feb5b88e05e56c7dc\" or \"61fe0843a45a4acdbe29a1bb8a2ef476229a5deeeb9e172e0274ff925f5e8db6\" or \"3c453652025b199e6dc9a0e7253e579f72a86383d8a37bdb1e120c930875126f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02950"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e18e39c1-dde5-5f46-b612-e130e6096639",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Gilded Pulley",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-02950",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "e18e39c1-dde5-5f46-b612-e130e6096639_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Rosewood Trowel cryptominer sample, as reported in campaign PTF-03040. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Rosewood Trowel Cryptominer: Process started from known malicious binary (PTF-03040)",
+        "note": "## Triage and analysis\n\n### Investigating Rosewood Trowel Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Rosewood Trowel cryptominer in campaign PTF-03040.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"6b38f6e91b7936a262e21298b9fbc2c378646faa223b2301ec48d9c77fbcc9ff\", \"d9a756c94f847e1e55da773a6d63968859ad9255d74250f3452b8fa2c4fa8508\", \"5571781511256a25deaee75822120adbcff537090fe6f104364ecb6d09eb892a\", \"c5a9cd11dc36d82e95b7b8c480a0ec20e7b9b126417dbce87fe5078ae943b91e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03040"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "66c5b43e-3819-5248-a2b5-939ed7e1fc2a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Rosewood Trowel",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03040",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "66c5b43e-3819-5248-a2b5-939ed7e1fc2a_1",
+    "type": "security-rule"
+}
