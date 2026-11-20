@@ -13,7 +13,7 @@
         "license": "Elastic License v2",
         "name": "Ivory Valise Espionage Toolkit: Several hosts resolving command and control domains (PTF-01986)",
         "note": "## Triage and analysis\n\n### Investigating Ivory Valise Espionage Toolkit: Several hosts resolving command and control domains\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ivory Valise espionage toolkit in campaign PTF-01986.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
-        "query": "FROM logs-endpoint.events.network-*\n| WHERE dns.question.name IN (\"cloud-secure22.test\", \"login-secure98.test\", \"login-update68.example\")\n| STATS host_count = COUNT_DISTINCT(host.id), hosts = VALUES(host.name) BY dns.question.name\n| WHERE host_count >= 3",
+        "query": "FROM logs-endpoint.events.network-*\n| WHERE dns.question.name IN (\"cloud-secure22.test\", \"login-secure98.test\", \"login-update68.example\", \"secure-cdn109.invalid\", \"mail-auth193.test\")\n| STATS host_count = COUNT_DISTINCT(host.id), hosts = VALUES(host.name) BY dns.question.name\n| WHERE host_count >= 3",
         "references": [
             "https://partner-threat-feed.example/campaigns/ptf-01986"
         ],
@@ -62,8 +62,8 @@
             }
         ],
         "type": "esql",
-        "version": 1
+        "version": 2
     },
-    "id": "d1abc778-7af9-5a9c-bba7-d44275924ff4_1",
+    "id": "d1abc778-7af9-5a9c-bba7-d44275924ff4_2",
     "type": "security-rule"
 }

@@ -13,7 +13,7 @@
         "license": "Elastic License v2",
         "name": "Copper Whistle Espionage Toolkit: Several hosts resolving command and control domains (PTF-01906)",
         "note": "## Triage and analysis\n\n### Investigating Copper Whistle Espionage Toolkit: Several hosts resolving command and control domains\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Copper Whistle espionage toolkit in campaign PTF-01906.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
-        "query": "FROM logs-endpoint.events.network-*\n| WHERE dns.question.name IN (\"cdn-api17.invalid\", \"connect-connect15.invalid\", \"connect-files65.test\", \"track-media10.invalid\")\n| STATS host_count = COUNT_DISTINCT(host.id), hosts = VALUES(host.name) BY dns.question.name\n| WHERE host_count >= 3",
+        "query": "FROM logs-endpoint.events.network-*\n| WHERE dns.question.name IN (\"cdn-api17.invalid\", \"connect-connect15.invalid\", \"connect-files65.test\", \"track-media10.invalid\", \"edge-secure108.invalid\", \"secure-edge103.test\")\n| STATS host_count = COUNT_DISTINCT(host.id), hosts = VALUES(host.name) BY dns.question.name\n| WHERE host_count >= 3",
         "references": [
             "https://partner-threat-feed.example/campaigns/ptf-01906"
         ],
@@ -62,8 +62,8 @@
             }
         ],
         "type": "esql",
-        "version": 1
+        "version": 2
     },
-    "id": "e469402a-97cf-5195-8507-83e0fb010964_1",
+    "id": "e469402a-97cf-5195-8507-83e0fb010964_2",
     "type": "security-rule"
 }
