@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Saffron Tankard cryptominer sample, as reported in campaign PTF-03659. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Saffron Tankard Cryptominer: File with known malicious hash written (PTF-03659)",
+        "note": "## Triage and analysis\n\n### Investigating Saffron Tankard Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Saffron Tankard cryptominer in campaign PTF-03659.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"edbc38601bfbbdcaab7ebf84b099f0eb2a23cf630da5ffe9d81124e4875fe9f6\" or \"440b2c5b1c7baaa4bf77bc0400cbcee09d6dc28a5ab01cbc3ae1b5c196a1796c\" or \"e756bd3501e54e0e777a6800dcf61660d281f497a9b53de7c29b5f18d13df327\" or \"2048d7edc3982351b8584e05e2c1e431bcb0fd875dd86525fd52ebf7471b4bd6\" or \"d4fc64265c6ac5409b0868ec2c7991574b42ad446176de0e76c8ecd65d4b0608\" or \"a6c236f39cb8a53f00793617b2e0d2979dd16d47f60c9dda9fff4e53d9996246\" or \"26aeb9d5f6e0d03af68fecba5311491976a364183eada225556400d1a7343a11\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03659"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "01ea4925-c028-5e03-8b1f-7dd3b95f879b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Saffron Tankard",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03659",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "01ea4925-c028-5e03-8b1f-7dd3b95f879b_1",
+    "type": "security-rule"
+}

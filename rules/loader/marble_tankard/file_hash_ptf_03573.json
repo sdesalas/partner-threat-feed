@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Marble Tankard loader sample, as reported in campaign PTF-03573. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Marble Tankard Loader: File with known malicious hash written (PTF-03573)",
+        "note": "## Triage and analysis\n\n### Investigating Marble Tankard Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Marble Tankard loader in campaign PTF-03573.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"f3758539d991441e4fe3edf5669e99809e91416107234cb19921f79c4dbe9015\" or \"366ca47b54c537aeee7b76e8a69d0a642341e3ae6e0dad08f80a3ce9bdfab031\" or \"44746360c406af9724cf694976b55f635b0c48acc5ec14293f32b611939abc55\" or \"dda0537d4c4f1cabd79bd6fa56f1c78f197c2fe11fe572c55b8ab04a91269a2c\" or \"58ab3de9c3cb0d182da60e842293afba46f4f311040557908db0e6f067b6e046\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03573"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "7ee69d4b-e128-5751-8149-6bca3dfb713d",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Marble Tankard",
+            "Threat Type: Loader",
+            "Campaign: PTF-03573",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "7ee69d4b-e128-5751-8149-6bca3dfb713d_1",
+    "type": "security-rule"
+}

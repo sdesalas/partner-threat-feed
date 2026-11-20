@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ivory Trowel remote access trojan sample, as reported in campaign PTF-03611. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ivory Trowel Remote Access Trojan: Process started from known malicious binary (PTF-03611)",
+        "note": "## Triage and analysis\n\n### Investigating Ivory Trowel Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ivory Trowel remote access trojan in campaign PTF-03611.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"6ed4d57c91ccf988424110361cb34f925fa02a5260f0bf16a0d2a35f20b1578c\", \"6e8fc859d0e53e0f75f4acc2f8bada750f69fd1be978805f846ef14480ca83dc\", \"8ef153d73f31aeb849d76c8ac27b7da32684064ab1f7745958bd26a6827ba897\", \"886e985b5da6ffabeb0c0cebd6b964d70572372a30faf2c62236acf60dd53c3e\", \"dbdb7b4fdc0a7f2713bcb5b6c0be8d27fc1fd06dd813de315de86526eb051604\", \"53a37b2c43ee845540f81e32ae9eb0490229e0cc9b351c3f6f02ca3007e15066\", \"43a0f12d7e72dd7e359ac108bb80e48d5e6f82a93d15c4268fc0d6bec11dd9cd\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03611"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "879ed959-d2c9-5a9d-bb77-01503801c9f3",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ivory Trowel",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-03611",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "879ed959-d2c9-5a9d-bb77-01503801c9f3_1",
+    "type": "security-rule"
+}

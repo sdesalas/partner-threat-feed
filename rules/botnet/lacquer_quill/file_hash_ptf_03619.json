@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Lacquer Quill botnet sample, as reported in campaign PTF-03619. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Lacquer Quill Botnet: File with known malicious hash written (PTF-03619)",
+        "note": "## Triage and analysis\n\n### Investigating Lacquer Quill Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Lacquer Quill botnet in campaign PTF-03619.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"856874401c0f3f407f40e78fb4dc0ba25297d62f5f4655d9e76e29c66c009fcb\" or \"2b8426467657ab841c2acca02d0ea76ba8978fb77d8d03909cac48a38a4e7cf9\" or \"281292d0495d8f3487e8e221021066dd059bd9c125c08b576adbd951528ce4ad\" or \"f50441fb3057b6b8fbb9386567e55ac57a5b7fc44c997efb7812a383427d9c01\" or \"ac1bf4c9d47abf00ee29a2a8eb8e93689ddc39cb0900b351ff64035b87eb2358\" or \"58647ef1b46e9457c51d798dcaee9549d52fafc896d7cacbdae2b2ac205b5a94\" or \"58f192e854e8764503123903a9b4b2343edd797ffebe632ab65b8483cecc0ed0\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03619"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "67a042d9-959e-50ef-a47b-72de31256a2c",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Lacquer Quill",
+            "Threat Type: Botnet",
+            "Campaign: PTF-03619",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "67a042d9-959e-50ef-a47b-72de31256a2c_1",
+    "type": "security-rule"
+}

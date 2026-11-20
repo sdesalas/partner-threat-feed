@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Paper Funnel loader sample, as reported in campaign PTF-03539. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Paper Funnel Loader: File with known malicious hash written (PTF-03539)",
+        "note": "## Triage and analysis\n\n### Investigating Paper Funnel Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Paper Funnel loader in campaign PTF-03539.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"1e950bf8495eecb4bf48bd87a36a6802f71ddc54d3f9f609b52d21278c064959\" or \"e93d82b651bb482fb2efc7baddb1f6f2c791292ff99635789147c508f6899b3f\" or \"3947250ef4864d31a6ba3769efcba342de138b3242d3b155877879c0cba45ca9\" or \"acb240751d58558d76a9729a31443f6af8d9cfbcb77f37b8f0affb2f9dc1f28a\" or \"e59a5540e1e044693f857ad422a83ede0380fc53879506833b43f92423020883\" or \"b05f7e5d24d632f08e4d7d0bc29b712e8a1a431ac954d5aa10d3f84f2cf9d411\" or \"21d896ecdf0251fce066abaf409738e597172fed7dc84a60514afac1b5a39196\" or \"ed04b4f03526365a427e3565052c879da6971cb9a8c42225c38de12308fd0b3f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03539"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b9a3b689-98a4-5815-a077-05178a2b42bb",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Paper Funnel",
+            "Threat Type: Loader",
+            "Campaign: PTF-03539",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "b9a3b689-98a4-5815-a077-05178a2b42bb_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Granite Pulley cryptominer sample, as reported in campaign PTF-03693. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Granite Pulley Cryptominer: Process started from known malicious binary (PTF-03693)",
+        "note": "## Triage and analysis\n\n### Investigating Granite Pulley Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Granite Pulley cryptominer in campaign PTF-03693.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"fe0151c419900d423ab10e52a768f483be2395b27b75240d70a7ac98c9f16397\", \"6d00cd08b7f934874e12311745f3d2a3f4f849eb4983e7e1bc8fd6b01e03f175\", \"59c7203e4a0c04bf0d44e1b97d61329bfd9475436475bc71bfd95d312f1bbdb2\", \"73ac624bc87e73868f4b003c2907a9d3a67bd254a60b5f1e946c91e6be59ed17\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03693"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "9e5c50ed-72c2-5bf6-adfa-78a353a674d7",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Granite Pulley",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03693",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "9e5c50ed-72c2-5bf6-adfa-78a353a674d7_1",
+    "type": "security-rule"
+}

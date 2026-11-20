@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Tawny Valise cryptominer sample, as reported in campaign PTF-03629. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Tawny Valise Cryptominer: Process started from known malicious binary (PTF-03629)",
+        "note": "## Triage and analysis\n\n### Investigating Tawny Valise Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tawny Valise cryptominer in campaign PTF-03629.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"f8dfab599f8966de31538fa14a27adb6b57f284a4f7a848d5438daeec17b4139\", \"5b887546b6e0b5b1d00e9c56795e0dba950427212eecbe4780a57b3acd8296c8\", \"2fdee9fba92945522742b5356c08054632adf2736bba687f0080d8fc1109adaa\", \"9c430313de7241a93e3115c5731090f585bdf5b2ce01551be422e1382bf93386\", \"94a93965e1e788a9c8b444ca68f8a985d69211768e072f0b81093cf6c6fbdf43\", \"89c2dc65cb56d4dd01eca6820e726ef5a9e00d92b279a7da2f829f00c6449843\", \"5f45399fcd79194e5e89c8908af64e18c5eb7ce3ec95f6716188ec68e6811a45\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03629"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "2eeca0b8-5efc-507f-837a-2a5894a10286",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Tawny Valise",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03629",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "2eeca0b8-5efc-507f-837a-2a5894a10286_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Umber Ladle cryptominer sample, as reported in campaign PTF-03585. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Umber Ladle Cryptominer: Process started from known malicious binary (PTF-03585)",
+        "note": "## Triage and analysis\n\n### Investigating Umber Ladle Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Umber Ladle cryptominer in campaign PTF-03585.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"a42e6eae884cab3c158fd8eea3d08dcf1735f3f97dee00f6fc1bc3978b5ccc09\", \"15c4b60aaec5f3bd69b22db5fe02091cf8cd3f6bcbc4866bdce9d895cba58286\", \"0a484aa183154001d0ff9142cb6c573d9c6d2c2de16743519f2d79453cf7da24\", \"5cd02f0f78fb297540d2d510aa2018d484281ec61cdb4bb362ba17ea9c3406b0\", \"8931b50fc7546013a4eaff132c807b9948c8e1080a533fe3acde66218d206e79\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03585"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "45abd628-8be4-5b60-8b28-257f610f0ebc",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Umber Ladle",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03585",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "45abd628-8be4-5b60-8b28-257f610f0ebc_1",
+    "type": "security-rule"
+}

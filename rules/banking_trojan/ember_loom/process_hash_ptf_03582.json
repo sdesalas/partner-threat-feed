@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ember Loom banking trojan sample, as reported in campaign PTF-03582. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ember Loom Banking Trojan: Process started from known malicious binary (PTF-03582)",
+        "note": "## Triage and analysis\n\n### Investigating Ember Loom Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ember Loom banking trojan in campaign PTF-03582.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"d11927fa34f7f8b24ce454653837d5ac5829ef767755efa518c1b0fb4669fc6a\", \"1cd134fe9cba915b8f09b88c350549190cb053e926056ca3dfe7902c4058495d\", \"30e72c72f1b40250a8b17595c1ea069dde1b5cc125c17d7f20a4ccb06eae7274\", \"66592e5db1f70bd0160e8a37c243d50c89723408f6ff7d8dd551823c28cdfdfe\", \"6b7d406c032724b29f89b3b359fecd3e3f195437d20cc2a55b001ecb079022bb\", \"fbfe9d85e463eaeb4b5ddbadb46165ef534815e0506c94ae9db1dcf580d5780f\", \"6126018bd4b4761672c165ea243f742b5548f2805b64ead183735d61bd66ac56\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03582"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "4fc0c57f-e740-5445-bb37-28d23ad7d299",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ember Loom",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-03582",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "4fc0c57f-e740-5445-bb37-28d23ad7d299_1",
+    "type": "security-rule"
+}

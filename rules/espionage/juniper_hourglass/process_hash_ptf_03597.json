@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Juniper Hourglass espionage toolkit sample, as reported in campaign PTF-03597. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Juniper Hourglass Espionage Toolkit: Process started from known malicious binary (PTF-03597)",
+        "note": "## Triage and analysis\n\n### Investigating Juniper Hourglass Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Juniper Hourglass espionage toolkit in campaign PTF-03597.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"bc0e9f84cf1029e4dca9943f10bce9de0fc49eba8bcb17f5b219e5566f4ec5d8\", \"f88efdabb17d92e55524b2163e2e87c3a841f2f0453a7042dfd294da11ee334e\", \"8cccdf36b02e4857a8bedd07e3885424c848f863c636359346a3973a5b832286\", \"d51de7989e7ea0d055dce53e331dd5dff8aab31562b1f3f80f31e78ba525851c\", \"9c626d7dfd981dd35b8e6ae452fa10c2448a680a6d7b3075983c67331c00342d\", \"5749bac20d2e7196dae600f32531fc73b771dd8f1cec69873686d42876a32d36\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03597"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "dadf90fe-1b89-541a-9dea-219f4b6ed757",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Juniper Hourglass",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-03597",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "dadf90fe-1b89-541a-9dea-219f4b6ed757_1",
+    "type": "security-rule"
+}

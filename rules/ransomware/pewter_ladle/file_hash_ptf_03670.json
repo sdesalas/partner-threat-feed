@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Pewter Ladle ransomware sample, as reported in campaign PTF-03670. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Pewter Ladle Ransomware: File with known malicious hash written (PTF-03670)",
+        "note": "## Triage and analysis\n\n### Investigating Pewter Ladle Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Pewter Ladle ransomware in campaign PTF-03670.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"3783452814b8df628393f4aeeef60b736bec7e67d1994bf879b8165879fac645\" or \"4c6a1c75898ee3a8c800f3f163f7fbd08433f7ebd0031d5ee7f7ec1f45c6a91d\" or \"355547b595c0de141eb133b98294a52656a8f790d0423ac09398dd172128a583\" or \"bb0eecbe7f00a79e503ba9f69ccbfc855830893b1e977ed05416e46e1c8c0f9c\" or \"0781cdd88047df0155c5ca410af08bbf7a175a2022f1e56a859eddeb4d998b92\" or \"4a79ab1976acfe0ad868da5f580c0b00b37e788a9fc25274d96ca952877c601e\" or \"d0563396c4795848ed639ed77f86d2199a625b54afa13994d80997029716263c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03670"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "20478190-d9e9-519c-87d4-59d02014da71",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Pewter Ladle",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-03670",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "20478190-d9e9-519c-87d4-59d02014da71_1",
+    "type": "security-rule"
+}

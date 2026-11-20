@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Hollow Ratchet remote access trojan sample, as reported in campaign PTF-03650. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Hollow Ratchet Remote Access Trojan: File with known malicious hash written (PTF-03650)",
+        "note": "## Triage and analysis\n\n### Investigating Hollow Ratchet Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hollow Ratchet remote access trojan in campaign PTF-03650.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"31d8a4b9b7769f18ad32aa7e9a6a3417f65a4984fc22eb74af1da85d8a09ca91\" or \"13a0b778363cc4d585eac394c444dedf4017d552faf0c6ccb766f56320c2a252\" or \"a3eec44cde7513fbb1f420c04a4352afad57522ca3245d64ef3cfca687ab2206\" or \"5bf140270f1da04ccb0f691e45ab6cc164f73b8bb09710abcd9bbda04d1305ed\" or \"8bbe3be489978c4f9b9abdf58668b1785ad8c543217f299d6f9e59842cfa99fa\" or \"9d8e4b51a6e585d9a4791a3cf8489c5bd2c0f8eb5b1ad2f72f4546d4b9c31677\" or \"5c27d2e3f84b0ffbfbd0857a39143f3f281634821f78c4f0fc7dec8268f4b833\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03650"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "0d8840f3-55a8-5e18-895f-852fd945c087",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Hollow Ratchet",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-03650",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "0d8840f3-55a8-5e18-895f-852fd945c087_1",
+    "type": "security-rule"
+}

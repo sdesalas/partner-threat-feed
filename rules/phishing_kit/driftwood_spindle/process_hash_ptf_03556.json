@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Driftwood Spindle phishing kit sample, as reported in campaign PTF-03556. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Driftwood Spindle Phishing Kit: Process started from known malicious binary (PTF-03556)",
+        "note": "## Triage and analysis\n\n### Investigating Driftwood Spindle Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Driftwood Spindle phishing kit in campaign PTF-03556.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"927075f3cccfe31a1cf91b5e939130e7aadd50f7b0b2e78ed36f4982631d97a0\", \"126fbe4936c27ff50483c9f5a973b6b13823fc950415e28624ad9b295708fa47\", \"b685ce6d2f85333ed79fed0d3c04a6de3807a9aa6bde90fb4e12a09aefce7d07\", \"3d24e2b53ac198e55a1bc3184d059519609a2339eef66d767ec546ebb0f98e96\", \"101fbb6a32588bd5fcc85da1fe649f931bf9af23ba67164aada304bc08ffa261\", \"249e472e4f815293f23b2a197324c03a6be54be90faa727acff10fcae748bd5f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03556"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e568c294-7687-5f42-a630-d9a1da7ea7d1",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Driftwood Spindle",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-03556",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "e568c294-7687-5f42-a630-d9a1da7ea7d1_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Flint Turnstile botnet sample, as reported in campaign PTF-03683. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Flint Turnstile Botnet: File with known malicious hash written (PTF-03683)",
+        "note": "## Triage and analysis\n\n### Investigating Flint Turnstile Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Flint Turnstile botnet in campaign PTF-03683.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"ca9c8dcec25066f53ebdd083a8b30164c73c91b13e37bc0c99c4bdf7103e83b6\" or \"1f08ec1d289db69f70fe8baffced4caaf9e726a0f90028954d5b6047ac6a33f1\" or \"98d66ad3b5f0f328909c1b1e13b2a41e2889217cacf79de067109a1803dc105c\" or \"c6c23752e64dbe1fc70a72ff00222f7ec5f6ddc782943739aeffb336fea4c866\" or \"c0b8cd6027ec5fb276acc5eb9970771ed78b1a8e0ee77fbcb1917978e33a1988\" or \"67c0af07e23d3e0d1eb70c1eb8f6dc553732c4d9b8dfbdca45a8b135c9bd4f7c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03683"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "1eb1f6a2-5606-5468-a873-e198c250b40b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Flint Turnstile",
+            "Threat Type: Botnet",
+            "Campaign: PTF-03683",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "1eb1f6a2-5606-5468-a873-e198c250b40b_1",
+    "type": "security-rule"
+}

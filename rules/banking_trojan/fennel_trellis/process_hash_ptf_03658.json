@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Fennel Trellis banking trojan sample, as reported in campaign PTF-03658. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Fennel Trellis Banking Trojan: Process started from known malicious binary (PTF-03658)",
+        "note": "## Triage and analysis\n\n### Investigating Fennel Trellis Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Fennel Trellis banking trojan in campaign PTF-03658.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"89d6e672edfbcb31b3fae02a51e81dfb0e057834afd168d9463f2f09b08c07a9\", \"6de652a4ee7315c59a44b5a8410529e94fbd128fa1dde37992dda46254dcd1cf\", \"930689c5fd3607542763c4bc78f4fd9a30ad1ac57afbf807b0bad4628cf8fdf7\", \"5cde8bc37cf90f1656b5bb38e4743e2024bcf1aedcbcfafcd482d8ce94f4452d\", \"b74a9969cd3ee0bbc4e8c1fc6362ea9ff158d0b82f465e2a0acc1d9cde32ce62\", \"e65fa800c8aca410c21d81be8efd1ba0018fc3e9baef967eaddd3f1ea495fb62\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03658"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "c72773b1-eddd-5ecd-a856-7abf84a37432",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Fennel Trellis",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-03658",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "c72773b1-eddd-5ecd-a856-7abf84a37432_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Willow Bellows infostealer sample, as reported in campaign PTF-03673. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Willow Bellows Infostealer: Process started from known malicious binary (PTF-03673)",
+        "note": "## Triage and analysis\n\n### Investigating Willow Bellows Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Willow Bellows infostealer in campaign PTF-03673.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"b5a9999aec84d16b0e67038051213642c0e6dda0f6b1fc6a76ba7c7ad9df16b2\", \"52d89556eca64a6545e31a1380e2be209b851135bcc4181fa62430d911320646\", \"14a6545f6aa63ff40e039f972e1ec66b2ab50851a6608fb4b5811a8c0881f079\", \"4107ee4797af455fbf020e3bb6d6f5bc93615c69ebe26ae515a093bc557cdcbc\", \"58a87104422807b87ceab8c82e1f0439889c43c91bcc5e15801c92aae1c8b0b1\", \"3dc004bc11dabc518bbe81205085ac6421582d7fbef525a2409c638391b46213\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03673"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "93fbafe9-0608-5fd2-8697-bde051e211ea",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Willow Bellows",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-03673",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "93fbafe9-0608-5fd2-8697-bde051e211ea_1",
+    "type": "security-rule"
+}

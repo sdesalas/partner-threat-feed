@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Lacquer Quill botnet sample, as reported in campaign PTF-03619. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Lacquer Quill Botnet: Process started from known malicious binary (PTF-03619)",
+        "note": "## Triage and analysis\n\n### Investigating Lacquer Quill Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Lacquer Quill botnet in campaign PTF-03619.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"1f0d96314904e330844454fa0246998e09f351ccf0888f516bb92d0a6997dd7e\", \"a68ff3b1e2c7a4775acb1060e1d5f3ef34a5c4348137ed9813730e14038d3f70\", \"e160689d5732d7405ce274c41d30b87ad65f3126a149d549bbf3e2ff6d4861e3\", \"72295ea59cce8791ac567317b9749f302728db96b3bebc54b6cd1ad8ecf487d7\", \"a64dd868bffb07eaebc815eadf75c38ff02474c9ab90675ed6b97829d4fc466b\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03619"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "2ed11c82-a6a4-59f1-a3f9-376d0ce61dba",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Lacquer Quill",
+            "Threat Type: Botnet",
+            "Campaign: PTF-03619",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "2ed11c82-a6a4-59f1-a3f9-376d0ce61dba_1",
+    "type": "security-rule"
+}

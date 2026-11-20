@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Hazel Wicket infostealer sample, as reported in campaign PTF-03570. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Hazel Wicket Infostealer: Process started from known malicious binary (PTF-03570)",
+        "note": "## Triage and analysis\n\n### Investigating Hazel Wicket Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hazel Wicket infostealer in campaign PTF-03570.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"c866545827508c369b723c6369843ca679ef608f2eb32704e014bca897efda40\", \"657d9203a7fc1865d3de85ea0d7c9e37a4f4ee9ddc19a52274a0b025d9a753eb\", \"24745e6cd21c1b42e32fcf9e012041295c4aafc237487822e7d345e17ce9a6a4\", \"071b9fb166924313141ad3414b339f6c20d77f366ad8bc9fbf719f832d85c590\", \"0f0c5ee79f2b032ca2c31f33845a1b6bdf629236b5a3cd3757f5a62cf0348c25\", \"084cddd606869ea30189a5b56c3931805d31b2158f3750eb3f2bf65d757d335e\", \"3bb01fdcf3d83af776fca574b0ff38c14541a3928844a590e143af937520601e\", \"95212048a6f1cd945bf9d2a06de6f2580390bd76e43a6c87d7ee2374bd8bea2d\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03570"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "396b84c7-ca45-52f1-90b0-f1f4636abe13",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Hazel Wicket",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-03570",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "396b84c7-ca45-52f1-90b0-f1f4636abe13_1",
+    "type": "security-rule"
+}

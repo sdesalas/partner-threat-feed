@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Juniper Hourglass espionage toolkit sample, as reported in campaign PTF-03596. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Juniper Hourglass Espionage Toolkit: Process started from known malicious binary (PTF-03596)",
+        "note": "## Triage and analysis\n\n### Investigating Juniper Hourglass Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Juniper Hourglass espionage toolkit in campaign PTF-03596.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"fa5c8bb930d48a1fc53a4d94b4fb9b3f68cb1b98390a751f512787bb393d793a\", \"2062703970d95263ce063b8d68fd91ea5d162ace2f9c5e6e9e4900eb3818b66c\", \"fd9c03b971b3d2fbb21f0e561294b7a158ab3767f41c3728656458670ac81c84\", \"b62638f0ebf6f861cf092fdf261da8dd8ac4fc31a2def83bc69a8abeabbdf4a4\", \"7e936df5acc26a75f1142064a9650f38cba76e2dc8ad32b79f18886af56c2b59\", \"83db51af5d7f13d28b153110a08a7159dc4a39385d3672c9c5b0156295160313\", \"c434390a53c6b58494e7033f25a44f9f92c61cb26458b17d73239de9e86beec6\", \"7076836eed32dc3abc96bc4bf9f7601223b4dc52c6f71618eb66682ffb8e99e2\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03596"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "64411290-6725-5661-b6fe-aa43f9417533",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Juniper Hourglass",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-03596",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "64411290-6725-5661-b6fe-aa43f9417533_1",
+    "type": "security-rule"
+}

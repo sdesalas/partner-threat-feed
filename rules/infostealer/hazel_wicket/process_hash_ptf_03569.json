@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Hazel Wicket infostealer sample, as reported in campaign PTF-03569. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Hazel Wicket Infostealer: Process started from known malicious binary (PTF-03569)",
+        "note": "## Triage and analysis\n\n### Investigating Hazel Wicket Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hazel Wicket infostealer in campaign PTF-03569.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"624e33cba71e22c982619e97686589fda76b7e8d0e14bc16b00be300721d1004\", \"d56690d60de900a73bb6711b3d97c8a6ba13e1e27d8350707eddddf569e3f1eb\", \"0966dfd3c88b655a4874e9c7d7cd51bcf9f96a57f5acfc6b05ab472a77756d7b\", \"b6ad0c907cb09888e71cd4020da20e63ae23b67f08d1ce8261fedd8bf31cb49a\", \"c0ed5b6192798f459250ac13b27e98dfa6b5065fafae781d063d460486b2c33e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03569"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "1b08d41e-4794-5499-b5d7-4f18f4ed53a4",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Hazel Wicket",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-03569",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "1b08d41e-4794-5499-b5d7-4f18f4ed53a4_1",
+    "type": "security-rule"
+}

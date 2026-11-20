@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Birch Tinderbox remote access trojan payloads, as reported in campaign PTF-03677. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Birch Tinderbox Remote Access Trojan: Request to known payload URL (PTF-03677)",
+        "note": "## Triage and analysis\n\n### Investigating Birch Tinderbox Remote Access Trojan: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Birch Tinderbox remote access trojan in campaign PTF-03677.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://api-files21.example/download/5401.bin\" or \"https://api-update23.example/invoice/8582.msi\" or \"https://files-static73.example/gate/9298.msi\" or \"https://login-assets48.example/payload/5824.bin\" or \"https://login-assets66.test/download/4321.msi\" or \"https://mail-relay99.invalid/doc/5637.zip\" or \"https://secure-static3.example/payload/6813.zip\" or \"https://static-login77.test/install/1616.msi\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03677"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "61912e03-cf51-5d6e-b0ca-daae31dc4a05",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Birch Tinderbox",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-03677",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "61912e03-cf51-5d6e-b0ca-daae31dc4a05_1",
+    "type": "security-rule"
+}

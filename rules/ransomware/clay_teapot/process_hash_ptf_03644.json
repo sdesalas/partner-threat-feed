@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Clay Teapot ransomware sample, as reported in campaign PTF-03644. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Clay Teapot Ransomware: Process started from known malicious binary (PTF-03644)",
+        "note": "## Triage and analysis\n\n### Investigating Clay Teapot Ransomware: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Clay Teapot ransomware in campaign PTF-03644.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"942938061e787a139141c4a22317e337825aea58cc5929292b6ea77889a4dd4a\", \"40dd07b66c9b77346843c2b642b81fbb655fe9b1ba1fd8e7dab25782df779bf0\", \"201582950b957933ed66685705ac2b9953ba9b2cc208b0201ab2fc9ae50f6f6b\", \"7cdb6f0df933f707a489ccdb8843c4078a1ea93db0ce3f7743e4fc34411327ed\", \"d8abd997b60571c106a00eb55941a013b1a9c81b56a499e0f21071699a2eaf8b\", \"5ac4f7f9cecbf04398c2127bb5165ed1739cc2062ea41ce62879915ef87e7f7d\", \"f40738118b127e2cfe6318e8a5526670ed98c539d5f2c0822f5844311c245fe9\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03644"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 99,
+        "rule_id": "4c22aeff-fdcc-5685-ab21-74662def5725",
+        "severity": "critical",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Clay Teapot",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-03644",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "4c22aeff-fdcc-5685-ab21-74662def5725_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies TLS connections whose JA3 client fingerprint matches the Dusky Spindle espionage toolkit implant, as reported in campaign PTF-03560. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.tls-*",
+            "packetbeat-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Dusky Spindle Espionage Toolkit: TLS client fingerprint of implant (PTF-03560)",
+        "note": "## Triage and analysis\n\n### Investigating Dusky Spindle Espionage Toolkit: TLS client fingerprint of implant\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Dusky Spindle espionage toolkit in campaign PTF-03560.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "tls.client.ja3:(\"53ee1c0d6ccbe10e5c4884eb09cdfa89\" or \"058f1f59f62369d27f560d25d789327b\" or \"e3c87c8b98c108db965215ff9bc67f48\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03560"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "89762172-95c1-520b-83b1-f628c899495d",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Dusky Spindle",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-03560",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1573",
+                        "name": "Encrypted Channel",
+                        "reference": "https://attack.mitre.org/techniques/T1573/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "89762172-95c1-520b-83b1-f628c899495d_1",
+    "type": "security-rule"
+}

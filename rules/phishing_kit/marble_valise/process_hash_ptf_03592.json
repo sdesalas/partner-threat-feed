@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Marble Valise phishing kit sample, as reported in campaign PTF-03592. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Marble Valise Phishing Kit: Process started from known malicious binary (PTF-03592)",
+        "note": "## Triage and analysis\n\n### Investigating Marble Valise Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Marble Valise phishing kit in campaign PTF-03592.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"875d61184f15d60cf533845799ebf1cf32b4e29cf164f43ae534c590ebb1b82e\", \"dc9c68bbe6a99d5c0eeefacf4d240b1ace9a28b1906d607b15b24ec67fa08d83\", \"599ba3b17af03843c63f983fa43eaea682691cbbf49f6a8f0b820672412fadfb\", \"a0e9b66b0cbe86dff23c96927c617a4f95701a51306c5621cb45853082e6a180\", \"f41334274164b8c8a799749d6a0f7bc8f5b9fa5835206d92eede89a50b449879\", \"8daf72aa9d765087aa8a7339246842037df0a1b198bcf605fb1056a9e54649f2\", \"0d97c9e79b7a58b6b9b20008f95857fbfe90c73ccf7dc0e17137a85da78cfcf4\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03592"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "a219adf8-5d40-5c2a-a5a4-cbeabec2e6c6",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Marble Valise",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-03592",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "a219adf8-5d40-5c2a-a5a4-cbeabec2e6c6_1",
+    "type": "security-rule"
+}

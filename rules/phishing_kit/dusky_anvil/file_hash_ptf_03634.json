@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Dusky Anvil phishing kit sample, as reported in campaign PTF-03634. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Dusky Anvil Phishing Kit: File with known malicious hash written (PTF-03634)",
+        "note": "## Triage and analysis\n\n### Investigating Dusky Anvil Phishing Kit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Dusky Anvil phishing kit in campaign PTF-03634.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"084e7029394ef02a676f3fd228c62e9365bd3fadf409dd0d387f74ff09d74617\" or \"c265816cc2da4e033c9db7d5cf2840e14c0f37c17faf22b40de9091f8bc26d75\" or \"7eaeba3b0df653da347907367d7690607368ab86dfba965e04140c240931db7a\" or \"53ece72702a32ed488da56abc3cd7dd385d0a772faf8fe3c9162d6f4cd999014\" or \"ca0e6259bfbe9bcf48d8745a0d045107cf5c777ce22d38b20fcb2400670f3191\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03634"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b2f8383d-7d01-56c9-9b0c-9617f6015f86",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Dusky Anvil",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-03634",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "b2f8383d-7d01-56c9-9b0c-9617f6015f86_1",
+    "type": "security-rule"
+}

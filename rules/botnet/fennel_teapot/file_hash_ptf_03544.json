@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Fennel Teapot botnet sample, as reported in campaign PTF-03544. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Fennel Teapot Botnet: File with known malicious hash written (PTF-03544)",
+        "note": "## Triage and analysis\n\n### Investigating Fennel Teapot Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Fennel Teapot botnet in campaign PTF-03544.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"9f67334b00caccfe6911dccf1007e4988dd1a4f9369d7a71afd345c7563b1ae3\" or \"530598dd9deaf5cd02d014021dd7e395781753be906bd1c0508500a544995259\" or \"67f1f9b96150efd425a58d9de04fc6ea01f04490b217890904cf8989a72dc21a\" or \"b1543767c1c4d19048c0c733b59236c8d42dac8d436c1cac7fefae3a74ff9684\" or \"a6c4782a4aabef8108d42e7fae2f84534b243baae73153d36427bff8f12072ef\" or \"c2748c2a0ecd77851c4a97827d1d1afb5e072d0cb1f50e30c15c2ecb456ca566\" or \"2c75417ad3201376fc615b28a8e613995fad3e606fc3425769a0adc751a8d953\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03544"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "bc89a885-8c2a-51e4-b63f-08271860bd11",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Fennel Teapot",
+            "Threat Type: Botnet",
+            "Campaign: PTF-03544",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "bc89a885-8c2a-51e4-b63f-08271860bd11_1",
+    "type": "security-rule"
+}

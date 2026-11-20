@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Juniper Hourglass espionage toolkit sample, as reported in campaign PTF-03599. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Juniper Hourglass Espionage Toolkit: File with known malicious hash written (PTF-03599)",
+        "note": "## Triage and analysis\n\n### Investigating Juniper Hourglass Espionage Toolkit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Juniper Hourglass espionage toolkit in campaign PTF-03599.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"93e5d51dd134375921e69fabc781522083a73bd54fa83df230b294a86f16eb5f\" or \"d0e105b5e2a7b723a55de47540a1cca46ad95d910c2cb5a55daadc2778aa4955\" or \"47526fff24bd74ffffa1a502ade5a97894f8c790cc38f1d5c72f4d8e78be975f\" or \"4b80f97a886baed78d1d32a9b45ea73db35a9aa1d16652f4ed6badf847a81507\" or \"aa126e99784ce7333fbba0a31bb218f87c417b8dbd6373ad121261587960f389\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03599"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "9fdf0678-0d6e-5d46-b93c-226a39ca0c5a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Juniper Hourglass",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-03599",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "9fdf0678-0d6e-5d46-b93c-226a39ca0c5a_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Pewter Gimlet infostealer sample, as reported in campaign PTF-03610. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Pewter Gimlet Infostealer: Process started from known malicious binary (PTF-03610)",
+        "note": "## Triage and analysis\n\n### Investigating Pewter Gimlet Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Pewter Gimlet infostealer in campaign PTF-03610.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"00e61738ddce589002387d7528c70b668d92114f0045138f2483b517163fbf35\", \"ce51ed2db725fb33b5263e8f24e081bed284a2f721f3644f6e3c2dc6c2948dcf\", \"b127753bf570c5ad511d1d2740ac1eee6efb5a4f6a437d3eeedb6142e525e0b1\", \"7dd3560348f3616a74412c53dc56bee24fd5b4e14a3026ec1dde80f661cb008c\", \"3ce3dd0743b950a06549d0cc7bce716faf3f011195aa5bc369c9a5b1067fae9b\", \"b7f485ba6f7fc01224befb2789b33c0e7f955e746d2ecec1dbaef07ef8fd2318\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03610"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "0411bbac-5a62-5763-9c7a-9f5dd07de615",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Pewter Gimlet",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-03610",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "0411bbac-5a62-5763-9c7a-9f5dd07de615_1",
+    "type": "security-rule"
+}

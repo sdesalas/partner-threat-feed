@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Hollow Valise botnet sample, as reported in campaign PTF-03653. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Hollow Valise Botnet: Process started from known malicious binary (PTF-03653)",
+        "note": "## Triage and analysis\n\n### Investigating Hollow Valise Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hollow Valise botnet in campaign PTF-03653.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"c8cb0679d9c2cff0729ff70e0b49c68250687df5b4593224d1bc043e3d8b5ba3\", \"7afb30ee8081f9e725b249c3fbaf0552a0df7d2641f4ad15d8edfa01224336db\", \"594b919eebd0184f2daa5840bb08b5943a49f16836e723bb645da7ee91945802\", \"7414a7443300944775db2ceeb4b1a5c85147c0e2ed5fdec0906bf35940712574\", \"081d51cfd2469f557fcdbc2b049cc993bd27a818bcf0f19d590945852694960e\", \"62690c166989cea3b9c8c54bf242f6adbf6be3cfc2b2cd2f650c747ba6d405bb\", \"581ae3587345127f7775dd58284c7cfcd345f374a4da024d8427501993b6d8f1\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03653"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "cbe8ae23-4b5c-5ba5-a72c-8b1a04b399fa",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Hollow Valise",
+            "Threat Type: Botnet",
+            "Campaign: PTF-03653",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "cbe8ae23-4b5c-5ba5-a72c-8b1a04b399fa_1",
+    "type": "security-rule"
+}

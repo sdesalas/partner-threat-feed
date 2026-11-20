@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Quartz Ladle botnet sample, as reported in campaign PTF-03578. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Quartz Ladle Botnet: Process started from known malicious binary (PTF-03578)",
+        "note": "## Triage and analysis\n\n### Investigating Quartz Ladle Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Quartz Ladle botnet in campaign PTF-03578.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"9e0eed0fbcb6a4d9dd05994a51f7ca049dd64ddff1d46f053da5b55061ef11f4\", \"5da8da3950792fbeec47bd506001d1ccb1b7cadf0cd48f11b7262b6cfc1282e8\", \"098d6eca2598c7e83090b15cfaa43b5eb77251d8da8bacd9afe1c17549147f80\", \"d510019afd3492b04e663a6850c7a33cdf88a146adee6f30a30cbd571722f9c9\", \"d3c03f24691d251a0f782cf1bc5cf8af71d5fa35614e091edbfb13644f16fafe\", \"c1dbefd0911b7983214c61a77afd37c30d07110ff91ed411f5240f717e96e0ae\", \"fc25175b7477c1486bd10a13e71bb9dc9153d2d84c5ba232069bea4bb25c0521\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03578"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "0927a31b-a231-5893-be4c-d606997cc63b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Quartz Ladle",
+            "Threat Type: Botnet",
+            "Campaign: PTF-03578",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "0927a31b-a231-5893-be4c-d606997cc63b_1",
+    "type": "security-rule"
+}

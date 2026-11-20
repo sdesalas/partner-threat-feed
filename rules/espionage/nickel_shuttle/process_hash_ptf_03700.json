@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Nickel Shuttle espionage toolkit sample, as reported in campaign PTF-03700. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Nickel Shuttle Espionage Toolkit: Process started from known malicious binary (PTF-03700)",
+        "note": "## Triage and analysis\n\n### Investigating Nickel Shuttle Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Nickel Shuttle espionage toolkit in campaign PTF-03700.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"1a199af488955fd5f938a61ba7de3faa6ffe1d24a356a2b1bd7f465c71f9291e\", \"6765e18c7fe043b40bd8ecec2265c28bd8d91e5e633fdce74f220c476fd85a01\", \"2d3371cd10cd328fc9a3cbf55cc1ed14bf636df0da4829b4c2ef19999783be3e\", \"9c36eca96f60c788bb1c196f50c56873c3f5ac17d3e1a60f95bba1a771f9b842\", \"fe1ebc7a736377e3261b8b2f46f2658fceb913bee936eacb787ae93f5ba9a99d\", \"d63cb00a8bc4b6a81d32dfe30b26fdf78e8b276b30c47a08076e8e344750ad40\", \"e851bd264ecf5ad290ea10085842c82839299488b5d062002681f110fcb4f70f\", \"5fc07ce5f655a191cae340e62dbf1b89d7975871254cac8415709b6bfc0cf7eb\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03700"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "db42c8f6-8e6d-5504-b2ee-cff5b2c78ecc",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Nickel Shuttle",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-03700",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "db42c8f6-8e6d-5504-b2ee-cff5b2c78ecc_1",
+    "type": "security-rule"
+}

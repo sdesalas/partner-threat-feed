@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Umber Tinderbox banking trojan sample, as reported in campaign PTF-03728. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Umber Tinderbox Banking Trojan: Process started from known malicious binary (PTF-03728)",
+        "note": "## Triage and analysis\n\n### Investigating Umber Tinderbox Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Umber Tinderbox banking trojan in campaign PTF-03728.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"3d72d5ed3ea4191cdfc8860d91a14a7214b40d8da721a1635d0aa14ab29efb53\", \"9bfa4e0d44c08ab3b4ecc30a9da8061a8a20f3d1631525faa3dc070c875d991f\", \"a658f29e6da1d369b883f056da6a468ff44d4333fd5770e468166e05212419fa\", \"12f6cbdaeddf6b7ef316729354e3b5a1b104bd1b6cd16efddbce14d501c4389b\", \"64ffd7e7fa9174752fb555e295665d985589c2a23ecf6c8412e6037818685214\", \"680ae2002703633f159d998685c24b2dbc6756d077fd5a89d43b8e2667c57ded\", \"364bb63e845503ec3485c39fe43f0e82e7c5a32fecfe2cde95f0ac685995c662\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03728"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "66469c2a-57ff-5374-b79a-8fbb6fb9b196",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Umber Tinderbox",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-03728",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "66469c2a-57ff-5374-b79a-8fbb6fb9b196_1",
+    "type": "security-rule"
+}

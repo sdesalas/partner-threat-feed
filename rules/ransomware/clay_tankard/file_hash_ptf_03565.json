@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Clay Tankard ransomware sample, as reported in campaign PTF-03565. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Clay Tankard Ransomware: File with known malicious hash written (PTF-03565)",
+        "note": "## Triage and analysis\n\n### Investigating Clay Tankard Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Clay Tankard ransomware in campaign PTF-03565.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"3b7c8e936d09a0ca77bd11d4f5c4ef5b60d1a68896bcb7d71ba28ca14c31152e\" or \"1e9b3064e5d063e76fad446b0a3d4fa50cc0c132cc000dd0f6588753020efb36\" or \"29bff2f441a447a64d4df93986a4020ec658d4d4808fb5a26ba6b1a0bba243bc\" or \"8fd233b94c537ad82448799a1ab221f3ee0ea414608f78383458061cee6b9dca\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03565"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "910d8513-a98f-5dfc-9c31-7538a066b8be",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Clay Tankard",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-03565",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "910d8513-a98f-5dfc-9c31-7538a066b8be_1",
+    "type": "security-rule"
+}

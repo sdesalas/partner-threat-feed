@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Frosted Wicket ransomware sample, as reported in campaign PTF-03705. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Frosted Wicket Ransomware: File with known malicious hash written (PTF-03705)",
+        "note": "## Triage and analysis\n\n### Investigating Frosted Wicket Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Frosted Wicket ransomware in campaign PTF-03705.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"3f568f82865d2085985e1855f45c135fd17e807c629a11a71a52d54b002fdde0\" or \"ef9af96b4e6499afc015d7d436401d7a9bf41fa05aca74420421e9a82bbf1007\" or \"68bcc90b9444d6150a397d463e95a5851e791d0d3c04bce23e976a02ae460ef1\" or \"e78e3f4d34c2b32ad355dceb78a363a77832a9f4010c6971af4a62bdc448c73c\" or \"0096b0fb378787d26ae9865aada4df39475be505086a77ae9e1490a013e4411e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03705"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "724cab32-2539-5550-8cf9-731e06f48137",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Frosted Wicket",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-03705",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "724cab32-2539-5550-8cf9-731e06f48137_1",
+    "type": "security-rule"
+}

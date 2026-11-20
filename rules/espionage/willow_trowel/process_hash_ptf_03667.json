@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Willow Trowel espionage toolkit sample, as reported in campaign PTF-03667. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Willow Trowel Espionage Toolkit: Process started from known malicious binary (PTF-03667)",
+        "note": "## Triage and analysis\n\n### Investigating Willow Trowel Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Willow Trowel espionage toolkit in campaign PTF-03667.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"614a6f02aa121d7eb8d09a0fa80bd73dd9e719946b8eb967845c5190368d5ef7\", \"1e7e1201bf930cca4267eaa364e3af818e4b510cf8ffd3aad7851f99ee930429\", \"03ddaa6aff86bd94454204aba627fcd30763a96cc8e64aa4c08d100b4c5a8b12\", \"997679104660f74b3ca550e3c254105d65a136f5b28ba48689ecdaa18004ac1c\", \"7477be30f1f212a4ab13cd022237a4173832b4fcbb4461ec811bde3a2e900621\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03667"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "6333e697-84b8-5a9f-8be5-11e61e9ed0ca",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Willow Trowel",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-03667",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "6333e697-84b8-5a9f-8be5-11e61e9ed0ca_1",
+    "type": "security-rule"
+}

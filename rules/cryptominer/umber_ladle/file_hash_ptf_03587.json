@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Umber Ladle cryptominer sample, as reported in campaign PTF-03587. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Umber Ladle Cryptominer: File with known malicious hash written (PTF-03587)",
+        "note": "## Triage and analysis\n\n### Investigating Umber Ladle Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Umber Ladle cryptominer in campaign PTF-03587.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"17c9a86de6474bcf10884561f99957ff91c8c085aa753ca307481a3be08e7560\" or \"bf65ed88a94e65a1ea64cdf6e822c0786ad3dd646ea4ade86d3e4719526c2cf0\" or \"3e7493aeac3ba1309a416a9b0081c08c16681e87b031b3fd0fd5ae96ffcbb0b5\" or \"6ea45ce487cf98b55b98020537d943e76507891170f2ffdd191fe368761a08fd\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03587"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "200deb9a-e433-5038-af30-41851762ce57",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Umber Ladle",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03587",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "200deb9a-e433-5038-af30-41851762ce57_1",
+    "type": "security-rule"
+}

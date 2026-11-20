@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ashen Pestle remote access trojan sample, as reported in campaign PTF-03532. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ashen Pestle Remote Access Trojan: Process started from known malicious binary (PTF-03532)",
+        "note": "## Triage and analysis\n\n### Investigating Ashen Pestle Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ashen Pestle remote access trojan in campaign PTF-03532.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"b7f6a5207afb709ff4106530bb751a33be6194e50e1aa2dd88c429c2d7fc3681\", \"7758e05ca1cbcbf4b8b302b020bf8d3e350a562055f53b524687b0fbcdaf1440\", \"2e1306af4ccb09ae9f689d89f1b467738c780315193c285f360ba1ed3d2d482e\", \"5676b73dee8a995cdcda45eefa0eda2929c2a98d19a8eef5286f730cbf868f4b\", \"63582568fe5d1bc8ffc962168fb8368cf39de2062ad5553a6a4e22d457dd6f97\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03532"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "2182c500-5f24-5cfa-ad40-fae95ff6c8e2",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ashen Pestle",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-03532",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "2182c500-5f24-5cfa-ad40-fae95ff6c8e2_1",
+    "type": "security-rule"
+}

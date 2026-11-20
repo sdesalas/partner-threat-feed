@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Frosted Valise cryptominer sample, as reported in campaign PTF-03554. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Frosted Valise Cryptominer: File with known malicious hash written (PTF-03554)",
+        "note": "## Triage and analysis\n\n### Investigating Frosted Valise Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Frosted Valise cryptominer in campaign PTF-03554.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"d577b2d74ae27dc9d2e057234a3216a0946824afb4531a86a256f7afa815deb3\" or \"9bf4bdba0ec1af6dbb607e070db7042a3a7e7cd2759a23c0a775918d63cb9bf8\" or \"467c12918cf4fcaa935afd7b2492009c2430388af4ec0ab6694f6c8eb8dc08aa\" or \"197ad35dd41a949879eeb3320ba1d0955de23459147552060589079f09caa0bd\" or \"943583ca205089ab94d2dc6f5b43033bc2ff640ed764a1643bcd68e0ebec2893\" or \"f520ab97317818b6b3a928e1d2f00c805a9cca1433066355a7faf8deb48ace82\" or \"d5abfa538f5786471d6f5f6e36abd2e0d4f4a0245886f9581de05fbb6751b2c0\" or \"b38832475c7c34ec63d9bbc090bd15abf2c138ed19de8ab0a2905afa5b1da410\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03554"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "0be45650-d4bd-5872-bdf8-3464a813ec8b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Frosted Valise",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03554",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "0be45650-d4bd-5872-bdf8-3464a813ec8b_1",
+    "type": "security-rule"
+}

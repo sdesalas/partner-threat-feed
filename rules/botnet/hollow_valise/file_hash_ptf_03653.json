@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Hollow Valise botnet sample, as reported in campaign PTF-03653. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Hollow Valise Botnet: File with known malicious hash written (PTF-03653)",
+        "note": "## Triage and analysis\n\n### Investigating Hollow Valise Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hollow Valise botnet in campaign PTF-03653.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"21638f2d1c0cb94720048f87660b474bfe6123e712ad6330b7a517f1c839eb06\" or \"5b5107e574804f5f306f31716a612e2a05dc2326ae79ea252fcab2f68c48507e\" or \"caf622547b469be32ab387d2f63a1746634f1ed867672ef4cc12447b94762d85\" or \"fa7c9d33be4935ae6a48776cb764e3daa8161be2355dd1d008c677e3cc45534f\" or \"3f57afb4d7f7bdae0d1a741130d43708d2777c1367346dde8685fec1147462fd\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03653"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f30e227d-2616-5820-86dc-0397d0033769",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Hollow Valise",
+            "Threat Type: Botnet",
+            "Campaign: PTF-03653",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "f30e227d-2616-5820-86dc-0397d0033769_1",
+    "type": "security-rule"
+}
