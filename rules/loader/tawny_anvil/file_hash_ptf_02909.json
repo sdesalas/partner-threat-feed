@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Tawny Anvil loader sample, as reported in campaign PTF-02909. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Tawny Anvil Loader: File with known malicious hash written (PTF-02909)",
+        "note": "## Triage and analysis\n\n### Investigating Tawny Anvil Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tawny Anvil loader in campaign PTF-02909.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"33e25234e0fa5d3adaf7f857d9d5d96ba224679a3ed58579e71109b4a8e331e4\" or \"d59fbb62bfc6144697a7e5f17b2ef531b5a73970b0b557fbb3f4c1b16923160d\" or \"6a6491b8c2b486812e030b48680e1f2a4601fa7bc2471c589d13202976088275\" or \"01e3e48acbcd79d97d45038182681f2bc6f308eecc27ad414a7fcb11d7192dce\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02909"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "bafa5309-afe6-59a3-b144-ce8d852eb085",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Tawny Anvil",
+            "Threat Type: Loader",
+            "Campaign: PTF-02909",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "bafa5309-afe6-59a3-b144-ce8d852eb085_1",
+    "type": "security-rule"
+}

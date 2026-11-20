@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Mulberry Wicket infostealer sample, as reported in campaign PTF-03087. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Mulberry Wicket Infostealer: Process started from known malicious binary (PTF-03087)",
+        "note": "## Triage and analysis\n\n### Investigating Mulberry Wicket Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mulberry Wicket infostealer in campaign PTF-03087.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"8577f15e95fd75b57c3b9b6de7e042186d72ac345d8d9999f7ba8ee45f534fa7\", \"328b26c00d2b696c6f61d2982fa695cf42fbd32041e0e22a21bfe6a353ec8b47\", \"b9d17de8679d329381ecce3988cff3fbc947e263e6f2c5eaca2f15d0d95add9b\", \"de4166e31b7456d46185add53f54e0d714446858da5f9b26afaad0818bfba4db\", \"dae1660a6d123580b71b417ad435514f3f58b27fcf1e9fa7a117d8a2d872bd33\", \"2db2ffd073ed669f45336ba4f13a5dd67da629fa76da4316c7b8ff5fdd25faad\", \"daf3309c8e427900cb9a6631f4e6a675f28b3eb73770574a2bbfb5fcfb07ae93\", \"531e0f1b36fbf79e4d37af19c0c89d5ee959da3102e69fee1995e2e759d90638\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03087"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "9331505f-be50-58ba-b2c2-28c68327cd4b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Mulberry Wicket",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-03087",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "9331505f-be50-58ba-b2c2-28c68327cd4b_1",
+    "type": "security-rule"
+}

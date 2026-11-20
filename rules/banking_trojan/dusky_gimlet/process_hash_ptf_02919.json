@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Dusky Gimlet banking trojan sample, as reported in campaign PTF-02919. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Dusky Gimlet Banking Trojan: Process started from known malicious binary (PTF-02919)",
+        "note": "## Triage and analysis\n\n### Investigating Dusky Gimlet Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Dusky Gimlet banking trojan in campaign PTF-02919.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"afdd108c565f6fc5674b7a3fafb5e808b05ce0740651c302de1d828e58349e24\", \"13783e53c8a4d2b6ff5964b5025f6386be641a5a69923e8ca5842ed72b316441\", \"66fa37d0d5e5611b8857688ff35acd1e6b94d49ed7aa4d68e41b43ab7bc087ea\", \"f63faae6bfd3da0bc8fa89f4acdabb4c47283687162d81a9731931ff730599c7\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02919"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f180a5b2-764a-558d-9ef9-99c554fa04ff",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Dusky Gimlet",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-02919",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "f180a5b2-764a-558d-9ef9-99c554fa04ff_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Tawny Gimlet infostealer sample, as reported in campaign PTF-03018. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Tawny Gimlet Infostealer: File with known malicious hash written (PTF-03018)",
+        "note": "## Triage and analysis\n\n### Investigating Tawny Gimlet Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tawny Gimlet infostealer in campaign PTF-03018.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"86a1da3c71839f084870ac5b09a4a21862b4dfd9cd1fe12d4dbd6bd5428fd424\" or \"c36674f5ac8c18898dc0dd49989882e72edcf54dad5e35dea502c194df2d07a3\" or \"6d118c8ddc2c4e2dbbef096552e301d4eca317859a1b10d62ccd8113932c5ab5\" or \"e71d65dbd049c77815caf339651f7e4e756e40e3e89fa437aa0b7b11f6f7e831\" or \"75604b86a36253bcd71cd8047bc1cd488d19834874418ae82e99e35889e479d6\" or \"4bf676a7627b628de764708e8a02ba558bb37e4e769eb88e26ea25519bef65ed\" or \"3c2e269320e70d1e0021445e7815048f9bb05f146bfcc301652876c707b1d3fa\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03018"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "10e1b07b-cb9c-52fc-be02-e762dddeb574",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Tawny Gimlet",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-03018",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "10e1b07b-cb9c-52fc-be02-e762dddeb574_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Marble Hourglass phishing kit payloads, as reported in campaign PTF-02970. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Marble Hourglass Phishing Kit: Request to known payload URL (PTF-02970)",
+        "note": "## Triage and analysis\n\n### Investigating Marble Hourglass Phishing Kit: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Marble Hourglass phishing kit in campaign PTF-02970.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://connect-cdn54.test/gate/6337.bin\" or \"https://data-relay41.invalid/update/6117.php\" or \"https://media-portal89.test/invoice/7755.php\" or \"https://relay-portal17.example/update/6923.php\" or \"https://static-node14.example/doc/5972.zip\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02970"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "e642a227-e61d-5b35-98b1-d6ca31f8b316",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Marble Hourglass",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-02970",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "e642a227-e61d-5b35-98b1-d6ca31f8b316_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Tawny Ladle botnet sample, as reported in campaign PTF-02994. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Tawny Ladle Botnet: Process started from known malicious binary (PTF-02994)",
+        "note": "## Triage and analysis\n\n### Investigating Tawny Ladle Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tawny Ladle botnet in campaign PTF-02994.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"c4332042b8d792fdf4482e964354ff098126b40f12ab88dd704822cded2329f3\", \"29ccd16df10d6742d503646879cb3367b31f1975322e3144b93255a1b2174116\", \"eb7ffa25be238a1a236eca0affc993d2d2fa56604881e9a4a1ebf0de46e38f58\", \"80bdf5051a7862982191819645160baef87935df5454b978aaf1327c02cecafb\", \"78b1571e3d4a115db1f0d52885a6c4bf5cf381fd899bdb1b54ac253028813151\", \"9d3b68426fc56278e955b37e2edcdd7a219c9d66957f9c347dd57086b9302fbf\", \"e832215baefe8d5ebcaa140f8056fd2b66ba9c3673fb68cedb83dab417dc9789\", \"9b481bd979bd8bc540c5b5bbedf71399112f201fc6313bff40dd1e39fea19358\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02994"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "df2697be-5d00-5d33-8acd-b63ecfdb42ca",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Tawny Ladle",
+            "Threat Type: Botnet",
+            "Campaign: PTF-02994",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "df2697be-5d00-5d33-8acd-b63ecfdb42ca_1",
+    "type": "security-rule"
+}

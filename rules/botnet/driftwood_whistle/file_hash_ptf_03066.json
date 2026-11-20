@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Driftwood Whistle botnet sample, as reported in campaign PTF-03066. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Driftwood Whistle Botnet: File with known malicious hash written (PTF-03066)",
+        "note": "## Triage and analysis\n\n### Investigating Driftwood Whistle Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Driftwood Whistle botnet in campaign PTF-03066.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"83773a609769748dabd11096025eca5e4942b5bc47c4d7c074375ccd7cdee40f\" or \"46cb9af791816629ed5a9f99c2cf51f5b2edb0eaf76026aa6ecb215e78b2fd21\" or \"84d5d685734816b62182b80061a2de0e4e61e8b4acb141044d3b5f9a271f48f1\" or \"e18066dd1f94b62f36db6a178745ffb686074654eb4e795875d9ea783328bb35\" or \"a30a09c4b81900a0aa881f70b597ad859ee0cbd0d53ef1ca9bf67c84ee3fa6af\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03066"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "47e53c19-e13a-5d7e-ac9b-06b4e2c78083",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Driftwood Whistle",
+            "Threat Type: Botnet",
+            "Campaign: PTF-03066",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "47e53c19-e13a-5d7e-ac9b-06b4e2c78083_1",
+    "type": "security-rule"
+}

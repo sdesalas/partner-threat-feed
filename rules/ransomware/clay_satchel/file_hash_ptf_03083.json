@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Clay Satchel ransomware sample, as reported in campaign PTF-03083. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Clay Satchel Ransomware: File with known malicious hash written (PTF-03083)",
+        "note": "## Triage and analysis\n\n### Investigating Clay Satchel Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Clay Satchel ransomware in campaign PTF-03083.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"b81d0942479404100812e930925ebac451b71e79e3cf994b2cd739ebf676113b\" or \"1263f1fcdc1614b0c4013d8be4e6c7c4db80509ece426d1e52753cf53448e8b8\" or \"3fee5ae0b7f645d38043ea89c6f5d954dda62ff78eaeba35aeeac0820bf908c8\" or \"9974d11b1bb9ebf7829702ca84a8c52ab64ac6d9497a71144e163e6751cf0f58\" or \"5eb174e0ef50369f0b79fa310b4b58dc4b5778410d952360a8a1ad2666f9c833\" or \"fb32f97772fdd35d74c486bc22b38f2f921806fef18af97b344a8a111b8bdbf5\" or \"778446d36a3fc96b893ec314d76f1f80c30f34454f5ce34accde2609b44deee3\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03083"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "2c0d1812-9c87-51e4-ade5-692761e60df2",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Clay Satchel",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-03083",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "2c0d1812-9c87-51e4-ade5-692761e60df2_1",
+    "type": "security-rule"
+}

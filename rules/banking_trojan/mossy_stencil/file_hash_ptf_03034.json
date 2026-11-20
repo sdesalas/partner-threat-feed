@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Mossy Stencil banking trojan sample, as reported in campaign PTF-03034. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Mossy Stencil Banking Trojan: File with known malicious hash written (PTF-03034)",
+        "note": "## Triage and analysis\n\n### Investigating Mossy Stencil Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mossy Stencil banking trojan in campaign PTF-03034.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"9f8e85b03f6fd7adee673919fb4e6bdd628c1a04bd7a5933177f63b78d5c37e2\" or \"6afeb6933004c0db547a7e842c1822256809d0a2a3477d89fe9f4c384eb81284\" or \"0aba91fda3ecea0ff5a66abff09c80f117494989ff40cbf4b9347347126b8fd8\" or \"1bbd9ac6c5b66603db5880e3049e7b28629aa70d6d22b87b480678b03c628611\" or \"8cc894df112610d8af2c38d54144ddc5e444657974c31361e31aa7497aba3781\" or \"62b7ede2fa617048993ab2877f9bde6fbfad4c724f7f8c49a58484cb183a172e\" or \"f4bb88591b847137b5b14759dc1e328ef606c8c86465b57e579463733544e324\" or \"b3a2e97eca36081243104906efe4af1f3cd5810ef02246db41f68ccd209056b3\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03034"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "9dee2f69-0db2-59de-8441-ee38df4548fc",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Mossy Stencil",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-03034",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "9dee2f69-0db2-59de-8441-ee38df4548fc_1",
+    "type": "security-rule"
+}

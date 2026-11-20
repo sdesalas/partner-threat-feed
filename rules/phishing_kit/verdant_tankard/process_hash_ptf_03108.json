@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Verdant Tankard phishing kit sample, as reported in campaign PTF-03108. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Verdant Tankard Phishing Kit: Process started from known malicious binary (PTF-03108)",
+        "note": "## Triage and analysis\n\n### Investigating Verdant Tankard Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Verdant Tankard phishing kit in campaign PTF-03108.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"41c59ae2fc8811c2a6c8f1ef74e1143678c352e7677bd454d4f5e7d87a8b2674\", \"9e5dd5510c10728e87c17a3dd8c15244c3d5b8a4ca7154a2dd7cf4ce50d07c60\", \"8802a2a88b72de34baba208cd4260800cc39a215785e298f5429054ae3a0bd51\", \"9db3a9f8ed3106bd5ad35687242b36df633b2e19c74ef34ea77631fbb06c5522\", \"034795f27f48a377ac98f23173b005e9f12630aea3dc4fcdb6d1469416e0d9af\", \"cc2fa02d4e94434cbbaabfa204d491508f080a46e42a0f1d013bd3e6e668041b\", \"c25262fb524a709fc347f1bbca2374a2133d60810a1fa666452efd3d414cc48c\", \"0ec2c475aeebdea0acf1eede3e010c47a19de99f7854d014301b795955bcf6ce\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03108"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "0dc6a7e4-39fa-5dc5-90f8-e9670c2de43d",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Verdant Tankard",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-03108",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "0dc6a7e4-39fa-5dc5-90f8-e9670c2de43d_1",
+    "type": "security-rule"
+}

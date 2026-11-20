@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ivory Needle loader sample, as reported in campaign PTF-02955. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ivory Needle Loader: Process started from known malicious binary (PTF-02955)",
+        "note": "## Triage and analysis\n\n### Investigating Ivory Needle Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ivory Needle loader in campaign PTF-02955.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"ba6f61f81223f2b0316317bb7e9fd86658af049c6e37b07021626d669128eb74\", \"722a68397b6e2ac4031c24b7671ad561d82642a3284384615334afe4779a9c85\", \"14550f9162e3253f3077f945d318d9980d2bb76cc1890478398a9401a9728a21\", \"ef4ce6a36658c6cd0dc8d7dc398955a65967509594b20c7dd3796df44cf1069c\", \"d7f556569d7efe4ca95b5b8d42ff9a73cc1437666d2a39057f9c2386511979f5\", \"9eb9aaf51478ed303134afe3ec41f3138d9a54fbb67eb3436964c85bd19d1b2b\", \"06229edf369c941034c816187ccf1a58ab26f43235dcce33127480b06fdd6c25\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02955"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "cdae4f7d-9d96-516b-be3a-7a4d181e18c3",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ivory Needle",
+            "Threat Type: Loader",
+            "Campaign: PTF-02955",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "cdae4f7d-9d96-516b-be3a-7a4d181e18c3_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Dusky Spool espionage toolkit sample, as reported in campaign PTF-02935. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Dusky Spool Espionage Toolkit: Process started from known malicious binary (PTF-02935)",
+        "note": "## Triage and analysis\n\n### Investigating Dusky Spool Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Dusky Spool espionage toolkit in campaign PTF-02935.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"859d19b035d1bb60d7a139bd24ba1dad94d48ef03d0ddb69c4c484eb0d2f048c\", \"91c24084de659455a8bc1e5372610e80d57cd8dcfa2196ec5bcac87e117cd5a9\", \"c135f447115daff07ccf3ef3d823018b35a10ea991f50d2baf5e91fc6680301f\", \"aa471acd6b6d4c1461ac9ece7325e9e59ce42d1c8913abcf9f741f5563bfedff\", \"c471b862f864d1f708129d486285bd2d104c3f33861bf9118aa62d79e3ff3e3e\", \"c6bfc475e893397d5763a4c2e537e95c761bf836409389ff4f98378031781cae\", \"275328b7e743b6c426af4c561f6016617aae3aea3b69143480b79a08ee2a74aa\", \"23cecb3e36a32d5c325823fb51dd35f9a9209f75ddd6a9b07b191906b168232b\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02935"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f47ed64e-6a20-5971-bcb8-19a9683dc369",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Dusky Spool",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-02935",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "f47ed64e-6a20-5971-bcb8-19a9683dc369_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Paper Trellis banking trojan sample, as reported in campaign PTF-03101. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Paper Trellis Banking Trojan: File with known malicious hash written (PTF-03101)",
+        "note": "## Triage and analysis\n\n### Investigating Paper Trellis Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Paper Trellis banking trojan in campaign PTF-03101.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"a222ec21d493940039cefdaae1a444cf4a1b7ef907fc707ebe20fb43de22eabe\" or \"bded95ba70a763842c1f46d0f41ad57eaf7828efe98ea31faefebb9f36251022\" or \"1381250944f6a7a9873bc1dac417eaa1773fa93b0ed4cbfab8f52ea6d50f8aa8\" or \"481ef2c8c1011fd12cc192e95089a94e84cee1e2b33ef5ec78624fda84d2d94c\" or \"aec32e6a154bc9cea2c289910538160625dde569dcec7d6ca3173f59b3b9ee8d\" or \"f06ca413453fd2d74f37061f43a8c3336e6c56ce7fd0cf4f9caa4b16412bf116\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03101"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e520cfca-7e2f-5180-86e7-dfa92215d723",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Paper Trellis",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-03101",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "e520cfca-7e2f-5180-86e7-dfa92215d723_1",
+    "type": "security-rule"
+}

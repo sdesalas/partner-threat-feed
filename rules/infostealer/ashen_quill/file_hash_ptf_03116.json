@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ashen Quill infostealer sample, as reported in campaign PTF-03116. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ashen Quill Infostealer: File with known malicious hash written (PTF-03116)",
+        "note": "## Triage and analysis\n\n### Investigating Ashen Quill Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ashen Quill infostealer in campaign PTF-03116.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"f765e93a183b1af448fc325c2e96efdd0e889c7b895959c8772149e8aeb622ff\" or \"da42f0e0978ca8951dfea2d65621177fc1c1b8d4f07314cd35b147d889a0fa83\" or \"4ed750b87241e2310516630198213e14511b1a122b6c77e946984946c5cf6ba3\" or \"78a6d01cd2fcb10e65cc60f9c0288760d10871e1a9ae9ead9fe6181aa98faa23\" or \"a3f5692a6d92b4a15d634ee7c6b49e2c51a480d71714e78a2bbbec474771e986\" or \"8ce461463c03560a72c5fe57c73918e37cab20aacee86ad58067b2efb296af72\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03116"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "292f40c2-51ac-56d8-b19a-6d6c3f3cacc2",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ashen Quill",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-03116",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "292f40c2-51ac-56d8-b19a-6d6c3f3cacc2_1",
+    "type": "security-rule"
+}

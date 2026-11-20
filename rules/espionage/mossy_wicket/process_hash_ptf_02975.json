@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Mossy Wicket espionage toolkit sample, as reported in campaign PTF-02975. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Mossy Wicket Espionage Toolkit: Process started from known malicious binary (PTF-02975)",
+        "note": "## Triage and analysis\n\n### Investigating Mossy Wicket Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mossy Wicket espionage toolkit in campaign PTF-02975.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"908c589342bb4c1307ad3e5258093af1f21efb1b9b11d256514e9b79a44f88fe\", \"a57cb9cb740bad7deb2526f42cdda47ccb8226d04a8942239b2e1eda68fff118\", \"723d5a2f5a8bd599da536644453b11622179e802e37cfaf1de12dd8a59c112f2\", \"2479278943f668042745ac446927077d7d642e01d38f43f2b052e8ba56e1143d\", \"ff9d7dc9cf810d737812e2783ba12340628308d454e520c85b9c2f7a31a52bdf\", \"e5618e8a621ca8354c25446ac0daa97cb079a1a4606649835dd9a398e308cb10\", \"7235b92543080cbb9cff775efabf1e6501b1cef98d44e233d776d41bbdc01270\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02975"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "4e993d44-9030-565a-920f-73e50433f684",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Mossy Wicket",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-02975",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "4e993d44-9030-565a-920f-73e50433f684_1",
+    "type": "security-rule"
+}

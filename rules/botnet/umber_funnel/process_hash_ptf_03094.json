@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Umber Funnel botnet sample, as reported in campaign PTF-03094. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Umber Funnel Botnet: Process started from known malicious binary (PTF-03094)",
+        "note": "## Triage and analysis\n\n### Investigating Umber Funnel Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Umber Funnel botnet in campaign PTF-03094.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"111eaed0f9d1637843fd76a160301e0ffac71065f6280abeea998764d7eb18c2\", \"e54b217c8e5f107d2290d869d300c8b4c3dd54f0ed57840f266271c810fb084e\", \"9949786f9c86cbf04d72d7157126a237d84817ea6e4fa65f907895cf344d17d8\", \"68d9ef114559cd5993a9cd4b20b5482c9cd227f6ec456df71e5332298496d470\", \"03ca239d15e3859d4626c4287a4e692d0aefe569a783a3d9ec676196e5cdad89\", \"203e29898fc8717cf8064ae58817e4414eee5a147e46b2a09b1007ba3a4c264c\", \"803207119992d2c1771f8cb00b38acf9199a1cac5c58316e75d1ae5cb0a4efe7\", \"9d7673b9f89e82aefd2df40855ae0bbd4f4edbb8c355a0b1251c982216dc30eb\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03094"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "de2659c4-a545-572c-b9a2-caf1c64a3077",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Umber Funnel",
+            "Threat Type: Botnet",
+            "Campaign: PTF-03094",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "de2659c4-a545-572c-b9a2-caf1c64a3077_1",
+    "type": "security-rule"
+}

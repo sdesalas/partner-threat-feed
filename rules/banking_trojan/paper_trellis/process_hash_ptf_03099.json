@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Paper Trellis banking trojan sample, as reported in campaign PTF-03099. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Paper Trellis Banking Trojan: Process started from known malicious binary (PTF-03099)",
+        "note": "## Triage and analysis\n\n### Investigating Paper Trellis Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Paper Trellis banking trojan in campaign PTF-03099.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"fe0bb1a344b7ca615ac8b61433e5a5c6008b63bd655185cc92f35889ea751cee\", \"b20960a978e81c2628f0d8cc3f1959d447ee46fe37043696bf3f319e9d7720ee\", \"b67395955345ecfe9c98e29cb13f0dc2e6934080cf5adc522762cb658a865478\", \"9049f8ffa6dbfe5adc2f7de9307e4b3ed77ef8ffcf56eae0788b9164816e0443\", \"48498a0497a57a6c330c17153f228d3cd4965620fafddbedef06ff1ccee543c9\", \"c3e8ffcad1000c208d20c2da6214b481097a72834f0b3492dc9b684cf7872593\", \"14230670c3d6b5d00fc7b7109b59664dc0cbdba5e038366a19f18ca9a75fb269\", \"65b5cdaeb86fefe167194e29bb7242340481042e725657d601c558d1eda90cd6\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03099"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "77878d23-0abe-5eb2-9183-2bccf484eacb",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Paper Trellis",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-03099",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "77878d23-0abe-5eb2-9183-2bccf484eacb_1",
+    "type": "security-rule"
+}

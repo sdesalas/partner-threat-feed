@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Fennel Spindle espionage toolkit sample, as reported in campaign PTF-03013. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Fennel Spindle Espionage Toolkit: Process started from known malicious binary (PTF-03013)",
+        "note": "## Triage and analysis\n\n### Investigating Fennel Spindle Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Fennel Spindle espionage toolkit in campaign PTF-03013.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"a418ba316485ede543d98aec82ccd7ef6e80384b7277cd11cf5619acaa0abf1f\", \"7261ac24b0b76e2b143b76cf6c30981db237fed77e0b286f904066fe07e84abc\", \"b818a8e7ce7748043524235877e02a708dc4a20506f00bd13ef7730fd114a0c5\", \"fbd9801e0ada418ca4d141c03c43b1f571a1e64dd6cd31089cea10b21836ffa3\", \"6ca010f38871e37b10cbad71ce8a7bf20db97d80881dfcee80d80c8d3a640a58\", \"08561bd3dc13fce93b87fc1ea9a6cc548d2725f393c545d6bffe7ee25b4f893f\", \"5e0095c993c318740d2a4782a07aea984ec3ac9754ae7e3981b626babbeafb72\", \"6821e7993760e89b19cb391ecc9527b10fed10734ccdfc72ace757f6a8f95796\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03013"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f45e3cd7-412c-5b3c-bdbc-4fdc1f96013b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Fennel Spindle",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-03013",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "f45e3cd7-412c-5b3c-bdbc-4fdc1f96013b_1",
+    "type": "security-rule"
+}

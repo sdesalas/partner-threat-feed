@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Pewter Satchel phishing kit sample, as reported in campaign PTF-03076. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Pewter Satchel Phishing Kit: File with known malicious hash written (PTF-03076)",
+        "note": "## Triage and analysis\n\n### Investigating Pewter Satchel Phishing Kit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Pewter Satchel phishing kit in campaign PTF-03076.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"89c23ef9a5ea95e894cfe6ca94999a268973768bf7c38a695b106be8d74eab4d\" or \"4fa382eb5bdf187c10f0c5d4df463ebc2b28b24ea84d843816d064365d25b416\" or \"642a03eba2c65d86c825cf6c8e0fd7b514d9e9bd0f73dd6cb471acd9d9ad77f4\" or \"246b84ec576e94f4689a6ecf49edee97cab37a33686abfc55dea5789a9d58849\" or \"ccd4be61e002825e07470a3384295a55c79f05b9565b611d3d18e9e9393fe3cf\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03076"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "c8046303-ad87-53d2-bd42-5dd65578bdb9",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Pewter Satchel",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-03076",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "c8046303-ad87-53d2-bd42-5dd65578bdb9_1",
+    "type": "security-rule"
+}

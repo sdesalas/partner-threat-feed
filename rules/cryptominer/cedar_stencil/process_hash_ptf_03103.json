@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Cedar Stencil cryptominer sample, as reported in campaign PTF-03103. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Cedar Stencil Cryptominer: Process started from known malicious binary (PTF-03103)",
+        "note": "## Triage and analysis\n\n### Investigating Cedar Stencil Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Cedar Stencil cryptominer in campaign PTF-03103.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"48e615d00adefdf20ab11f3de0a941d2e1cb6e5a2504da25f844c878528e6d13\", \"ba51a7b311f3ca2c143fe20c4a137ab7277f0edb9bfad4172f10df51a3ad29dc\", \"5fcc546e3c14c4dad167477aa7e5d131a3bf2a1271b1ad8d4c711ef15258f32a\", \"debbf6661a4e2956c7ac1c32d58ede91e901bac5ad394770c37238bea7463fb6\", \"07b84722b35a2cc834aa6742606475e047e62e7224fd49b8412a585219150ce1\", \"5abc4ac1c83030856f8440e0a00507643ae5de1c2f7bcb8ab44254c09a895e7c\", \"561134928842e247321f0a6702a3aa9f094bb93b36dc6537dedd628159fe9b9c\", \"4ffc0cfc37342e3568fc35ca73517bb3b94621cef84a0fa8103735456806353e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03103"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "7a188aad-4fd7-5e7d-80f6-77cbda6ce126",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Cedar Stencil",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03103",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "7a188aad-4fd7-5e7d-80f6-77cbda6ce126_1",
+    "type": "security-rule"
+}

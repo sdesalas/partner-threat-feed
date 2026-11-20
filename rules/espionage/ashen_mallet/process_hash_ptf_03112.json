@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ashen Mallet espionage toolkit sample, as reported in campaign PTF-03112. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ashen Mallet Espionage Toolkit: Process started from known malicious binary (PTF-03112)",
+        "note": "## Triage and analysis\n\n### Investigating Ashen Mallet Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ashen Mallet espionage toolkit in campaign PTF-03112.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"2cdeab3e326447b9a5d58b1125c7277858936417499ea98a9138f33aa8171ed6\", \"31153b1cf770a94c09f112b52b5dd2b332cdacdf28bdc1a7a7f127edc46661f6\", \"0519ea0ed54096cd995f7a3081d0e9d55bceb8b8e4aff5aa49f451f1f93c55eb\", \"ac50848c4ff140e08133591e90b3c86539765e47d55fc90d481c23982ff72003\", \"c9d47a4bc95079459575094b5d26eb4c651e0649088fed4e9ec583676996e8cb\", \"6fd3498137a9d563876844dfdcd5fca5aefc7ca3206a07c47b0a8f78b81c6fa8\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03112"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "6d7256c4-3976-5d9a-8de3-624cd60095b6",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ashen Mallet",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-03112",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "6d7256c4-3976-5d9a-8de3-624cd60095b6_1",
+    "type": "security-rule"
+}

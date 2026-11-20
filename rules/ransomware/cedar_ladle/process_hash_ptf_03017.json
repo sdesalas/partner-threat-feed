@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Cedar Ladle ransomware sample, as reported in campaign PTF-03017. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Cedar Ladle Ransomware: Process started from known malicious binary (PTF-03017)",
+        "note": "## Triage and analysis\n\n### Investigating Cedar Ladle Ransomware: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Cedar Ladle ransomware in campaign PTF-03017.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"a79280ab5bd93fafdecefe3e8ae468d2f19448f066b592fd3d2561b958817335\", \"bb5d5cf46dbfcd5c961bdda5ebad8d28bde2b7426321d0f0558a5fee8509cf23\", \"69e303d22f0a0f78f6aa6322604cc28094edadf008d8602e59b453bb73c7d62b\", \"0f94f6025e57abd9b251cbf989ebbe492da637c61e079a3952cb6ea75fabbfcf\", \"765472c5e7acc6f465e762d8666ba67ed5341a2dbe9047199eb91c2b211d60a4\", \"809c8ae6e0f110e488336f4976b4271b02b0b6985a03b3f3382c87b1df280c04\", \"10630153ee7ced517406f9bdbb0f89da94eb402174dedb12947e92b6a221bd20\", \"2daa25f7c4a9347c3d3f3d829c2e51eeccb6107d33bfcb5156ac68080461a2f7\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03017"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 99,
+        "rule_id": "b7aa201e-3871-5249-a064-a8953c0697ab",
+        "severity": "critical",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Cedar Ladle",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-03017",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "b7aa201e-3871-5249-a064-a8953c0697ab_1",
+    "type": "security-rule"
+}

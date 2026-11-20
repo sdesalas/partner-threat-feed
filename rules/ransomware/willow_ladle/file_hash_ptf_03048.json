@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Willow Ladle ransomware sample, as reported in campaign PTF-03048. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Willow Ladle Ransomware: File with known malicious hash written (PTF-03048)",
+        "note": "## Triage and analysis\n\n### Investigating Willow Ladle Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Willow Ladle ransomware in campaign PTF-03048.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"89fc7738ee1f803e13752924937c3efd2eef70722c3b52c1e6c361fc091151f1\" or \"b5de6879d628a14430f0c19163f731b6f18683163d47b5f7964b3beaf0e6715a\" or \"eedd432e468a0c3789900a29c75aac0cda497e2f68ade5d2df1a8a8b52527520\" or \"7b32e1c191f3ad27a7f57460010d691326f3516b863325b13e749a31cd18d808\" or \"9ab6018f8d71bfe8131b23bbe23606f4f0d265053758073c4fb5e890ee2ccb0e\" or \"e18d56d885cdb8db9fa6780296e87a9eca859e07fb89a67e2d46ac025c947935\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03048"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "fb196983-7d89-5f64-9b3e-a23f8c0ee5c8",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Willow Ladle",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-03048",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "fb196983-7d89-5f64-9b3e-a23f8c0ee5c8_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Frosted Sextant ransomware sample, as reported in campaign PTF-03115. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Frosted Sextant Ransomware: Process started from known malicious binary (PTF-03115)",
+        "note": "## Triage and analysis\n\n### Investigating Frosted Sextant Ransomware: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Frosted Sextant ransomware in campaign PTF-03115.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"a633e23601bbbf35cfca7fa1df248b6991699d8ebd3aa309c4fbba5527722c12\", \"1d920e1d57645262cefd2bcf7454ddc321417c6931c583795e22294893d1d2a7\", \"fd33a1921659a8b545f01ce65bc931c97352ae83e1c2021384661f359626da38\", \"61aa5d9cdb14c7ddfe737e75a08e4746210ce1a996c973d81cb3f7e40af2c159\", \"7b77292a772affbaf3b7f9a4f028e19dbeb837da0d332dd84c9572b6f14aa59a\", \"edf7a23d9174717e3cef1730541e107f0ef86fa5f8436e2fb5f3cd066d759e63\", \"2053e4ce1b8e2ba7ff3d7b840783cc87c8879cc44882d32e83b0500d98971ecd\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03115"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 99,
+        "rule_id": "dd61b6a2-bd3e-5ce7-8c41-6c0d3f41daa5",
+        "severity": "critical",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Frosted Sextant",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-03115",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "dd61b6a2-bd3e-5ce7-8c41-6c0d3f41daa5_1",
+    "type": "security-rule"
+}

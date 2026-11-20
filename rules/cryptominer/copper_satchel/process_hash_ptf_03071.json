@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Copper Satchel cryptominer sample, as reported in campaign PTF-03071. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Copper Satchel Cryptominer: Process started from known malicious binary (PTF-03071)",
+        "note": "## Triage and analysis\n\n### Investigating Copper Satchel Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Copper Satchel cryptominer in campaign PTF-03071.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"4f3c274de3e4457beb6aa8b0b54bc3b263045b64066f3d7c41111a01dea09291\", \"5ce413e8b27956f516c7ff8b2b06245c2e99598f28c00762d8675de3dbf042a6\", \"314011415a506858b2318dfc45b89151f881cf50361939e52a681d4e31b13e7d\", \"c2db4f0aa14728a05bb483bf191dad2e441cd916bda014017da226dd619790d6\", \"8ec371e2b6161d853ed4c395ac0b1d7b6d02cf8321b34e789f4f653a1f6bbc23\", \"c5d6fb1d27948660b8981c9ee0fefb11a9f49845cff2792fb0fd4769b2aa8881\", \"19687db2c1f44afc29e9e3bd0b4c9a46145613dac2f080a1ad97166faef4be06\", \"dae350d0901421705fc6a4a4a21e62d2243a9d4db7282d3d1b232248b252f541\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03071"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b2e9243b-8d3b-58f7-a9f7-803bb9dbffd5",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Copper Satchel",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03071",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "b2e9243b-8d3b-58f7-a9f7-803bb9dbffd5_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Rosewood Jigsaw remote access trojan sample, as reported in campaign PTF-03024. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Rosewood Jigsaw Remote Access Trojan: Process started from known malicious binary (PTF-03024)",
+        "note": "## Triage and analysis\n\n### Investigating Rosewood Jigsaw Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Rosewood Jigsaw remote access trojan in campaign PTF-03024.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"ad9b6c4271b54d5020cbcc302d49d0146630463e468fcb80516eff53deef093c\", \"296e07a5ffcfb554f7bbbcd56684e13e3c417ca233da7c2848a30f882c1ce313\", \"922d88b2e23d68142fd7649c8f9ef34e22f3133eea062865ae9689e0c5ec39a4\", \"496418e9332841cc399325e0448eb7be0018007664ace01ae6603983abb06d13\", \"611927ac65ee40928e8c975c45126463d230b3a5c30eb5dcef864ae74f81ec93\", \"8836a8293c23a18c6ee44bab11782e6245fa811b64df78d7ab5f92a33453e318\", \"51c41d7eb784248f85713e85167fac3f4bc305e117af8074b919467c9949b5b0\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03024"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "1d1b631d-62de-59ab-a99e-66f1f6b15f9e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Rosewood Jigsaw",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-03024",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "1d1b631d-62de-59ab-a99e-66f1f6b15f9e_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Mulberry Wicket infostealer sample, as reported in campaign PTF-03086. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Mulberry Wicket Infostealer: File with known malicious hash written (PTF-03086)",
+        "note": "## Triage and analysis\n\n### Investigating Mulberry Wicket Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mulberry Wicket infostealer in campaign PTF-03086.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"35669066f28c6a5328a1c78494d6820ea0c4d70c1d70afa9d9f31af173031090\" or \"c8765a2d1be5e184d951e16992369f19f70733c4e173e3e77bd54e4a0f87240c\" or \"c882e1d511517d9901541cb76a6ac73a3ca5ea839ab5d5030d68b795ecca1ed5\" or \"79c4d69028f2672827fd4488c82309d35c87304455e8ed22b6e483e452b3ac44\" or \"e5f521b1ca5a325a5010ffb1b62f2063935cf75fdc33074436848397068a948a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03086"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "6100311e-5f9c-58e5-bad5-e2b0318744ae",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Mulberry Wicket",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-03086",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "6100311e-5f9c-58e5-bad5-e2b0318744ae_1",
+    "type": "security-rule"
+}
