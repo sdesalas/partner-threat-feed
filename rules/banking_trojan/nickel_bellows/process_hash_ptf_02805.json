@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Nickel Bellows banking trojan sample, as reported in campaign PTF-02805. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Nickel Bellows Banking Trojan: Process started from known malicious binary (PTF-02805)",
+        "note": "## Triage and analysis\n\n### Investigating Nickel Bellows Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Nickel Bellows banking trojan in campaign PTF-02805.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"5a5d980ea3e53ce0e316b4bbbcd09ece24adaecbda94be7b2a9a233c03d04950\", \"67c09952b9ea02c4dd63f8708a878d5979d0ed5253605e1f13234af71cac16de\", \"07088fa795385523d276c971c8633079e3d098b8f6da54b1177d1d037732c74f\", \"6d034e7287bfe3048b5e5578e0202a86762d76df086f24295bb923cd7a3b157c\", \"16c14ebf09db2da22129636827db5c246fc800aa5cc5fef157fb8d2549776a4b\", \"ef948e5cd1e076da4b0a31e12ac803641c7a474a07a10d5c99b0b96ef0f617e7\", \"5b3423c63c9b5c3caba83b399187a97dac9242d24caf8036487c908239990f1a\", \"3ac39c27eb4cf8c6b29d409e78c2bd50ca1b2020f25774e63e24153c0d21cf16\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02805"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "5e3b562b-2ad1-51bc-aa3c-05946f8daa73",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Nickel Bellows",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-02805",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "5e3b562b-2ad1-51bc-aa3c-05946f8daa73_1",
+    "type": "security-rule"
+}

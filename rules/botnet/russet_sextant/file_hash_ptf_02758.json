@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Russet Sextant botnet sample, as reported in campaign PTF-02758. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Russet Sextant Botnet: File with known malicious hash written (PTF-02758)",
+        "note": "## Triage and analysis\n\n### Investigating Russet Sextant Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Russet Sextant botnet in campaign PTF-02758.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"2c761d1c19220ac9b68c949643666b73062e3e68bb8560fbb15784ec48494a94\" or \"57bd5d0e49db76938c2cbf6e174ca38f18e54ab974400547c37c6d01a0761363\" or \"0b93514c1da8ca7df40a1fdc0feff5dea99d881a27e441443994d459e0679acc\" or \"f197cd11ac5337aa4c658d9daf832ee9ae8964300be54783eee886b3db7e99aa\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02758"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "26645843-25bf-5688-ab12-d13a10c1e07d",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Russet Sextant",
+            "Threat Type: Botnet",
+            "Campaign: PTF-02758",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "26645843-25bf-5688-ab12-d13a10c1e07d_1",
+    "type": "security-rule"
+}

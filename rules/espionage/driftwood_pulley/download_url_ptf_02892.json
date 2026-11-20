@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Driftwood Pulley espionage toolkit payloads, as reported in campaign PTF-02892. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Driftwood Pulley Espionage Toolkit: Request to known payload URL (PTF-02892)",
+        "note": "## Triage and analysis\n\n### Investigating Driftwood Pulley Espionage Toolkit: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Driftwood Pulley espionage toolkit in campaign PTF-02892.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://api-connect67.example/update/7461.php\" or \"https://cloud-relay3.example/update/8911.php\" or \"https://data-mail78.invalid/payload/5168.zip\" or \"https://files-edge88.invalid/download/8961.php\" or \"https://login-mail1.invalid/download/6258.msi\" or \"https://media-static5.test/download/2597.zip\" or \"https://track-portal19.example/payload/4759.msi\" or \"https://update-data82.test/update/6610.bin\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02892"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "1af3d1d6-0f48-5b9e-9f62-e977ad65262d",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Driftwood Pulley",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-02892",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "1af3d1d6-0f48-5b9e-9f62-e977ad65262d_1",
+    "type": "security-rule"
+}

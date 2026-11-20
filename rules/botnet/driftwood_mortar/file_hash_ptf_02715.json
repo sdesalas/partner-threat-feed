@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Driftwood Mortar botnet sample, as reported in campaign PTF-02715. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Driftwood Mortar Botnet: File with known malicious hash written (PTF-02715)",
+        "note": "## Triage and analysis\n\n### Investigating Driftwood Mortar Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Driftwood Mortar botnet in campaign PTF-02715.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"78fb59221821e8deffec1786c7c1affd99d9abeb2518b9f5be33aba213908b6d\" or \"1cd00307aaa187dfedc966d16456a0dbde0c19756503fc44c2e4b87942081fdf\" or \"59bbd53e98c9d52e5a85a0f092ac4d6a2d70051456f88cc03a531ca04d718de8\" or \"cf71d215c9cd7c824fac08e63e2b8869721bd3bd9d2f54b44eb71c267f2a1fd6\" or \"b7653b935f2bdcd3bf84c5a61da55af622c2d3c521dd50b4e9b246f23db79eae\" or \"08b72a97e5cff59001fe60935b88d7b5ee8204f42673f9380aa9c36e2e7778cf\" or \"7e274ac2b78ec8ff6632f239b4dd2f972cb51314c94125408fa8d3f877688ae6\" or \"5c737881e858cca5d11a9977a47f081b46eb94c43115f23c75b61e121a35044b\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02715"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "c43df92e-3304-5b37-a6ae-30f38b1e473a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Driftwood Mortar",
+            "Threat Type: Botnet",
+            "Campaign: PTF-02715",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "c43df92e-3304-5b37-a6ae-30f38b1e473a_1",
+    "type": "security-rule"
+}

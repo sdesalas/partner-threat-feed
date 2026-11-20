@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Fennel Thimble phishing kit sample, as reported in campaign PTF-02887. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Fennel Thimble Phishing Kit: File with known malicious hash written (PTF-02887)",
+        "note": "## Triage and analysis\n\n### Investigating Fennel Thimble Phishing Kit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Fennel Thimble phishing kit in campaign PTF-02887.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"e70868587deb73b291537e841d4d603ea5c43b3410c17aa28c315d99d5ea725a\" or \"c0ae7e1566cb04c17b49e1c9bc0fc2dd598482c95c4e448091dce4206bb0e857\" or \"20853d571c126f2809b387e193e2264b7a408a20bcbf0f89dbb99c62a9a97c00\" or \"bdd2b16919e74614394fb2499f15f995e221447183bce0625e5784ae8b7d22c6\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02887"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "edc752e3-a554-5699-b22c-d85d60a75220",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Fennel Thimble",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-02887",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "edc752e3-a554-5699-b22c-d85d60a75220_1",
+    "type": "security-rule"
+}

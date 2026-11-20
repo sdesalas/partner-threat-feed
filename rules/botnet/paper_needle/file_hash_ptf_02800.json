@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Paper Needle botnet sample, as reported in campaign PTF-02800. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Paper Needle Botnet: File with known malicious hash written (PTF-02800)",
+        "note": "## Triage and analysis\n\n### Investigating Paper Needle Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Paper Needle botnet in campaign PTF-02800.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"4301021a78fdff5f586a3c1ff567dcf3dd8339452b10ea25cda20949ba53439c\" or \"37bee647dcedd1fbd14b7586cb6c876ff2def0468538604b9e62cceccf355c10\" or \"516ca8d5c937d20ec6cc8087969b5fcd0e0eda6cb6f679887de7790555bd5767\" or \"3110d1ae149f7258720abfd8daf9b6b69de29cd6064d436e988e41d285b5af6b\" or \"160fbae13ff84e0b33f6f666c751990e9f97a3fe82c429253b65db6a46590675\" or \"549a5848a44b450f1020c88e2c276f873bccde9fbd35a8a917777add94a3c818\" or \"2fd6fbfcdbdd3b0da3c88538f42df5c6b89500936e6b90076369f012bcf21431\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02800"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "45bb9b90-36ef-51f3-8bcf-d3bf57f63d44",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Paper Needle",
+            "Threat Type: Botnet",
+            "Campaign: PTF-02800",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "45bb9b90-36ef-51f3-8bcf-d3bf57f63d44_1",
+    "type": "security-rule"
+}

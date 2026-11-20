@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Lacquer Lectern loader sample, as reported in campaign PTF-02833. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Lacquer Lectern Loader: File with known malicious hash written (PTF-02833)",
+        "note": "## Triage and analysis\n\n### Investigating Lacquer Lectern Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Lacquer Lectern loader in campaign PTF-02833.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"a37ac0d94a5ce39678ff774b5fa3e5a70e401c2692606b0f6914a260ef8f5d1d\" or \"8a29b686791646c4c2d719576d1384dabf00f870a7125e730add4490813d6350\" or \"2d855be08e265b9e8a98fb69423cc67260c3545f2b5effe3d8a588b1991dd17a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02833"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "3b4580be-71d5-51c3-b1bf-91b2e4af937d",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Lacquer Lectern",
+            "Threat Type: Loader",
+            "Campaign: PTF-02833",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "3b4580be-71d5-51c3-b1bf-91b2e4af937d_1",
+    "type": "security-rule"
+}

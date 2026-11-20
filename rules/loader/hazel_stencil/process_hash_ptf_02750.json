@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Hazel Stencil loader sample, as reported in campaign PTF-02750. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Hazel Stencil Loader: Process started from known malicious binary (PTF-02750)",
+        "note": "## Triage and analysis\n\n### Investigating Hazel Stencil Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hazel Stencil loader in campaign PTF-02750.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"2f2cce3a98e8530aae781cdae3056c88a9202ad9f6fde34526d44eaa4029150d\", \"f46fbe0ce71d42ff2b34ae23c60679fb285106ca5b1e971715091d9f37ba5b28\", \"96e71fbc64dddd5f87e8009389e4740c36b500f1b5fcf157ae368ad26f37d810\", \"37f3bde8b5ca37f2347bae25870a2888f52cf1246692f207f68c131f559701d8\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02750"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "6f74bc14-4506-5a8e-83bb-5d7eeec68af1",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Hazel Stencil",
+            "Threat Type: Loader",
+            "Campaign: PTF-02750",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "6f74bc14-4506-5a8e-83bb-5d7eeec68af1_1",
+    "type": "security-rule"
+}

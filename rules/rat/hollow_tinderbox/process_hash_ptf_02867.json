@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Hollow Tinderbox remote access trojan sample, as reported in campaign PTF-02867. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Hollow Tinderbox Remote Access Trojan: Process started from known malicious binary (PTF-02867)",
+        "note": "## Triage and analysis\n\n### Investigating Hollow Tinderbox Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hollow Tinderbox remote access trojan in campaign PTF-02867.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"c43aac243d44b03fc0bd522303f70a2415d2828d2f647b187958bf7690c4c28a\", \"9ac5cfb5c01338e422d220ea479d03268c5b5de8f304231a51a1497102bc3ddc\", \"38fadc4af9e87bc857dfe3f115b5d105acd8736d3600f7b871e35dc7d56c510d\", \"445898ec9a0bb7e3ce59bc4a5eecc4938eee36309d809352c0ddf369290a6f84\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02867"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "15778588-5d27-5668-80bd-55d0d1f55706",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Hollow Tinderbox",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-02867",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "15778588-5d27-5668-80bd-55d0d1f55706_1",
+    "type": "security-rule"
+}

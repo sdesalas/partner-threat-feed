@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ivory Pestle loader sample, as reported in campaign PTF-02711. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ivory Pestle Loader: File with known malicious hash written (PTF-02711)",
+        "note": "## Triage and analysis\n\n### Investigating Ivory Pestle Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ivory Pestle loader in campaign PTF-02711.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"58250a7f92cd0ae70a33bce2641db62e385c83f2b953fecbbc4b000ce7c048a7\" or \"605287cb682759eb57b0ebe5c219598464d2e6f41fd201a679ba446fd2e9d357\" or \"d6a9d2f7adb8d056eb867a35f553bd9645f833c6cf1dea820dfac75d1fb0f4e6\" or \"e01ed4b22788f5fe641f5200b2b69b4d9513133fbef02cb9aac922bd1dc0be09\" or \"19bc4e694b933e68da644a530ac09a61b5b4d4d7ffbcd20b5be3f842c7583e15\" or \"b01fc2c1758e22183098f96c1d3cc02907c0c6a6812b4d79b3b1ccf65b45f433\" or \"42103268c21f41d0a23258b2e93c8c321a35f2282abf51d221296a0a70365cfd\" or \"48b155c640a6be170590ab626b14017e17eb7c5bad31fdb0eee71e3a2b5466e2\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02711"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "bba6a7c4-81eb-5471-92d5-f65cc640389f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ivory Pestle",
+            "Threat Type: Loader",
+            "Campaign: PTF-02711",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "bba6a7c4-81eb-5471-92d5-f65cc640389f_1",
+    "type": "security-rule"
+}

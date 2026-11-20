@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Gilded Bobbin remote access trojan sample, as reported in campaign PTF-02827. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Gilded Bobbin Remote Access Trojan: Process started from known malicious binary (PTF-02827)",
+        "note": "## Triage and analysis\n\n### Investigating Gilded Bobbin Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Gilded Bobbin remote access trojan in campaign PTF-02827.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"b2edcccba42f890e59756d7b18f207ea00d7e5a619552d545d430d34df08fd5b\", \"a404d08e7d7f8e052c839290dd5f3a006c05a79e059547ea304d20453a2b49a1\", \"5d93bd9f397defb8376c3f8fb79cca31e3a1c83db06e988153d1dc4c3392c52a\", \"08291b3adbe393fe66cc1a1f0ee393cdd6f7039e09270c9e2f69d0ad6471a705\", \"27baced9ad8bfeeffdc30c7708d6aa38db8ebb672d454c27dac08b5e39d30e04\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02827"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e0c4d129-a701-5d70-a0c8-b52603e57f2e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Gilded Bobbin",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-02827",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "e0c4d129-a701-5d70-a0c8-b52603e57f2e_1",
+    "type": "security-rule"
+}

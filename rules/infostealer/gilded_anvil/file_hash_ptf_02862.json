@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Gilded Anvil infostealer sample, as reported in campaign PTF-02862. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Gilded Anvil Infostealer: File with known malicious hash written (PTF-02862)",
+        "note": "## Triage and analysis\n\n### Investigating Gilded Anvil Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Gilded Anvil infostealer in campaign PTF-02862.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"c9bf3272b848685227bb75f61d0c69ab1536b9e47bbcd6ffbb7a9f0bcef0ed8a\" or \"a7642b5201f73c7f22d9690dba58b2406e939aa92cc26a3b776e1b859a2f3e4f\" or \"7c762b450b05731e9e4905ff8a6e37abfc61957ba96af60141ecc184339851d6\" or \"2b23a13ab99b18b6f0fdc417da53700d33227c2a56580d5b02565df18304964f\" or \"c47e2a7f32d970c66085d2def34429e4dc025f8d7ca0c1ac9d82ad6505b6bc4e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02862"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "153cad14-d516-580b-87cd-3f314c4f9906",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Gilded Anvil",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-02862",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "153cad14-d516-580b-87cd-3f314c4f9906_1",
+    "type": "security-rule"
+}

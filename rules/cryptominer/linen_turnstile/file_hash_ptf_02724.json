@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Linen Turnstile cryptominer sample, as reported in campaign PTF-02724. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Linen Turnstile Cryptominer: File with known malicious hash written (PTF-02724)",
+        "note": "## Triage and analysis\n\n### Investigating Linen Turnstile Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Linen Turnstile cryptominer in campaign PTF-02724.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"14115ec68f6dd9e180d6d7807c3c0828ec9c63aa8acc04c01661a2e9e5bc68c5\" or \"0a390eaf000faf8dc04f3f31f34539a4ed69632eb411da2a61cba9107cff7612\" or \"2baf0c7115b3bb47d10be9ad5eec2c98d6d8710d17055f5accbef696a64a4ad0\" or \"eee138bcb3c4df7072552f20a11e3445142cd715a60a6eebb67e88be4e62c1a8\" or \"f22b363980cbbd92467f31ad8bf23bcf7c269333ae6557d8d720046c6a2a395f\" or \"1be405bc7f8f21f0de473e0f197f80c4562b8d04caad5e1ed951e7da73800ec0\" or \"bfd0c182e3e1dc34ace0a41d70d1f57310de6ecb63c841fb4468e13fc32923dc\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02724"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "1d664517-099f-5081-b882-075e5589e731",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Linen Turnstile",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-02724",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "1d664517-099f-5081-b882-075e5589e731_1",
+    "type": "security-rule"
+}

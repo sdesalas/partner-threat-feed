@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Linen Ladle cryptominer sample, as reported in campaign PTF-02847. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Linen Ladle Cryptominer: Process started from known malicious binary (PTF-02847)",
+        "note": "## Triage and analysis\n\n### Investigating Linen Ladle Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Linen Ladle cryptominer in campaign PTF-02847.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"fc585c1c9b1f89a0b6d39f0af4dc9853a46749a585b363f958a6c7caa2b19d1d\", \"19ac30d206b026597f00528cf379df1ddc6cbd6977489872e3d87b7a0ee6f061\", \"12d1aef47fca0e3f7d73418c97a9361558024e33ffdc24739b7cbbd34dd121ac\", \"bd3a2367ec1f9869f127fd77324e6c751b779c5f4fadf877b87ea243ca1d07d4\", \"3a83345c4d4b92869e089dd5daab67cc6e53bd7b04c10dcb9337ebb38c47ce57\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02847"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "6d91f4df-7b9e-5e7d-a0bc-9ed34a9f923f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Linen Ladle",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-02847",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "6d91f4df-7b9e-5e7d-a0bc-9ed34a9f923f_1",
+    "type": "security-rule"
+}

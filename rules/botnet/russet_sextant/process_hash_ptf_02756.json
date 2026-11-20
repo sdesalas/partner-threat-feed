@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Russet Sextant botnet sample, as reported in campaign PTF-02756. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Russet Sextant Botnet: Process started from known malicious binary (PTF-02756)",
+        "note": "## Triage and analysis\n\n### Investigating Russet Sextant Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Russet Sextant botnet in campaign PTF-02756.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"5628aa7246ec15811058b25293082db5f6b44064e26d29b6e7cc3ae2300d6ef3\", \"0f164453c5cc3b70e705ad1f2a13a90f215856e419199144ac1c86987b3c9992\", \"20a24cbb91ea49fc2b16ab3e6e83880b6b3c0121bf401f64a10d3ec2aca88823\", \"b71c50f935067f6d774f87fc13209c211eff511458ef0a96968aa04e3211c25f\", \"5bb93a3c1d1a35e9ae2d5727fb88177735515aceef35713f8ba944472601ebec\", \"832a962629d165b8028d41bb99df66fa2d8188eb6ccd8cc8e5ff568559e84444\", \"e4c3b8dd986ce6ef90c72fb13b49c9532ec3e5e43f01ac06158bc851e8f0acc6\", \"0ef88d48c3323561b14a7f131f2f655af396fab69f99e82601848c9a8e1d18c5\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02756"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "cd790a07-3f06-56a7-84b4-8ea5aa2547a6",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Russet Sextant",
+            "Threat Type: Botnet",
+            "Campaign: PTF-02756",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "cd790a07-3f06-56a7-84b4-8ea5aa2547a6_1",
+    "type": "security-rule"
+}

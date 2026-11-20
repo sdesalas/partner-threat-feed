@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Fennel Thimble phishing kit sample, as reported in campaign PTF-02884. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Fennel Thimble Phishing Kit: Process started from known malicious binary (PTF-02884)",
+        "note": "## Triage and analysis\n\n### Investigating Fennel Thimble Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Fennel Thimble phishing kit in campaign PTF-02884.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"ef48e1d79a1a86ce94f19fc9962c0f98d45462dc0e52ddffa8239acda1924682\", \"5d64d205f1f396310cef59b74dede29b902247b628bea129b20e20b71a3c445c\", \"7b4b4801fa2e4e4292ae36157a5df72ce567e555197a7675471ec1930b9d5857\", \"d45bd2f848096f5807c18a8e7a05ff6b06d5908214c6cf99b410742c57231b9d\", \"09445e9434516463fc59c3287e240bcf0b5beb99d62c33e267483bcaad4fef42\", \"a8011852ffb43f1ae56ccd6564956776a3067ec2695730da1d6dd4cf3d63b62e\", \"9862578c4226072c6a26bb2f9ce9941b7c233b119c779f13e913de7e5908c9db\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02884"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "38f6a9ac-a9cf-524e-b7ab-a13b1de21fa6",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Fennel Thimble",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-02884",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "38f6a9ac-a9cf-524e-b7ab-a13b1de21fa6_1",
+    "type": "security-rule"
+}

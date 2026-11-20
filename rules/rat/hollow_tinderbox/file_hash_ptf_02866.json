@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Hollow Tinderbox remote access trojan sample, as reported in campaign PTF-02866. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Hollow Tinderbox Remote Access Trojan: File with known malicious hash written (PTF-02866)",
+        "note": "## Triage and analysis\n\n### Investigating Hollow Tinderbox Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hollow Tinderbox remote access trojan in campaign PTF-02866.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"66cb7ba3cb22d1355cb404e1c1b29852c993c4300f37ac38585f198f33c782e7\" or \"ea34fd5e098b468c43977198afccee55c09d26681715b533853febae8027f32a\" or \"2ca5474ab9598791e2bb27591b6b793639adedf08f49342912c9e3342c399e70\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02866"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "260b630a-8ad7-561c-b922-b93215b70352",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Hollow Tinderbox",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-02866",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "260b630a-8ad7-561c-b922-b93215b70352_1",
+    "type": "security-rule"
+}

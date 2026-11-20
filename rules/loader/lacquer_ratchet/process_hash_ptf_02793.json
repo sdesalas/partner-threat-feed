@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Lacquer Ratchet loader sample, as reported in campaign PTF-02793. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Lacquer Ratchet Loader: Process started from known malicious binary (PTF-02793)",
+        "note": "## Triage and analysis\n\n### Investigating Lacquer Ratchet Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Lacquer Ratchet loader in campaign PTF-02793.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"eae7d5ba5b611b7cff8ab5717415ed7b67c4f360c9b6318fdf9218937558bb49\", \"871ff3f362304f12d841e788d183f587b0d40a8ae772bb56720d061f6295b696\", \"066bad1bcae9f9b4472b09e5dd0207e4cb8f672c04ff8fe2b0fbb49de42edb58\", \"724c23ddbe282ccf327ab55dc5236ec8ab43c9a3b0654b61a29cd3e62ca6b69e\", \"5bd7e92c4135385dbd83d4f74a3612b39890948c388be49ed077e25942018d03\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02793"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f6954c57-c11d-580f-bdd9-f6307e73ae54",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Lacquer Ratchet",
+            "Threat Type: Loader",
+            "Campaign: PTF-02793",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "f6954c57-c11d-580f-bdd9-f6307e73ae54_1",
+    "type": "security-rule"
+}

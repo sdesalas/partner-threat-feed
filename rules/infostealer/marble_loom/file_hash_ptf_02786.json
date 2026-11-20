@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Marble Loom infostealer sample, as reported in campaign PTF-02786. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Marble Loom Infostealer: File with known malicious hash written (PTF-02786)",
+        "note": "## Triage and analysis\n\n### Investigating Marble Loom Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Marble Loom infostealer in campaign PTF-02786.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"5aa5c44fb496f6132f853cce36cdeb8fe1b79da62953f0233b20c5c19563ddf7\" or \"c70052e988ebdd0a60317222a760b99dddde05c5a485d8bb835c435c150ba7f0\" or \"6c0ccaa6cd16b5dc6d9bc1e2c7773c6127b7c365343dd0a7b55e6febd16b5886\" or \"c57e0e02bf5a3403b0fdd4a4e46c927c2d517f9c4cd3b3d64c36389ae2d2031c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02786"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e7061a61-c3c4-5e00-9146-8d7a0caeb8b6",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Marble Loom",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-02786",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "e7061a61-c3c4-5e00-9146-8d7a0caeb8b6_1",
+    "type": "security-rule"
+}

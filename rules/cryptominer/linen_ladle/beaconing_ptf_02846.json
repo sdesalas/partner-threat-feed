@@ -1,0 +1,78 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies a host making 20 or more connections to command and control IP addresses used by the Linen Ladle cryptominer, as reported in campaign PTF-02846. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.network-*",
+            "logs-network_traffic.*",
+            "packetbeat-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Linen Ladle Cryptominer: Repeated connections to command and control IP addresses (PTF-02846)",
+        "note": "## Triage and analysis\n\n### Investigating Linen Ladle Cryptominer: Repeated connections to command and control IP addresses\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Linen Ladle cryptominer in campaign PTF-02846.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:network and destination.ip:(\"198.19.223.86\" or \"198.19.214.147\" or \"198.19.41.16\" or \"198.19.179.153\" or \"198.19.182.37\" or \"198.18.170.16\" or \"198.19.64.58\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02846"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            },
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "f1e4ceec-18bf-5e93-8b66-e90a121da98a",
+        "severity": "high",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Linen Ladle",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-02846",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1071",
+                        "name": "Application Layer Protocol",
+                        "reference": "https://attack.mitre.org/techniques/T1071/"
+                    }
+                ]
+            }
+        ],
+        "threshold": {
+            "field": [
+                "host.id"
+            ],
+            "value": 20
+        },
+        "timestamp_override": "event.ingested",
+        "type": "threshold",
+        "version": 1
+    },
+    "id": "f1e4ceec-18bf-5e93-8b66-e90a121da98a_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Lacquer Mallet cryptominer sample, as reported in campaign PTF-02882. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Lacquer Mallet Cryptominer: File with known malicious hash written (PTF-02882)",
+        "note": "## Triage and analysis\n\n### Investigating Lacquer Mallet Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Lacquer Mallet cryptominer in campaign PTF-02882.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"5d9d510e2dbae369a2cfa1399e8c0058152feabfbb7b423e869eceea4af2217e\" or \"c62c4878cd572725549ebf0e0ff31343567bba50c31c1f784992f493261e82f7\" or \"456ac1fa591169d74c763f1db7eac5fbe95b85bbb30b48f085d377bc8a40c414\" or \"31577aae90c71c64526f050c023dca970904c9dfee6b22ef6424d2886ee2a47c\" or \"56fcbecbbe8f3c039e13f335313a716e10219a537bfabb599ec3fbff86d82252\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02882"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "303e0aae-00b3-5e42-99b6-588fa61e7648",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Lacquer Mallet",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-02882",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "303e0aae-00b3-5e42-99b6-588fa61e7648_1",
+    "type": "security-rule"
+}

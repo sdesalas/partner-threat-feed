@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ivory Pestle loader sample, as reported in campaign PTF-02708. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ivory Pestle Loader: Process started from known malicious binary (PTF-02708)",
+        "note": "## Triage and analysis\n\n### Investigating Ivory Pestle Loader: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ivory Pestle loader in campaign PTF-02708.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"0f7d40e9ec654b019c32bd06f7163cf16d6ec67c429255aa4590724127c70261\", \"22d8d95d47dd5c52568d6817cf1b13825ff88bb139c4cfe9be6ce8db2b847d1c\", \"1d99038a4b9f92a5c678689dcc91ee7b300f0ac307305b9992e8221dc6b4e159\", \"9d01b4d2a0a95f9f7b38f2c55e67991c6efa69253abfda421241e570e897dca7\", \"c273bccd5f0be4195b809d2d556d4f8164995d24cffe13074092e7fc4534cf58\", \"b17db4ac741daf4f7ac898182b48cbd1f6a867b88841307114739d7f021a10dd\", \"344c132c3fcb983a5057a7bdf19552f85ac3a8dea8b8e1efb952823a43facac1\", \"2d894f6ac0fbcc8dd811c4f5243b4e876a300cc7dc21459686e32bb1ea5c3771\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02708"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "1acc4aac-1a3b-5d2d-ad95-99e483dc5c3e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ivory Pestle",
+            "Threat Type: Loader",
+            "Campaign: PTF-02708",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "1acc4aac-1a3b-5d2d-ad95-99e483dc5c3e_1",
+    "type": "security-rule"
+}

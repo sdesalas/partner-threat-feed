@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Slate Whistle espionage toolkit sample, as reported in campaign PTF-02857. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Slate Whistle Espionage Toolkit: Process started from known malicious binary (PTF-02857)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Whistle Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Whistle espionage toolkit in campaign PTF-02857.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"65f76b343a550f6aa1c752812a2cb6a92ada75e2373578a5288d1051db455422\", \"6330283af46256505c0ac678e3f62a135b00c7c55ac80dbc36301a3b4d268501\", \"6d5c85596a3f3e484c3637032cc99d52e41182c04a0ba382726f95c04c2487c0\", \"0dbb65dbf059549c97752b02c1bc0b28235cd523cddc6ae9b3f8f6fec45dffd0\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02857"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e6405755-3588-5c26-9949-d9dc9aa38dae",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Slate Whistle",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-02857",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "e6405755-3588-5c26-9949-d9dc9aa38dae_1",
+    "type": "security-rule"
+}

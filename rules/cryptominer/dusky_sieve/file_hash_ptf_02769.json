@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Dusky Sieve cryptominer sample, as reported in campaign PTF-02769. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Dusky Sieve Cryptominer: File with known malicious hash written (PTF-02769)",
+        "note": "## Triage and analysis\n\n### Investigating Dusky Sieve Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Dusky Sieve cryptominer in campaign PTF-02769.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"9e4dd9412a89d57cf2f09fa57f744cd69143691db19d5b0ed64f3e401384e618\" or \"29abcbba44b1d2fbba5323db8ffbbc1c580d4e154a058e7c637b44851ee01924\" or \"27258985be7cd22d24177a07ecf17a67b81ff8cdc1a9a36b9418990974a321ac\" or \"70d75642334350aff7fbb118d2daccb2e6b870ed728b26eab3a5dfe77154e857\" or \"2ceb081a1c5f5dbb99c9ff59e3120432e45a2266311896073893194d41d01126\" or \"8c6836900b271591009f05bce368b94e8dce4661c0bd4a9c99951c928a8c1d34\" or \"c72cb92e931a9106cafaf02f0758a60eeafcd0e56bdb4848eda890b6285150a3\" or \"1fa34439bb5b8de61b0169b7c323ea41fb0f172b62114d36011836575aa3d278\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02769"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ed123dd5-6e86-54f9-b1fd-9c97ae7d3da6",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Dusky Sieve",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-02769",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "ed123dd5-6e86-54f9-b1fd-9c97ae7d3da6_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Marble Loom infostealer sample, as reported in campaign PTF-02784. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Marble Loom Infostealer: Process started from known malicious binary (PTF-02784)",
+        "note": "## Triage and analysis\n\n### Investigating Marble Loom Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Marble Loom infostealer in campaign PTF-02784.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"4f911629bdbb475bb2e53a68cf0d397972899629439e36be8c09437344d44e85\", \"9b9ec998d456cb0685c6e5effc95a87d0e99ae1c31c30606dad8766ff315c3d6\", \"1a82449eaec898ab31a37c45063de0da14c224a577ff4b920861b2640fb17515\", \"3561c32d9214cf74feca3562568e4a17e69c02f1ed4d4d3f532426f9fe65b5d3\", \"8fef2c0743c33639082a227b439bb590f97c3fa4cab9f719a7cf271041574585\", \"608c60c5f2b825f25862a6e8c0e7deaad0b3eea832a2a5d810eeca4c357da9f1\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02784"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "b6ceddd6-1b86-509e-a24a-2a4745b6e482",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Marble Loom",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-02784",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "b6ceddd6-1b86-509e-a24a-2a4745b6e482_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Umber Easel remote access trojan sample, as reported in campaign PTF-02704. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Umber Easel Remote Access Trojan: Process started from known malicious binary (PTF-02704)",
+        "note": "## Triage and analysis\n\n### Investigating Umber Easel Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Umber Easel remote access trojan in campaign PTF-02704.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"82740f4f9562934bddc5450b1aedbf63120ca9336b379dfb1b7c3e6db8144e35\", \"db1f64d4433c5e8fa7bbb89ba23256eba31ff1ae02b76c17ad115c86e0c17e10\", \"3cd84bfb6a2c0476aa3618023f55a115cbc7bba0a25c01a3d80f625a8edb7f23\", \"2aa8d04e62e6f454d53c7e5153915814b0fe6337747f1ec1edde6f28e2cc80ea\", \"8376630902298e17fec0399c0646a0529736e87988c3314667060a69a2968d71\", \"cd67b6ab7fe41aea893901c35ba8dda2831d986c8f3dbe1dd030e59927dd6e13\", \"95bea6919545e80cd2985c2ca6e4d124a133cde043e839a6a6a055ac2d9b709c\", \"0715a08b4faaeb74b9d5fbc7de22389292e8228ca32271863e0432df480c8924\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02704"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "5339102a-4a55-57c8-ba4d-b6c147b5d686",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Umber Easel",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-02704",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "5339102a-4a55-57c8-ba4d-b6c147b5d686_1",
+    "type": "security-rule"
+}

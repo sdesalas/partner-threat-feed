@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Quartz Inkwell phishing kit sample, as reported in campaign PTF-02814. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Quartz Inkwell Phishing Kit: Process started from known malicious binary (PTF-02814)",
+        "note": "## Triage and analysis\n\n### Investigating Quartz Inkwell Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Quartz Inkwell phishing kit in campaign PTF-02814.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"ce17c23af8ec50d6b003303d1943d756bc230e852c522aac7912738410157906\", \"4e138ebec8817e093c51a27e6d96241a135a6649329f7c3c26e2b953af7c38dc\", \"a5622e8763408f3beb4619536a470b56cbf9393aa0e5eecd23e3e0e84f2b2c0d\", \"00e23c1257cb61a7e212beabadd316f4ea446ea8d5d6e86ca2518ded7e30cb14\", \"9ba3e22bc30a4c21570777473aa3482264bab7268f9acbd6e022a711b7a1a59f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02814"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e9412669-cf4f-50c3-b68b-ea5bc5444fa5",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Quartz Inkwell",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-02814",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "e9412669-cf4f-50c3-b68b-ea5bc5444fa5_1",
+    "type": "security-rule"
+}

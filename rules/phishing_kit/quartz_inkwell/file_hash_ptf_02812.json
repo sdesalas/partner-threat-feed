@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Quartz Inkwell phishing kit sample, as reported in campaign PTF-02812. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Quartz Inkwell Phishing Kit: File with known malicious hash written (PTF-02812)",
+        "note": "## Triage and analysis\n\n### Investigating Quartz Inkwell Phishing Kit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Quartz Inkwell phishing kit in campaign PTF-02812.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"4bf8ffa1b115a24104a30d94dcf110032d1019371d286207353b2956b05db56e\" or \"881eb36cd1ecbeee59b83e4d57738e4b5f7bdd6d05d685e219443c33b7b36154\" or \"1ab67df668bac610c4386db70f763d69f3b0ddfbdeaf5780ad3e539c5dcde183\" or \"a5fe861d42f5020ae063559c69999f14dd55ea04ca5dc5dc67eb2b1ce628a2df\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02812"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "20eac6cb-d8fc-55f1-aae4-e3686ce071b9",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Quartz Inkwell",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-02812",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "20eac6cb-d8fc-55f1-aae4-e3686ce071b9_1",
+    "type": "security-rule"
+}

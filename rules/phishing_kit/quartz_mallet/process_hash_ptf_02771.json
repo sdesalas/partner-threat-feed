@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Quartz Mallet phishing kit sample, as reported in campaign PTF-02771. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Quartz Mallet Phishing Kit: Process started from known malicious binary (PTF-02771)",
+        "note": "## Triage and analysis\n\n### Investigating Quartz Mallet Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Quartz Mallet phishing kit in campaign PTF-02771.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"1969c4f502dd6af8525fae96dc24ac66278f6db6293d571414652de4f375104e\", \"9cac7e9b7f65b9af87d5578a65c76e1ade39474719c4149a4866f7394620d833\", \"768ef2fc27bddb80a32cfba55ecc0f18a160a6a53ec632c738e79d73ab4a90b4\", \"00f8c4a52e9f79aabe91dc08b92e5bd7901d6c24eeeb37991663695f236628eb\", \"14edcca000fffe98bf4c58a7d2345769c7f68eae3203d198dddf510892e9995c\", \"e9f7520cb870bf62b10ac0de7f45b83778147673421848a2c01f139139d9d36c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02771"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "359cb16c-6c23-56fb-8c98-8be16c9c3cd0",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Quartz Mallet",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-02771",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "359cb16c-6c23-56fb-8c98-8be16c9c3cd0_1",
+    "type": "security-rule"
+}

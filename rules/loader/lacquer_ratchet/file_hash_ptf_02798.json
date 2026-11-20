@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Lacquer Ratchet loader sample, as reported in campaign PTF-02798. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Lacquer Ratchet Loader: File with known malicious hash written (PTF-02798)",
+        "note": "## Triage and analysis\n\n### Investigating Lacquer Ratchet Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Lacquer Ratchet loader in campaign PTF-02798.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"d6c1c68fd7c4607a2ab2abd146cd541428e87a0918c7457d1b93b162a0316a37\" or \"6f2f508aa1e998ea25503a956eab9eb8c61c92aefe6fe1d4e8126be2eed99e18\" or \"e530b8018f5c2649dd7d8946f2aaaa39c3b891be8efd4fcd362170876741defb\" or \"b3d474a082b36419f347b9a364c0e426d95206b50c570c9683176ade489060b3\" or \"432fcf1a83c93426819abcef7407d5ad4bc2c8d57a80dc8af268e5179a81334c\" or \"bc1507543b361d70877f5acff591ba35e94d80f39a9b44304c5d979f88cba13f\" or \"b555b713672c988f7935ceb6490f36f0e27fffdab5a1f2e371aeebd6c9872c3e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02798"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "3ebd36e9-f050-5a07-8094-4ed0d31b3d7f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Lacquer Ratchet",
+            "Threat Type: Loader",
+            "Campaign: PTF-02798",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "3ebd36e9-f050-5a07-8094-4ed0d31b3d7f_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ochre Ratchet phishing kit sample, as reported in campaign PTF-02852. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ochre Ratchet Phishing Kit: File with known malicious hash written (PTF-02852)",
+        "note": "## Triage and analysis\n\n### Investigating Ochre Ratchet Phishing Kit: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ochre Ratchet phishing kit in campaign PTF-02852.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"1fa9c6bd888f61f65343c3d56e4b4285c6784387c86c019c0765bf2cb394743d\" or \"78b106eeba2b65362d82f7e426bb65c6275eb731e298c992bb7c14e57757e7fb\" or \"23e3b61effdac11edb89f9810b09b20329e8e082433ee30ecd52e41c2d2c7579\" or \"02eb2320c05f515afa7fdec676186e61f44fb21386feb2d8c71bf46f8234b4c5\" or \"4e8e356c9409bf8823067c0acebbe5f3c9674486698d82992ba56be413f9425a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02852"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "2648c745-429a-5c90-9d6b-0726ae69c6d7",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ochre Ratchet",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-02852",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "2648c745-429a-5c90-9d6b-0726ae69c6d7_1",
+    "type": "security-rule"
+}

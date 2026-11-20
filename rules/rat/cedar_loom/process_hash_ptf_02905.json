@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Cedar Loom remote access trojan sample, as reported in campaign PTF-02905. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Cedar Loom Remote Access Trojan: Process started from known malicious binary (PTF-02905)",
+        "note": "## Triage and analysis\n\n### Investigating Cedar Loom Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Cedar Loom remote access trojan in campaign PTF-02905.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"b63574384c170c90e4b19f08a2f8d52cefc75519ae618f5cb93e0647520f7c54\", \"2792fe9a7c758cf4fdc29bdc6ddf88971500539b96c78377fbce570c405a2939\", \"6bd1b1f28000700c3885b29bae1f9beb74fe10d98b546068590d531b57964fa8\", \"d5c05f12dff072fffbe34a2148f39ce50c334261da66e619c3ae49fb3fd82506\", \"9f291b85aab98c13ee07c4967929bbe04325274f2f5addeba282d50eea47f4e8\", \"505f6bb6d24f3ed32641e157f467ad3a84f7e3f05d07c2cc062f3b47507e366b\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02905"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "5d5907d0-5852-5aa3-890e-a8e63f71c0bb",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Cedar Loom",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-02905",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "5d5907d0-5852-5aa3-890e-a8e63f71c0bb_1",
+    "type": "security-rule"
+}

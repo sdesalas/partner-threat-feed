@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ashen Gimlet banking trojan sample, as reported in campaign PTF-02840. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ashen Gimlet Banking Trojan: File with known malicious hash written (PTF-02840)",
+        "note": "## Triage and analysis\n\n### Investigating Ashen Gimlet Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ashen Gimlet banking trojan in campaign PTF-02840.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"290810f32b8766eb74b5d740679dfd42797fc61b0e110ab32ab16d203d1a1c84\" or \"8fb4f1fc1416f41ab04e770283150e7ba2ac374bfdf11d193463679cabcd1908\" or \"8aecb62c309f37fc7784ba6fdcc09bf53afe8f1a32c81f6501ca05d92ce6b4d3\" or \"48bc8574e4bb0544dc725795ef624c580307b6290b09121d12f3c6637a4ec743\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02840"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "25da6080-2e83-5fe7-8ea1-f5286abf2e20",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ashen Gimlet",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-02840",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "25da6080-2e83-5fe7-8ea1-f5286abf2e20_1",
+    "type": "security-rule"
+}

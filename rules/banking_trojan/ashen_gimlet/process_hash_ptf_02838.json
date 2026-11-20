@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ashen Gimlet banking trojan sample, as reported in campaign PTF-02838. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ashen Gimlet Banking Trojan: Process started from known malicious binary (PTF-02838)",
+        "note": "## Triage and analysis\n\n### Investigating Ashen Gimlet Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ashen Gimlet banking trojan in campaign PTF-02838.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"6ce784c73d034baa3193a4968ad741874850e56ced012fa3ca9a0378e3e257d8\", \"66739f127a5fc2f17aa108f16cb06433e118b8f8075e62da5a78511339101063\", \"77cf43aa160845000e43fb8e6a4aa209a553ccf2fa27a0a2f33c56247637197d\", \"81311df314aeb3cd83ed1acbd4cdb3d26b5e41a410d0814408f4ef88a593a549\", \"b4970f14ce9a36210717af0901ec2b6b7b8811f50c4032e8ed32158f4f9d6f7a\", \"852bf0aed9ef4b5fc7d7efd5d8ef85f85d6a0ea14d75c8f4b188a74a822bcf03\", \"11c71ccc8e0012cc90a3b3ec456a150f5d46d777ad02cba5ddb851fc6371f76e\", \"d38818b4520598682c36ea216e61c4cbeced05769a664768bcd6bd90cfcaa8fa\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02838"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "c10fcb49-3a12-5bf0-abf9-eae2d9540966",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ashen Gimlet",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-02838",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "c10fcb49-3a12-5bf0-abf9-eae2d9540966_1",
+    "type": "security-rule"
+}

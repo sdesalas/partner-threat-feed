@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Mossy Sextant phishing kit sample, as reported in campaign PTF-02728. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Mossy Sextant Phishing Kit: Process started from known malicious binary (PTF-02728)",
+        "note": "## Triage and analysis\n\n### Investigating Mossy Sextant Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mossy Sextant phishing kit in campaign PTF-02728.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"660bce073056656f59d4ee6d5f4d64c2854ffc6e635fbcf8a37c079e06f2fb66\", \"e5c126bf75a272b0152198fa34e931b1596b40b8c4228123d4f2bca23ac7cc8f\", \"56db5d979ee2a1b794ba6cf7f3bb070c62ba496bdb8569975cdfadaa2abc9c27\", \"ae06b0dbeda178f894869dc138d0b9347a2c3aeb007d6f32570363a1312cce13\", \"146de8b6f6a878fb28429ff49d69ed2ff80e1631b823fe58ebcc0f669fa378cf\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-02728"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d84c4f66-538c-5e5b-97ad-a475cc44c8c0",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Mossy Sextant",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-02728",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "d84c4f66-538c-5e5b-97ad-a475cc44c8c0_1",
+    "type": "security-rule"
+}
