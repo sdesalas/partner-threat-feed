@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Tawny Pulley infostealer sample, as reported in campaign PTF-03524. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Tawny Pulley Infostealer: Process started from known malicious binary (PTF-03524)",
+        "note": "## Triage and analysis\n\n### Investigating Tawny Pulley Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tawny Pulley infostealer in campaign PTF-03524.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"d0ad42fef901eac97878a66fff29dcb47d5a9a921db5e0f177ab4037c0f4a37a\", \"4901294141f0c918d6996a156b14f5db27d1ece796e5a16a5dd617fa9843b0f9\", \"94e7da37b448ea8ac258343d051c520c5f003259dc7b28f3cae039bb889aa2b9\", \"8d6e9a8dd6c81c78384f44f506c7a0e147665feed157be4d1a3b1b8047f0140c\", \"9f992c69baefb801cdd9b4448248d9a787bc3a24f07ab120d73bba3ee3a9df24\", \"3e9c1df0533803002d0e60a1b64a7e7536bb128b3a71e4181de731c12aa8139e\", \"a503bfd61326768de502c5a6837f2779fa924f00c24a9885b304202b7912ae7b\", \"03ce3585f77276ba27f2e04891970c317fc836aaf78e855ad731b0395a68ec37\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03524"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "29b26020-86c9-5835-b5bf-ead27f02b0e3",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Tawny Pulley",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-03524",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "29b26020-86c9-5835-b5bf-ead27f02b0e3_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Willow Inkwell infostealer sample, as reported in campaign PTF-03338. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Willow Inkwell Infostealer: Process started from known malicious binary (PTF-03338)",
+        "note": "## Triage and analysis\n\n### Investigating Willow Inkwell Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Willow Inkwell infostealer in campaign PTF-03338.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"b68d2c89a64be79bb9d6e3a3247dfe2b47005d714e4de66891e3b01937b2412c\", \"c6567f7f567315219bfe15dc93e82e786745908ff76cbf8b22e814a94a6b24ee\", \"27b64367af93a5a679580461ead2b52cfed4084fb87dea904f993c5585c10ec3\", \"e4a48d3aef18247d2b54cf68079f4e022572078449812d7cc0ffe12e1b1b0db8\", \"b5fa89fba9e665a1145dfbc2f6d772f65d26871abeceaa6ba2c1d6abc4bb7375\", \"a08ee972ea94d69fc50b9c4ba06cd3e647dd6133ead752bc180bf51342ff963e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03338"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "0f5d40de-51a6-568e-90a6-af383f545b87",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Willow Inkwell",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-03338",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "0f5d40de-51a6-568e-90a6-af383f545b87_1",
+    "type": "security-rule"
+}

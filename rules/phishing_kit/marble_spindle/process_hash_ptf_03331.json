@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Marble Spindle phishing kit sample, as reported in campaign PTF-03331. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Marble Spindle Phishing Kit: Process started from known malicious binary (PTF-03331)",
+        "note": "## Triage and analysis\n\n### Investigating Marble Spindle Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Marble Spindle phishing kit in campaign PTF-03331.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"375e2684928d109563c62f2053a97932e4941888cefcedabc3a579c915429b03\", \"5f64210bc090959c7a3506477a51045fee8c02cb3d8571ee34b4acb7a0ec4b32\", \"081b941abc0b59776fee7604831e2c59bcbef89834f946e62896c7a7a850c90b\", \"27956b1b394e62cfe1518f7ee943cf1a47355cc12b90aeecfc6534f38c518874\", \"33154f7b42cf22f5a104dbed31231f4facc67b26cabf383c723064ddbcd40ad7\", \"1d3b6257e656fa67f616e73b05ea60c6e5298fecd0a1c788a1bdca1ede6f3bbb\", \"8d5ddf2139808c3ff996e5ec4fa83b5f4ac391c7f9b5fa44a28f1700a859515e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03331"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "21c9888c-03ad-5f63-b042-7d384199c395",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Marble Spindle",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-03331",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "21c9888c-03ad-5f63-b042-7d384199c395_1",
+    "type": "security-rule"
+}

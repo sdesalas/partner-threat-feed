@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Slate Abacus botnet sample, as reported in campaign PTF-03458. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Slate Abacus Botnet: File with known malicious hash written (PTF-03458)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Abacus Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Abacus botnet in campaign PTF-03458.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"b9ea19ef3426874b5f1d97b0bd51367c985bb86942445430e649f5647e590076\" or \"eae65f2a99e19ba36945c31c06279997b75bf91ad7ec3751680c82401ea90c0e\" or \"e76b80840eff5511c0ab89d75e78fa8735921eb2c6d76fb872587dcd8f8e63aa\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03458"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "c74011d6-ff6d-5ad0-8d11-bbcf49d6d311",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Slate Abacus",
+            "Threat Type: Botnet",
+            "Campaign: PTF-03458",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "c74011d6-ff6d-5ad0-8d11-bbcf49d6d311_1",
+    "type": "security-rule"
+}

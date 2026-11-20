@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Slate Abacus botnet sample, as reported in campaign PTF-03458. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Slate Abacus Botnet: Process started from known malicious binary (PTF-03458)",
+        "note": "## Triage and analysis\n\n### Investigating Slate Abacus Botnet: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Slate Abacus botnet in campaign PTF-03458.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"8e1b95ba0a50e631a2fc90b4fabf0935de89207ae6bd1b999093af171298305d\", \"bd1f2e4a4216c8a9319a67cf4ab9d7ee45735c9f7d0dc01df73d2d6bce082cf1\", \"5b10c362878eeea5c3a1b1c9edfb1f357d628d51b7a2892739d9e2959417720a\", \"e61a5cbe6e19c2eee47bedefa8d6c9487ef644645febebd9c81e143625140f30\", \"d4f8773b649284f572024b2a42a26aaad7aa331cc268fe55ae33652668a0f1c6\", \"e875e11ececc0aabe1373336510ad7778e7041a9cc2b946e79c1e2d749419db8\", \"d8564d0d62d6894c2b9834da732f3406b3cda20272b4f72aa5f63d78d4a78c49\", \"dbf1f80fa462d1a14c5279203d41aae376312e08737cccc8e97c7f5cccba5d89\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03458"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "20563a06-8ad4-5afc-bcbb-13b20e412464",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Slate Abacus",
+            "Threat Type: Botnet",
+            "Campaign: PTF-03458",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "20563a06-8ad4-5afc-bcbb-13b20e412464_1",
+    "type": "security-rule"
+}

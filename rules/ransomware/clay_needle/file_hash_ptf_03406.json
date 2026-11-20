@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Clay Needle ransomware sample, as reported in campaign PTF-03406. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Clay Needle Ransomware: File with known malicious hash written (PTF-03406)",
+        "note": "## Triage and analysis\n\n### Investigating Clay Needle Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Clay Needle ransomware in campaign PTF-03406.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"1541cbb4c5b421f4af189f29ff6ea55f3b4c28b44006e29b23ab587b034f81ef\" or \"7dc11045496a8d2511744e9a9a57636bc0740fb269e6d8a6f6efa290fb865c62\" or \"fac2a36fced5d65c6b1c39eb7114135cbbf2fffee34df2e5d0ce614c7f164609\" or \"c6da0ea1cd265c50ab0dad833052da60dcff095445b450934e1870b7c98f711d\" or \"da152659332a7a71c31243a89b45216dbd277ecaf7046a662d13ea01bc4001c8\" or \"157df5103de30771d0b3915923e3b9621c83d05e3d8ebe46b92e918ea9705d77\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03406"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ac03bf7f-a2d8-5713-867c-d51b7c3389aa",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Clay Needle",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-03406",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "ac03bf7f-a2d8-5713-867c-d51b7c3389aa_1",
+    "type": "security-rule"
+}

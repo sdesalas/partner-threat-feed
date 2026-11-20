@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Chalk Valise cryptominer sample, as reported in campaign PTF-03468. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Chalk Valise Cryptominer: Process started from known malicious binary (PTF-03468)",
+        "note": "## Triage and analysis\n\n### Investigating Chalk Valise Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Chalk Valise cryptominer in campaign PTF-03468.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"d995beabeaff76551995142cd3d10f3d83675c114842610b3829154898585e8e\", \"2fae115b7ef40722351f9f2ebcf333a2f63b5e9fab1cbd8955285151e63ed445\", \"5082fbcc29df8ec886eac19608350db4778699b31ae045858af0f1a448a43ba5\", \"4afdd97862881ac05285eaf83d366b0d774bd39cf42e181ac4988dd7940eb38c\", \"67ef621c69be49731e3eb6cc55f44f9e33d08f75694ab07c716a1e392426d8bb\", \"2d2e8e87b450df4fa3a3bb15e5eba14cdbe98bcc5c2eba8d6fa146a87a752f2e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03468"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "2ff075d0-3005-5363-ad9a-b1f3895cea36",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Chalk Valise",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03468",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "2ff075d0-3005-5363-ad9a-b1f3895cea36_1",
+    "type": "security-rule"
+}

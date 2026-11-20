@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Chalk Valise cryptominer sample, as reported in campaign PTF-03464. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Chalk Valise Cryptominer: Process started from known malicious binary (PTF-03464)",
+        "note": "## Triage and analysis\n\n### Investigating Chalk Valise Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Chalk Valise cryptominer in campaign PTF-03464.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"8789b0ee4a5628f7702b94da19dbf0eb4164ce0058275fab2cbd669796add385\", \"7cbe7d1f52a994b8f72e10df94b96dceddfe15e875b5233d5c6662378a6c5d8e\", \"4911f58b75af4c1017e79b9e8eb353fbfaf4b3c540e01e31b58f239b6aacffed\", \"98c61a1bfa74125ea22d1fb7c51c558880fa88ed8fe060a7f0e6c75e6db67d1f\", \"a9640946c81c9fdaf67ff0c480e02deaccd5390a5f50540cbea5d4361acfec69\", \"bfd1982cba683c25056a746519096b0c6c9d087dc66b9c0e230ee2872a2d8e17\", \"1381e48be8c703d844faada4912d1f108aa32d36ad7fc0a89eca2936f1a08740\", \"1a930c1ca45ac1c5402ccd0a328d35de1b79557ff73071d2ca4c0aebc95f932e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03464"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "fdbe8fb2-e9f2-5ddb-8acd-f2de51b1305e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Chalk Valise",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03464",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "fdbe8fb2-e9f2-5ddb-8acd-f2de51b1305e_1",
+    "type": "security-rule"
+}

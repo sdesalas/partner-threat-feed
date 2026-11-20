@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ochre Whistle botnet sample, as reported in campaign PTF-03498. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ochre Whistle Botnet: File with known malicious hash written (PTF-03498)",
+        "note": "## Triage and analysis\n\n### Investigating Ochre Whistle Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ochre Whistle botnet in campaign PTF-03498.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"863f42f2f6d62c168181394e87cd210a0447542b1003095d23640a6812a20dbf\" or \"75ba792db42a0cb3e0fbe27fdcc487fa2c3e08c48c92d552a19504e9cdcad8bd\" or \"c4191c7501315f3689751c05e3d7a1a1fd9a9b13c9af90900ddcc22767b92124\" or \"883d5c3b432ddc49a2b8e17a469e2220a2602834515ce48764c8440550433069\" or \"6155b8048051a72631b2789565904ed79918e69d25c3cdeb53566232d707e882\" or \"54d76845335f12c40d50209fe86f3e37bcc539e70a9621e39ab51576c345dca5\" or \"1803e93aa03cf48c6d68708a8a62a97431c83ecdd721d541d5cb25c40fecc39d\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03498"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "06c29462-773a-5354-bc5e-b06716a1cbef",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ochre Whistle",
+            "Threat Type: Botnet",
+            "Campaign: PTF-03498",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "06c29462-773a-5354-bc5e-b06716a1cbef_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Fennel Wicket cryptominer sample, as reported in campaign PTF-03356. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Fennel Wicket Cryptominer: Process started from known malicious binary (PTF-03356)",
+        "note": "## Triage and analysis\n\n### Investigating Fennel Wicket Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Fennel Wicket cryptominer in campaign PTF-03356.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"80e543e6c5c9ff316eb2acbb633bfe119d86b321e69c88c9685095f4fd6300f8\", \"76420bc4cd789808e56c541c0afb367ca71dadaed1006e4f4ea83f973f60c051\", \"d50f0424f0973d4b4ec6a1c9b54fb501cffba91164b1627f85d8615cc5547f21\", \"39161eadf39810454a94e7c0a380d06ef266c2592bda81a3bfa4953f5e5df8fc\", \"8daa7a79d35db21e880f8a547dc698283f69a87e8bd6de7a69491e9b4fda847e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03356"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "825b3410-b2a5-5ab1-a390-8ce0e3c76bb0",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Fennel Wicket",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03356",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "825b3410-b2a5-5ab1-a390-8ce0e3c76bb0_1",
+    "type": "security-rule"
+}

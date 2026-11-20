@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Verdant Pestle infostealer sample, as reported in campaign PTF-03410. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Verdant Pestle Infostealer: File with known malicious hash written (PTF-03410)",
+        "note": "## Triage and analysis\n\n### Investigating Verdant Pestle Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Verdant Pestle infostealer in campaign PTF-03410.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"1f12b9fbc07ad4955fe13ffd50fc19fbff531375dfba0fc6d312cf46659c6f1d\" or \"bd768f3f45077fb999c52ca6e79d31d7e5ae5db51e83c688148c3cb8ec0d0809\" or \"edd70a33a7d0412d474d9f5f1cb8e8df7337d65b524da97c854ecaad4d38ed65\" or \"b359e3b0ddeaa6ec94d0e452d2ba473047b1876c4511eee47f45968d1851491c\" or \"e45e42c76ce01752cbe56b1d913d233d45f0144db52ab820fa7aebd94dee19cd\" or \"bcde47a2a17852d76de12fd343515da6fec4392d53f905c0ea86783722af14a8\" or \"1e7aeebb6e2a0ed7585ddd9175aa2c7c64a9d065450b1e515ca57a7f209b2c29\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03410"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "cf20d2fc-ae1b-567f-b07f-89a3a0a42082",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Verdant Pestle",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-03410",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "cf20d2fc-ae1b-567f-b07f-89a3a0a42082_1",
+    "type": "security-rule"
+}

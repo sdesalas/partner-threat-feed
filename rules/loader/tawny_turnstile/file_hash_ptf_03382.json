@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Tawny Turnstile loader sample, as reported in campaign PTF-03382. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Tawny Turnstile Loader: File with known malicious hash written (PTF-03382)",
+        "note": "## Triage and analysis\n\n### Investigating Tawny Turnstile Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Tawny Turnstile loader in campaign PTF-03382.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"1b4ff2da47212f5fb21919fef7b20463cd203a832bb8a5481346dee38c884c0b\" or \"39a15d2ce384ace19ad0b376d9ee54714dc1fa50a8ad897a531e4579d5e0edee\" or \"5947eff63b737d86bcf06ef5446451d4a03f34a5e9863087436bce17276e246a\" or \"64708d32812e9a74d770d64bfe60ab6bef56f4ba9b708767f96cf609cff952f2\" or \"64ae05970a302358f7981ddd1dbc36c12835e89284fcd8a2b4e17d2a84e760a4\" or \"1cddd2fde1ee942178cdd3981d30980e2e4ad4aa016df32f8812c0c6c083288f\" or \"5ecefd96cf063326ad264f8c71c304680bc78fecff4604302c8403afb38b13f8\" or \"ba070019b7d7eafc6502ec4b3b22b58ad3c9c57c2909a2b6d8ebc5c7461d59d4\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03382"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "6ed67fbb-d945-58ff-8831-2a377e8d3681",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Tawny Turnstile",
+            "Threat Type: Loader",
+            "Campaign: PTF-03382",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "6ed67fbb-d945-58ff-8831-2a377e8d3681_1",
+    "type": "security-rule"
+}

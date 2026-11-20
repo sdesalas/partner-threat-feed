@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Paper Ratchet banking trojan sample, as reported in campaign PTF-03423. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Paper Ratchet Banking Trojan: Process started from known malicious binary (PTF-03423)",
+        "note": "## Triage and analysis\n\n### Investigating Paper Ratchet Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Paper Ratchet banking trojan in campaign PTF-03423.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"281b4727d6f7bf522a87c20c809acd021962c5e99899cfe319d1c806618fac1c\", \"1b1487514a1e72acc86282642b2e82969fea4bcc37690f8361aaa63478b9da8e\", \"23fe3423b2e11e1f9e61171d4888cfc419d3c20cded8a7f9453be4c343ca66fe\", \"1aa2545831609e20f4dfcc9078b7d77a5d653e63bfb2ccd0867b842780bd8e64\", \"e9c895e06903666228c93bfae40a7ce6ce5e65c7bbffc9ca0c0777b11360c6bf\", \"f4662ef8ae6bf1734fee293575af244b5d4c2dfb4c2b18e3d7c9870de6f8fd55\", \"59804e316a2db1a49dc63c933760a346dbefffe6526128b38eff9db32893cba1\", \"82f0c63b2120b6f629b41d48f41653f97c1b98b99d5a57bf5aacb41d16b6fa8c\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03423"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "fb7a2138-bb9c-51f5-90ce-a460ca161492",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Paper Ratchet",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-03423",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "fb7a2138-bb9c-51f5-90ce-a460ca161492_1",
+    "type": "security-rule"
+}

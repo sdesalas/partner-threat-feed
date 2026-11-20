@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Verdant Ratchet cryptominer sample, as reported in campaign PTF-03507. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Verdant Ratchet Cryptominer: File with known malicious hash written (PTF-03507)",
+        "note": "## Triage and analysis\n\n### Investigating Verdant Ratchet Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Verdant Ratchet cryptominer in campaign PTF-03507.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"625f05232ce7856cca0412560e18a638d86bcdbf8590eae28e42cda314fb6173\" or \"e661cd4e0b0b33bbb2694424192d9dd8b5048bf12eb87629b2215c6e3267303d\" or \"9ad46230466cf3b8aae28bee6fb997492620e6cff6d6e1b093a1c101da989fe4\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03507"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "a7c5eee3-59bf-5fa7-8277-29b4ea96e3aa",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Verdant Ratchet",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-03507",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "a7c5eee3-59bf-5fa7-8277-29b4ea96e3aa_1",
+    "type": "security-rule"
+}

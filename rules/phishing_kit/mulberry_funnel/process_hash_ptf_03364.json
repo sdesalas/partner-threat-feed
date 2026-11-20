@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Mulberry Funnel phishing kit sample, as reported in campaign PTF-03364. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Mulberry Funnel Phishing Kit: Process started from known malicious binary (PTF-03364)",
+        "note": "## Triage and analysis\n\n### Investigating Mulberry Funnel Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mulberry Funnel phishing kit in campaign PTF-03364.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"9a1bc1c183053dac8f75b2fa9c960f0321a578d9e2d7cfa34bfa895e75dbc957\", \"6a0a9b661a3e09a5ab5271945fd93d24ede82bc960e50c2f4fdf99a9198e9da5\", \"9e00e8d2bb047d91f8ca73c09e5ef5ed607f51faa7ee939762e2ce81205fe3c5\", \"81291efe6534cc8a3f260e682b66c344e66c621fb4b5ff2518eda824a2cccdc6\", \"e1d36c3accf2a8ea65e8f53f759d935eddcd7d394509109aa8d7741b1e59a2a6\", \"5accdcd5c6b27342310c598ded49f1bd39c8be5b07c8860b3e23b551efdac4cc\", \"0c2721e314b7610e3f9c4af611988b94842f17d2f52018fc23d3e5e1a88c8483\", \"9a6093c3359cfc38365c1e37b4911ea823244b9686a13bd196d2ff34a542da73\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03364"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "861a9503-24ec-591d-8bae-162d9aa3232b",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Mulberry Funnel",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-03364",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "861a9503-24ec-591d-8bae-162d9aa3232b_1",
+    "type": "security-rule"
+}

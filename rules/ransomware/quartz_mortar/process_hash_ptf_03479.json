@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Quartz Mortar ransomware sample, as reported in campaign PTF-03479. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Quartz Mortar Ransomware: Process started from known malicious binary (PTF-03479)",
+        "note": "## Triage and analysis\n\n### Investigating Quartz Mortar Ransomware: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Quartz Mortar ransomware in campaign PTF-03479.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"0c8f84d427fac99d6c2de72a0bdbc0e38acb4747c485fc737d0ab9e92301dfa0\", \"cbcd5d005d2786e74fca24456f1f0ccf9f0e08054b8d2a81900d926e00f3a813\", \"796641e81f4e31982234198b807e74ef9ccfe12cec5d19da2204ff6709f1b73c\", \"9cf6b4f7fa600b684ea3c3ed673515206325602c3f7285166f82bd5803480f34\", \"f970a60b7ea43e5091b82bc0a351a39d6b08c2bf3ef9c65d7fc401d7fdd083f3\", \"3df86e378e71001147f086acef2d3b0fc7d5c53939ca258d0f35f121aebcfc32\", \"dc261cd364282b33a63cdc902942cb6ecc486ece8921f75795d37dab509066eb\", \"4094f849e41d013614b15cef858dbb91c41be8ce561e6c5ab0d3868af1cf5bd4\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03479"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 99,
+        "rule_id": "7a804d7b-3513-5618-95e8-678336a8a9c1",
+        "severity": "critical",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Quartz Mortar",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-03479",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "7a804d7b-3513-5618-95e8-678336a8a9c1_1",
+    "type": "security-rule"
+}

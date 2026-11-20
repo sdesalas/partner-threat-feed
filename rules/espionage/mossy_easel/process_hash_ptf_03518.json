@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Mossy Easel espionage toolkit sample, as reported in campaign PTF-03518. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Mossy Easel Espionage Toolkit: Process started from known malicious binary (PTF-03518)",
+        "note": "## Triage and analysis\n\n### Investigating Mossy Easel Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mossy Easel espionage toolkit in campaign PTF-03518.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"9b4d98b0a6f0a6a3dab35843f7ebb16765f853f3263c301f03a04801b0e508b4\", \"c26c8593de7f6a303bc716e5e5664199039918ac4d86bd395f197b5a1e87762a\", \"d5b7ab58e80093217a65ba657adb8e5fa2a13ef8e9bbc975855df2c09f469be4\", \"e95766a1eafa935e2fdfa7f5f32f1dad8d1800e77ad129453600a4e7b043bb60\", \"753935200cd34b110ac91dd102664e26bd691c7e21efeeac842d696873d4d830\", \"4af98fc884cc538ba13006b8a2421b8a2c3c8072b8c6bf7ad178535c5b8b0521\", \"c867444e2bdaca1767824dd9a3a3c0efeea20f0dfb2d00b0145922bbc66459da\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03518"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "2de75635-ae7f-5a54-80ee-48db30699749",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Mossy Easel",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-03518",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "2de75635-ae7f-5a54-80ee-48db30699749_1",
+    "type": "security-rule"
+}

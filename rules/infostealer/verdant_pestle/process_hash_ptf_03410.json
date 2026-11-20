@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Verdant Pestle infostealer sample, as reported in campaign PTF-03410. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Verdant Pestle Infostealer: Process started from known malicious binary (PTF-03410)",
+        "note": "## Triage and analysis\n\n### Investigating Verdant Pestle Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Verdant Pestle infostealer in campaign PTF-03410.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"a16194c1d1bfaba5244764f3c1a8b7d4cfcb560d2cf2ffa5dc697527b1fba473\", \"cac751938505db87a57583b4f88d4e182ea5499ff59ea567a5a3e98004759495\", \"1d478c8b1d0427c77d98a2ae210b5731d9628db0d0c4434b8ba37ed5c53d78b9\", \"790fa8569ea4a79d0ccfe9a37cf04011b7f086714474904a54f463bc1f616825\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03410"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "cd1f7ba5-1626-56b5-82ef-18cc60fae02a",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Verdant Pestle",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-03410",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "cd1f7ba5-1626-56b5-82ef-18cc60fae02a_1",
+    "type": "security-rule"
+}

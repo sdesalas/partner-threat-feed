@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ember Anvil espionage toolkit sample, as reported in campaign PTF-03474. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ember Anvil Espionage Toolkit: Process started from known malicious binary (PTF-03474)",
+        "note": "## Triage and analysis\n\n### Investigating Ember Anvil Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ember Anvil espionage toolkit in campaign PTF-03474.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"c0d473cb64453b39992092d80961d61ef7f52eb5bdc604277852cfcee3a0759a\", \"f2e89a0603497be753c6eef1728f92ed658e86459e2d0ac8d22918266be9677d\", \"a0e650a5a319e054f7877d99ee04868c06613d414b529946a3da1d412810ab93\", \"ad660a2c07e07430412caecf58a8079ac8c08e7414fc8d46caf2b3c05eec8b98\", \"808a38543bb7b8fa2e14bf7abbd8748a5124e9b8e3032a0bf9f1460764ddb408\", \"8677436ae17c5250f2e45ce310a55e5f74501c008cdf43aeb1f37b72ff84d48c\", \"31b4f5c130b58be3bff7c8614106bb322569f66c3ed48621cd7e5fe6c0d752e7\", \"c3ead7b2645efcee0dca3337564c4bcd26e96e0cd5284d449a464ceb5734697a\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03474"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "2d8fb68d-27ec-5ebe-b961-b68586853a70",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ember Anvil",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-03474",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "2d8fb68d-27ec-5ebe-b961-b68586853a70_1",
+    "type": "security-rule"
+}

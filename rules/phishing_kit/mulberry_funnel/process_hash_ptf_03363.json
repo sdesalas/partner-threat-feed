@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Mulberry Funnel phishing kit sample, as reported in campaign PTF-03363. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Mulberry Funnel Phishing Kit: Process started from known malicious binary (PTF-03363)",
+        "note": "## Triage and analysis\n\n### Investigating Mulberry Funnel Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mulberry Funnel phishing kit in campaign PTF-03363.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"a8ccbff711e1856439a916aff20e0c25b6f5d199aea8570b3c38b08187a54e71\", \"0628392c64f776dfb64f0d01378dc18cb6c0411614137e4edf619dedf5c8d0e4\", \"3d7edc061db41e62574f046753b6a6073497e0a50435efbd0ac3d136baf37b18\", \"061cfd7bb2292c91d48419ac9e086f139438d13f4f87d704df0b6b9d8649e8e1\", \"212adff2d7e890d7736d33cd190ce1bddb2025652110ec962a9576f29eb7381b\", \"a83f7f3421c613f272f24b005fcd150b6ffe6701fce6065fdc9556852da6f619\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03363"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "523eb789-531d-5bcf-b54d-f2bedbd4f25c",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Mulberry Funnel",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-03363",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "523eb789-531d-5bcf-b54d-f2bedbd4f25c_1",
+    "type": "security-rule"
+}

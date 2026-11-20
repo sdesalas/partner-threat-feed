@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Hollow Ladle remote access trojan sample, as reported in campaign PTF-03343. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Hollow Ladle Remote Access Trojan: Process started from known malicious binary (PTF-03343)",
+        "note": "## Triage and analysis\n\n### Investigating Hollow Ladle Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Hollow Ladle remote access trojan in campaign PTF-03343.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"2399aaeb773c33f1e59d10ec5ea4f8b9df45cc12a6254e4c05348c1e0e509487\", \"7a8932ad510248e46620844238c1decdb898db45a601683ab08a068be8ee02cf\", \"5dd4d16edb08fae2a0400c07a6bd69cea1de57a87ca98561e0f596d4333bbecf\", \"2af74b54a491963a918bedeb8d80ba7cf67d94f14486307423455dd202d42c06\", \"f9eae03480963e4ea13adbcc6aed4bc98cebab7c1b41bce016eb39edd56ddaaa\", \"37dcb7e41c51e86441aecfc8f6bfea569a2075c7286a7b2ccb8a4ddbe9ea5b10\", \"dbe20cfca39db38524b2c3072060730490cf0840859aa24e224e475049ba7dd0\", \"3570e582830c477d03b46aabecab38b9f179feac96c6eb513a1376aa8e2664c4\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03343"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "bdd7b87b-ff6b-530c-8ad1-7e75867fafec",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Hollow Ladle",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-03343",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "bdd7b87b-ff6b-530c-8ad1-7e75867fafec_1",
+    "type": "security-rule"
+}

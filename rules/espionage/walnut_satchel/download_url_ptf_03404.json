@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Walnut Satchel espionage toolkit payloads, as reported in campaign PTF-03404. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Walnut Satchel Espionage Toolkit: Request to known payload URL (PTF-03404)",
+        "note": "## Triage and analysis\n\n### Investigating Walnut Satchel Espionage Toolkit: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Walnut Satchel espionage toolkit in campaign PTF-03404.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://api-api32.example/update/3426.msi\" or \"https://login-files53.invalid/invoice/6420.zip\" or \"https://node-files3.invalid/gate/8196.bin\" or \"https://relay-static32.invalid/update/1102.msi\" or \"https://sync-portal25.example/doc/9349.msi\" or \"https://update-relay5.test/doc/6560.zip\" or \"https://update-relay55.test/download/7305.php\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03404"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "bec835aa-a0af-5667-aa34-63e05d76e56c",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Walnut Satchel",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-03404",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "bec835aa-a0af-5667-aa34-63e05d76e56c_1",
+    "type": "security-rule"
+}

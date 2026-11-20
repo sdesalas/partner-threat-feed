@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ochre Teapot phishing kit sample, as reported in campaign PTF-03469. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ochre Teapot Phishing Kit: Process started from known malicious binary (PTF-03469)",
+        "note": "## Triage and analysis\n\n### Investigating Ochre Teapot Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ochre Teapot phishing kit in campaign PTF-03469.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"d998d1f7544f5063a25afa9bdcf722debbcb9c374fca5b1ce21a13311c0fe077\", \"b72eb34c232f88a573be6ed11b5d84b6bf1edabf32325a5b258ca4700ee4b930\", \"3e1f49859647e520bbae51178da7b1304e43939cd18a5a5dd70a7e3110979223\", \"5975944c19008df19bec5ad7d501b4eaa6256d0eef0fecebcb914e796b5dc59b\", \"2969aab38f186e8c9f6ad28ae485a87ee86db2018397e58467a2ec83b32b1e2b\", \"fafda6341d15ec0dea78e1c20ee8c578bfa0eeeb8a38d5523b95250debc0b80e\", \"47541e0efc374e96dbe6890127c0577246ce6e116b8b521797aca8d41876857b\", \"44eddb6035cfce04d0a0ae3c28211a76ec94889b616296148a565e0c44064976\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03469"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "2342217b-c464-5d2c-9a66-76fe97709f58",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ochre Teapot",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-03469",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "2342217b-c464-5d2c-9a66-76fe97709f58_1",
+    "type": "security-rule"
+}

@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Clay Lantern ransomware sample, as reported in campaign PTF-03521. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Clay Lantern Ransomware: File with known malicious hash written (PTF-03521)",
+        "note": "## Triage and analysis\n\n### Investigating Clay Lantern Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Clay Lantern ransomware in campaign PTF-03521.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"28af2cc226da3f4f1fac5af1f1c270f0fb899557b2441a1eca77d8facf31571f\" or \"6e0507c1d7ea4f181afb15bd429d2cf47f836eca947eeb58418e3a8ac0387ac3\" or \"c29abe3e87d531eb160363842046d4b0aa06515ea4d3d087e465e66622adbe73\" or \"af4f6108c60077a6f03ef302d0b9dd4c8ef6d0c31c21df385fee3101f36f09a0\" or \"4e3dd36fc1d607dc14a06fd88936ed3ade2e0d5da9a196711621b371dcd775e0\" or \"57118e7bc980422c48f8c8b172eac1b8ca7e8a4957b9d7950035c291e9cbe328\" or \"ae9ab64a6d8f5a9804f0e55f6f6540e49ed47120b3e8203a4cd455f757f17200\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03521"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "2fe1b2ec-fd73-5e24-882d-c4b1a9927151",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Clay Lantern",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-03521",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "2fe1b2ec-fd73-5e24-882d-c4b1a9927151_1",
+    "type": "security-rule"
+}

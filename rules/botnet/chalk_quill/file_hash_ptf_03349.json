@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Chalk Quill botnet sample, as reported in campaign PTF-03349. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Chalk Quill Botnet: File with known malicious hash written (PTF-03349)",
+        "note": "## Triage and analysis\n\n### Investigating Chalk Quill Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Chalk Quill botnet in campaign PTF-03349.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"96ffd5e6c31c73ccd7d237a98b0041198117ae51f9c843879a7d5ab7f2bde3c6\" or \"18a33f7ce450e4bb2f56bc46217a1950a0ac787cf62f7d06c0851b350e4fa729\" or \"58e7b812b91eadd82cd698591f5b702b76244ef948a796f5869db46577293177\" or \"05774fa3df615b0cabbe516309417e1859dbc2d602dd2af738eb240fff69a173\" or \"95cf9c78019688369f7178a93a70bcb7d989fb17c09ad348e725797657fe6da8\" or \"65ff915e1af8ffb0667bd5188fdc63f1ee944c00de032ed1da2a68e6ff040b83\" or \"a451a4330c4598540d130b64a4a1c44b542640f95a4c50ef962f46444faf7a20\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03349"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "ad778160-530d-5681-9fd4-28a26247320e",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Chalk Quill",
+            "Threat Type: Botnet",
+            "Campaign: PTF-03349",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "ad778160-530d-5681-9fd4-28a26247320e_1",
+    "type": "security-rule"
+}

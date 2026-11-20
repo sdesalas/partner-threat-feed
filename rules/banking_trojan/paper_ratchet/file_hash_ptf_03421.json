@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Paper Ratchet banking trojan sample, as reported in campaign PTF-03421. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Paper Ratchet Banking Trojan: File with known malicious hash written (PTF-03421)",
+        "note": "## Triage and analysis\n\n### Investigating Paper Ratchet Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Paper Ratchet banking trojan in campaign PTF-03421.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"3ca58912375cc4218ee8bed4d95f3ef931a2c7d29e87a214c1e220ee92d61e0d\" or \"3b674be1293b339abbc4c99d0d0d62509d92c718ed44c33cb72697ec33a0c58c\" or \"2e4ea3e90d34f785a0d76cf77c1faf097ca8e36ee261b90327f92a39851e80b7\" or \"6b169f1ec67206f6d40856a8c8f6627b620f5d74d87c442cddc00899941fa0e9\" or \"faf48b5afea40c6e60148de8a7e8ac4e2a5eb13aed775983d9a718fc7f634d8f\" or \"0b9ec194b5710102639e2ca61cc4266c025b37aed5154b07f9beeff4bd9ce00c\" or \"49a9b4b5a215852cd426b0aff7934a64d5132c96f2086d879458dc316ea7b89e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03421"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "359140cb-1540-5bd2-aa3b-7c7da450ec35",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Paper Ratchet",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-03421",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "359140cb-1540-5bd2-aa3b-7c7da450ec35_1",
+    "type": "security-rule"
+}

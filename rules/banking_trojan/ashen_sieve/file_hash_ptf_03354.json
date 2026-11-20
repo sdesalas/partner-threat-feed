@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Ashen Sieve banking trojan sample, as reported in campaign PTF-03354. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Ashen Sieve Banking Trojan: File with known malicious hash written (PTF-03354)",
+        "note": "## Triage and analysis\n\n### Investigating Ashen Sieve Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ashen Sieve banking trojan in campaign PTF-03354.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"905c12bc8908388412ff84b360c47892aeed19ceda95478713fca4f87db2ed7a\" or \"150494e877fe5d74d6b4475065c236f5b92fbb3a8480175ccc11a0e40d13b547\" or \"2fc107e012e68c1664801fea87cf3081d768d42b2afec0ca7bb40db54c363fdf\" or \"32794630a7a83d41924807b54826bd23ad79a7cacbb90b529cf7117f2dc95743\" or \"66e0510fedcc3a6f343bfdc9c305aac592ffd02ad671f78bebafd68cb9bb4e63\" or \"e632e2d30178869865c82074053a542da30e676aa30e72151aedee58e3b8ca1e\" or \"036b979d485a30e81dcc6c5e75f0e321de6622f1581a5bc0c379f8dc024971bb\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03354"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "26056681-cf83-50cb-8735-442df3b45cbb",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Ashen Sieve",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-03354",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "26056681-cf83-50cb-8735-442df3b45cbb_1",
+    "type": "security-rule"
+}

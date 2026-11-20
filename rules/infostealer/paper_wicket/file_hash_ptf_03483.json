@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Paper Wicket infostealer sample, as reported in campaign PTF-03483. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Paper Wicket Infostealer: File with known malicious hash written (PTF-03483)",
+        "note": "## Triage and analysis\n\n### Investigating Paper Wicket Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Paper Wicket infostealer in campaign PTF-03483.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"843d7c919bb68c60750ac5a3925ccd591289535fa9368da7b989026ffe0e271c\" or \"351723e6c100e9feb1dd15f3999b4b002260545f2de10ddf520a7a6f986e6225\" or \"95a61129da39adf551234391a497fc7299b9b49d498fa94316e90a62a39bf0da\" or \"3dbc5457f9668946c204449d3f4accaaf0a60bdc048c438aa1c01ee522f606a4\" or \"d76a796414e9713c6fcdb13ecf175095014296ed8d04764c66e2201190660333\" or \"b868d94d423b8d5c8a4024eb10255b7843568711ee793439d61cc8b3d16bc81a\" or \"04209f3eeba461eb273076c2da11ba69469406123886a4162caf462a7739fb66\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-03483"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "cb71dcb8-69b5-5fde-bb8b-9b8a559624d0",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Paper Wicket",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-03483",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "cb71dcb8-69b5-5fde-bb8b-9b8a559624d0_1",
+    "type": "security-rule"
+}
