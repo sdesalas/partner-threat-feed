@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Russet Mallet banking trojan sample, as reported in campaign PTF-04481. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Russet Mallet Banking Trojan: File with known malicious hash written (PTF-04481)",
+        "note": "## Triage and analysis\n\n### Investigating Russet Mallet Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Russet Mallet banking trojan in campaign PTF-04481.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"57778cb68064ea88097019a59c93ad9f15cb40ff3dd81d480f1b528ff91ff0a1\" or \"c238abac0e7b250a14c0b897d40f5fabc293093b1ba0994e0b44c2ba3f1df97b\" or \"404599bb16ac18318c8e0b4fcd48f7a7de054cc0fb43f17ae0bb19750d4ac0db\" or \"e19c88693706a68affc0eb41f679e42916d8ea4bae8e8729d0c11debb60b2d17\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04481"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "9e0df669-f865-518c-9f84-694e0a655686",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Russet Mallet",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-04481",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "9e0df669-f865-518c-9f84-694e0a655686_1",
+    "type": "security-rule"
+}

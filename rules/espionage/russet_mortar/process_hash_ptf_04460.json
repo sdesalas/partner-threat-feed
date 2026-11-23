@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Russet Mortar espionage toolkit sample, as reported in campaign PTF-04460. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Russet Mortar Espionage Toolkit: Process started from known malicious binary (PTF-04460)",
+        "note": "## Triage and analysis\n\n### Investigating Russet Mortar Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Russet Mortar espionage toolkit in campaign PTF-04460.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"c101522bcb413b5db489496bdd8f60dcbeb62312df95889beac28e467a8113ca\", \"0aa91ebded19ee00c0eb1b2ea54a8f9d61d689f8621ddf25d8ca955447526b50\", \"ca46294026139a5e8532b1ffd7e1adcee3c05346ac28afbe107ced6fc1eda49b\", \"0f79ebc8d88e51a2180e33954461d7d3e127eca9b191dd4691ad439286d32af8\", \"1e7ad48dc7d7337c750d22c2e3ec6664fa965a9e322b00dcf0636333e83b2ff3\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04460"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "fd0a5824-abdb-5dd7-a48c-78654bf5c073",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Russet Mortar",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-04460",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "fd0a5824-abdb-5dd7-a48c-78654bf5c073_1",
+    "type": "security-rule"
+}

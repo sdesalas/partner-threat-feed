@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Copper Funnel cryptominer sample, as reported in campaign PTF-04523. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Copper Funnel Cryptominer: Process started from known malicious binary (PTF-04523)",
+        "note": "## Triage and analysis\n\n### Investigating Copper Funnel Cryptominer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Copper Funnel cryptominer in campaign PTF-04523.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"4e5927015abc147d2ae390d4d00c890247c3e5f161c2317aafd18aeb692a27bc\", \"d928f2adc8565388af0aa6c53a04d7702b7cf9d912297314a7fea74cd4b6bfb8\", \"bfa42c32451986d3e2c9b430798836eb1269a7dd00b5c82713fccc67ed0e6e05\", \"dfbd00051ee5712b6232c242fff3101dbb95b5e0ccf7943306553be8368cfd6b\", \"c1974fab3efbd4f93359860240b94b93af1b19bec7cc1b0c8919f0937b9fe9f2\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04523"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "cf2c970d-70ea-5610-9d06-2b1ac6d1ff32",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Copper Funnel",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-04523",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "cf2c970d-70ea-5610-9d06-2b1ac6d1ff32_1",
+    "type": "security-rule"
+}

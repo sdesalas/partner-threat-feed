@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Lacquer Kettle botnet sample, as reported in campaign PTF-04405. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Lacquer Kettle Botnet: File with known malicious hash written (PTF-04405)",
+        "note": "## Triage and analysis\n\n### Investigating Lacquer Kettle Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Lacquer Kettle botnet in campaign PTF-04405.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"c0a795f0939b0a2f8d32ff5821663f88aaef7eb4ec5ac3e434d4967744ff8e3e\" or \"4a5ded9d87bab8644779bd6b583f0e16b6a40664520f4bf08688a205b4894681\" or \"bd088b017dbb37b1835910eb136aaad9403c7a20757d568e0c706c1fe072bc9b\" or \"d1ac947c3db6869e0a78efc56505a926f7117b4fa5e58d8890ccadbcd6ff0e68\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04405"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "348c16d9-eed2-5dbf-9cfa-709ffd04cf0c",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Lacquer Kettle",
+            "Threat Type: Botnet",
+            "Campaign: PTF-04405",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "348c16d9-eed2-5dbf-9cfa-709ffd04cf0c_1",
+    "type": "security-rule"
+}

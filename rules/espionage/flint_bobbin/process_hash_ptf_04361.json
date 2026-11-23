@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Flint Bobbin espionage toolkit sample, as reported in campaign PTF-04361. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Flint Bobbin Espionage Toolkit: Process started from known malicious binary (PTF-04361)",
+        "note": "## Triage and analysis\n\n### Investigating Flint Bobbin Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Flint Bobbin espionage toolkit in campaign PTF-04361.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"f5c4afd99561ef51ac58e805bd61a19c559a3bbcb656ad4eb299f8cd9fae1ec7\", \"4574f830c024fba619f8824d35e153a7e29136fc003b8616777459cb6042f0f6\", \"51f669732f41faee256c490cb4873f1934a881371e10c2e946bdf2d4f3e89292\", \"4e7e068826b6a3f36d8970ec5e3122657c05007af7dec6e226cf27b99525efd3\", \"b4d09ca4cbb5eef6e4d7ef1cf8cd914d62b1343430ab2624c3c58f3a2bc2b33d\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04361"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "761d60e5-0537-5709-b9a9-ce53aceebffc",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Flint Bobbin",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-04361",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "761d60e5-0537-5709-b9a9-ce53aceebffc_1",
+    "type": "security-rule"
+}

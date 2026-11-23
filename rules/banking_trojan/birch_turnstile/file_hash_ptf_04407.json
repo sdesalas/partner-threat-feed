@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Birch Turnstile banking trojan sample, as reported in campaign PTF-04407. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Birch Turnstile Banking Trojan: File with known malicious hash written (PTF-04407)",
+        "note": "## Triage and analysis\n\n### Investigating Birch Turnstile Banking Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Birch Turnstile banking trojan in campaign PTF-04407.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"cca6fceb6eaa61ed35a95cdeddd72478f3083ebe880c067ef7abd26a8f242152\" or \"362c1bab91aa6189f99ed8ca406cc9ebefb570d1c89a471093cb957074244e69\" or \"65a93db122e0885d1f6e8406bfc378cec4ce686bdf0b3fc2a0f0285886261fc7\" or \"2fda2ea06c31a6647b5bd7f4193445c9c26ffe5c5ea2b632b7de7e7fac9340ce\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04407"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "c93dd176-a380-5c47-ba57-279ea33b5eca",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Birch Turnstile",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-04407",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "c93dd176-a380-5c47-ba57-279ea33b5eca_1",
+    "type": "security-rule"
+}

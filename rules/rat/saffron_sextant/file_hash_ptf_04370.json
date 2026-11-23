@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Saffron Sextant remote access trojan sample, as reported in campaign PTF-04370. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Saffron Sextant Remote Access Trojan: File with known malicious hash written (PTF-04370)",
+        "note": "## Triage and analysis\n\n### Investigating Saffron Sextant Remote Access Trojan: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Saffron Sextant remote access trojan in campaign PTF-04370.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"d6470f2b9c4f700055e7dda68eb242d760379bbc08147e52b874cafc8f0ed991\" or \"2aaeeb3a4e620dc5f2032fb2420ac9eb470d49ac4eefd493e449522e19198c59\" or \"ae05e3cf358c32ce2cf27343adaf67ebfde53a6cf7d14c4757ce3d403806bdbe\" or \"d6174aab7b87dd1e6ba5915b14e2b4a961b3634d0ef62dcc381afe88ce6e97ec\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04370"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "044bb9a3-b7a1-50be-8d0a-879b7e95fef9",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Saffron Sextant",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-04370",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "044bb9a3-b7a1-50be-8d0a-879b7e95fef9_1",
+    "type": "security-rule"
+}

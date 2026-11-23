@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Oaken Sextant botnet sample, as reported in campaign PTF-04476. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Oaken Sextant Botnet: File with known malicious hash written (PTF-04476)",
+        "note": "## Triage and analysis\n\n### Investigating Oaken Sextant Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Oaken Sextant botnet in campaign PTF-04476.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"84494a022fd83b23a4fccbf9547e1f2d543cc2bd83bacddb1f38ec032ef270e2\" or \"aaa1339f0985a36a869667fa8fe5adae11d449298afe2a212c50e0dd65771fae\" or \"7764f631ef04a25e3e954fe4394b5145fe58481f4c469b213d6e349939c343d5\" or \"f174a0604404fec1648e69f2e8ff92e34f25f7ea883d70a3ec9994f0c3cf6c28\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04476"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "15844afc-fdd8-52ae-a9c0-70eefe1310ff",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Oaken Sextant",
+            "Threat Type: Botnet",
+            "Campaign: PTF-04476",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "15844afc-fdd8-52ae-a9c0-70eefe1310ff_1",
+    "type": "security-rule"
+}

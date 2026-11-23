@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Gilded Gimlet cryptominer sample, as reported in campaign PTF-04385. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Gilded Gimlet Cryptominer: File with known malicious hash written (PTF-04385)",
+        "note": "## Triage and analysis\n\n### Investigating Gilded Gimlet Cryptominer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Gilded Gimlet cryptominer in campaign PTF-04385.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"59be983275fedf8516a13d68734e02718965e050b2180614b2d042503f743d62\" or \"484db4a28de9ea282f47269888a351653806a0fcac82f803b521f2962a51d039\" or \"9e5d686775a850e92c19993d9ba46190041e3b463fd381e19d8eb22541ce8e5a\" or \"a5d535ab7845d0bed32c7bda7be41e8d28b50cb0afffe44f4febf063649db2cb\" or \"1a5e070e174187d643c73f93e6af04cae40cd9ae5569a7219af5534adf543d22\" or \"617ec1a9675dc28057e524fb817abec2fc319399afd414d7d1c4c50710e4235c\" or \"5013f06512a931e8cdb46719beb08acb43d3b04b5223c7ddd5ae05e6caf825cc\" or \"28aa812acd46be40a5db2cb3e36add1984baebab07123937fe535b5fbc915e08\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04385"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d5967974-e5a8-53c9-a614-e9de37bd53b4",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Gilded Gimlet",
+            "Threat Type: Cryptominer",
+            "Campaign: PTF-04385",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "d5967974-e5a8-53c9-a614-e9de37bd53b4_1",
+    "type": "security-rule"
+}

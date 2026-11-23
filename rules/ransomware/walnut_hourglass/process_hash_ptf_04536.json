@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Walnut Hourglass ransomware sample, as reported in campaign PTF-04536. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Walnut Hourglass Ransomware: Process started from known malicious binary (PTF-04536)",
+        "note": "## Triage and analysis\n\n### Investigating Walnut Hourglass Ransomware: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Walnut Hourglass ransomware in campaign PTF-04536.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"f0fa2bcceff508cf347c90056361ab577b333babc532b2673aa35e959d1a91f2\", \"12e773a5478ec6f32149ad20c3d061433e197e0bee7a145370e77033590dc1de\", \"6ebbcc93d59b130eae0792037b43ef74d89fd7d4553753e9066170ea27d6b271\", \"24c504caa3453901e48e23bf276b285f263c4d04ce8b8385e299170cfb62dcc1\", \"9a0b60215f8181ae8c27a5b558fb65c1d9ed123d3faba4c4e136c335146a0617\", \"42b1fbab753ea12a80c3d0656cfde793929b2b1e39927fedd1e289ffd5859731\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04536"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 99,
+        "rule_id": "4f40982c-edab-509e-8231-aeab845abbe7",
+        "severity": "critical",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Walnut Hourglass",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-04536",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "4f40982c-edab-509e-8231-aeab845abbe7_1",
+    "type": "security-rule"
+}

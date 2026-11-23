@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Russet Jigsaw espionage toolkit sample, as reported in campaign PTF-04390. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Russet Jigsaw Espionage Toolkit: Process started from known malicious binary (PTF-04390)",
+        "note": "## Triage and analysis\n\n### Investigating Russet Jigsaw Espionage Toolkit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Russet Jigsaw espionage toolkit in campaign PTF-04390.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"d4d5cc1d9850aff6f594791f87f21bfd28bf3c54255e23243f66c0ec4474409e\", \"d61d2cea6fd76b8ebf6556eaa31795e3f6c7049450917ef8973756e2ae2ebc02\", \"1bf28e33413359f597a837d9398f8d8f9aa4d9f219899a35b38d47724a41536b\", \"d38715af3867014865d9b965e3b610166c7fd39ca4957c3b49681f89df00f93b\", \"be67b202b8389a9ce7dc293f0ecf97ba80961d30ad42b5b9daf8080dbed46b16\", \"37ebce411e4fab6170ae41bc2b6aa9cbacd100a0617590d178d4858ec4479c5f\", \"10da2558c143b91e110f8dee6a75eed15bc08d9bf11527a378fe3b5213dc65cb\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04390"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "c2f4ede7-063d-5a83-a897-f58b26b50b1c",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Russet Jigsaw",
+            "Threat Type: Espionage Toolkit",
+            "Campaign: PTF-04390",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "c2f4ede7-063d-5a83-a897-f58b26b50b1c_1",
+    "type": "security-rule"
+}

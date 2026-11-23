@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Chalk Satchel banking trojan sample, as reported in campaign PTF-04381. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Chalk Satchel Banking Trojan: Process started from known malicious binary (PTF-04381)",
+        "note": "## Triage and analysis\n\n### Investigating Chalk Satchel Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Chalk Satchel banking trojan in campaign PTF-04381.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"1115d3fece045e96a017a54167bf225536b059408d49653713e21dd06e921c27\", \"28c39ede09c0646e764b36b559980b6cf37522b2896c3db272145980f3244b67\", \"159dc7ec176fb02fbaefd5cb6cb0297c057e96562880cc754626c0c9ef64f531\", \"42f5a1b14c11012f86197b5592280a9c9e2a1d9ea6c4f15b90616ae11d3e8b4b\", \"a4d4ccf954be29fc18103037eaa372caebd37f39b50c5760e5c2fd55b3d57847\", \"61e260fbe9c4cedcf75907c62b91ba72301d1884a231218d737602f20c62c113\", \"ce97ca6e275d3c9e6878b4a7e64bf80c699134f689e1fff8c2050a1c5e8b0273\", \"8dfd02dd2ceb8a66aba07371694851948c74a7ee62b1621a137dd04daca37041\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04381"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "dceaa04a-1c6d-54b9-8453-d04b1ba49e61",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Chalk Satchel",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-04381",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "dceaa04a-1c6d-54b9-8453-d04b1ba49e61_1",
+    "type": "security-rule"
+}

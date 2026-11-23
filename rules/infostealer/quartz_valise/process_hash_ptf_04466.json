@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Quartz Valise infostealer sample, as reported in campaign PTF-04466. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Quartz Valise Infostealer: Process started from known malicious binary (PTF-04466)",
+        "note": "## Triage and analysis\n\n### Investigating Quartz Valise Infostealer: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Quartz Valise infostealer in campaign PTF-04466.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"c03935554b664d9d695d71f469731a26c5869b7261dae4d25689ce02e3b1f53a\", \"9fbc84ebb768af70494dab6ac522958c69ffd0eeeaf8a546bb3b3f5e026b29ed\", \"78be5d09d514b0bb708128a8d1bdc93704bce4b29616a9721492d9fa1f1f473d\", \"ee9fa061d7b2bffe4c5b037e2494577b63ffa74c8c5222820d2c9685646785cf\", \"548ec1c932275380a851fbe64eb3a3d19e487b27a5931cbadd16210d5396c188\", \"5c6c4003d682de535a8e636de5fa20e5c91b86329f19aae009431248e14fb3ff\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04466"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "0a8a5533-ca0f-5d7a-8a69-98a25f27822d",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Quartz Valise",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-04466",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "0a8a5533-ca0f-5d7a-8a69-98a25f27822d_1",
+    "type": "security-rule"
+}

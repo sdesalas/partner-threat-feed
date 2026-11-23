@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Walnut Hourglass ransomware sample, as reported in campaign PTF-04534. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Walnut Hourglass Ransomware: File with known malicious hash written (PTF-04534)",
+        "note": "## Triage and analysis\n\n### Investigating Walnut Hourglass Ransomware: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Walnut Hourglass ransomware in campaign PTF-04534.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"7a6debb929cedadbec60033f2f2f6413c4fa5be6658140c70ef82f1c947bfff8\" or \"89bd449c285d7d458cd8e56b52da168d9eb5a9c003ba4da4a39d887832dc6aa5\" or \"306b13629399e99f74777d31cad15385b8473c0ddb6352c76070b559257cb2d1\" or \"297a57cd11a47e2ddb67de6e136633989a8ad54298edf304a9c073b75b33e55d\" or \"2b05679b580775d7f545a5ad99135bb820a642d1e21cd543662e7231855d3fcc\" or \"b5b0bedd0be84ca7e2396c34eb18bd910e5df5a6cef1b35bd6e9be58e803c8dc\" or \"0c8f76f58b99e9ce3738db353fc100e47bb2aa77448d867ba246ce1a14d65859\" or \"0fa7d2889dd9ab986abc44adaa2f55910c8596419dbd7d56e439b9aa99fcfe30\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04534"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "63b25992-6684-5d52-ae1d-570fb71f4191",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Walnut Hourglass",
+            "Threat Type: Ransomware",
+            "Campaign: PTF-04534",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "63b25992-6684-5d52-ae1d-570fb71f4191_1",
+    "type": "security-rule"
+}

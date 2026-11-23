@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Cedar Inkwell botnet sample, as reported in campaign PTF-04375. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Cedar Inkwell Botnet: File with known malicious hash written (PTF-04375)",
+        "note": "## Triage and analysis\n\n### Investigating Cedar Inkwell Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Cedar Inkwell botnet in campaign PTF-04375.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"33b94e93ebe0d55c3f7bb691ead4e2825fcf42b682f44477ae2bdb756df6ebe6\" or \"713ba1dbf9b3023ff3697cce74028c4a106c484e7d0aa9acf1dd317b9f7334f3\" or \"85e2c775f07c1abeae4ab85ad2290fae066c14e754b0aab683691e91c78e8b43\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04375"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "09771fb0-4497-5d96-b040-31385ffa7d7f",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Cedar Inkwell",
+            "Threat Type: Botnet",
+            "Campaign: PTF-04375",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "09771fb0-4497-5d96-b040-31385ffa7d7f_1",
+    "type": "security-rule"
+}

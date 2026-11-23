@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Ashen Ratchet phishing kit sample, as reported in campaign PTF-04418. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Ashen Ratchet Phishing Kit: Process started from known malicious binary (PTF-04418)",
+        "note": "## Triage and analysis\n\n### Investigating Ashen Ratchet Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Ashen Ratchet phishing kit in campaign PTF-04418.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"7f2efe491ccb061d5251801097553a9f85d18e3055b65b4abe26d723e9d210b7\", \"3174f4e624846aca6c7df4ebd21cff9c07ebef5a5b220eeab953479b90578737\", \"895504babcab6b51c196a2b5d2577efe5593400d9c33e6c6ef693675075d14eb\", \"541922ccf64311c3c3216c70052e98312b4a645adb63e8f62cd4cb237336efef\", \"9a027b8329cac7cb132bcd222bc3bc56e348673a0e1db6b83d03685de07e0942\", \"c64c21ab35dfa9efacf00131dfacf57ae83e4c6fc9b82b7d989e5e0e6421e938\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04418"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "1b8d0398-432b-5cc5-82fe-2a1bbff01821",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Ashen Ratchet",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-04418",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "1b8d0398-432b-5cc5-82fe-2a1bbff01821_1",
+    "type": "security-rule"
+}

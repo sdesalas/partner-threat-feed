@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Fennel Ratchet botnet sample, as reported in campaign PTF-04446. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Fennel Ratchet Botnet: File with known malicious hash written (PTF-04446)",
+        "note": "## Triage and analysis\n\n### Investigating Fennel Ratchet Botnet: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Fennel Ratchet botnet in campaign PTF-04446.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"6f88cfc7f9f6d6ed253d6f2f3fbfdd77aedcae966b121ec0c1ca68552e47dc01\" or \"536785dccd7cc63f1215d1bab18627b8fbe00870b08639f560bdbf4f4ebc66a8\" or \"5bb3ffa2c5648ff1cd68c5fe3abe8d255fb4e5c99d7ba4551b59e8acbfe52e27\" or \"a2b822605e2ed37dc9e7594ccc12c1bdfbad327891a3eef6a6f8914df8c23938\" or \"bd8cfd2575cb8210b5b6558bf7b482492b61982d11fde819476f6a8aedf79c3e\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04446"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "bbba5c46-5a05-5600-8d78-7c2cda75fe02",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Fennel Ratchet",
+            "Threat Type: Botnet",
+            "Campaign: PTF-04446",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "bbba5c46-5a05-5600-8d78-7c2cda75fe02_1",
+    "type": "security-rule"
+}

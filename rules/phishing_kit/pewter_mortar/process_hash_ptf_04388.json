@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Pewter Mortar phishing kit sample, as reported in campaign PTF-04388. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Pewter Mortar Phishing Kit: Process started from known malicious binary (PTF-04388)",
+        "note": "## Triage and analysis\n\n### Investigating Pewter Mortar Phishing Kit: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Pewter Mortar phishing kit in campaign PTF-04388.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"f316738612ca6ca65e930174efc2a6a679267c761cf43cd4b616505d3d651855\", \"6b0b6ed9234e80ed3ab7d4fe594cedffa802fbeca108cfdcc1faecce0ae7f33e\", \"22b518911e8dea52dbadc0ca4bbd017061f43fea23d22b07ded1c0a94b6d8e82\", \"5811361a83780f0373b5b143c49ea3ef66f57d755ba230520feb3ffe14a57c66\", \"1aef61f9c26edd7328043abaf80698ba3310e1f41b3956d5a708b006881bac63\", \"87dbb1fc51c464d4e2ffdbcaa334af8ef70c5e23523a737230b35f261f234d1f\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04388"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "9445120e-36a6-5483-a038-bdc7af0254ac",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Pewter Mortar",
+            "Threat Type: Phishing Kit",
+            "Campaign: PTF-04388",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "9445120e-36a6-5483-a038-bdc7af0254ac_1",
+    "type": "security-rule"
+}

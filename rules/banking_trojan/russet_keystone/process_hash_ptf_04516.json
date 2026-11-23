@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Russet Keystone banking trojan sample, as reported in campaign PTF-04516. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Russet Keystone Banking Trojan: Process started from known malicious binary (PTF-04516)",
+        "note": "## Triage and analysis\n\n### Investigating Russet Keystone Banking Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Russet Keystone banking trojan in campaign PTF-04516.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"a176f70ffdcc738f2d5fadfc38e54e3fcf18c7d117bb532fe0049055d5cde0b8\", \"8d522067b41a65473620735e66f12c62568513247cb0d7884d4aa3561e95217b\", \"2da0a03c0fbe9a633032747b6c5611c8668e7e4289d02c464598d6f5b25036e4\", \"a8de8c1f6506d16ab123fc6e22e456ec9a7cd363e00e1b608dd1c926000a31de\", \"3c7913cd8587f54822c0cb59efadaf5a4447c1bb4d234eb6f65291304b2aa9c5\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04516"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "6800b092-70f0-561c-b94e-ec8acab1f5e5",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Russet Keystone",
+            "Threat Type: Banking Trojan",
+            "Campaign: PTF-04516",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "6800b092-70f0-561c-b94e-ec8acab1f5e5_1",
+    "type": "security-rule"
+}

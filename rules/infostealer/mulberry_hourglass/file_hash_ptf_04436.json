@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Mulberry Hourglass infostealer sample, as reported in campaign PTF-04436. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Mulberry Hourglass Infostealer: File with known malicious hash written (PTF-04436)",
+        "note": "## Triage and analysis\n\n### Investigating Mulberry Hourglass Infostealer: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Mulberry Hourglass infostealer in campaign PTF-04436.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"9d0aa09b1af5906f8f810252aeeb9fc5b58915319cedc3de26ad6a7c92364251\" or \"eb88b4ad2e47028c30db97043a3e6cc25e0ad423b9b47526cc860b7d6c3c6b8c\" or \"e3c90ddf9a1a914bb2e6e084dc022e8131f615cd89a0096e19f75ec636ba461b\" or \"2cb7b9dbc40a19af62d7c4c8470deb53b77dc668a2b869e928ea46d97c8a9748\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04436"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "d83a966a-6446-5e79-bca4-4ff3a5afccf1",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Mulberry Hourglass",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-04436",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "d83a966a-6446-5e79-bca4-4ff3a5afccf1_1",
+    "type": "security-rule"
+}

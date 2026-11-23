@@ -1,0 +1,68 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies web requests to URLs that serve Brass Lectern infostealer payloads, as reported in campaign PTF-04397. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-network_traffic.http-*",
+            "packetbeat-*",
+            "logs-zscaler_zia.web-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Brass Lectern Infostealer: Request to known payload URL (PTF-04397)",
+        "note": "## Triage and analysis\n\n### Investigating Brass Lectern Infostealer: Request to known payload URL\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Brass Lectern infostealer in campaign PTF-04397.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "url.full:(\"https://api-auth38.invalid/update/3374.zip\" or \"https://auth-cloud54.example/invoice/7647.zip\" or \"https://cdn-sync74.invalid/doc/3725.zip\" or \"https://files-mail99.invalid/update/8946.msi\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04397"
+        ],
+        "related_integrations": [
+            {
+                "package": "network_traffic",
+                "version": ">=1.1.0"
+            }
+        ],
+        "risk_score": 47,
+        "rule_id": "1f105092-1664-56a2-9dac-cbd232eaad23",
+        "severity": "medium",
+        "tags": [
+            "Domain: Network",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Brass Lectern",
+            "Threat Type: Infostealer",
+            "Campaign: PTF-04397",
+            "Data Source: Network Traffic",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "1f105092-1664-56a2-9dac-cbd232eaad23_1",
+    "type": "security-rule"
+}

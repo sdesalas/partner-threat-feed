@@ -1,0 +1,74 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies processes started from binaries whose SHA-256 hash matches a Paper Mallet remote access trojan sample, as reported in campaign PTF-04506. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.process-*"
+        ],
+        "language": "eql",
+        "license": "Elastic License v2",
+        "name": "Paper Mallet Remote Access Trojan: Process started from known malicious binary (PTF-04506)",
+        "note": "## Triage and analysis\n\n### Investigating Paper Mallet Remote Access Trojan: Process started from known malicious binary\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Paper Mallet remote access trojan in campaign PTF-04506.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "process where event.type == \"start\" and process.hash.sha256 in (\"ea2849402a9965abba3bb2d56f66788c63088616a3b246664c7d31cb04a577d9\", \"25ed062a045c2233dc1120ed9c84892b4604232b11970c230515acb587076bf6\", \"c692c3ab93e9581d039353a037b1c95f6f1ac74d8a747344ed54e5f7dd30a99c\", \"c384cfe7347084f7344d3b1f7d02aa0f5eda6b7b0e5e550ee9e54391e4c0b1d0\", \"592dbd0e6e85c6cf7b14ea7959fa1660328438780c09a7272118d970b17c4fd3\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04506"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "a3c8fb48-8cb9-5d7e-adb7-5659586443b9",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Execution",
+            "Threat: Paper Mallet",
+            "Threat Type: Remote Access Trojan",
+            "Campaign: PTF-04506",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0002",
+                    "name": "Execution",
+                    "reference": "https://attack.mitre.org/tactics/TA0002/"
+                },
+                "technique": [
+                    {
+                        "id": "T1204",
+                        "name": "User Execution",
+                        "reference": "https://attack.mitre.org/techniques/T1204/",
+                        "subtechnique": [
+                            {
+                                "id": "T1204.002",
+                                "name": "Malicious File",
+                                "reference": "https://attack.mitre.org/techniques/T1204/002/"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "eql",
+        "version": 1
+    },
+    "id": "a3c8fb48-8cb9-5d7e-adb7-5659586443b9_1",
+    "type": "security-rule"
+}

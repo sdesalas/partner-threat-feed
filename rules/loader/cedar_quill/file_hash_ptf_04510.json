@@ -1,0 +1,67 @@
+{
+    "attributes": {
+        "author": [
+            "Partner Threat Feed"
+        ],
+        "description": "Identifies files written to disk whose SHA-256 hash matches a Cedar Quill loader sample, as reported in campaign PTF-04510. The indicators are synthetic and use reserved address and domain ranges, so they match no real traffic.",
+        "false_positives": [
+            "Security testing that replays known indicators.",
+            "A shared hosting address or domain that later served benign content."
+        ],
+        "from": "now-9m",
+        "index": [
+            "logs-endpoint.events.file-*"
+        ],
+        "language": "kuery",
+        "license": "Elastic License v2",
+        "name": "Cedar Quill Loader: File with known malicious hash written (PTF-04510)",
+        "note": "## Triage and analysis\n\n### Investigating Cedar Quill Loader: File with known malicious hash written\n\nThis rule matches indicators that the Partner Threat Feed attributes to the Cedar Quill loader in campaign PTF-04510.\n\n### Possible investigation steps\n\n- Review the matching event and the host or user it came from.\n- Look for other indicators from the same campaign on the same host.\n- Check the process tree around the event for the initial execution or delivery.\n\n### Response and remediation\n\n- Isolate the host if the match is confirmed.\n- Block the indicators at the network edge and on endpoints.\n- Reset credentials used on the host.\n",
+        "query": "event.category:file and file.hash.sha256:(\"c1e07931738b84746a63668484b8de45f9af0b162140194995fb252012bd4250\" or \"adb1bc92873260a35f062b01a04a59b2c098470ad487a36e9458263d13432bf3\" or \"f9bc3f7aca8962d189759318f5a80bd4437d9e3e236f76106274b29ef66f1ef0\")",
+        "references": [
+            "https://partner-threat-feed.example/campaigns/ptf-04510"
+        ],
+        "related_integrations": [
+            {
+                "package": "endpoint",
+                "version": ">=8.2.0"
+            }
+        ],
+        "risk_score": 73,
+        "rule_id": "e46a0596-22f7-5afb-aa7d-26f0ec4f88a3",
+        "severity": "high",
+        "tags": [
+            "Domain: Endpoint",
+            "OS: Windows",
+            "Use Case: Threat Detection",
+            "Tactic: Command and Control",
+            "Threat: Cedar Quill",
+            "Threat Type: Loader",
+            "Campaign: PTF-04510",
+            "Data Source: Elastic Defend",
+            "Resources: Investigation Guide",
+            "Source: Partner Threat Feed"
+        ],
+        "threat": [
+            {
+                "framework": "MITRE ATT&CK",
+                "tactic": {
+                    "id": "TA0011",
+                    "name": "Command and Control",
+                    "reference": "https://attack.mitre.org/tactics/TA0011/"
+                },
+                "technique": [
+                    {
+                        "id": "T1105",
+                        "name": "Ingress Tool Transfer",
+                        "reference": "https://attack.mitre.org/techniques/T1105/"
+                    }
+                ]
+            }
+        ],
+        "timestamp_override": "event.ingested",
+        "type": "query",
+        "version": 1
+    },
+    "id": "e46a0596-22f7-5afb-aa7d-26f0ec4f88a3_1",
+    "type": "security-rule"
+}
